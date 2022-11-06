@@ -1,0 +1,62 @@
+/* unnecessary child */
+.gjs-block-categories {
+  display: none;
+  flex-direction: unset;
+}
+
+/* holder of the blocks */
+.gjs-blocks-c {
+  flex-wrap: unset;
+  justify-content: unset;
+}
+
+.gjs-block {
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  width: unset;
+  min-width: unset;
+  padding: unset;
+  box-sizing: unset;
+  min-height: unset;
+  cursor: all-scroll;
+  font-size: unset;
+  font-weight: unset;
+  text-align: unset;
+  display: unset;
+  flex-direction: unset;
+  justify-content: unset;
+  border: unset;
+  border-radius: unset;
+  margin: unset;
+  box-shadow: unset;
+  transition: unset;
+  transition-property: unset;
+}
+
+.gjs-block-label {
+  font-family: inherit;
+  overflow: unset;
+  text-overflow: unset;
+  font-size: unset;
+}
+
+.gjs-one-color-h:hover {
+  color: unset;
+}
+
+.gjs-two-color-h:hover {
+  color: unset;
+}
+
+.gjs-three-color-h:hover {
+  color: unset;
+}
+
+.gjs-four-color-h:hover {
+  color: unset;
+}
+
+.gjs-block:hover {
+  box-shadow: unset;
+}

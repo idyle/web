@@ -1,0 +1,38 @@
+/* Let's highlight canvas boundaries */
+
+/* Reset some default styling */
+.gjs-cv-canvas {
+  font-family: "Okta Neue", sans-serif;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.gjs-one-bg {
+  background-color: transparent;
+}
+
+.gjs-two-color {
+  background-color: transparent;
+}
+
+.gjs-blocks-cs {
+  display: grid;
+}
+
+/* holder of the blocks */
+.gjs-blocks-c {
+  display: grid;
+  gap: 5px;
+}
+
+.gjs-block {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+.gjs-selected {
+  outline: 2px solid black !important;
+
+}
