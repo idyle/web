@@ -8,6 +8,7 @@ import Test from './Test';
 import "./reset.css";
 import "./styles.css";
 
+// provide ability to click on page inside of editor
 
 
 const Main = () => {
@@ -17,10 +18,6 @@ const Main = () => {
 
     useEffect(() => {
         const editor = init({
-            defaults: {
-
-                toolbar: [], // this will prevent its rendering on the component
-              },
             // Indicate where to init the editor. You can also pass an HTMLElement
             container: '#gjs',
             // Get the content for the canvas directly from the element
@@ -32,16 +29,6 @@ const Main = () => {
             // Disable the storage manager for the moment
             storageManager: false,
             // Avoid any default panel
-            buildProps: ['font-family', 'Okta Nueve'],
-properties:[
-	{  
-		property: 'font-family',
-		name: 'Font',
-		list: [
-			{ name: 'Okta Nueve', value: 'Okta Nueve, sans-serif' }
-		
-		]
-	}],
             panels: { defaults: [] },
             blockManager: {
               custom: true,
@@ -88,10 +75,14 @@ properties:[
     console.log('htmll', html)
     
     return (
-      <div className="grid grid-cols-[10%_90%] w-full h-[400px]">
+      <div className="grid grid-cols-[20%_80%]">
         <div className="h-full" id="blocks"></div>
-        <div id="gjs"></div>
+        <div className="grid p-2 border border-black shadow-2xl overflow-hidden rounded-lg m-2">
+        <div className="p-4 rounded-xl overflow-hidden" id="gjs"></div>
+</div>
+
       </div>
+
 
 
     )

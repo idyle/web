@@ -10,7 +10,10 @@ import { useState } from 'react';
 const Navigator = () => {
 
     const [mobileClicked, setMobileClicked] = useState(false);
-    const signOutUser = () => signOut(getAuth());
+    const signOutUser = () => {
+        console.log('logged out');
+        signOut(getAuth());
+    };
     
     return (
         <>
@@ -28,6 +31,7 @@ const Navigator = () => {
 
             <div className="grid grid-flow-row md:grid-flow-col gap-2 items-center justify-items-center">
                 <h1 className="text-3xl text-black font-bold">idyle</h1>
+                {/* convert to input box, use absolute/fixed + offset for results drop */}
                 <div className="flex gap-1 h-[2rem] w-[20rem] border p-2 rounded-lg border-black items-center">
                     <BiSearch color="black" size="10px"/>
                     <h1 className="text-lg text-black">Search</h1>

@@ -5,6 +5,8 @@ import { emmetHTML } from "emmet-monaco-es";
 import { parse } from 'himalaya';
 
 // To escape eslint
+
+// LOOK: file sorter like in vscode
 const rTabs = (str) => str.trim().replace(/^ {4}/gm, "");
 const exampleCode = {
   javascript: rTabs(`
@@ -60,7 +62,8 @@ export default function App() {
       <style jsx={"true"}>
         {`
           .editor-main-container {
-            height: 600px;
+            width: 50%;
+
           }
         `}
       </style>

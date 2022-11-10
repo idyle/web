@@ -36,21 +36,25 @@ export const AuthContext = ({ children }) => {
     const { loader, setLoader } = useUtil();
     useEffect(() => {
         console.log(auth, path);
-        if (path === '/login' && auth) {
-            console.log('met');
+        
+        if (path === '/login' && auth === 'auth') {
+            console.log('met', auth, path);
             setLoader(false);
             return setPath('/');
         }
-        if (path !== '/login' && !auth) {
+        if (path !== '/login' && auth !== 'auth') {
             console.log('not auth and going not login!@');
             return setPath('/login');
         }
     }, [path, auth]);
     useEffect(() => onAuthStateChanged(getAuth(), user => {
         setUser(user);
-        setAuth(user?.uid);
-        localStorage.setItem('auth', user?.uid);
+        const auth = user?.uid ? 'auth' : false;
+        setAuth(auth);
+        localStorage.setItem('auth', auth);
     }), []);
+
+    useEffect(() => console.log('is changed', auth), [auth]);
     const values = { auth, user }
     return ( <AuthValues.Provider value={values}>{children}</AuthValues.Provider> );
 };

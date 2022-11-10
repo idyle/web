@@ -10,12 +10,13 @@ const App = () => {
         <NavContext>
             <UtilContext>
                 <AuthContext>
-                    <div className='h-screen'>
+                    <div className='h-screen grid grid-rows-[5%_95%]'>
+                        {/* 10% */}
                     <Loader />
                     <Routes>
-                            <Route path="login" element={<Login />} />
-                            <Route path ="*" element={<Interface />} />
-                        </Routes>
+                        <Route path="login" element={<Login />} />
+                        <Route path ="*" element={<Interface />} />
+                    </Routes>
                     <Notifier />
                     </div>
 
