@@ -5,7 +5,7 @@ import DND from './Editor/Design/Main';
 
 const Interface = () => {
     return (
-        <div className='grid grid-rows-[15%_85%]'>
+        <div className='grid grid-rows-[auto_1fr]'>
             <Navigator />
             {/* NA */}
             <Routes>

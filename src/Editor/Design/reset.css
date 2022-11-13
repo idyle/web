@@ -60,3 +60,23 @@
 .gjs-block:hover {
   box-shadow: unset;
 }
+
+.gjs-sm-sector {
+  background-color: unset;
+  color: unset;
+  clear: unset;
+  font-weight: unset;
+  text-align: unset;
+}
+
+.gjs-sm-sector-title {
+  font-weight: unset;
+  background-color: unset;
+  letter-spacing: unset;
+  padding: unset;
+  border-bottom: unset;
+  text-align: unset;
+  position: unset;
+  cursor: unset;
+}
+

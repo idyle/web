@@ -1,19 +1,30 @@
 /* Let's highlight canvas boundaries */
+@import url("https://fonts.cdnfonts.com/css/okta-neue");
 
+@font-face {
+  font-family: "Okta Neue", sans-serif;
+  src: url("https://fonts.cdnfonts.com/css/okta-neue");
+}
 /* Reset some default styling */
-.gjs-cv-canvas {
+.gjs-cv-canvas,
+.im39 {
   font-family: "Okta Neue", sans-serif;
   top: 0;
   width: 100%;
   height: 100%;
 }
 
+.izcf {
+  font-family: "Okta Neue", sans-serif;
+}
+
 .gjs-one-bg {
-  background-color: transparent;
+  background-color: white;
 }
 
 .gjs-two-color {
-  background-color: transparent;
+  background-color: white;
+  color: white;
 }
 
 .gjs-blocks-cs {
@@ -32,7 +43,52 @@
   align-items: center;
 }
 
-.gjs-selected {
-  outline: 2px solid black !important;
+.gjs-sm-sectors {
+  background-color: white !important;
+}
 
+.gjs-sm-sector {
+  background-color: white;
+  color: black;
+}
+
+.gjs-badge {
+  display: none !important;
+}
+
+.gjs-toolbar {
+  /* for the toolbar */
+  display: none !important;
+}
+
+.gjs-cv-canvas .gjs-highlighter {
+  outline: none !important;
+  border: 1px solid black !important;
+}
+.gjs-selected-parent {
+  outline: 2px solid transparent !important;
+}
+
+.gjs-placeholder {
+  border-color: black;
+}
+
+.gjs-placeholder.horizontal,
+.gjs-com-placeholder.horizontal,
+.gjs-placeholder.horizontal {
+  border-color: rgba(0, 0, 0, 0) gold !important;
+  border-width: 3px 5px;
+  margin: -3px 0 0;
+}
+
+.gjs-placeholder-int,
+.gjs-com-placeholder-int,
+.gjs-placeholder-int {
+  background-color: gold !important;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  padding: 1.5px;
+  outline: none;
 }

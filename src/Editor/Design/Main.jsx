@@ -1,28 +1,89 @@
 import { init } from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
-import { useEffect } from 'react';
+import 'grapesjs/dist/grapes.min.js';
+// import 'grapesjs-plugin-ckeditor/dist/grapesjs-plugin-ckeditor.min.js'
+import { useEffect, useState } from 'react';
 import ReactDOMServer from "react-dom/server";
 import Icon from './Icon';
 import Test from './Test';
+import { styleManager } from './config';
+import internal from './internal.css';
+// import './cke.js';
+import 'ckeditor/ckeditor.js';
+import plugin from 'grapesjs-plugin-ckeditor';
 
-import "./reset.css";
-import "./styles.css";
+import './reset.css';
+import './styles.css';
 
-// provide ability to click on page inside of editor
+
+import test from './styles.css';
+
+console.log(internal);// provide ability to click on page inside of editor
 
 
 const Main = () => {
 
   const html = ReactDOMServer.renderToStaticMarkup(<Icon />);
   const test = ReactDOMServer.renderToStaticMarkup(<Test />);
+  const [editor, setEditor] = useState();
 
     useEffect(() => {
+      // wait to be ready
         const editor = init({
+
+          canvas: {
+            styles: ['http://localhost:3000/internal.css'],
+            scripts: [
+              "https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"
+          ]
+        },
             // Indicate where to init the editor. You can also pass an HTMLElement
             container: '#gjs',
             // Get the content for the canvas directly from the element
             // As an alternative we could use: `components: '<h1>Hello World Component!</h1>'`,
             fromElement: true,
+            plugins: [plugin],
+            pluginsOpts: {
+              'gjs-plugin-ckeditor' : {
+                options: {
+                        language: 'en',
+                        toolbarGroups: [
+                          { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+                          { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+                          { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+                          { name: 'forms', groups: [ 'forms' ] },
+                          '/',
+                          { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+                          { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+                          { name: 'links', groups: [ 'links' ] },
+                          { name: 'insert', groups: [ 'insert' ] },
+                          '/',
+                          { name: 'styles', groups: [ 'styles' ] },
+                          { name: 'colors', groups: [ 'colors' ] },
+                          { name: 'tools', groups: [ 'tools' ] },
+                          { name: 'others', groups: [ 'others' ] },
+                          { name: 'about', groups: [ 'about' ] }
+                        ],
+                        removeButtons: 'NewPage'
+                      },
+              }
+            },
+            canvasCss: `
+            .gjs-selected {
+              outline: none !important;
+              border: 1.5px solid black !important;
+            }
+
+            .gjs-selected-parent {
+              border: none !important;
+              outline:4px solid black !important;
+              }
+
+              .gjs-placeholder.vertical, .gjs-placeholder.int, .gjs-placeholder.horizontal  {
+                outline: none !important;
+                border: 1.5px solid black !important;
+              }
+            `,
             // Size of the editor
             height: 'auto',
             width: 'auto',
@@ -30,6 +91,7 @@ const Main = () => {
             storageManager: false,
             // Avoid any default panel
             panels: { defaults: [] },
+            styleManager,
             blockManager: {
               custom: true,
                 appendTo: '#blocks',
@@ -38,7 +100,7 @@ const Main = () => {
                     id: 'section', // id is mandatory
                     label: html, // You can use HTML/SVG inside labels
                     attributes: { class:'gjs-block-section' },
-                    content: `<section>
+                    content: `<section style="font-family: Helectiva, serif">
                       <h1>This is a simple title</h1>
                       <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
                     </section>`,
@@ -62,25 +124,37 @@ const Main = () => {
                 ]
               },
           });
+
+          editor.on('canvas:drop', () => console.log(editor.getHtml()))
+          setEditor(editor);
           editor.on('load', function () {
             //Add Lato Font & Set as Default
-           const fontProperty = editor.StyleManager.getProperty('Typography', 'font-family');
-           fontProperty.addOption({value: `Okta Neue sans-serif`, name: 'Okta Neue'});
-           fontProperty.set('defaults', `Okta Neue sans-serif`);
+           const fontProperty = editor.StyleManager.getProperty('typography', 'font-family');
+           console.log(fontProperty.get());
+           fontProperty.addOption({value: `Okta Neue, sans-serif`, name: 'TESTTEST'});
+           fontProperty.set('default', `Okta Neue, sans-serif`);
        });
-          editor.stopCommand('core:copy')
+
+
+
     }, []);
 
     
     console.log('htmll', html)
     
     return (
-      <div className="grid grid-cols-[20%_80%]">
+      <div className="grid grid-cols-[15%_70%_15%] m-2">
+        <div className="grid p-2 shadow-xl rounded-lg m-1">
         <div className="h-full" id="blocks"></div>
-        <div className="grid p-2 border border-black shadow-2xl overflow-hidden rounded-lg m-2">
+        </div>
+        <div className="grid p-2 shadow-xl overflow-hidden rounded-lg m-1">
         <div className="p-4 rounded-xl overflow-hidden" id="gjs"></div>
-</div>
-
+        
+    </div>
+    <div className="grid p-2 shadow-xl rounded-lg m-1">
+    <div className="styles-container"></div>
+        </div>
+    
       </div>
 
 

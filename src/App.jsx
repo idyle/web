@@ -10,7 +10,7 @@ const App = () => {
         <NavContext>
             <UtilContext>
                 <AuthContext>
-                    <div className='h-screen grid grid-rows-[5%_95%]'>
+                    <div className='h-screen grid grid-rows-[auto_1fr]'>
                         {/* 10% */}
                     <Loader />
                     <Routes>

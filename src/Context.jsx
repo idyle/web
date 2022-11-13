@@ -12,6 +12,9 @@ export const NavContext = ({ children }) => {
     useEffect(() => {
         if (path) navigate(path);
     }, [navigate, path]);
+    useEffect(() => {
+        if (location.pathname) setPath(location.pathname);
+    }, [location.pathname]);
     const values = { path, setPath };
     return ( <NavValues.Provider value={values}>{children}</NavValues.Provider> );
 };
