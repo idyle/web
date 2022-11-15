@@ -2,11 +2,12 @@ import { HiCreditCard, HiOutlineCreditCard, HiDatabase, HiOutlineDatabase } from
 
 const Icon = () => {
     const style = {
-        fontFamily: 'Okta Neue, sans-serif'
+        display: 'grid',
+        'grid-template-columns': '1fr 1fr'
     }
     return (
-        <div className="grid items-center border p-2 border-black rounded-full">
-            <h1 style={style} className="text-3xl text-black">TESsdTTESTTEST</h1>
+        <div style={style} className="data-gjs-resizable grid grid-cols-2 items-center border p-2 border-black rounded-full">
+           
         </div>
     )
 };

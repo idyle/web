@@ -9,14 +9,12 @@ import Test from './Test';
 import { styleManager } from './config';
 import internal from './internal.css';
 // import './cke.js';
-import 'ckeditor/ckeditor.js';
-import plugin from 'grapesjs-plugin-ckeditor';
+import "grapesjs-plugin-ckeditor";
+import ckeditor from "ckeditor";
 
 import './reset.css';
 import './styles.css';
-
-
-import test from './styles.css';
+import './internal.css'
 
 console.log(internal);// provide ability to click on page inside of editor
 
@@ -28,13 +26,14 @@ const Main = () => {
   const [editor, setEditor] = useState();
 
     useEffect(() => {
+      console.log(window.CKEDITOR)
       // wait to be ready
         const editor = init({
 
           canvas: {
             styles: ['http://localhost:3000/internal.css'],
             scripts: [
-              "https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"
+            'https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js'
           ]
         },
             // Indicate where to init the editor. You can also pass an HTMLElement
@@ -42,30 +41,14 @@ const Main = () => {
             // Get the content for the canvas directly from the element
             // As an alternative we could use: `components: '<h1>Hello World Component!</h1>'`,
             fromElement: true,
-            plugins: [plugin],
+            plugins: ['gjs-plugin-ckeditor'],
             pluginsOpts: {
-              'gjs-plugin-ckeditor' : {
+              'gjs-plugin-ckeditor': {
+                position: "center",
                 options: {
-                        language: 'en',
-                        toolbarGroups: [
-                          { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
-                          { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-                          { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
-                          { name: 'forms', groups: [ 'forms' ] },
-                          '/',
-                          { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-                          { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
-                          { name: 'links', groups: [ 'links' ] },
-                          { name: 'insert', groups: [ 'insert' ] },
-                          '/',
-                          { name: 'styles', groups: [ 'styles' ] },
-                          { name: 'colors', groups: [ 'colors' ] },
-                          { name: 'tools', groups: [ 'tools' ] },
-                          { name: 'others', groups: [ 'others' ] },
-                          { name: 'about', groups: [ 'about' ] }
-                        ],
-                        removeButtons: 'NewPage'
-                      },
+                  language: "en"
+                  //skin: 'moono-dark',
+                }
               }
             },
             canvasCss: `
@@ -85,8 +68,8 @@ const Main = () => {
               }
             `,
             // Size of the editor
-            height: 'auto',
-            width: 'auto',
+            height: '100%',
+            width: '100%',
             // Disable the storage manager for the moment
             storageManager: false,
             // Avoid any default panel
@@ -96,6 +79,30 @@ const Main = () => {
               custom: true,
                 appendTo: '#blocks',
                 blocks: [
+                  {
+                    id: 'test',
+                    label: html
+                  },
+                  {
+                    id: 'test2',
+                    label: html
+                  },
+                  {
+                    id: 'test3',
+                    label: html
+                  },
+                  {
+                    id: 'test4',
+                    label: html
+                  },
+                  {
+                    id: 'test5',
+                    label: html
+                  },
+                  {
+                    id: 'test6',
+                    label: html
+                  },
                   {
                     id: 'section', // id is mandatory
                     label: html, // You can use HTML/SVG inside labels
@@ -107,34 +114,149 @@ const Main = () => {
                   }, {
                     id: 'text',
                     label: html,
-                    content: test,
+                    content: `
+                    <div class="row" data-gjs-droppable=".row-cell" data-gjs-custom-name="Row">
+                      <div class="row-cell" data-gjs-draggable=".row"></div>
+                      <div class="row-cell" data-gjs-draggable=".row"></div>
+                    </div>
+                    <style>
+                      .row {
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: stretch;
+                        flex-wrap: nowrap;
+                        padding: 10px;
+                        min-height: 75px;
+                      }
+                      .row-cell {
+                        flex-grow: 1;
+                        flex-basis: 100%;
+                        padding: 5px;
+                      }
+                    </style>
+                  `,
+                    resizable: true
                   }, {
-                    id: 'image',
+                    id: 'column',
+                    label: '2 Columns',
+                    content: `
+                    <div class="row" data-gjs-droppable=".row-cell" data-gjs-draggable="true">
+                      <div class="row-cell" data-gjs-draggable=".row"></div>
+                      <div class="row-cell" data-gjs-draggable=".row"></div>
+                    </div>
+                    <style>
+                      .row {
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: stretch;
+                        flex-wrap: nowrap;
+                        padding: 10px;
+                        min-height: 75px;
+                      }
+                      .row-cell {
+                        flex-grow: 1;
+                        flex-basis: 100%;
+                        padding: 5px;
+                      }
+                    </style>
+                  `,
+                  }
+                ]
+              },
+                        blockManager: {
+              custom: true,
+                appendTo: '#blocks',
+                blocks: [
+                  {
+                    id: 'test',
                     label: html,
-                    // Select the component once it's dropped
-                    select: true,
-                    // You can pass components as a JSON instead of a simple HTML string,
-                    // in this case we also use a defined component type `image`
-                    content: { type: 'image' },
-                    // This triggers `active` event on dropped components and the `image`
-                    // reacts by opening the AssetManager 
-                    // Asset
-                    activate: true,
+                    category: 'Test'
+                  },
+                  {
+                    id: 'test2',
+                    label: html,
+                    category: 'Test'
+                  },
+                  {
+                    id: 'test3',
+                    label: html,
+                    category: 'Test'
+                  },
+                  {
+                    id: 'test4',
+                    label: html
+                  },
+                  {
+                    id: 'test5',
+                    label: html
+                  },
+                  {
+                    id: 'test6',
+                    label: html
+                  },
+                  {
+                    id: 'section', // id is mandatory
+                    label: html, // You can use HTML/SVG inside labels
+                    attributes: { class:'gjs-block-section' },
+                    content: `<section style="font-family: Helectiva, serif">
+                      <h1>This is a simple title</h1>
+                      <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
+                    </section>`,
+                  }, {
+                    id: 'text',
+                    label: html,
+                    content: `
+                    <div class="row" data-gjs-droppable=".row-cell" data-gjs-custom-name="Row">
+                      <div class="row-cell" data-gjs-draggable=".row"></div>
+                      <div class="row-cell" data-gjs-draggable=".row"></div>
+                    </div>
+                    <style>
+                      .row {
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: stretch;
+                        flex-wrap: nowrap;
+                        padding: 10px;
+                        min-height: 75px;
+                      }
+                      .row-cell {
+                        flex-grow: 1;
+                        flex-basis: 100%;
+                        padding: 5px;
+                      }
+                    </style>
+                  `,
+                    resizable: true
+                  }, {
+                    id: 'column',
+                    label: '2 Columns',
+                    content: `
+                    <div class="row" data-gjs-droppable=".row-cell" data-gjs-draggable="true">
+                      <div class="row-cell" data-gjs-draggable=".row"></div>
+                      <div class="row-cell" data-gjs-draggable=".row"></div>
+                    </div>
+                    <style>
+                      .row {
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: stretch;
+                        flex-wrap: nowrap;
+                        padding: 10px;
+                        min-height: 75px;
+                      }
+                      .row-cell {
+                        flex-grow: 1;
+                        flex-basis: 100%;
+                        padding: 5px;
+                      }
+                    </style>
+                  `,
                   }
                 ]
               },
           });
 
-          editor.on('canvas:drop', () => console.log(editor.getHtml()))
-          setEditor(editor);
-          editor.on('load', function () {
-            //Add Lato Font & Set as Default
-           const fontProperty = editor.StyleManager.getProperty('typography', 'font-family');
-           console.log(fontProperty.get());
-           fontProperty.addOption({value: `Okta Neue, sans-serif`, name: 'TESTTEST'});
-           fontProperty.set('default', `Okta Neue, sans-serif`);
-       });
-
+          
 
 
     }, []);

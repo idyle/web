@@ -1,30 +1,14 @@
 /* Let's highlight canvas boundaries */
 @import url("https://fonts.cdnfonts.com/css/okta-neue");
 
-@font-face {
-  font-family: "Okta Neue", sans-serif;
-  src: url("https://fonts.cdnfonts.com/css/okta-neue");
-}
-/* Reset some default styling */
-.gjs-cv-canvas,
-.im39 {
-  font-family: "Okta Neue", sans-serif;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.izcf {
-  font-family: "Okta Neue", sans-serif;
-}
 
 .gjs-one-bg {
-  background-color: white;
+  background-color: transparent;
 }
 
 .gjs-two-color {
-  background-color: white;
-  color: white;
+  background-color: transparent;
+  color: transparent;
 }
 
 .gjs-blocks-cs {
@@ -34,6 +18,7 @@
 /* holder of the blocks */
 .gjs-blocks-c {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 5px;
 }
 
@@ -43,12 +28,16 @@
   align-items: center;
 }
 
+.gjs-block-label {
+  width: 100%;
+}
+
 .gjs-sm-sectors {
-  background-color: white !important;
+  background-color: transparent !important;
 }
 
 .gjs-sm-sector {
-  background-color: white;
+  background-color: transparent;
   color: black;
 }
 
@@ -81,6 +70,14 @@
   margin: -3px 0 0;
 }
 
+.gjs-placeholder.vertical,
+.gjs-com-placeholder.vertical,
+.gjs-placeholder.vertical {
+  border-color: rgba(0, 0, 0, 0) gold !important;
+  border-width: 3px 5px;
+  margin: -3px 0 0;
+}
+
 .gjs-placeholder-int,
 .gjs-com-placeholder-int,
 .gjs-placeholder-int {
@@ -92,3 +89,11 @@
   padding: 1.5px;
   outline: none;
 }
+
+.gjs-cv-canvas {
+
+  height: 100%;
+  position: unset;
+}
+
+

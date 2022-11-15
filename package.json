@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^5.0.2",
     "@craftjs/core": "^0.2.0-beta.8",
     "@monaco-editor/react": "^4.4.6",
     "@testing-library/jest-dom": "^5.16.5",
@@ -11,6 +12,7 @@
     "emmet-monaco-es": "^5.1.2",
     "firebase": "^9.13.0",
     "grapesjs": "^0.20.1",
+    "grapesjs-blocks-basic": "^1.0.1",
     "grapesjs-plugin-ckeditor": "^0.0.10",
     "grapesjs-preset-webpage": "^1.0.2",
     "himalaya": "^1.1.0",

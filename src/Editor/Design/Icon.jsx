@@ -5,8 +5,9 @@ const Icon = () => {
         fontFamily: 'Arial, sans-serif'
     }
     return (
-        <div style={style}className="grid items-center border p-2 border-black rounded-full">
-            < HiCreditCard color="black" size='50px' />
+        <div className="grid text-black shadow-xl rounded-lg items-center justify-items-center">
+            < HiCreditCard color="inherit" size='60px' />
+            <h1 className="text-xl text-inherit">Test</h1>
         </div>
     )
 };

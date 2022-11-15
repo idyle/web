@@ -26,12 +26,16 @@
     -->
     <title>React App</title>
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js"></script>
 
   </head>
   <body>
+    <script>
+      window.CKEDITOR_BASEPATH = '../node_modules/ckeditor/';
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
