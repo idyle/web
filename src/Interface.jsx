@@ -1,7 +1,7 @@
 import Navigator from './Navigator';
 import Editor from './Editor/Editor';
 import { Routes, Route } from 'react-router-dom'; 
-import DND from './Editor/Design/Main';
+import DND from './Design/Main';
 
 const Interface = () => {
     return (

@@ -3,7 +3,6 @@ import { useUtil } from "../Context";
 const Loader = () => {
 
     const { loader } = useUtil();
-    console.log(loader);
 
     return (
         <div>

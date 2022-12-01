@@ -2,7 +2,7 @@ import { IoPersonCircle, IoPersonCircleOutline, IoRocket, IoRocketOutline } from
 import { MdOutlineBuild, MdBuild, MdOutlinePermMedia, MdPermMedia } from 'react-icons/md';
 import { HiCreditCard, HiOutlineCreditCard, HiDatabase, HiOutlineDatabase } from 'react-icons/hi';
 import { BiSearch, BiMenu, BiX } from 'react-icons/bi';
-import Navbutton from './Navbutton';
+import Navbutton from './Templates/Navbutton';
 
 import { signOut, getAuth } from 'firebase/auth';
 
@@ -55,11 +55,7 @@ const Navigator = () => {
                     </div>
                 </div>
 
-                <Navbutton route='/editor'>
-                <MdOutlineBuild color="inherit" size="25px" />
-                        <h1 className='text-xl text-inherit font-semibold'>Editor</h1>
-                </Navbutton>
-
+                <Navbutton icon={<MdOutlineBuild/>} text="Editor" route='/editor'/>
 
                 <div className="flex w-full border rounded-lg border-black place-content-center">
                     <div className="flex gap-1 h-[2rem] p-1 items-center">
