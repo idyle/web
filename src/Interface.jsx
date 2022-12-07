@@ -5,7 +5,7 @@ import DND from './Design/Main';
 
 const Interface = () => {
     return (
-        <div className='grid grid-rows-[auto_1fr]'>
+        <div className='grid h-full grid-rows-[auto_minmax(0,_1fr)]'>
             <Navigator />
             {/* NA */}
             <Routes>
