@@ -1,4 +1,7 @@
 import { createElement, useState } from 'react';
+import { renderToString } from 'react-dom/server';
+
+import Text from '../Elements/Text';
 
 const Website = () => {
 
@@ -46,3 +49,9 @@ export const renderElements = (config) => {
     if (config.children instanceof Array) config.children = config.children.map((e) => renderElements(e));
     return createElement(config.component, { class: config.class }, config.children)
 };
+
+export const convertToString = (reactElement) => {
+    return renderToString(reactElement)
+}
+
+console.log(convertToString(<Text/>))

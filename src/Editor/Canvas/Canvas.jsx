@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react';
 import Div from "../Elements/Div";
 import Text from "../Elements/Text";
@@ -13,6 +14,14 @@ export const DomContext = ({ children }) => {
 
 
 const Canvas = () => {
+
+    const [JSON, setJSON] = useState({});
+    // carrier object, manipulate from click is placed here
+
+    useEffect(() => {
+        // render HTML based on edited JSON data
+        // 
+    }, [JSON])
     const [dom, setDom] = useState([]);
 
     const testfunction = () => {
