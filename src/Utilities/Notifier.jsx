@@ -1,22 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUtil } from '../Context';
+import { HiOutlineInformationCircle } from 'react-icons/hi';
 
-const Notifier = ({ text = '' }) => {
+const Notifier = () => {
 
-    const { notifier } = useUtil();
+    const { notifier, setNotifier } = useUtil();
     const [active, setActive] = useState(false);
+
+    useEffect(() => {
+        if (!notifier) return;
+        timeout();
+    }, [notifier])
 
     const timeout = () => {
         if (active) return;
         setActive(true);
-        setTimeout(() => setActive(false), 3000);
+        setTimeout(() => {
+            setActive(false);
+            setNotifier();
+        }, 2000);
     };
 
     return (
         <div>
-            { notifier && <div className={`bg-black ${active ? 'h-[40px]' : 'h-0'} overflow-hidden absolute bottom-0 left-0 right-0 shadow ease-in duration-300`}>
-                <h1 className="text-white">{text}</h1>
-            </div> }
+            <div className={`flex items-center place-content-center gap-1 bg-black ${active ? 'h-[40px]' : 'h-0'} overflow-hidden absolute bottom-0 left-0 right-0 shadow ease-in duration-300`}>
+                <HiOutlineInformationCircle className="text-white" />
+                <h1 className="text-lg text-white">{notifier}</h1>
+            </div> 
         </div>
     )
 };

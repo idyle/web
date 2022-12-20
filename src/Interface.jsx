@@ -1,7 +1,7 @@
 import Navigator from './Navigator';
 import Editor from './Editor/Editor';
 import { Routes, Route } from 'react-router-dom'; 
-import DND from './Design/Main';
+import Accounts from './Accounts/Accounts';
 
 const Interface = () => {
     return (
@@ -9,7 +9,8 @@ const Interface = () => {
             <Navigator />
             {/* NA */}
             <Routes>
-                <Route path ="editor" element={<Editor />} />
+                <Route path ="editor/*" element={<Editor />} />
+                <Route path="/accounts/*" element={<Accounts />} />
             </Routes>
         </div>
     )

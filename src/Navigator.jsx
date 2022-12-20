@@ -40,13 +40,9 @@ const Navigator = () => {
             </div>
 
             <div className="grid w-[20rem] md:w-auto md:grid-cols-6 grid-cols-1 gap-1 items-center justify-items-center">
-                
-                <div onClick={signOutUser} className="flex w-full border rounded-lg border-black place-content-center">
-                    <div className="flex gap-1 h-[2rem] p-1 items-center">
-                        <IoPersonCircleOutline color="black" size="25px" />
-                        <h1 className='text-xl text-black font-semibold'>Accounts</h1>
-                    </div>
-                </div>
+        
+
+                <Navbutton icon={<IoPersonCircleOutline/>} text="Accounts" route='/accounts'/>
 
                 <div className="flex w-full border rounded-lg border-black place-content-center transition animate-fadein duration-300">
                     <div className="flex gap-1 h-[2rem] p-1 items-center">
@@ -54,6 +50,8 @@ const Navigator = () => {
                         <h1 className='text-xl text-black font-semibold'>Payments</h1>
                     </div>
                 </div>
+
+                {/* not all elements have fully migrated */}
 
                 <Navbutton icon={<MdOutlineBuild/>} text="Editor" route='/editor'/>
 

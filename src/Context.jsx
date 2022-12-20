@@ -9,12 +9,14 @@ export const NavContext = ({ children }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [path, setPath] = useState(location.pathname);
-    useEffect(() => {
-        if (path) navigate(path);
-    }, [navigate, path]);
-    useEffect(() => {
-        if (location.pathname) setPath(location.pathname);
-    }, [location.pathname]);
+    // useEffect(() => {
+    //     if (!location.pathname) return;
+    //     setPath(location.pathname);
+    //     navigate(location.pathname);
+    // }, [location.pathname]);
+    // useEffect(() => {
+    //     if (location.pathname) setPath(location.pathname);
+    // }, [location.pathname]);
     const values = { path, setPath };
     return ( <NavValues.Provider value={values}>{children}</NavValues.Provider> );
 };
@@ -37,19 +39,26 @@ export const AuthContext = ({ children }) => {
     const [user, setUser] = useState();
     const { path, setPath } = useNav();
     const { loader, setLoader } = useUtil();
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
     useEffect(() => {
-        console.log(auth, path);
+        console.log(auth, pathname);
         
-        if (path === '/login' && auth === 'auth') {
-            console.log('met', auth, path);
+        if (pathname === '/login' && auth === 'auth') {
+            console.log('met', auth, pathname);
             setLoader(false);
-            return setPath('/');
+            return navigate('/');
         }
-        if (path !== '/login' && auth !== 'auth') {
+        if (pathname !== '/login' && auth !== 'auth') {
             console.log('not auth and going not login!@');
-            return setPath('/login');
+            return navigate('/login');
         }
-    }, [path, auth]);
+    }, [pathname, auth]);
+    useEffect(() => {
+        if (!auth && !user) return;
+        if (auth && !user) setLoader(true);
+        else if (auth && user) setLoader(false);
+    }, [auth, user]);
     useEffect(() => onAuthStateChanged(getAuth(), user => {
         setUser(user);
         const auth = user?.uid ? 'auth' : false;
