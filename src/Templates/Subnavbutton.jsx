@@ -1,16 +1,14 @@
 import { cloneElement, useState, useEffect } from 'react';
-import { useNav } from "../Context";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useProps } from './Subnav';
 
-const Subnavbutton =  ({ icon, text, route }) => {
+const Subnavbutton =  ({ icon, text, route, textColor = 'text-black', bgColor = 'bg-black' }) => {
 
     const editedIcon = cloneElement(icon, { color: "inherit", size: "20px" });
-    const { path, setPath } = useNav();
 
     const [selected, setSelected] = useState(false);
 
     const navigate = useNavigate();
-
     const { pathname } = useLocation();
 
     useEffect(() => {
@@ -26,11 +24,26 @@ const Subnavbutton =  ({ icon, text, route }) => {
             if (itemMatch === itemPath && i === splicedMatch.length-1) return setSelected(true);
         };
         return setSelected(false);
-    }, [pathname, route])
+    }, [pathname, route]);
 
+    const { mode } = useProps();
+    // let mode = 'black';
+    let style, borderSelected, borderUnselected;
+    // refers to main bg 
+    if (mode === 'black') {
+        // probably best to use this as an object
+        borderSelected = 'border-white';
+        borderUnselected = 'border-black';
+        style = 'text-white hover:border-white hover:bg-black';
+    } else {
+        borderSelected = 'border-black';
+        borderUnselected = 'border-white';
+        style = 'text-black hover:border-black hover:bg-white'
+    }
+    
 
     return (
-        <div onClick={() => navigate(route)} className={`${selected ? 'border-white' : 'border-black'} text-white flex select-none gap-1 items-center border-b-[1px] hover:border-white`}>
+        <div onClick={() => navigate(route)} className={`${selected ? borderSelected : borderUnselected} flex select-none gap-1 items-center border-b-[1px] hover:opacity-80 ${style}`}>
             {editedIcon}
             <h1 className="text-xl text-inherit">{text}</h1>
         </div>

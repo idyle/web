@@ -4,6 +4,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import Infotable from './Infotable';
 import { useState, useEffect } from "react";
 import { updateProfile } from "firebase/auth";
+import { BsPersonCircle } from 'react-icons/bs';
 
 const Profile = () => {
     const { user } = useAuth();
@@ -49,9 +50,9 @@ const Profile = () => {
             </div>
 
             <div className="grid items-center justify-items-center border border-black p-2 rounded-lg">
-                <img className="w-[80px] h-[80px] rounded-full" src={user?.photoURL} />
+                {user?.photoURL ? <img className="w-[80px] h-[80px] rounded-full" src={user?.photoURL} /> : <BsPersonCircle size="80px" />}
                 {edit ? <input autoFocus className="text-center text-3xl w-1/2" onChange={onNameChange} value={name}/> : <h1 className="text-3xl">{name}</h1>}
-                <h1 className="text-3xl font-thin">marcus.imperial01@gmail.com</h1>
+                <h1 className="text-3xl font-thin">{user?.email}</h1>
                 <div className="justify-self-end" onClick={() => setEdit(!edit)}>
                     {edit ? <MdCheck onClick={saveInfo} size="25px" /> : <MdEdit size="25px" />}
                 </div>

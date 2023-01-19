@@ -29,7 +29,7 @@ const Canvas = () => {
 
 
     return (
-        <div className="grid grid-cols-[20%_80%] m-2">
+        <div className="grid grid-cols-[20%_80%]">
             <DomContext>
             <Toolbar />
 

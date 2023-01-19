@@ -30,14 +30,12 @@ const Editor = () => {
         document.title = 'Editor';
     }, []);
     return (
-        <div className='grid grid-rows-[auto_minmax(0,_1fr)]'>
-            <div className="grid w-full bg-white p-1 flex items-center justify-items-center">
-                <Subnav>
-                    <Subnavbutton icon={<FaCode />} text="Codebase" route="/editor/codebase" />
-                    <Subnavbutton icon={<AiOutlineDrag />} text="Canvas" route="/editor/canvas" />
-                    <Subnavbutton icon={<MdPages />} text="Pages" />
-                </Subnav>
-            </div>
+        <div className='grid grid-rows-[auto_minmax(0,_1fr)] m-1'>
+            <Subnav>
+                <Subnavbutton icon={<FaCode />} text="Codebase" route="/editor/codebase" />
+                <Subnavbutton icon={<AiOutlineDrag />} text="Canvas" route="/editor/canvas" />
+                <Subnavbutton icon={<MdPages />} text="Pages" />
+            </Subnav>
             <EditorContext>
                     <Routes>
                         <Route path="canvas" element={<Canvas />} />

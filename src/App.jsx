@@ -1,7 +1,8 @@
 import Notifier from './Utilities/Notifier';
 import Loader from './Utilities/Loader';
-import Login from './Login';
+import Login from './Login/Login';
 import Interface from './Interface';
+import Actions from './Actions/Actions';
 import { NavContext, AuthContext, UtilContext } from './Context';
 import { Routes, Route } from 'react-router-dom'; 
 
@@ -14,7 +15,8 @@ const App = () => {
                         {/* 10% */}
                     <Loader />
                     <Routes>
-                        <Route path="login" element={<Login />} />
+                        <Route path="login/*" element={<Login />} />
+                        <Route path="actions" element={<Actions />} />
                         <Route path ="*" element={<Interface />} />
                     </Routes>
                     <Notifier />

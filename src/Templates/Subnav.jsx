@@ -1,21 +1,17 @@
-import { AiOutlineDrag } from 'react-icons/ai';
-import { FaCode } from 'react-icons/fa'; 
-import { MdPages } from 'react-icons/md';
+import { useContext, createContext } from "react";
 
-const Subnav =  ({ children }) => {
+const Props = createContext();
+export const useProps = () => useContext(Props);
+
+const Subnav = ({ children, mode = 'black', type = 'top' }) => {
     return (
-        <div className="grid rounded-lg w-full bg-black p-1 flex items-center justify-items-center">
-            <div className="grid grid-flow-col gap-3">
-
-            {children}
-            
+        <Props.Provider value={{ mode }}>
+            <div className={`grid rounded-lg w-full p-1 ${type === 'top' && 'justify-items-center'} ${mode === 'black' ? 'bg-black' : 'bg-white shadow-xl'}`}>
+                <div className={`grid ${type === 'side' && 'p-3'} ${type === 'top' ? 'grid-flow-col' : 'auto-rows-min'} gap-3`}>
+                    {children}
+                </div>
             </div>
-            
-
-
-        </div>
-
-
+        </Props.Provider>
     )
 };
 

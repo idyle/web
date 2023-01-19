@@ -43,25 +43,30 @@ export const AuthContext = ({ children }) => {
     const { pathname } = useLocation();
     useEffect(() => {
         console.log(auth, pathname);
+
+        const split = pathname.split('/')[1];
+        console.log(split, 'split');
         
-        if (pathname === '/login' && auth === 'auth') {
-            console.log('met', auth, pathname);
-            setLoader(false);
-            return navigate('/');
+        if (split === 'login' && auth === 'auth') {
+            navigate('/');
+            return setLoader(false);
         }
-        if (pathname !== '/login' && auth !== 'auth') {
-            console.log('not auth and going not login!@');
+        if ((split !== 'login' && split !== 'actions') && auth !== 'auth') {
             return navigate('/login');
         }
     }, [pathname, auth]);
     useEffect(() => {
         if (!auth && !user) return;
-        if (auth && !user) setLoader(true);
+        if (auth && !user) {
+            console.log('triggereed loader from context', 'value of auth', auth);
+            setLoader(true);
+        }
         else if (auth && user) setLoader(false);
     }, [auth, user]);
     useEffect(() => onAuthStateChanged(getAuth(), user => {
+        console.log('aUTH STATEE', user);
         setUser(user);
-        const auth = user?.uid ? 'auth' : false;
+        const auth = user?.uid ? 'auth' : '';
         setAuth(auth);
         localStorage.setItem('auth', auth);
     }), []);
