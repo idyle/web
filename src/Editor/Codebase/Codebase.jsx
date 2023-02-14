@@ -1,33 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { emmetHTML } from "emmet-monaco-es";
 import { parse, stringify } from 'himalaya';
 import { useEditor } from "../Editor";
 import { renderElements } from "./Converter";
-import { renderToString } from "react-dom/server";
-import { format } from 'prettier';
-import parseHtml from 'prettier/parser-html';
 import { useUtil } from "../../Context";
 
 const Codebase = () => {
 
-    const { JSON, setJSON } = useEditor();
+    const { page, setPageData } = useEditor();
+
+    // in handling json, codebase should UPDATE json on every change, but not TAKE from it (to prevent infinite call)
+    // instead, an internal JSON should be used, in which a "data update" should occur during init
+
     const [dom, setDom] = useState();
     const [string, setString] = useState();
 
+    // on init: convert main JSON into string
+    // on usage: convert string into JSON
+
+
     useEffect(() => {
-        // when our JSON edits, we have to rerender our dom
+
+        // from JSON into string
 
         const convertJSONtoHimalayaJSON = (config) => {
             // we are basing this off our built in JSON
             let children = config.children;
             if (config.component === 'h1') children = [{ type: 'text', content: config.children || '' }];
             else children = children?.map(child => convertJSONtoHimalayaJSON(child));
-            console.log('our config', config);
 
             let attributes = [];
             for (let [key, value] of Object.entries(config)) {
-                console.log('testing key val', key, value)
                 if (key === 'id' || key === 'children' || key === 'component') continue;
                 if (key === 'className') key = 'class';
                 attributes.push({ key, value });
@@ -37,86 +41,35 @@ const Codebase = () => {
             return { tagName: config.component, attributes, children };
             // ids are not necessary because we do not display them any way
         };
-
-        const convertHimalayaJSONtoJSON = (config, id = '0') => {
-
-            let children = config.children;
-            if (config.tagName === 'h1') children = children.find(child => child.type === 'text')?.value || '';
-            else if (config.tagName === 'img') children = null;
-            else children = children.filter(child => child.type === 'element')?.map((child, i) => convertHimalayaJSONtoJSON(child, `${id}-${i}`)) || [];
-            // himalaya json follows this format
-
-
-            let attributes = {};
-            for (let {key, value} of config.attributes) {
-                console.log(key, value, 'himalaya -> json');
-                if (key === 'id') continue;
-                if (key === 'class') key = 'className';
-                attributes[`${key}`] = value;
-            };
-
-            // we are returning a {} consistent with the built in format
-            return { component: config.tagName, children, id, ...attributes };
+        
+        const convertJSONtoHimalayaJSONArray = (config) => {
+            let elements = [];
+            let children = config?.children;
+            if (children instanceof Array) for (const child of children) elements.push(convertJSONtoHimalayaJSON(child));
+            return elements;
         };
 
-        setDom(renderElements(JSON));
-        console.log('DOM THAT IS SET', dom);
-
-        const convertedHimalayaJSON = convertJSONtoHimalayaJSON(JSON);
-
-        console.log('JSON EXAMPLE', convertedHimalayaJSON);
-
-        const stringifiedHimalayaJSON = stringify([convertedHimalayaJSON]);
-        const formattedString = format(stringifiedHimalayaJSON, {
-            parser: "html",
-            plugins: [parseHtml]
-        });
-        console.log('STRINGIFED EXAMPLE', formattedString);
-
-        setString(formattedString);
-
-
-        const convertJSONtoHimalayaJSONs = (config) => {
-            // h1 can only have children has text
-            
-            // for h1 and div: attributes[] find key: 'class' only [{ key: 'class', value: '' }]
-
-            // h1: children (first child -> must be { type: 'text' or ''})
-            // div: children (all children -> must be { type: 'element' }) (filter)
-
-            let children = config.children;
-            if (children instanceof Array) {
-                if (config.tagName === 'h1') children = children.find(child => child.type === 'text')?.value || '';
-                else children = children.filter(child => child.type === 'element').map(child => convertJSONtoHimalayaJSON(child));
-                console.log('amended children', children)
-            };
-            let className = config.attributes;
-            return { component: config.tagName, children, className }
-
-        }
-    }, [JSON]);
-
-    const [provisionedString, setProvisionedString] = useState('');
-
+        const convertedHimalayaJSON = convertJSONtoHimalayaJSONArray(page.data);
+        const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON);
+        setString(stringifiedHimalayaJSON);
+        if (page.data) setDom(renderElements(page.data));
+    }, [])
 
 
     const onChange = (editorValue, event ) => {
-        const parsedHimalayaJSON = parse(editorValue);
-
-        console.log('parsed himalaya json', parsedHimalayaJSON);
+        editorRef?.current?.getAction('editor.action.formatDocument')?.run();
 
         const convertHimalayaJSONtoJSON = (config, id = '0') => {
 
             let children = config.children;
-            if (config.tagName === 'h1') children = children.find(child => child.type === 'text')?.value || '';
+            if (config.tagName === 'h1') children = children.find(child => child.type === 'text')?.content || '';
             else if (config.tagName === 'img') children = null;
             else children = children.filter(child => child.type === 'element')?.map((child, i) => convertHimalayaJSONtoJSON(child, `${id}-${i}`)) || [];
             // himalaya json follows this format
-
+            console.log('CHILD DURING PARSE', children, config.children);
 
             let attributes = {};
             for (let {key, value} of config.attributes) {
-                console.log(key, value, 'himalaya -> json');
                 if (key === 'id') continue;
                 if (key === 'class') key = 'className';
                 attributes[`${key}`] = value;
@@ -126,22 +79,32 @@ const Codebase = () => {
             return { component: config.tagName, children, id, ...attributes };
         };
 
+        const parsedHimalayaJSON = parse(`<div class=''>${editorValue}</div>`);
+        // output string
+        console.log('parsed himalaya json', parsedHimalayaJSON);
+
         const builtInJSON = convertHimalayaJSONtoJSON(parsedHimalayaJSON[0]);
+        console.log('standard json', builtInJSON);
 
-        console.log('transferred built in json', builtInJSON);
+        if (!builtInJSON) return;
 
-        if (builtInJSON) setJSON({ ...builtInJSON });
+        setPageData({ ...builtInJSON });
 
-        // we need to find a way to mass-assign the ids
-        // @ JSON change
+        setDom(renderElements(builtInJSON));
+
     };
 
     const { setLoader } = useUtil();
     const [mounted, setMounted] = useState();
 
-    const onMount = () => setMounted(true);
+    const editorRef = useRef();
 
-    const test = () => console.log('TRIGGERED');
+    const onMount = (editor) => {
+        console.log('editor, ', editor, editor.getPosition());
+        editor.getAction('editor.action.formatDocument')?.run();
+        setMounted(true);
+        editorRef.current = editor;
+    };
 
     const beforeMount = (monaco) => emmetHTML(monaco);
 
@@ -154,17 +117,16 @@ const Codebase = () => {
         <div className="grid grid-cols-[40%_60%]">
             <div className="shadow-xl rounded-lg overflow-hidden">
                 <Editor
-                className="transition animate-fadein duration-300"
+                className="transition animate-fadein duration-300"                
                 loading=""
                 theme="vs-dark"
                 defaultLanguage="html"
-                onKeyDown={test}
                 value={string}
                 defaultValue={string}
                 onChange={onChange}
                 onMount={onMount}
                 beforeMount={beforeMount}
-                options={{ minimap: { enabled: false } }}
+                options={{ minimap: { enabled: false }, wrappingIndent: 'indent', wordWrap: 'on' }}
             />
             </div>
 

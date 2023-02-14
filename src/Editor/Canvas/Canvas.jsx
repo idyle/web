@@ -14,25 +14,18 @@ export const DomContext = ({ children }) => {
     return ( <DomValues.Provider value={values}>{children}</DomValues.Provider> );
 };
 
-
 const Canvas = () => {
 
-    const { JSON, setJSON } = useEditor();
-
-    useEffect(() => {
-
-        // render HTML based on edited JSON data
-        const change = renderElements(JSON);
-        setDom(change);
-    }, [JSON])
+    const { page } = useEditor();
     const [dom, setDom] = useState([]);
-
+    useEffect(() => {
+        if (page.data) setDom(renderElements(page.data));
+    }, [page.data]);
 
     return (
         <div className="grid grid-cols-[20%_80%]">
             <DomContext>
             <Toolbar />
-
             <div className="grid p-2 overflow-auto shadow-xl rounded-lg m-1">
                 {dom}
             </div>

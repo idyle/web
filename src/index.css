@@ -4,13 +4,12 @@
 
 @layer base {
   @font-face {
-    font-family: 'Okta Neue';
+    font-family: "Okta Neue";
     font-style: normal;
     font-weight: 400;
-    src: url('./Okta.woff') format('woff');
-}
+    src: url("./Okta.woff") format("woff");
+  }
   html {
     font-family: "Okta Neue", sans-serif;
   }
 }
-
