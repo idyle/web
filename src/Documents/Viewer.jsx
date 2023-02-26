@@ -58,6 +58,7 @@ const Viewer = () => {
     return (
         <div className="transition animate-fadein duration-300 border border-black p-3 shadow-xl rounded-lg overflow-hidden">
         <Editor
+        className=""
             loading=""
             defaultLanguage="json"
             value={val}

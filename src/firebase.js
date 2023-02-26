@@ -1,12 +1,12 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 const config = {
-    apiKey: "AIzaSyAkuxJPVjUa6zk1zjiBI6i8XwaVC91IDvQ",
-    authDomain: "idyleio.firebaseapp.com",
-    projectId: "idyleio",
-    storageBucket: "idyleio.appspot.com",
-    messagingSenderId: "131994800774",
-    appId: "1:131994800774:web:a0870930612f777636f707"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID
 };
 const app = initializeApp(config);
 export const auth = getAuth(app);
