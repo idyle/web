@@ -1,33 +1,24 @@
 import Editor from "@monaco-editor/react";
-import { useRef } from "react";
 import { useState, useEffect } from "react";
 import { useUtil } from "../Context";
 
-const Viewer = () => {
+const Viewer = ({ doc, setDocs, docs }) => {
 
     const { setLoader } = useUtil();
     const [mounted, setMounted] = useState(false);
-    const editorRef = useRef();
 
-    const obj = {
-        'hello': 'test',
-        hi: 'yay'
-    };
+    const { id, ...newDocs } = doc;
+    const [value, setValue] = useState();
 
-    const [val, setVal] = useState('');
+    useEffect(() => {
+        const { id, ...newDoc } = doc;
+        setValue(newDoc);
+    }, [doc]);
 
-    const onMount = async (editor) => {
-        console.log('on mount triggered',editor.getValue());
-        setVal(JSON.stringify(obj));
-        await editor.getAction('editor.action.formatDocument').run();
-        setVal(JSON.stringify(obj));
-        setMounted(true);
-        editorRef.current = editor;
-    };
+    const onMount = async (editor) => setMounted(true);
 
     useEffect(() => {
         if (!mounted) return setLoader(true);
-        editorRef.current.getAction('editor.action.formatDocument').run();
         setLoader(false);
     }, [mounted]);
 
@@ -41,32 +32,38 @@ const Viewer = () => {
         renderLineHighlight: 'none'
     };
 
-    const onChange = async (val) => {
 
+    const onChange = async (val) => {
         try {
-            const parsed = JSON.parse(val);
-            if (!parsed) return;
-            console.log(parsed);
+            // if the value to change is the same as the doc, return
+            if (val === JSON.stringify(newDocs)) return;
+
+
+            const parsedDoc = JSON.parse(val);
+            
+            const index = docs.findIndex(doc => doc.id === id);
+
+            if (index < 0) return;
+
+            docs[index] = { ...parsedDoc, id };
+            setDocs([ ...docs ]);
+            setValue({ ...parsedDoc });
         } catch {
             return;
         }
     };
 
-
-
-
     return (
         <div className="transition animate-fadein duration-300 border border-black p-3 shadow-xl rounded-lg overflow-hidden">
-        <Editor
-        className=""
-            loading=""
-            defaultLanguage="json"
-            value={val}
-            onChange={onChange}
-            onMount={onMount}
-            options={config}
-
-        />
+            <Editor 
+                className="" 
+                loading="" 
+                defaultLanguage="json"
+                value={JSON.stringify(value, null, 2)}
+                onChange={onChange}
+                onMount={onMount}
+                options={config}
+            />
         </div>
 
     )

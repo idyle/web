@@ -1,17 +1,56 @@
 import { AiFillCopy, AiOutlineDownload, AiOutlineDelete } from 'react-icons/ai'
+import { useAuth, useUtil } from '../Context';
+import { deleteFile, downloadFile } from './requests';
 
-const Object = () => {
+const Object = ({ object, objects, setObjects }) => {
+
+    const { user } = useAuth();
+    const { setNotifier, setLoader } = useUtil();
+
+    const copy = () => {
+        setNotifier('Successfully copied to clipboard');
+        navigator.clipboard.writeText(object.url);
+    };
+
+    const download = async () => {
+
+        setLoader(true);
+        const file = await downloadFile(user?.accessToken, object.name);
+        setLoader(false);
+        if (!file) return;
+
+        const data = Uint8Array.from(file.data);
+        const content = new Blob([data.buffer], { type: object.type });
+        const encodedUri = window.URL.createObjectURL(content);
+        const link = document.createElement("a");
+        
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", object.name);    
+        link.click();
+    };
+
+    const remove = async () => {
+
+        setLoader(true);
+        const op = await deleteFile(user?.accessToken, object.name);
+        setLoader(false);
+        if (!op) return setNotifier('Something went wrong...');
+
+        setObjects(objects.filter(( { name }) => name !== object.name));
+        
+    };
+
     return (
-        <div className="grid grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg py-2 ">
-            <h1 className="text-2xl text-center break-all">test.png</h1>
-            <h1 className="text-2xl">image/png</h1>
-            <div className="flex items-center border border-black select-none p-1 gap-1 rounded-lg">
+        <div className="grid grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg p-2 ">
+            <h1 className="text-2xl text-center break-all">{object.name}</h1>
+            <h1 className="text-2xl">{object.type}</h1>
+            <div onClick={copy} className="flex items-center border border-black select-none p-1 gap-1 rounded-lg hover:bg-black hover:text-white">
                 <AiFillCopy size="15px" />
                 <h1 className="text-xl">Copy Link</h1>
             </div>
             <div className="flex items-center gap-1">
-                <AiOutlineDownload size="30px" />
-                <AiOutlineDelete size="30px" />
+                <AiOutlineDownload onClick={download} size="30px" />
+                <AiOutlineDelete onClick={remove} size="30px" />
             </div>
         </div>
     )

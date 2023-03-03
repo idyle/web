@@ -1,24 +1,22 @@
-const servicePath = `${process.env.REACT_APP_BASEPATH}/objects`;
+const servicePath = `${process.env.REACT_APP_BASEPATH}/documents`;
 
-export const uploadFile = async (token, file) => {
+export const setDoc = async (token, doc) => {
     try {
 
-        const form = new FormData();
-        form.append('files', file);
+        const { id, ...newDoc } = doc;
 
         const options = {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: form
+            body: JSON.stringify({ object: newDoc })
         };
 
-        const req = await fetch(`${servicePath}/upload/user/${file.name}`, options);
+        const req = await fetch(`${servicePath}/set/user/${id}?merge=true`, options);
         const res = await req.json();
-
-        if (!res?.status) return false;
-        return res?.file;
+        return res?.status;
 
     } catch (e) {
         console.error(e);
@@ -26,7 +24,7 @@ export const uploadFile = async (token, file) => {
     }
 };
 
-export const listFiles = async (token) => {
+export const listDocs = async (token) => {
     try {
         const options = {
             method: 'POST',
@@ -48,7 +46,7 @@ export const listFiles = async (token) => {
     }
 };
 
-export const downloadFile = async (token, fileName) => {
+export const removeDoc = async (token, docId) => {
     try {
 
         const options = {
@@ -59,30 +57,7 @@ export const downloadFile = async (token, fileName) => {
             }
         };
 
-        const req = await fetch(`${servicePath}/download/user/${fileName}`, options);
-        const res = await req.json();
-
-        if (!res?.status) return false;
-        return res.file;
-
-    } catch (e) {
-        console.error(e);
-        return false;
-    }
-};
-
-export const deleteFile = async (token, fileName) => {
-    try {
-
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        };
-
-        const req = await fetch(`${servicePath}/delete/user/${fileName}`, options);
+        const req = await fetch(`${servicePath}/delete/user/${docId}`, options);
         const res = await req.json();
         return res?.status;
 
