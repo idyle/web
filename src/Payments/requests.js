@@ -1,30 +1,6 @@
-const servicePath = `${process.env.REACT_APP_BASEPATH}/documents`;
+const servicePath = `${process.env.REACT_APP_BASEPATH}/payments`;
 
-export const setDoc = async (token, doc) => {
-    try {
-
-        const { id, ...newDoc } = doc;
-
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ object: newDoc })
-        };
-
-        const req = await fetch(`${servicePath}/set/user/${id}?merge=true`, options);
-        const res = await req.json();
-        return res?.status;
-
-    } catch (e) {
-        console.error(e);
-        return false;
-    }
-};
-
-export const listDocs = async (token) => {
+export const getCheckout = async (token, planId) => {
     try {
         const options = {
             method: 'POST',
@@ -34,20 +10,20 @@ export const listDocs = async (token) => {
             }
         };
 
-        const req = await fetch(`${servicePath}/list/user`, options);
+        const req = await fetch(`${servicePath}/checkout/${planId}`, options);
         const res = await req.json();
-        if (!res?.status) return [];
-        return res?.items;
+
+        if (!res?.status) return false;
+        return res?.link;
 
     } catch (e) {
         console.error(e);
-        return [];
+        return false;
     }
 };
 
-export const removeDoc = async (token, docId) => {
+export const confirmCheckout = async (token, sessionId) => {
     try {
-
         const options = {
             method: 'POST',
             headers: {
@@ -56,8 +32,9 @@ export const removeDoc = async (token, docId) => {
             }
         };
 
-        const req = await fetch(`${servicePath}/delete/user/${docId}`, options);
+        const req = await fetch(`${servicePath}/confirm/${sessionId}`, options);
         const res = await req.json();
+        
         return res?.status;
 
     } catch (e) {
@@ -65,3 +42,23 @@ export const removeDoc = async (token, docId) => {
         return false;
     }
 };
+
+export const cancelPlan = async (token, planId) => {
+    try {
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        const req = await fetch(`${servicePath}/cancel/${planId}`, options);
+        const res = await req.json();
+        
+        return res?.status;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}; 

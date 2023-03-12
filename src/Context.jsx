@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, onIdTokenChanged } from 'firebase/auth';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const NavValues = createContext();
@@ -63,15 +63,19 @@ export const AuthContext = ({ children }) => {
         }
         else if (auth && user) setLoader(false);
     }, [auth, user]);
-    useEffect(() => onAuthStateChanged(getAuth(), user => {
-        console.log('aUTH STATEE', user);
-        setUser(user);
+
+    useEffect(() => onAuthStateChanged(getAuth(), async user => {
+        const latest = await user?.getIdTokenResult(true);
+        console.log('THE USER', latest?.claims);
+        console.log(typeof user);
+        if (user && latest) setUser({ ...user, ...latest?.claims });
+        // quick fix, combining base user details + latest info (from refresh)
         const auth = user?.uid ? 'auth' : '';
         setAuth(auth);
         localStorage.setItem('auth', auth);
     }), []);
 
     useEffect(() => console.log('is changed', auth), [auth]);
-    const values = { auth, user }
+    const values = { auth, user, setUser }
     return ( <AuthValues.Provider value={values}>{children}</AuthValues.Provider> );
 };

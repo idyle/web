@@ -23,7 +23,7 @@ const Profile = () => {
         let date = new Date(user?.metadata?.creationTime)?.toLocaleString('en-us');
         const info = [
             { title: 'User ID', text: user?.uid },
-            { title: 'Account Provider', text: user?.providerData[0]?.providerId },
+            { title: 'Account Provider', text: user?.providerData?.[0]?.providerId },
             { title: 'User Since', text: date }
         ];
         setInfo(info);

@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Accounts from './Accounts/Accounts';
 import Error from './Error';
 import Home from './Home';
-import Payments from './Payments';
+import Payments from './Payments/Payments';
 import Documents from './Documents/Documents';
 import Objects from './Objects/Objects';
 

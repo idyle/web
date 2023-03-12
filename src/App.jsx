@@ -12,7 +12,6 @@ const App = () => {
             <UtilContext>
                 <AuthContext>
                     <div className='h-screen grid grid-rows-[auto_minmax(0,_1fr)]'>
-                        {/* 10% */}
                     <Loader />
                     <Routes>
                         <Route path="login/*" element={<Login />} />
@@ -21,7 +20,6 @@ const App = () => {
                     </Routes>
                     <Notifier />
                     </div>
-
                 </AuthContext>
             </UtilContext>
         </NavContext>

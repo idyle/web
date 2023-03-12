@@ -9,15 +9,15 @@ const Notifier = () => {
 
     useEffect(() => {
         if (!notifier) return;
+        setActive(true);
         timeout();
     }, [notifier])
 
     const timeout = () => {
         if (active) return;
-        setActive(true);
         setTimeout(() => {
-            setActive(false);
             setNotifier();
+            setActive(false);
         }, 2000);
     };
 
