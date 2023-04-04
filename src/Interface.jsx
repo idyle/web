@@ -7,6 +7,7 @@ import Home from './Home';
 import Payments from './Payments/Payments';
 import Documents from './Documents/Documents';
 import Objects from './Objects/Objects';
+import Deployer from './Deployer/Deployer';
 
 const Interface = () => {
     return (
@@ -19,6 +20,7 @@ const Interface = () => {
                 <Route path="payments" element={<Payments />} />
                 <Route path="docs" element={<Documents />} />
                 <Route path="objects" element={<Objects />} />
+                <Route path="deployer" element={<Deployer />} />
                 <Route path="*" element={<Error />} />
             </Routes>
         </div>
