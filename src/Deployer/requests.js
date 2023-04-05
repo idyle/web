@@ -13,7 +13,31 @@ export const setupWebsite = async (token, website) => {
 
         const req = await fetch(`${servicePath}/setup/${website}`, options);
         const res = await req.json();
+        console.log('res', res);
         return res?.status;
+
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
+export const getWebsite = async (token) => {
+    try {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        const req = await fetch(`${servicePath}/get`, options);
+        const res = await req.json();
+        console.log('res', res);
+        if (!res?.status) return false;
+        return res;
 
     } catch (e) {
         console.error(e);
@@ -84,7 +108,7 @@ export const convertDoc = async (token, path, customPath) => {
         };
 
         let url = `${servicePath}/convert/${path}`;
-        if (source) url = `${url}?source=${customPath}`;
+        if (customPath) url = `${url}?source=${customPath}`;
 
         const req = await fetch(url, options);
         const res = await req.json();

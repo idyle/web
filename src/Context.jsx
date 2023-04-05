@@ -75,6 +75,9 @@ export const AuthContext = ({ children }) => {
         localStorage.setItem('auth', auth);
     }), []);
 
+    useEffect(() => onIdTokenChanged(getAuth(), async user => console.log('TOKEN CHANGE', user)), []);
+    // test id token change;
+
     useEffect(() => console.log('is changed', auth), [auth]);
     const values = { auth, user, setUser }
     return ( <AuthValues.Provider value={values}>{children}</AuthValues.Provider> );

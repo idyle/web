@@ -12,14 +12,17 @@ const Labs = () => {
             </div>
 
             <div className="flex items-center gap-2 place-content-center border border-black rounded-xl select-none hover:scale-[.98]">
-                <h1 className="text-4xl">Select Page Data from</h1>
+                <h1 className="text-4xl text-center">Select Page Data from</h1>
                 <MdPages size="30px" />
-                <h1 className="text-4xl">Pages</h1>
+                <h1 className="text-4xl text-center">Pages</h1>
             </div>
+
             <div className="flex items-center gap-2 place-content-center border border-black rounded-xl select-none hover:scale-[.98]">
-                <h1 className="text-4xl">Select Custom Data from</h1>
+                <h1 className="text-4xl text-center">Select Custom Data from</h1>
+                <div className="flex items-center gap-1">
                 <HiOutlineDatabase size="30px" />
-                <h1 className="text-4xl">Docs</h1>
+                <h1 className="text-4xl text-center">Docs</h1>
+                </div>
             </div>
 
             <div className="flex items-center justify-between border-b-2 border-black">
