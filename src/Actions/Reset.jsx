@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Reset = ({ code }) => {
 
     const navigate = useNavigate();
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
     const [password, setPassword] = useState('');
 
     const onPasswordChange = (e) => setPassword(e.target.value);
@@ -22,11 +22,11 @@ const Reset = ({ code }) => {
             await signInWithEmailAndPassword(getAuth(), verifiedEmail, password);
             navigate('/');
             console.log('result of password change', test);
-            setNotifier('password changed!');
+            notify('password changed!');
             setLoader(false);
         } catch (e) {
-            if (e.code === 'auth/invalid-action-code') setNotifier('This session is invalid.');
-            else setNotifier('an error occured');
+            if (e.code === 'auth/invalid-action-code') notify('This session is invalid.');
+            else notify('an error occured');
             setLoader(false);
             console.error(e);
         }

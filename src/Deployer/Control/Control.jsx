@@ -8,18 +8,18 @@ import { useState } from 'react';
 const Control = () => {
 
     const { user } = useAuth();
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
 
     const [list, setList] = useState([]);
  
     useEffect(() => {
         (async () => {
-            if (!user) return;
-            setLoader(true);
-            const list = await listDeploys(user?.accessToken);
-            setLoader(false);
-            if (!list) return setNotifier('Something went wrong.');
-            setList(list?.list);
+            // if (!user) return;
+            // setLoader(true);
+            // const list = await listDeploys(user?.accessToken);
+            // setLoader(false);
+            // if (!list) return notify('Something went wrong.');
+            // setList(list?.list);
         })();
     }, [user]);
 

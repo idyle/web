@@ -6,7 +6,7 @@ import { useUtil } from "../Context";
 const Reset = () => {
 
     const navigate = useNavigate();
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
     const [email, setEmail] = useState('');
 
     const onEmailChange = (e) => setEmail(e.target.value);
@@ -17,7 +17,7 @@ const Reset = () => {
         try {
             setLoader(true);
             const test = await sendPasswordResetEmail(getAuth(), email);
-            setNotifier('email sent!', test);
+            notify('email sent!', test);
             setLoader(false);
         } catch (e) {
             console.log(e);

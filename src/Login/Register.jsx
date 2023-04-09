@@ -8,7 +8,7 @@ import Providers from "./Providers";
 const Register = () => {
     const [credentials, setCredentials] = useState({});
     const { transit, setTransit, handleDuplicateError } = useSignIn();
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
     const navigate = useNavigate();
 
     const onChange = (e) => {
@@ -32,7 +32,7 @@ const Register = () => {
         if (password !== confirm) verdict.message = 'Passwords do not match';
 
         if (verdict.message) {
-            setNotifier(verdict.message);
+            notify(verdict.message);
             return false;
         }
         return true;
@@ -53,9 +53,9 @@ const Register = () => {
             setTransit();
         } catch (e) {
             setTransit();
-            if (e.code === 'auth/email-already-in-use') setNotifier('This email has already been used.');
-            else if (e.code === 'auth/weak-password') setNotifier('This password is invalid.');
-            else if (e.code === 'auth/invalid-email') setNotifier('This email is invalid.');
+            if (e.code === 'auth/email-already-in-use') notify('This email has already been used.');
+            else if (e.code === 'auth/weak-password') notify('This password is invalid.');
+            else if (e.code === 'auth/invalid-email') notify('This email is invalid.');
             console.log(e);
             handleDuplicateError(e);
         }

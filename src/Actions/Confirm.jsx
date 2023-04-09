@@ -6,7 +6,7 @@ const Confirm = ({ code }) => {
 
     const navigate = useNavigate();
 
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
 
     const onClick = async () => {
         try {
@@ -15,11 +15,11 @@ const Confirm = ({ code }) => {
             await applyActionCode(getAuth(), code);
             navigate('/login/login');
             setLoader(false);
-            setNotifier('You have been successfully verified');
+            notify('You have been successfully verified');
         } catch (e) {
             console.error(e);
             setLoader(false);
-            setNotifier('Something went wrong in the verification.');
+            notify('Something went wrong in the verification.');
         }
     };
     

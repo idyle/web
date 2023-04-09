@@ -8,15 +8,15 @@ const Setup = () => {
 
 
     const { user } = useAuth();
-    const { setNotifier, setLoader } = useUtil();
+    const { notify, setLoader } = useUtil();
 
     const [clicked, setClicked] = useState(false);
     const [website, setWebsite] = useState('');
     const [inputWebsite, setInputWebsite] = useState('');
     
     const onClick = async () => {
-        if (clicked || !inputWebsite) return setNotifier('An error occured.');
-        if (!inputWebsite) return setNotifier('No website name inputted.');
+        if (clicked || !inputWebsite) return notify('An error occured.');
+        if (!inputWebsite) return notify('No website name inputted.');
         setClicked(true);
         setLoader(true);
         console.log('req', user?.accessToken, inputWebsite);
@@ -35,7 +35,7 @@ const Setup = () => {
             setLoader(true);
             const website = await getWebsite(user?.accessToken);
             setLoader(false);
-            if (!website) return setNotifier('You may currently not own a website.');
+            if (!website) return notify('You may currently not own a website.');
             setWebsite(website?.website);
         })();
     }, [user]);

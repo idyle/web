@@ -45,6 +45,23 @@ module.exports = {
         fadeOut: {
           '0%': { opacity: '1' }, '100%': { opacity: '0' }
         },
+        typing: {
+          "0%": {
+            width: "0%",
+            visibility: "hidden"
+          },
+          "100%": {
+            width: "100%"
+          }  
+        },
+        blink: {
+          "50%": {
+            borderColor: "transparent"
+          },
+          "100%": {
+            borderColor: "white"
+          }  
+        }
       },
       animation: {
         'bar1': 'growBar1 2.5s infinite, moveBar1 2.5s infinite',
@@ -52,7 +69,9 @@ module.exports = {
         'bar': 'start 0.3s ease-in',
         'slide': 'slideDown 2.5s 1.0s 1 ease forwards',
         'fadein': 'fadeIn 0.5s ease-in',
+        'fadeinlong': 'fadeIn 7s ease-in',
         'fadeout': 'fadeOut 0.5s ease-in',
+        'typing': "typing 2s steps(25) alternate, blink .7s infinite"
       }
     },
     fontFamily: {

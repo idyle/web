@@ -14,7 +14,7 @@ export const useSignIn = () => useContext(SignInValues);
 
 export const SignInContext = ({ children }) => {
     const { auth } = useAuth();
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
     const [transit, setTransit] = useState(localStorage.getItem('transit'));
     const [linkage, setLinkage] = useState(localStorage.getItem('linkage'));
 
@@ -36,7 +36,7 @@ export const SignInContext = ({ children }) => {
 
     const handleDuplicateError = (e) => {
         if (e.code === 'auth/account-exists-with-different-credential') {
-            setNotifier('This account already exists.');
+            notify('This account already exists.');
         }
     };
 

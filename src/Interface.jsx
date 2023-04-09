@@ -1,8 +1,7 @@
 import Navigator from './Navigator/Navigator';
 import Editor from './Editor/Editor';
-import { Routes, Route } from 'react-router-dom'; 
+import { Routes, Route, Navigate } from 'react-router-dom'; 
 import Accounts from './Accounts/Accounts';
-import Error from './Error';
 import Home from './Home';
 import Payments from './Payments/Payments';
 import Documents from './Documents/Documents';
@@ -21,7 +20,7 @@ const Interface = () => {
                 <Route path="docs" element={<Documents />} />
                 <Route path="objects" element={<Objects />} />
                 <Route path="deployer" element={<Deployer />} />
-                <Route path="*" element={<Error />} />
+                <Route path="*" element={<Navigate to="" />} />
             </Routes>
         </div>
     )

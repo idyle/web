@@ -5,27 +5,19 @@ import { HiOutlineInformationCircle } from 'react-icons/hi';
 const Notifier = () => {
 
     const { notifier, setNotifier } = useUtil();
-    const [active, setActive] = useState(false);
 
+    // effect-based since it's just an advisory
     useEffect(() => {
-        if (!notifier) return;
-        setActive(true);
-        timeout();
-    }, [notifier])
-
-    const timeout = () => {
-        if (active) return;
-        setTimeout(() => {
-            setNotifier();
-            setActive(false);
-        }, 2000);
-    };
+        // activity is based on notifier
+        if (!notifier?.active) return;
+        setTimeout(() => setNotifier({ ...notifier, active: false }), notifier?.time);;
+    }, [notifier?.active]);
 
     return (
         <div>
-            <div className={`flex items-center place-content-center gap-1 bg-black ${active ? 'h-[40px]' : 'h-0'} overflow-hidden absolute bottom-0 left-0 right-0 shadow ease-in duration-300`}>
+            <div className={`flex items-center place-content-center gap-1 bg-black ${notifier?.active ? 'h-[40px]' : 'h-0'} overflow-hidden absolute bottom-0 left-0 right-0 shadow ease-in duration-300`}>
                 <HiOutlineInformationCircle className="text-white" />
-                <h1 className="text-lg text-white">{notifier}</h1>
+                <h1 className="text-lg text-white">{notifier?.message}</h1>
             </div> 
         </div>
     )

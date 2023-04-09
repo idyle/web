@@ -8,7 +8,7 @@ import Providers from './Providers';
 const Email = () => {
     const [credentials, setCredentials] = useState({});
     const { transit, setTransit, handleDuplicateError } = useSignIn();
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
     const navigate = useNavigate();
 
     const onChange = (e) => {
@@ -31,8 +31,8 @@ const Email = () => {
             setTransit();
             console.log(e);
             if (e.code === 'auth/invalid-email' || e.code === 'auth/wrong-password') {
-                setNotifier('Your email or password is invalid.');
-            } else if (e.code === 'auth/user-not-found') setNotifier('This account does not exist');
+                notify('Your email or password is invalid.');
+            } else if (e.code === 'auth/user-not-found') notify('This account does not exist');
             handleDuplicateError(e);
         }
     };

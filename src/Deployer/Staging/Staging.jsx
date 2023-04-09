@@ -1,30 +1,65 @@
 import { MdOutlinePermMedia, MdRadioButtonUnchecked, MdRadioButtonChecked } from 'react-icons/md';
-import { AiOutlineFile, AiFillDelete } from 'react-icons/ai';
 import { RiGasStationFill } from 'react-icons/ri';
 import File from './File';
+import { useUtil } from '../../Context';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 
 const Staging = () => {
-    return (
-        <div className="grid bg-black text-white rounded-lg p-3 gap-2 overflow-auto">
 
+    const { prompt, notify, setIntegrator, integrator } = useUtil();
+    const navigate = useNavigate();
+    const [files, setFiles] = useState([]);
+
+    const sendFileRequest = async () => {
+        setIntegrator({ active: true, target: 'objects' });
+        notify('Sending you to objects. Please select a file to deploy.')
+        navigate('/objects');
+    };
+
+    const setIndex = (i) => {
+        let array = files;
+        console.log('FILES', files);
+        for (const index in files) console.log(index);
+        console.log('ARRAY', array);
+        setFiles(array);
+    };
+
+    // returning
+    useEffect(() => {
+        if (!integrator?.active || integrator?.target !== 'objects') return;
+        console.log('INTEGRATOR DATA', integrator?.data);
+        setFiles([ ...files, { path: integrator?.data, index: true } ]);
+        setIntegrator({ active: false });
+    }, [integrator?.active]);
+
+    useEffect(() => console.log(files), [files]);
+
+    const remove = async (filePath) => {
+        if (!(await prompt('Remove your chosen file?'))) return;
+        setFiles(files.filter(file => file.path !== filePath));
+        notify('Removed the file.');
+    };
+
+    return (
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] bg-black text-white rounded-lg p-3 gap-2 overflow-auto">
+
+            <div className="grid">
             <div className="flex items-center gap-2 p-2">
                     <RiGasStationFill size="40px" />
                     <h1 className="text-6xl">Staging Area</h1>
                 </div>
 
-            <div className="flex items-center gap-2 place-content-center border border-white rounded-xl select-none hover:scale-[.98]">
+            <div onClick={sendFileRequest} className="flex items-center gap-2 place-content-center border border-white rounded-xl select-none hover:scale-[.98]">
                 <h1 className="text-4xl">Select Files from</h1>
                 <MdOutlinePermMedia size="30px" />
                 <h1 className="text-4xl">Objects</h1>
             </div>
 
-            <div className="grid rounded-lg p-2 border border-white overflow-auto">
-                <File />
-                <File />
-                <File />
-                <File />
-                <File />
-                <File />
+            </div>
+
+            <div className="grid auto-rows-min rounded-lg p-2 border border-white overflow-auto">
+            {files?.map((file, i) => (<File file={file} key={`f${i}`} setIndex={setIndex} remove={remove} />))}
             </div>
 
             <div className="grid items-center justify-items-center bg-white text-black p-2 gap-1 rounded-lg">

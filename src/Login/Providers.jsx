@@ -9,7 +9,7 @@ import Minprovider from "./Minprovider";
 
 const Providers = ({ layout = 'default' }) => {
 
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
     const { transit, setTransit, linkage, setLinkage, handleDuplicateError } = useSignIn();
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const Providers = ({ layout = 'default' }) => {
                     console.log('parsed creds', credential);
                     const t = await linkWithCredential(result.user, credential);
                     console.log('credential linkage', t);
-                    setNotifier("We've linked your accounts");
+                    notify("We've linked your accounts");
                     setLinkage();
                 }
                 // we need to use credential linkage
@@ -35,16 +35,16 @@ const Providers = ({ layout = 'default' }) => {
                 setTransit();
                 if (e.code === 'auth/account-exists-with-different-credential') {
                     console.log(e.customData, 'email');
-                    setNotifier("You're using another providr")
+                    notify("You're using another providr")
                     const providers = await fetchSignInMethodsForEmail(getAuth(), e?.customData?.email);
                     console.log('providers', providers);
                     const provider = providers.find(p => p === 'google.com' || p === 'facebook.com' || p === 'github.com');
-                    if (!provider) return setNotifier('Youre using another provider');
+                    if (!provider) return notify('Youre using another provider');
                     let serviceProvider;
                     if (provider === 'google.com') serviceProvider = new GoogleAuthProvider();
                     else if (provider === 'facebook.com') serviceProvider = new FacebookAuthProvider();
                     else if (provider === 'github.com') serviceProvider = new GithubAuthProvider();
-                    else return setNotifier('ANothe rprovider being used;')
+                    else return notify('ANothe rprovider being used;')
                     console.log('serviceprovider', provider, serviceProvider);
                     // lets get the credential
                     

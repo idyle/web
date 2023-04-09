@@ -8,11 +8,11 @@ import { BsPersonCircle } from 'react-icons/bs';
 
 const Profile = () => {
     const { user } = useAuth();
-    const { setNotifier } = useUtil();
+    const { notify } = useUtil();
     const onSignOut = () => signOut(getAuth());
 
     const copyToClip = () => {
-        setNotifier('Successfully copied to clipboard');
+        notify('Successfully copied to clipboard');
         navigator.clipboard.writeText(user?.accessToken);
         
     };

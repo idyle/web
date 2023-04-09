@@ -8,7 +8,7 @@ import { listDocs, removeDoc, setDoc } from "./requests";
 
 const Documents = () => {
 
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
     const { user } = useAuth();
 
     const [docs, setDocs] = useState([]);
@@ -29,12 +29,12 @@ const Documents = () => {
     const check = async () => {
         if (!user?.accessToken || !selectedDoc?.id) return;
         const actualDoc = docs.find(({ id }) => id === selectedDoc?.id);
-        if (!actualDoc) return setNotifier('Something went wrong...');
+        if (!actualDoc) return notify('Something went wrong...');
         setLoader(true);
         const op = await setDoc(user?.accessToken, actualDoc);
         setLoader(false);
-        if (!op) return setNotifier('Something went wrong...');
-        return setNotifier('Successfully updated doc');
+        if (!op) return notify('Something went wrong...');
+        return notify('Successfully updated doc');
     };
 
     const remove = async () => {
@@ -42,10 +42,10 @@ const Documents = () => {
         setLoader(true);
         const op = await removeDoc(user?.accessToken, selectedDoc.id);
         setLoader(false);
-        if (!op) return setNotifier('Something went wrong...');
+        if (!op) return notify('Something went wrong...');
         setSelectedDoc();
         setDocs(docs.filter(({ id }) => id !== selectedDoc.id));
-        return setNotifier('Successfully removed doc');
+        return notify('Successfully removed doc');
     };
 
     useEffect(() => {

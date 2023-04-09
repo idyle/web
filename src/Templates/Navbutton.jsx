@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const Navbutton = ({ icon, text, route }) => {
 
     const editedIcon = cloneElement(icon, { color: "inherit", size: "25px" });
-    const { path, setPath } = useNav();
 
     const navigate = useNavigate();
     const { pathname } = useLocation();

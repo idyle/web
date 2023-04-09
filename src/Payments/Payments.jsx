@@ -55,7 +55,7 @@ const Payments = () => {
     ];
 
     const { user } = useAuth();
-    const { setLoader, setNotifier } = useUtil();
+    const { setLoader, notify } = useUtil();
 
     const [searchParams] = useSearchParams();
 
@@ -77,7 +77,7 @@ const Payments = () => {
     const onClick = async (e) => {
         const id = e.currentTarget.id;
         // where target id === planId
-        if (user?.planType) return setNotifier('To select another plan, cancel the one you have.'); 
+        if (user?.planType) return notify('To select another plan, cancel the one you have.'); 
         // if user already owns plan 
         if (!id) return;
         setLoader(true);
