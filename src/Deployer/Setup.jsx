@@ -1,44 +1,34 @@
 import { MdCheck, MdInfoOutline, MdRadioButtonChecked } from "react-icons/md";
 import { useAuth, useUtil } from "../Context";
 import { useState } from "react";
-import { getWebsite, setupWebsite } from "./requests";
+import { setupWebsite } from "./requests";
 import { useEffect } from "react";
+import { BiLinkExternal } from 'react-icons/bi';
 
-const Setup = () => {
+const Setup = ({ website, setWebsite }) => {
 
+    console.log('from SETUP', website);
 
     const { user } = useAuth();
-    const { notify, setLoader } = useUtil();
+    const { notify, setLoader, prompt } = useUtil();
 
     const [clicked, setClicked] = useState(false);
-    const [website, setWebsite] = useState('');
     const [inputWebsite, setInputWebsite] = useState('');
     
     const onClick = async () => {
-        if (clicked || !inputWebsite) return notify('An error occured.');
         if (!inputWebsite) return notify('No website name inputted.');
-        setClicked(true);
+        if (!(await prompt('You are about to create a website. This action is permanent. Proceed?'))) return;
         setLoader(true);
-        console.log('req', user?.accessToken, inputWebsite);
         const operation = await setupWebsite(user?.accessToken, inputWebsite);
-        console.log('res', operation);
         setLoader(false);
-        if (operation) window.location.reload();
-        // come up with a better state management checker in auth
+        if (operation) setWebsite(website);
     };
 
     const onChange = (e) => setInputWebsite(e.target.value);
 
-    useEffect(() => {
-        (async () => {
-            if (!user) return;
-            setLoader(true);
-            const website = await getWebsite(user?.accessToken);
-            setLoader(false);
-            if (!website) return notify('You may currently not own a website.');
-            setWebsite(website?.website);
-        })();
-    }, [user]);
+    const goToWebsite = () => {
+        if (website?.name) window.open(`https://${website?.name}.idyle.app`, '_blank');
+    };
 
     return (
         <div className="grid auto-rows-min bg-black rounded-lg text-white p-3">
@@ -47,11 +37,11 @@ const Setup = () => {
                 <div className="flex w-full items-center gap-2">
                     <h1 className="shrink-0 text-4xl font-bold">Website Name</h1>
                     {
-                        website ? <h1 className="text-3xl">{website}</h1> :
+                        website ? <h1 className="text-3xl">{website?.name}</h1> :
                         <input onChange={onChange} className="text-white bg-black text-3xl w-full border-b-2" value={inputWebsite}/>
                     }
                 </div>
-                { website ? <MdRadioButtonChecked size="30px" /> : <MdCheck onClick={onClick} size="30px" /> }
+                { website ? <BiLinkExternal onClick={goToWebsite} size="30px" /> : <MdCheck onClick={onClick} size="30px" /> }
             </div>
 
             { !website && <div className="flex items-center gap-1">

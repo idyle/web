@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { MdEdit, MdDelete, MdCheck } from 'react-icons/md';
 import { useEditor } from '../Editor';
 
-const Page = ({ page }) => {
-    const { setPageRoute, setPage, pageRoute, pages, setPages } = useEditor();
+const Page = ({ page, editPage, addMode}) => {
+    const { setPageRoute, pageRoute, remove } = useEditor();
 
     const onClick = () => setPageRoute(page.route);
 
@@ -15,25 +15,20 @@ const Page = ({ page }) => {
     const [editName, setEditName] = useState(false);
     const [editRoute, setEditRoute] = useState(false);
 
-    const editPage = (obj) => {
-        const index = pages.findIndex((p) => p.route === page.route);
-        if (!(index >= 0)) return;
-        pages[index] = { ...page, ...obj };
-        setPages([...pages]);
-    }
-
     const onRouteEdit = (e) => {
         setEditRoute(false);
-        editPage({ route })
+        editPage({ ...page, route })
     };
 
     const onNameEdit = (e) => {
         setEditName(false);
-        editPage({ name });
+        editPage({ ...page, name });
     };
 
     const onRouteChange = (e) => setRoute(e.target.value); 
     const onNameChange = (e) => setName(e.target.value);
+
+    const removePage = () => remove(page);
 
     return (
         <div onClick={onClick} className={`grid w-full items-center justify-items-center ${color} p-6 gap-3 rounded-lg`}>
@@ -51,7 +46,7 @@ const Page = ({ page }) => {
                 <div className="flex items-center place-content-center gap-2">
                     { editRoute ?
                     <input autoFocus className={`text-center ${color} text-3xl rounded-lg w-1/2`} onChange={onRouteChange} value={route}/>
-                    : <h1 className="text-3xl text-inherit">{route}</h1>
+                    : <h1 className="text-3xl text-inherit">/{route}</h1>
                     }
         
                     { editRoute ? <MdCheck onClick={onRouteEdit} className='text-inherit' size="20px" /> 
@@ -59,7 +54,7 @@ const Page = ({ page }) => {
                     }
                 </div>
             </div>
-            <MdDelete size="30px" />
+            { !addMode && <MdDelete onClick={removePage} size="30px" /> }
         </div>
     )
 };

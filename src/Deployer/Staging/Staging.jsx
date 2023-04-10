@@ -1,13 +1,15 @@
 import { MdOutlinePermMedia, MdRadioButtonUnchecked, MdRadioButtonChecked } from 'react-icons/md';
 import { RiGasStationFill } from 'react-icons/ri';
 import File from './File';
-import { useUtil } from '../../Context';
+import { useAuth, useUtil } from '../../Context';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import { deployWebsite } from '../requests';
 
-const Staging = () => {
+const Staging = ({ website, deploy }) => {
 
-    const { prompt, notify, setIntegrator, integrator } = useUtil();
+    const { user } = useAuth();
+    const { prompt, notify, setIntegrator, integrator, setLoader } = useUtil();
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
 
@@ -41,6 +43,12 @@ const Staging = () => {
         notify('Removed the file.');
     };
 
+    const onDeploy = async () => {
+        if (!files.length) return notify('You added no files.');
+        if (!(await prompt("You're about to make a deploy. Proceed?"))) return;
+        deploy(files);
+    };
+
     return (
         <div className="grid grid-rows-[auto_minmax(0,_1fr)] bg-black text-white rounded-lg p-3 gap-2 overflow-auto">
 
@@ -59,10 +67,10 @@ const Staging = () => {
             </div>
 
             <div className="grid auto-rows-min rounded-lg p-2 border border-white overflow-auto">
-            {files?.map((file, i) => (<File file={file} key={`f${i}`} setIndex={setIndex} remove={remove} />))}
+                {files?.map((file, i) => (<File file={file} key={`f${i}`} setIndex={setIndex} remove={remove} />))}
             </div>
 
-            <div className="grid items-center justify-items-center bg-white text-black p-2 gap-1 rounded-lg">
+            <div onClick={onDeploy} className="grid items-center justify-items-center bg-white text-black p-2 gap-1 rounded-lg select-none hover:scale-[.98]">
                 <h1 className="text-4xl font-bold">Initiate Deploy</h1>
             </div>
         </div>

@@ -5,25 +5,32 @@ import { useAuth, useUtil } from '../../Context';
 import { listDeploys } from '../requests';
 import { useState } from 'react';
 
-const Control = () => {
+const Control = ({ website, deploy }) => {
 
     const { user } = useAuth();
-    const { setLoader, notify } = useUtil();
+    const { setLoader, notify, prompt } = useUtil();
 
-    const [list, setList] = useState([]);
+    const [deploys, setDeploys] = useState([]);
  
     useEffect(() => {
         (async () => {
-            // if (!user) return;
-            // setLoader(true);
-            // const list = await listDeploys(user?.accessToken);
-            // setLoader(false);
-            // if (!list) return notify('Something went wrong.');
-            // setList(list?.list);
+            if (!user) return;
+            setLoader(true);
+            const deploys = await listDeploys(user?.accessToken);
+            console.log('LIST', deploys);
+            setLoader(false);
+            if (!deploys) return notify('Something went wrong.');
+            setDeploys(deploys);
         })();
     }, [user]);
 
     // needs deploy utility as well 
+
+    const revert = async (id) => {
+        if (!id) return notify('No deploy specified.');
+        if (!(await prompt(`You're about to revert back to ${id}. Make sure you still have the same files in Objects. Proceed?`))) return;
+        deploy([], id);
+    };
 
     return (
         <div className="grid grid-rows-[auto_minmax(0,_1fr)] border border-black rounded-lg p-3 overflow-auto">
@@ -34,12 +41,7 @@ const Control = () => {
             </div>
 
             <div className="grid gap-2 auto-rows-min overflow-auto">
-
-                <Deploy />
-                <Deploy />
-                <Deploy />
-                <Deploy />
-                <Deploy />
+                {deploys?.map((deploy, i) => (<Deploy i={i} key={`d${i}`} revert={revert} deploy={deploy} website={website} />))}
             </div>
 
         </div>

@@ -62,6 +62,7 @@ export const deployWebsite = async (token, website, files, revertDeployId) => {
 
         const req = await fetch(url, options);
         const res = await req.json();
+        console.log('deploy', res);
         if (!res?.status) return false;
         return res;
 

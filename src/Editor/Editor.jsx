@@ -8,32 +8,62 @@ import Codebase from './Codebase/Codebase';
 import Pages from './Pages/Pages';
 import { createContext, useContext, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useNav } from '../Context';
 import { useEffect } from 'react';
+import { useAuth, useUtil } from '../Context';
+import { savePage, listPages, deletePage } from './requests';
 
 const EditorValues = createContext();
 export const useEditor = () => useContext(EditorValues);
 
 export const EditorContext = ({ children }) => {
 
-
+    const { user } = useAuth();
+    const { setLoader, notify, prompt } = useUtil();
     const [pageRoute, setPageRoute] = useState('');
     // page the user selects
     const [pages, setPages] = useState([
-        {
-            name: 'Home',
-            route: '/',
-            data: { //JSON
-                component: 'div',
-                id: '0',
-                className: '',
-                children: []
-            }
-        }
+        // {
+        //     name: 'Home',
+        //     route: '/',
+        //     data: { //JSON
+        //         component: 'div',
+        //         id: '0',
+        //         className: '',
+        //         children: []
+        //     }
+        // }
     ]);
     // all pages data
     const [page, setPage] = useState({});
     // specific page data
+
+    useEffect(() => {
+        (async () => {
+            if (!user) return;
+            setLoader(true);
+            const list = await listPages(user?.accessToken);
+            setLoader(false);
+            if (!list) return notify('Something went wrong listing.');
+            setPages(list);
+        })();
+    }, [user]);
+
+    const save = async (page) => {
+        setLoader(true);
+        const operation = await savePage(user?.accessToken, page);
+        setLoader(false);
+        if (!operation) return notify('Something went wrong trying to create the page.');
+    };
+
+    const remove = async (page) => {
+        if (!(await prompt("You're about to delete a page. This action cannot be undone. Proceed?"))) return;
+        setLoader(true);
+        const operation = await deletePage(user?.accessToken, page);
+        setLoader(false);
+        if (!operation) return notify('Something went wrong trying to delete this page.');
+        console.log('removing... page', page?.route);
+        setPages(pages.filter(({ route }) => route !== page?.route));
+    };
 
     useEffect(() => {
         setPage(pages.find(({ route }) => route === pageRoute) || pages[0]);
@@ -46,7 +76,7 @@ export const EditorContext = ({ children }) => {
         console.log(index);
         if (!(index >= 0)) return;
         pages[index] = page;
-        console.log(pages, 'pages after');
+        savePage(user?.accessToken, page);
         setPages([...pages]);
     }, [page])
 
@@ -59,14 +89,7 @@ export const EditorContext = ({ children }) => {
 
     const setPageData = (pageData) => setPage({ ...page, data: serialize(pageData) });
 
-    const [JSON, setJSON] = useState({
-        component: 'div',
-        id: '0',
-        className: '',
-        children: []
-    });
-
-    const values = { page, setPageData, pages, setPageRoute, pageRoute, setPage, setPages };
+    const values = { page, setPageData, pages, setPageRoute, pageRoute, setPage, setPages, save, remove };
     return ( <EditorValues.Provider value={values}>{children}</EditorValues.Provider> );
 };
 

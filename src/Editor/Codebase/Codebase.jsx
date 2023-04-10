@@ -5,9 +5,11 @@ import { parse, stringify } from 'himalaya';
 import { useEditor } from "../Editor";
 import { renderElements } from "./Converter";
 import { useUtil } from "../../Context";
+import { useNavigate } from "react-router-dom";
 
 const Codebase = () => {
 
+    const navigate = useNavigate();
     const { page, setPageData } = useEditor();
 
     // in handling json, codebase should UPDATE json on every change, but not TAKE from it (to prevent infinite call)
@@ -19,8 +21,9 @@ const Codebase = () => {
     // on init: convert main JSON into string
     // on usage: convert string into JSON
 
-
     useEffect(() => {
+        // if a page is not selected 
+        if (!page?.data) return navigate('/editor/pages');
 
         // from JSON into string
 
@@ -49,10 +52,10 @@ const Codebase = () => {
             return elements;
         };
 
-        const convertedHimalayaJSON = convertJSONtoHimalayaJSONArray(page.data);
+        const convertedHimalayaJSON = convertJSONtoHimalayaJSONArray(page?.data);
         const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON);
         setString(stringifiedHimalayaJSON);
-        if (page.data) setDom(renderElements(page.data));
+        setDom(renderElements(page?.data));
     }, [])
 
 
@@ -109,6 +112,7 @@ const Codebase = () => {
     const beforeMount = (monaco) => emmetHTML(monaco);
 
     useEffect(() => {
+        if (!page?.data) return;
         if (!mounted) setLoader(true);
         else setLoader(false);
     }, [mounted]);
@@ -127,7 +131,7 @@ const Codebase = () => {
                 onMount={onMount}
                 beforeMount={beforeMount}
                 options={{ minimap: { enabled: false }, wrappingIndent: 'indent', wordWrap: 'on' }}
-            />
+                /> 
             </div>
 
             <div className="grid p-2 overflow-auto shadow-xl rounded-lg m-1">

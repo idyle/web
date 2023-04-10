@@ -1,9 +1,7 @@
-const servicePath = `${process.env.REACT_APP_BASEPATH}/documents`;
+const servicePath = `${process.env.REACT_APP_BASEPATH}/editor`;
 
-export const setDoc = async (token, doc) => {
+export const savePage = async (token, page) => {
     try {
-
-        const { id, ...newDoc } = doc;
 
         const options = {
             method: 'POST',
@@ -11,11 +9,12 @@ export const setDoc = async (token, doc) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ object: newDoc })
+            body: JSON.stringify({ page })
         };
 
-        const req = await fetch(`${servicePath}/set/user/${id}?merge=true`, options);
+        const req = await fetch(`${servicePath}/save/user/${page?.route}`, options);
         const res = await req.json();
+        console.log('set res', res);
         return res?.status;
 
     } catch (e) {
@@ -24,28 +23,32 @@ export const setDoc = async (token, doc) => {
     }
 };
 
-export const listDocs = async (token) => {
+export const listPages = async (token, filter, value) => {
     try {
+
         const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-            }
+            },
         };
 
-        const req = await fetch(`${servicePath}/list/user`, options);
-        const res = await req.json();
-        if (!res?.status) return [];
-        return res?.list;
+        let url = `${servicePath}/list/user`;
+        if (filter && value) url = `${url}?filter=${filter}&value=${value}`;
 
+        const req = await fetch(url, options);
+        const res = await req.json();
+        console.log('res pages', res);
+        if (!res?.status) return false;
+        return res?.pages;
     } catch (e) {
         console.error(e);
-        return [];
+        return false;
     }
 };
 
-export const removeDoc = async (token, docId) => {
+export const deletePage = async (token, page) => {
     try {
 
         const options = {
@@ -56,8 +59,9 @@ export const removeDoc = async (token, docId) => {
             }
         };
 
-        const req = await fetch(`${servicePath}/delete/user/${docId}`, options);
+        const req = await fetch(`${servicePath}/delete/user/${page?.route}`, options);
         const res = await req.json();
+        console.log('delete res', res);
         return res?.status;
 
     } catch (e) {

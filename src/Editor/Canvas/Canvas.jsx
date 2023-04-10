@@ -3,6 +3,8 @@ import { createContext, useContext, useState } from 'react';
 import { renderElements } from './Converter';
 import { useEditor } from '../Editor';
 import Toolbar from './Toolbar';
+import { useUtil } from '../../Context';
+import { useNavigate } from 'react-router-dom';
 
 const DomValues = createContext();
 export const useDom = () => useContext(DomValues);
@@ -17,10 +19,13 @@ export const DomContext = ({ children }) => {
 const Canvas = () => {
 
     const { page } = useEditor();
+    const navigate = useNavigate();
     const [dom, setDom] = useState([]);
     useEffect(() => {
-        if (page.data) setDom(renderElements(page.data));
-    }, [page.data]);
+        // handle case where no page selected / exists
+        if (!page?.data) return navigate('/editor/pages');
+        setDom(renderElements(page?.data));
+    }, [page?.data]);
 
     return (
         <div className="grid grid-cols-[20%_80%]">
