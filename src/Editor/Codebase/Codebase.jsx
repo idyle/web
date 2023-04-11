@@ -118,7 +118,7 @@ const Codebase = () => {
     }, [mounted]);
 
     return (
-        <div className="grid grid-cols-[40%_60%]">
+        <div className="grid grid-cols-[40%_60%] m-2">
             <div className="shadow-xl rounded-lg overflow-hidden">
                 <Editor
                 className="transition animate-fadein duration-300"                

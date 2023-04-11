@@ -1,16 +1,11 @@
 import { BiSearch } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
 import Result from './Result';
+import { routes } from './routes';
 
 const Search = () => {
 
-    const [data] = useState([
-        { title: 'Accounts', route: '/accounts' },
-        { title: 'Profile' , route: '/accounts/profile' },
-        { title: 'Editor', route: '/editor' },
-        { title: 'Canvas', route: '/editor/canvas' },
-        { title: 'Codebase', route: '/editor/codebase' }
-    ]);
+    const [data] = useState(routes);
 
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
@@ -84,14 +79,14 @@ const Search = () => {
     return (
         <div onFocus={onFocus} onBlur={onBlur} className="relative flex gap-1 h-[2rem] w-[20rem] border p-2 rounded-lg border-black items-center">
             <BiSearch color="black" size="10px"/>
-            <input onChange={test} className="outline-none placeholder:text-black text-lg w-full" type="text" placeholder="Search" />
-            { active && <div className="absolute top-8 left-0 right-0 bg-white z-10 p-3 bg-black text-white border border-black rounded-lg h-max h-full max-h-60 overflow-auto">
+            <input onChange={test} className="outline-none placeholder:text-black text-lg w-full" type="text" placeholder="Search" value={query} />
+            { (active && query) && <div className="absolute top-8 left-0 right-0 bg-white z-10 p-3 bg-black text-black border border-black rounded-lg h-max h-full max-h-60 overflow-auto">
                 <div className="grid gap-1">
                     <h1 className="text-lg">Search Results</h1>
                     {
                         results.length ? 
-                        results.map(({ title, route }, i) => (<Result title={title} route={route} key={`r${i}`}/>)) :
-                        <div className="p-1 rounded-lg border border-white text-white">
+                        results.map(({ title, route }, i) => (<Result title={title} route={route} setQuery={setQuery} key={`r${i}`}/>)) :
+                        <div className="p-1 rounded-lg border border-white text-black">
                             <h1 className="text-lg">No Results Found</h1>
                         </div>
                     }

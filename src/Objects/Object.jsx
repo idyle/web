@@ -41,12 +41,12 @@ const Object = ({ object, objects, setObjects }) => {
         
     };
 
-    const integrationMode = integrator?.active ? `hover:bg-blue-300/50 select-none` : '';
+    const integrationMode = (integrator?.active && integrator?.target === 'objects') ? `hover:bg-blue-300/50 select-none` : '';
 
     const sendFile = () => {
         // send data back
         console.log(integrator?.active, 'integrator status');
-        if (!integrator?.active) return;
+        if (!integrator?.active || integrator?.target !== 'objects') return;
         setIntegrator({ ...integrator, data: object?.name });
         navigate('/deployer');
     };

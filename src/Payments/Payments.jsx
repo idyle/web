@@ -110,11 +110,11 @@ const Payments = () => {
             </Helmet>
 
             <div className="grid gap-1 justify-items-center rounded-lg">
-                <h1 className="text-6xl">{user?.displayName || ''}, choose a plan for You</h1>
+                <h1 className="text-6xl text-center">{user?.displayName || ''}, choose a plan for You</h1>
 
             </div>
 
-            <div className="grid grid-cols-3 gap-x-10 px-44 auto-rows-min overflow-auto">
+            <div className="grid grid-cols-3 gap-x-5 p-3 auto-rows-min overflow-auto">
                 {plans.map((plan, i) => (<Plan key={`p${i}`} onCancel={onCancel} plan={plan} onClick={onClick} />))}
             </div>
 

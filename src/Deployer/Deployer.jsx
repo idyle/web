@@ -30,6 +30,8 @@ const Deployer = () => {
         setLoader(false);
         if (!operation) return notify('Deploy failed :(');
         console.log('deploy operation', operation);
+        notify("Successfully deployed your page. Due to caching, changes may take up to an hour to take effect.");
+        window.location.reload();
     };
 
     return (

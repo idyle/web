@@ -50,14 +50,15 @@ const Pages = () => {
     return (
         <div className="grid auto-rows-min">
             <div className="grid justify-items-center gap-3 p-2">
-                <h1 className="text-5xl">Your Pages</h1>
+                <h1 className="text-6xl">Your Pages</h1>
+                <h1 className="text-4xl">Click on a page to get started.</h1>
                 <div onClick={addPage} className="flex items-center border-black border rounded-lg select-none p-3 gap-x-1 hover:scale-[.98]">
                     <MdAddCircle size="30px" />
                     <h1 className="text-4xl">Add a New Page</h1>
                 </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 justify-items-center items-center">
+            <div className="grid grid-cols-3 gap-3 px-5 justify-items-center items-center">
                 {pages.map((page, i) => (<Page key={`p${i}`} page={page} editPage={editPage} />))}
                 { addPageMode && <Page page={config} editPage={editPage} addMode={addPageMode} /> }
             </div>

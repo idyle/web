@@ -29,7 +29,7 @@ const Staging = ({ website, deploy }) => {
 
     // returning
     useEffect(() => {
-        if (!integrator?.active || integrator?.target !== 'objects') return;
+        if (!integrator?.active || integrator?.target !== 'objects' || !integrator?.data) return;
         console.log('INTEGRATOR DATA', integrator?.data);
         setFiles([ ...files, { path: integrator?.data, index: true } ]);
         setIntegrator({ active: false });
@@ -59,9 +59,7 @@ const Staging = ({ website, deploy }) => {
                 </div>
 
             <div onClick={sendFileRequest} className="flex items-center gap-2 place-content-center border border-white rounded-xl select-none hover:scale-[.98]">
-                <h1 className="text-4xl">Select Files from</h1>
-                <MdOutlinePermMedia size="30px" />
-                <h1 className="text-4xl">Objects</h1>
+                <h1 className="text-4xl text-center">Select Files from Objects</h1>
             </div>
 
             </div>

@@ -33,11 +33,11 @@ const Setup = ({ website, setWebsite }) => {
     return (
         <div className="grid auto-rows-min bg-black rounded-lg text-white p-3">
 
-            <div className="flex w-full items-center justify-between gap-2">
-                <div className="flex w-full items-center gap-2">
-                    <h1 className="shrink-0 text-4xl font-bold">Website Name</h1>
+            <div className="flex items-center justify-between gap-1">
+                <div className="flex items-center justify-between gap-2">
+                    <h1 className="text-center text-3xl font-bold">Website</h1>
                     {
-                        website ? <h1 className="text-3xl">{website?.name}</h1> :
+                        website ? <h1 className="text-3xl text-center">{website?.name}</h1> :
                         <input onChange={onChange} className="text-white bg-black text-3xl w-full border-b-2" value={inputWebsite}/>
                     }
                 </div>

@@ -97,7 +97,7 @@ export const listDeploys = async (token, filter, value) => {
     }
 };
 
-export const convertDoc = async (token, path, customPath) => {
+export const convertPage = async (token, pageRoute, customPath, stringOutput) => {
     try {
 
         const options = {
@@ -108,11 +108,14 @@ export const convertDoc = async (token, path, customPath) => {
             },
         };
 
-        let url = `${servicePath}/convert/${path}`;
-        if (customPath) url = `${url}?source=${customPath}`;
+        let url = `${process.env.REACT_APP_BASEPATH}/editor/convert/user/${pageRoute}`;
+        if (customPath) url = `${url}?type=custom`;
+        if (stringOutput && customPath) url = `${url}&output=string`
+        else if (stringOutput) url = `${url}?output=string`;
 
         const req = await fetch(url, options);
         const res = await req.json();
+        console.log('res of convert', res);
         if (!res?.status) return false;
         return res?.status;
 

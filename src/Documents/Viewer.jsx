@@ -9,10 +9,12 @@ const Viewer = ({ doc, setDocs, docs }) => {
 
     const { id, ...newDocs } = doc;
     const [value, setValue] = useState();
+    const [string, setString] = useState();
 
     useEffect(() => {
         const { id, ...newDoc } = doc;
         setValue(newDoc);
+        setString(JSON.stringify(newDoc));
     }, [doc]);
 
     const onMount = async (editor) => setMounted(true);
@@ -20,6 +22,7 @@ const Viewer = ({ doc, setDocs, docs }) => {
     useEffect(() => {
         if (!mounted) return setLoader(true);
         setLoader(false);
+        
     }, [mounted]);
 
     const config = {
@@ -35,11 +38,13 @@ const Viewer = ({ doc, setDocs, docs }) => {
 
     const onChange = async (val) => {
         try {
-            // if the value to change is the same as the doc, return
-            if (val === JSON.stringify(newDocs)) return;
-
-
             const parsedDoc = JSON.parse(val);
+            // if the value to change is the same as the doc, return
+            console.log('val', JSON.stringify(parsedDoc) , 'stringifed', JSON.stringify(newDocs), 'test', JSON.stringify(parsedDoc)  === JSON.stringify(newDocs));
+            if (JSON.stringify(parsedDoc) === JSON.stringify(newDocs)) return;
+
+
+
             
             const index = docs.findIndex(doc => doc.id === id);
 
@@ -48,18 +53,24 @@ const Viewer = ({ doc, setDocs, docs }) => {
             docs[index] = { ...parsedDoc, id };
             setDocs([ ...docs ]);
             setValue({ ...parsedDoc });
+            // setString(JSON.stringify(parsedDoc));
         } catch {
             return;
         }
     };
 
+    const prettify = () => {
+        console.log('prettifiyg', value);
+        setString(JSON.stringify(value, null, 2));
+    };
+
     return (
-        <div className="transition animate-fadein duration-300 border border-black p-3 shadow-xl rounded-lg overflow-hidden">
+        <div onBlur={prettify} className="transition animate-fadein duration-300 border border-black p-3 shadow-xl rounded-lg overflow-hidden">
             <Editor 
                 className="" 
                 loading="" 
                 defaultLanguage="json"
-                value={JSON.stringify(value, null, 2)}
+                value={string}
                 onChange={onChange}
                 onMount={onMount}
                 options={config}

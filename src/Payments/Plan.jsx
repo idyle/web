@@ -24,14 +24,14 @@ const Plan = ({ plan, onClick, onCancel }) => {
 
             <div className="grid justify-items-center">
                 {editedIcon}
-                <h1 className="text-5xl">{plan?.name}</h1>
+                <h1 className="text-4xl break-all text-center">{plan?.name}</h1>
             </div>
 
-            <h1 className="text-5xl">{plan?.gb} GB</h1>
+            <h1 className="text-5xl text-center">{plan?.gb} GB</h1>
 
             <div className="grid justify-items-center">
-                <h1 className="text-5xl font-bold">${plan?.price}</h1>
-                <h1 className="text-3xl">per month</h1>
+                <h1 className="text-5xl font-bold text-center">${plan?.price}</h1>
+                <h1 className="text-3xl text-center">per month</h1>
             </div>
 
             <div className="grid">
@@ -39,7 +39,7 @@ const Plan = ({ plan, onClick, onCancel }) => {
                     plan?.inclusions?.map((inclusion, i) => (
                         <div key={`in${i}`} className="flex items-center gap-2">
                             <AiOutlineCheck size="30px" />
-                            <h1 className="text-2xl">{inclusion}</h1>
+                            <h1 className="text-2xl text-center">{inclusion}</h1>
                         </div>
                     ))
                 }
@@ -50,18 +50,23 @@ const Plan = ({ plan, onClick, onCancel }) => {
                 <div className="grid w-full justify-items-center items-center">
                     <div id={plan?.id} className="grid grid-cols-[auto_minmax(0,_1fr)] w-full p-2 justify-items-center items-center bg-black text-white rounded-xl select-none">
                         <AiOutlineCheck size="30px" />
-                        <h1 className="text-3xl">Selected Plan</h1>
+                        <h1 className="text-3xl text-center">Selected Plan</h1>
                     </div>
 
-                    <div className="flex gap-2 items-center">
-                        <h1 className="text-2xl italic">Renews {subscription?.date} {subscription?.day}</h1>
-                        <h1 onClick={onCancel} className="text-2xl italic font-bold">Cancel?</h1>
+                    {/* <div className="flex items-center">
+                    <AiOutlineCheck size="30px" />
+                        <h1 className="text-3xl text-center">Selected Plan</h1>
+                    </div> */}
 
+
+                    <div className="grid justify-items-center items-center">
+                        <h1 className="text-2xl  text-center">Renews {subscription?.date} {subscription?.day}</h1>
+                        <h1 onClick={onCancel} className="text-2xl italic font-bold text-center">Cancel your subscription?</h1>
                     </div>
                 </div>
                 :
-                <div id={plan?.id} onClick={onClick} className="grid w-full p-2 items-center justify-items-center border border-black hover:bg-black hover:text-white rounded-xl select-none">
-                    <h1 className="text-3xl">Select Plan</h1>
+                <div id={plan?.id} onClick={onClick} className="grid w-full p-1 items-center justify-items-center border border-black hover:bg-black hover:text-white rounded-xl select-none">
+                    <h1 className="text-3xl text-center">Select Plan</h1>
                 </div>
             }
 
