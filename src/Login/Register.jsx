@@ -65,7 +65,7 @@ const Register = () => {
     return (
         <>
             <div className="grid justify-items-center">
-                <h1 className="text-3xl">Register your Account</h1>
+                <h1 className="text-3xl text-center">Register your Account</h1>
                 <h1 onClick={() => navigate('/login/login')} className="text-lg underline select-none">Have an Account? Login here</h1>
             </div>
             <div className="grid w-full gap-1">

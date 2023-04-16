@@ -41,7 +41,7 @@ const Email = () => {
     return (
         <>
             <div className="grid justify-items-center">
-                <h1 className="text-3xl">Sign in to your Account</h1>
+                <h1 className="text-3xl text-center">Sign in to your Account</h1>
                 <h1 onClick={() => navigate('/login/register')} className="text-lg underline select-none">No Account? Register here</h1>
             </div>
             <div className="grid w-full gap-1">

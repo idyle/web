@@ -61,7 +61,7 @@ const Plan = ({ plan, onClick, onCancel }) => {
 
                     <div className="grid justify-items-center items-center">
                         <h1 className="text-2xl  text-center">Renews {subscription?.date} {subscription?.day}</h1>
-                        <h1 onClick={onCancel} className="text-2xl italic font-bold text-center">Cancel your subscription?</h1>
+                        <h1 onClick={onCancel} className="text-2xl italic font-bold text-center hover:text-gray-500">Cancel your subscription?</h1>
                     </div>
                 </div>
                 :

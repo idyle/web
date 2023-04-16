@@ -11,7 +11,7 @@ const Payments = () => {
 
     const plans = [
         {
-            id: 'price_1MbGbIBVlu9NzRVaiTJI7P1U',
+            id: 'price_1MxQSmBVlu9NzRVaVpQzkIhw',
             name: 'Standard',
             icon: <MdGroups />,
             gb: 30,
@@ -25,11 +25,11 @@ const Payments = () => {
             ]
         },
         {
-            id: 'sd',
+            id: 'price_1MxQUYBVlu9NzRVaf0TudX3i',
             name: 'Business',
             icon: <MdBusinessCenter />,
             gb: 50,
-            price: 7.99,
+            price: 9.99,
             inclusions: [
                 "idyle Platform & API",
                 "idyle Network & CDN",
@@ -39,11 +39,11 @@ const Payments = () => {
             ]
         },
         {
-            id: 'sadas',
+            id: 'price_1MxQUwBVlu9NzRVaHaga7OPV',
             name: 'Enterprise',
             icon: <MdDomain />,
             gb: 100,
-            price: 9.99,
+            price: 14.99,
             inclusions: [
                 "idyle Platform & API",
                 "idyle Network & CDN",
