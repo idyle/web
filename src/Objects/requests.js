@@ -16,7 +16,7 @@ export const uploadFile = async (token, file) => {
 
         const req = await fetch(`${servicePath}/upload/user/${file.name}`, options);
         const res = await req.json();
-
+        console.log('res', res);
         if (!res?.status) return false;
         return res?.file;
 

@@ -20,7 +20,7 @@ const Payments = () => {
                 "idyle Platform & API",
                 "idyle Network & CDN",
                 "Basic Request Quota",
-                "Basic Data Quota",
+                "Basic Data Features",
                 "1 Custom Domain + SSL"
             ]
         },
@@ -34,7 +34,7 @@ const Payments = () => {
                 "idyle Platform & API",
                 "idyle Network & CDN",
                 "Premium Request Quota",
-                "Basic Data Quota",
+                "Basic Data Features",
                 "2 Custom Domains + SSL"
             ]
         },
@@ -48,7 +48,7 @@ const Payments = () => {
                 "idyle Platform & API",
                 "idyle Network & CDN",
                 "Premium Request Quota",
-                "Premium Data Quota",
+                "Premium Data Features",
                 "5 Custom Domains + SSL"
             ]
         }
