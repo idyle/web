@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 const Plan = ({ plan, onClick, onCancel }) => {
 
-    const editedIcon = cloneElement(plan?.icon, { color: "inherit", size: "40px" });
+    // const editedIcon = cloneElement(plan?.icon, { color: "inherit", size: "40px" });
 
     const { user } = useAuth();
 
@@ -23,7 +23,7 @@ const Plan = ({ plan, onClick, onCancel }) => {
         <div id={plan?.id} className="grid rounded-xl gap-10 p-5 justify-items-center border border-black select-none">
 
             <div className="grid justify-items-center">
-                {editedIcon}
+                {/* {editedIcon} */}
                 <h1 className="text-4xl break-all text-center">{plan?.name}</h1>
             </div>
 
