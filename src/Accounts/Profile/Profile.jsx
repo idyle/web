@@ -1,4 +1,4 @@
-import { useAuth, useUtil } from "../../Context";
+import { useAuth, useUtil } from "../../Contexts/Contexts";
 import { MdEdit, MdCheck } from 'react-icons/md';
 import { getAuth, signOut } from 'firebase/auth';
 import Infotable from './Infotable';

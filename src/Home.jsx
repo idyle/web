@@ -1,4 +1,4 @@
-import { useAuth, useUtil } from "./Context";
+import { useAuth, useUtil } from "./Contexts/Contexts";
 import { BsPersonCircle } from 'react-icons/bs';
 import { AiOutlineCheck, AiOutlineClose, AiOutlineFile } from 'react-icons/ai';
 import plans from './Payments/plans';
@@ -41,7 +41,7 @@ const Home = () => {
             <div className="col-span-2 row-span-6 bg-black text-white rounded-lg">EDITOR</div>
             {/* ALL EDITOR LIST */}
             <div className="flex items-center col-span-4 row-span-1 bg-black text-white rounded-lg px-3 gap-1">
-                {user?.photoURL ? <img className="w-[40px] h-[40px] rounded-full" src={user?.photoURL} /> : <BsPersonCircle size="60px" />}
+                {user?.photoURL ? <img className="w-[40px] h-[40px] rounded-full" src={user?.photoURL} /> : <BsPersonCircle size="40px" />}
                 {user?.displayName && <h1 className="text-4xl text-white">{user?.displayName}</h1> }
             </div>
             <div className="col-span-3 row-span-3 bg-black text-white rounded-lg">DOCS</div>

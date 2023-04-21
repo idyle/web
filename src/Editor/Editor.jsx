@@ -9,7 +9,7 @@ import Pages from './Pages/Pages';
 import { createContext, useContext, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAuth, useUtil } from '../Context';
+import { useAuth, useUtil } from '../Contexts/Contexts';
 import { savePage, listPages, deletePage } from './requests';
 
 const EditorValues = createContext();

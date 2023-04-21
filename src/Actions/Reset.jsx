@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getAuth, confirmPasswordReset, verifyPasswordResetCode, signInWithEmailAndPassword} from "firebase/auth";
-import { useUtil } from "../Context";
+import { useUtil } from "../Contexts/Contexts";
 import { useNavigate } from "react-router-dom";
 
 const Reset = ({ code }) => {

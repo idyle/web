@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AiOutlinePartition, AiOutlineFile, AiOutlineLink, AiOutlineUpload } from 'react-icons/ai';
-import { useAuth, useUtil } from '../Context';
+import { useAuth, useUtil } from '../Contexts/Contexts';
 
 import Object from './Object';
 import { listFiles, uploadFile } from './requests';

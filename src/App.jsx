@@ -1,7 +1,7 @@
 import Notifier from './Utilities/Notifier';
 import Loader from './Utilities/Loader';
 import Prompter from './Utilities/Prompter';
-import { AuthContext, UtilContext } from './Context';
+import { AuthContext, UtilContext } from './Contexts/Contexts';
 import Components from './Components';
 
 const App = () => {

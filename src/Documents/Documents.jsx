@@ -3,7 +3,7 @@ import Viewer from "./Viewer";
 import { AiOutlinePlus, AiFillDelete, AiOutlineCheck } from 'react-icons/ai';
 import Document from "./Document";
 import { useEffect, useState } from "react";
-import { useAuth, useUtil } from "../Context";
+import { useAuth, useUtil } from "../Contexts/Contexts";
 import { listDocs, removeDoc, setDoc } from "./requests";
 
 const Documents = () => {

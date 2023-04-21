@@ -1,7 +1,7 @@
 import { GrDeploy } from 'react-icons/gr';
 import Deploy from "./Deploy";
 import { useEffect } from 'react';
-import { useAuth, useUtil } from '../../Context';
+import { useAuth, useUtil } from '../../Contexts/Contexts';
 import { listDeploys } from '../requests';
 import { useState } from 'react';
 

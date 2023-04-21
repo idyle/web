@@ -1,6 +1,6 @@
 import { AiOutlineCheck } from 'react-icons/ai';
 import { cloneElement } from 'react';
-import { useAuth } from '../Context';
+import { useAuth } from '../Contexts/Contexts';
 import { useState, useEffect } from 'react';
 
 const Plan = ({ plan, onClick, onCancel }) => {

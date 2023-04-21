@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useUtil } from '../Context';
+import { useUtil } from '../Contexts/Contexts';
 import { HiOutlineInformationCircle } from 'react-icons/hi';
 
 const Notifier = () => {

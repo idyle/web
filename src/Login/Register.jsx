@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import { useSignIn } from "./Login";
-import { useUtil } from "../Context";
+import { useUtil } from "../Contexts/Contexts";
 import { useNavigate } from "react-router-dom";
 import Providers from "./Providers";
 

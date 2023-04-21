@@ -4,7 +4,7 @@ import Setup from './Setup';
 import Staging from "./Staging/Staging";
 import Labs from "./Labs";
 import { useState, useEffect } from "react";
-import { useAuth, useUtil } from "../Context";
+import { useAuth, useUtil } from "../Contexts/Contexts";
 import { deployWebsite, getWebsite } from "./requests";
 
 const Deployer = () => {

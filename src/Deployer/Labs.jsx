@@ -2,7 +2,7 @@ import { IoMdFlask } from 'react-icons/io';
 import { MdPages, MdClose } from 'react-icons/md';
 import { HiOutlineDatabase } from 'react-icons/hi';
 import { BsThreeDots } from 'react-icons/bs';
-import { useAuth, useUtil } from '../Context';
+import { useAuth, useUtil } from '../Contexts/Contexts';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';

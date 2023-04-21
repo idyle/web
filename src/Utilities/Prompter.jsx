@@ -1,4 +1,4 @@
-import { useUtil } from '../Context';
+import { useUtil } from '../Contexts/Contexts';
 import { MdCheck, MdCancel } from 'react-icons/md';
 
 const Prompter = () => {
