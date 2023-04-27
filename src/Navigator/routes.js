@@ -6,6 +6,7 @@ module.exports = {
         { title: 'Editor', route: '/editor' },
         { title: 'Canvas', route: '/editor/canvas' },
         { title: 'Codebase', route: '/editor/codebase' },
+        { title: 'Pages', route: '/editor/pages' },
         { title: 'Deployer', route: '/deployer' },
         { title: 'Objects', route: '/objects' },
         { title: 'Documents', route: '/docs' },
