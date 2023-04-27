@@ -3,15 +3,18 @@ import Viewer from "./Viewer";
 import { AiOutlinePlus, AiFillDelete, AiOutlineCheck } from 'react-icons/ai';
 import Document from "./Document";
 import { useEffect, useState } from "react";
-import { useAuth, useUtil } from "../Contexts/Contexts";
+import { useAuth } from "../Contexts/Auth";
+import { useUtil } from "../Contexts/Util";
 import { listDocs, removeDoc, setDoc } from "./requests";
+import { useData } from "../Contexts/Data";
 
 const Documents = () => {
 
     const { setLoader, notify } = useUtil();
     const { user } = useAuth();
+    const { docs, setDocs } = useData();
 
-    const [docs, setDocs] = useState([]);
+    // const [docs, setDocs] = useState([]);
     const [selectedDoc, setSelectedDoc] = useState();
 
     const onClick = (e) => {
@@ -48,22 +51,25 @@ const Documents = () => {
         return notify('Successfully removed doc');
     };
 
-    useEffect(() => {
-        setLoader(true);
-        if (!user?.accessToken) return setLoader(false);
-        (async () => {
-            const list = await listDocs(user?.accessToken);
-            if (!list) return setLoader(false);;
-            setDocs([ ...list ]);
-            return setLoader(false);
-        })();
-    }, [user?.accessToken]);
+    // useEffect(() => {
+    //     setLoader(true);
+    //     if (!user?.accessToken) return setLoader(false);
+    //     (async () => {
+    //         const list = await listDocs(user?.accessToken);
+    //         if (!list) return setLoader(false);;
+    //         setDocs([ ...list ]);
+    //         return setLoader(false);
+    //     })();
+    // }, [user?.accessToken]);
 
     return (
         <div className='grid m-5'>
 
             <Helmet>
-                <title>Documents</title>
+                <title>idyle - Documents</title>
+                <meta name="description" content="" />
+                <meta name="keywords" content="Documents" />
+                <link rel="canonical" href="/docs" />
             </Helmet>
             
             <div className="grid grid-cols-2 gap-3 overflow-auto">
@@ -95,7 +101,6 @@ const Documents = () => {
                 <div className="grid items-center justify-items-center border border-black rounded-lg">
                     <h1 className="text-5xl">Select a doc</h1>
                 </div>
-
 
                 }
                 

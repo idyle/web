@@ -1,28 +1,30 @@
 import { GrDeploy } from 'react-icons/gr';
 import Deploy from "./Deploy";
 import { useEffect } from 'react';
-import { useAuth, useUtil } from '../../Contexts/Contexts';
+import { useUtil } from '../../Contexts/Util';
+import { useAuth } from '../../Contexts/Auth';
 import { listDeploys } from '../requests';
 import { useState } from 'react';
+import { useData } from '../../Contexts/Data';
 
 const Control = ({ website, deploy }) => {
 
     const { user } = useAuth();
     const { setLoader, notify, prompt } = useUtil();
-
-    const [deploys, setDeploys] = useState([]);
+    const { deploys, setDeploys } = useData();
+    // const [deploys, setDeploys] = useState([]);
  
-    useEffect(() => {
-        (async () => {
-            if (!user) return;
-            setLoader(true);
-            const deploys = await listDeploys(user?.accessToken);
-            console.log('LIST', deploys);
-            setLoader(false);
-            if (!deploys) return notify('Something went wrong.');
-            setDeploys(deploys);
-        })();
-    }, [user]);
+    // useEffect(() => {
+    //     (async () => {
+    //         if (!user) return;
+    //         setLoader(true);
+    //         const deploys = await listDeploys(user?.accessToken);
+    //         console.log('LIST', deploys);
+    //         setLoader(false);
+    //         if (!deploys) return notify('Something went wrong.');
+    //         setDeploys(deploys);
+    //     })();
+    // }, [user]);
 
     // needs deploy utility as well 
 

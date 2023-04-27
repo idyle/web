@@ -9,8 +9,11 @@ import Pages from './Pages/Pages';
 import { createContext, useContext, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAuth, useUtil } from '../Contexts/Contexts';
+import { useAuth } from "../Contexts/Auth";
+import { useUtil } from "../Contexts/Util";
 import { savePage, listPages, deletePage } from './requests';
+import { useData } from '../Contexts/Data';
+import { Helmet } from 'react-helmet';
 
 const EditorValues = createContext();
 export const useEditor = () => useContext(EditorValues);
@@ -19,34 +22,35 @@ export const EditorContext = ({ children }) => {
 
     const { user } = useAuth();
     const { setLoader, notify, prompt } = useUtil();
+    const { pages, setPages } = useData();
     const [pageRoute, setPageRoute] = useState('');
     // page the user selects
-    const [pages, setPages] = useState([
-        // {
-        //     name: 'Home',
-        //     route: '/',
-        //     data: { //JSON
-        //         component: 'div',
-        //         id: '0',
-        //         className: '',
-        //         children: []
-        //     }
-        // }
-    ]);
+    // const [pages, setPages] = useState([
+    //     // {
+    //     //     name: 'Home',
+    //     //     route: '/',
+    //     //     data: { //JSON
+    //     //         component: 'div',
+    //     //         id: '0',
+    //     //         className: '',
+    //     //         children: []
+    //     //     }
+    //     // }
+    // ]);
     // all pages data
     const [page, setPage] = useState({});
     // specific page data
 
-    useEffect(() => {
-        (async () => {
-            if (!user) return;
-            setLoader(true);
-            const list = await listPages(user?.accessToken);
-            setLoader(false);
-            if (!list) return notify('Something went wrong listing.');
-            setPages(list);
-        })();
-    }, [user]);
+    // useEffect(() => {
+    //     (async () => {
+    //         if (!user) return;
+    //         setLoader(true);
+    //         const list = await listPages(user?.accessToken);
+    //         setLoader(false);
+    //         if (!list) return notify('Something went wrong listing.');
+    //         setPages(list);
+    //     })();
+    // }, [user]);
 
     const save = async (page) => {
         setLoader(true);
@@ -95,11 +99,15 @@ export const EditorContext = ({ children }) => {
 
 const Editor = () => {
 
-    useEffect(() => {
-        document.title = 'Editor';
-    }, []);
     return (
         <div className='grid grid-rows-[auto_minmax(0,_1fr)] m-1'>
+
+            <Helmet>
+                <title>idyle - Editor</title>
+                <meta name="description" content="Editor" />
+                <meta name="keywords" content="Editor" />
+                <link rel="canonical" href="/editor" />
+            </Helmet>
             <Subnav>
                 <Subnavbutton icon={<FaCode />} text="Codebase" route="/editor/codebase" />
                 <Subnavbutton icon={<AiOutlineDrag />} text="Canvas" route="/editor/canvas" />

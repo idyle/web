@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { AiOutlinePartition, AiOutlineFile, AiOutlineLink, AiOutlineUpload } from 'react-icons/ai';
-import { useAuth, useUtil } from '../Contexts/Contexts';
-
+import { useAuth } from '../Contexts/Auth';
+import { useUtil } from '../Contexts/Util';
 import Object from './Object';
 import { listFiles, uploadFile } from './requests';
 import { Helmet } from "react-helmet";
+import { useData } from '../Contexts/Data';
 
 const Objects = () => {
 
     const { user } = useAuth();
     const { setLoader } = useUtil();
+    const { objects, setObjects } = useData();
 
     const onChange = async (e) => {
         if (!e.target?.files[0]) return;
@@ -27,24 +29,28 @@ const Objects = () => {
 
     };
 
-    const [objects, setObjects] = useState([]);
 
-    useEffect(() => {
-        setLoader(true);
-        if (!user?.accessToken) return setLoader(false);
-        (async () => {
-            const list = await listFiles(user?.accessToken);
-            setLoader(false);
-            if (!list) return;
-            setObjects([ ...list ]);
-        })();
-    }, [user?.accessToken]);
+    // const [objects, setObjects] = useState([]);
+
+    // useEffect(() => {
+    //     setLoader(true);
+    //     if (!user?.accessToken) return setLoader(false);
+    //     (async () => {
+    //         const list = await listFiles(user?.accessToken);
+    //         setLoader(false);
+    //         if (!list) return;
+    //         setObjects([ ...list ]);
+    //     })();
+    // }, [user?.accessToken]);
 
     return (
         <div className="grid grid-rows-[auto_minmax(0,_1fr)_auto] m-5 gap-2">
 
             <Helmet>
-                <title>Objects</title>
+                <title>idyle - Objects</title>
+                <meta name="description" content="Objects" />
+                <meta name="keywords" content="Objects" />
+                <link rel="canonical" href="/objects" />
             </Helmet>
 
             <div className="grid grid-cols-4 items-center justify-items-center border-2 border-black rounded-lg p-3">

@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
-import { useAuth, useUtil } from "../Contexts/Contexts";
+import { useAuth } from "../Contexts/Auth";
+import { useUtil } from "../Contexts/Util";
 import { MdGroups, MdDomain, MdBusinessCenter  } from 'react-icons/md';
 import Plan from './Plan';
 import { useEffect } from "react";
@@ -65,6 +66,9 @@ const Payments = () => {
 
             <Helmet>
                 <title>idyle - Payments</title>
+                <meta name="description" content="Payments" />
+                <meta name="keywords" content="Payments" />
+                <link rel="canonical" href="/payments" />
             </Helmet>
 
             <div className="grid gap-1 justify-items-center rounded-lg">

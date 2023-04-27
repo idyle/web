@@ -1,7 +1,8 @@
 import { MdOutlinePermMedia, MdRadioButtonUnchecked, MdRadioButtonChecked } from 'react-icons/md';
 import { RiGasStationFill } from 'react-icons/ri';
 import File from './File';
-import { useAuth, useUtil } from '../../Contexts/Contexts';
+import { useUtil } from '../../Contexts/Util';
+import { useAuth } from '../../Contexts/Auth';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { deployWebsite } from '../requests';

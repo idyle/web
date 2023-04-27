@@ -1,5 +1,6 @@
 import { AiFillCopy, AiOutlineDownload, AiOutlineDelete } from 'react-icons/ai'
-import { useAuth, useUtil } from '../Contexts/Contexts';
+import { useAuth } from "../Contexts/Auth";
+import { useUtil } from "../Contexts/Util";
 import { deleteFile, downloadFile } from './requests';
 import { useNavigate } from 'react-router-dom';
 

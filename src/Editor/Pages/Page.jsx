@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MdEdit, MdDelete, MdCheck } from 'react-icons/md';
 import { useEditor } from '../Editor';
-import { useUtil } from '../../Contexts/Contexts';
+import { useUtil } from '../../Contexts/Util';
 import { useNavigate } from 'react-router-dom';
 
 const Page = ({ page, editPage, addMode}) => {

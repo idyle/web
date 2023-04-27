@@ -4,25 +4,28 @@ import Setup from './Setup';
 import Staging from "./Staging/Staging";
 import Labs from "./Labs";
 import { useState, useEffect } from "react";
-import { useAuth, useUtil } from "../Contexts/Contexts";
+import { useUtil } from "../Contexts/Util";
+import { useAuth } from "../Contexts/Auth";
 import { deployWebsite, getWebsite } from "./requests";
+import { useData } from "../Contexts/Data";
 
 const Deployer = () => {
 
     const { user } = useAuth();
     const { setLoader, notify, prompt } = useUtil();
-    const [website, setWebsite] = useState('');
+    const { website, setWebsite } = useData();
+    console.log('FROM DEPLOYER', website);
 
-    useEffect(() => {
-        (async () => {
-            if (!user) return;
-            setLoader(true);
-            const website = await getWebsite(user?.accessToken);
-            setLoader(false);
-            if (!website) return notify('You may currently not own a website.');
-            setWebsite(website?.website);
-        })();
-    }, [user]);
+    // useEffect(() => {
+    //     (async () => {
+    //         if (!user) return;
+    //         setLoader(true);
+    //         const website = await getWebsite(user?.accessToken);
+    //         setLoader(false);
+    //         if (!website) return notify('You may currently not own a website.');
+    //         setWebsite(website?.website);
+    //     })();
+    // }, [user]);
 
     const deploy = async (files = [], revert) => {
         setLoader(true);
@@ -39,6 +42,9 @@ const Deployer = () => {
 
             <Helmet>
                 <title>idyle - Deployer</title>
+                <meta name="description" content="Deployer" />
+                <meta name="keywords" content="Deployer" />
+                <link rel="canonical" href="/deployer" />
             </Helmet>
 
             <div className="grid grid-cols-2 gap-3 overflow-auto">

@@ -37,7 +37,7 @@ export const getWebsite = async (token) => {
         const res = await req.json();
         console.log('res', res);
         if (!res?.status) return false;
-        return res;
+        return res?.website;
 
     } catch (e) {
         console.error(e);

@@ -2,7 +2,7 @@ import Navigator from './Navigator/Navigator';
 import Editor from './Editor/Editor';
 import { Routes, Route, Navigate } from 'react-router-dom'; 
 import Accounts from './Accounts/Accounts';
-import Home from './Home';
+import Home from './Home/Home';
 import Payments from './Payments/Payments';
 import Documents from './Documents/Documents';
 import Objects from './Objects/Objects';

@@ -1,6 +1,7 @@
 import { useEffect, useState, createContext, useContext } from "react";
 import { signInWithRedirect, getRedirectResult, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, getAuth } from "firebase/auth";
-import { useAuth, useUtil } from "../Contexts/Contexts";
+import { useAuth } from "../Contexts/Auth";
+import { useUtil } from "../Contexts/Util";
 import Provider from "./Provider";
 import { FaMicrosoft, FaGoogle, FaApple, FaArrowRight } from "react-icons/fa";
 import Providers from './Providers';

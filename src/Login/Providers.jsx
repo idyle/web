@@ -3,7 +3,7 @@ import { getAuth, signInWithRedirect, getRedirectResult, fetchSignInMethodsForEm
 import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, OAuthProvider } from 'firebase/auth';
 import Provider from './Provider';
 import { FaFacebook, FaGoogle, FaGithub } from "react-icons/fa";
-import { useUtil } from "../Contexts/Contexts";
+import { useUtil } from "../Contexts/Util";
 import { useSignIn } from "./Login";
 import Minprovider from "./Minprovider";
 

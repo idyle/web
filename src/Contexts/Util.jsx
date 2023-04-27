@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const UtilValues = createContext();
 export const useUtil = () => useContext(UtilValues);
 
-export const UtilContext = ({ children }) => {
+const UtilContext = ({ children }) => {
     const [loader, setLoader] = useState(false);
     const [notifier, setNotifier] = useState({ active: false });
     const notify = (message, time = 3000) => setNotifier({ message, active: true, time });
@@ -19,3 +19,5 @@ export const UtilContext = ({ children }) => {
     };
     return ( <UtilValues.Provider value={values}>{children}</UtilValues.Provider> );
 };
+
+export default UtilContext;

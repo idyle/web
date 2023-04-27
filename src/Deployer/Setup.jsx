@@ -1,5 +1,6 @@
 import { MdCheck, MdInfoOutline, MdRadioButtonChecked } from "react-icons/md";
-import { useAuth, useUtil } from "../Contexts/Contexts";
+import { useUtil } from "../Contexts/Util";
+import { useAuth } from "../Contexts/Auth";
 import { useState } from "react";
 import { setupWebsite } from "./requests";
 import { useEffect } from "react";

@@ -1,5 +1,5 @@
 import { applyActionCode, getAuth } from "firebase/auth";
-import { useUtil } from "../Contexts/Contexts";
+import { useUtil } from "../Contexts/Util";
 import { useNavigate } from "react-router-dom";
 
 const Confirm = ({ code }) => {

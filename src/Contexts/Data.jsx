@@ -1,15 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useAuth } from "./Contexts";
+import { useAuth } from "./Auth";
 import { listPages } from "../Editor/requests";
-import { listDeploys } from "../Deployer/requests";
+import { getWebsite, listDeploys } from "../Deployer/requests";
 import { listDocs } from "../Documents/requests";
 import { listFiles } from "../Objects/requests";
+import { getMetrics } from "../Payments/requests";
 
 const DataValues = createContext();
 export const useData = () => useContext(DataValues);
 
-
-export const DataContext = ({ children }) => {
+const DataContext = ({ children }) => {
 
     // impl only for LIST requests in editor, deployer, objects, docs
     // applicable also for get requests in deployer
@@ -40,18 +40,23 @@ export const DataContext = ({ children }) => {
         if (!token) return;
         // attempt to retrieve from cache
         const cachedData = getDataFromSession();
+        console.log('cached data', cachedData);
         // get cache when applicable
 
         let missing = [];
-        const keys = [ 'pages', 'deploys', 'docs', 'objects' ];
-        for (const key of keys) if (!data[key]) missing.push(key);
+        const keys = [ 
+            'pages', 'deploys', 'docs', 
+            'objects', 'website', 'metrics' 
+        ];
+        for (const key of keys) if (!data?.[key]) missing.push(key);
 
         if (!missing.length) return setData(cachedData);
         // if no missing data
 
         let requests = [ 
             listPages(token), listDeploys(token), 
-            listDocs(token), listFiles(token)
+            listDocs(token), listFiles(token), 
+            getWebsite(token), getMetrics(token)
         ], requestedData = {};
 
         const results = await Promise.all(requests);
@@ -64,22 +69,30 @@ export const DataContext = ({ children }) => {
         setData({ ...cachedData, ...requestedData });
     };
 
-    useEffect(() => onLoad(), [user?.accessToken]);
+    useEffect(() => {
+        onLoad();
+    }, [user?.accessToken]);
     useEffect(() => saveToSession(), [data]);
 
     const setPages = (array) => setData({ ...data, pages: array }); 
     const setDeploys = (array) => setData({ ...data, deploys: array }); 
     const setObjects = (array) => setData({ ...data, objects: array }); 
     const setDocs = (array) => setData({ ...data, docs: array }); 
+    const setWebsite = (obj) => setData({ ...data, website: obj });
+    const setMetrics = (obj) => setData({ ...data, metrics: obj });
 
     const values = {
         pages: data?.pages || [], setPages,
         deploys: data?.deploys || [], setDeploys,
         objects: data?.objects || [], setObjects,
-        docs: data?.docs || [], setDocs
+        docs: data?.docs || [], setDocs,
+        website: data?.website || '', setWebsite,
+        metrics: data?.metrics || '', setMetrics
     };
 
     return (
         <DataValues.Provider value={values} >{children}</DataValues.Provider>
     )
 };
+
+export default DataContext;

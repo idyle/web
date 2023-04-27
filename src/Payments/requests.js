@@ -62,3 +62,23 @@ export const cancelPlan = async (token, planId) => {
         return false;
     }
 }; 
+
+export const getMetrics = async (token) => {
+    try {
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        const req = await fetch(`${servicePath}/metrics`, options);
+        const res = await req.json();
+        console.log('metrics', res);
+        return res?.metrics;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}; 
