@@ -41,7 +41,7 @@ export const listDocs = async (token) => {
 
     } catch (e) {
         console.error(e);
-        return [];
+        return false;
     }
 };
 

@@ -44,7 +44,7 @@ export const listFiles = async (token) => {
 
     } catch (e) {
         console.error(e);
-        return [];
+        return false;
     }
 };
 

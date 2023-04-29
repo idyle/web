@@ -65,7 +65,7 @@ const DataContext = ({ children }) => {
             const key = keys[i];
             if (result) requestedData[key] = result;
         };
-
+        console.log('TO CACHE', cachedData, 'TO MERGE', requestedData);
         setData({ ...cachedData, ...requestedData });
     };
 

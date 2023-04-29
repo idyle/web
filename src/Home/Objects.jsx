@@ -6,6 +6,7 @@ const Objects = () => {
     const { notify } = useUtil();
     const { objects } = useData();
 
+    console.log('OBJECTS', objects);
     const object = objects?.[0];
 
     const copy = () => {

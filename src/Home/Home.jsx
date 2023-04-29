@@ -33,7 +33,7 @@ const Home = () => {
                 <Payments />
             </div>
 
-            <div className="col-span-5 row-span-3 p-1">
+            <div className="grid items-center justify-items-center col-span-5 row-span-3 p-1">
                 <Welcome />
             </div>
 
@@ -45,7 +45,7 @@ const Home = () => {
                 <Metrics />
             </div>
 
-            <div className="col-span-3 row-span-3 bg-black text-white rounded-lg p-1">
+            <div className="grid items-center justify-items-center col-span-3 row-span-3 bg-black text-white rounded-lg p-1">
                 <Objects />
             </div>
         </div>
