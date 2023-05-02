@@ -23,34 +23,9 @@ export const EditorContext = ({ children }) => {
     const { user } = useAuth();
     const { setLoader, notify, prompt } = useUtil();
     const { pages, setPages } = useData();
-    const [pageRoute, setPageRoute] = useState('');
-    // page the user selects
-    // const [pages, setPages] = useState([
-    //     // {
-    //     //     name: 'Home',
-    //     //     route: '/',
-    //     //     data: { //JSON
-    //     //         component: 'div',
-    //     //         id: '0',
-    //     //         className: '',
-    //     //         children: []
-    //     //     }
-    //     // }
-    // ]);
-    // all pages data
-    const [page, setPage] = useState({});
-    // specific page data
 
-    // useEffect(() => {
-    //     (async () => {
-    //         if (!user) return;
-    //         setLoader(true);
-    //         const list = await listPages(user?.accessToken);
-    //         setLoader(false);
-    //         if (!list) return notify('Something went wrong listing.');
-    //         setPages(list);
-    //     })();
-    // }, [user]);
+    // const [pageRoute, setPageRoute] = useState();
+    const [page, setPage] = useState({});
 
     const save = async (page) => {
         setLoader(true);
@@ -66,13 +41,13 @@ export const EditorContext = ({ children }) => {
         setLoader(false);
         if (!operation) return notify('Something went wrong trying to delete this page.');
         console.log('removing... page', page?.route);
-        setPages(pages.filter(({ route }) => route !== page?.route));
+        setPages(pages.filter(({ id }) => id !== page?.id));
     };
 
-    useEffect(() => {
-        setPage(pages.find(({ route }) => route === pageRoute) || pages[0]);
-        console.log(pages.filter(({ route }) => route === pageRoute) || pages[0])
-    }, [pageRoute]);
+    // useEffect(() => {
+    //     setPage(pages.find(({ route }) => route === pageRoute) || pages[0]);
+    //     console.log(pages.filter(({ route }) => route === pageRoute) || pages[0])
+    // }, [pageRoute]);
 
     useEffect(() => {
         console.log(page, 'page');
@@ -93,7 +68,7 @@ export const EditorContext = ({ children }) => {
 
     const setPageData = (pageData) => setPage({ ...page, data: serialize(pageData) });
 
-    const values = { page, setPageData, pages, setPageRoute, pageRoute, setPage, setPages, save, remove };
+    const values = { page, setPageData, pages, setPage, setPages, save, remove };
     return ( <EditorValues.Provider value={values}>{children}</EditorValues.Provider> );
 };
 

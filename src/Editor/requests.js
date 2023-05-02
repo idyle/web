@@ -12,7 +12,10 @@ export const savePage = async (token, page) => {
             body: JSON.stringify({ page })
         };
 
-        const req = await fetch(`${servicePath}/save/user/${page?.route}`, options);
+        let url = `${servicePath}/save/user`;
+        if (page?.id) url = `${url}/${page?.id}`;
+
+        const req = await fetch(url, options);
         const res = await req.json();
         console.log('set res', res);
         return res?.status;
@@ -59,7 +62,7 @@ export const deletePage = async (token, page) => {
             }
         };
 
-        const req = await fetch(`${servicePath}/delete/user/${page?.route}`, options);
+        const req = await fetch(`${servicePath}/delete/user/${page?.id}`, options);
         const res = await req.json();
         console.log('delete res', res);
         return res?.status;

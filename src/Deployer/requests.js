@@ -97,7 +97,7 @@ export const listDeploys = async (token, filter, value) => {
     }
 };
 
-export const convertPage = async (token, pageRoute, customPath, stringOutput) => {
+export const convertPage = async (token, pageId, customPath, stringOutput) => {
     try {
 
         const options = {
@@ -108,7 +108,7 @@ export const convertPage = async (token, pageRoute, customPath, stringOutput) =>
             },
         };
 
-        let url = `${process.env.REACT_APP_BASEPATH}/editor/convert/user/${pageRoute}`;
+        let url = `${process.env.REACT_APP_BASEPATH}/editor/convert/user/${pageId}`;
         if (customPath) url = `${url}?type=custom`;
         if (stringOutput && customPath) url = `${url}&output=string`
         else if (stringOutput) url = `${url}?output=string`;

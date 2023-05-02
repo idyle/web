@@ -36,7 +36,7 @@ const Wrapper = ({ children }) => {
     }, [selected]);
 
     return (
-        <div className={`p-0.5 border ${(hovered === children.props.id || selected === children.props.id) ? 'border-black' : 'border-transparent'}`} 
+        <div className={`p-0.5 border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue-400' : 'border-transparent'} rounded-lg`} 
         onClick={onClick} 
         onMouseOver={onMouseOver} 
         onMouseOut={onMouseOut}>

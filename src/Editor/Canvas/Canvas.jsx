@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { renderElements } from './Converter';
 import { useEditor } from '../Editor';
-import Toolbar from './Toolbar';
+import Elements from './Elements';
 import { useNavigate } from 'react-router-dom';
+import Toolbar from './Toolbar';
+import Formatter from './Formatter';
 
 const DomValues = createContext();
 export const useDom = () => useContext(DomValues);
@@ -23,18 +25,28 @@ const Canvas = () => {
     useEffect(() => {
         // handle case where no page selected / exists
         if (!page?.data) return navigate('/editor/pages');
+        console.log('CURRNET PAGE ON CANVAS', page);
         setDom(renderElements(page?.data));
     }, [page?.data]);
 
     return (
-        <div className="grid grid-cols-[20%_80%]">
-            <DomContext>
-            <Toolbar />
-            <div className="grid p-2 overflow-auto shadow-xl rounded-lg m-1">
-                {dom}
+        <DomContext>
+        <div className="grid h-full grid-cols-[20%_80%]">
+
+            <div className="grid grid-rows-[80%_20%] gap-1 p-1">
+                <Elements />
+                <Formatter />
             </div>
-            </DomContext>
+
+            <div className="grid grid-rows-[10%_90%] overflow-auto p-1">
+                <Toolbar />
+
+                <div className="grid p-1 overflow-auto shadow-xl rounded-lg">
+                    {dom}
+                </div>
+            </div>
         </div>
+        </DomContext>
     )
 };
 

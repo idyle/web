@@ -44,7 +44,7 @@ const Labs = () => {
     const onConvert = async () => {
         if (!page?.route) return;
         setLoader(true);
-        const operation = await convertPage(user?.accessToken, page?.route);
+        const operation = await convertPage(user?.accessToken, page?.id);
         setLoader(false);
         if (!operation) return notify('Something went wrong converting the page.');
         notify('Successfully converted the page. Sending you to objects.');

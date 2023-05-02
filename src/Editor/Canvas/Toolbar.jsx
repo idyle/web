@@ -1,89 +1,92 @@
-import { useEditor } from "../Editor";
-import { useDom } from "./Canvas";
-import { presets } from '../presets';
-import { useEffect, useState } from "react";
+import { 
+    RxTextAlignCenter, RxTextAlignLeft, RxTextAlignRight, 
+    RxTextAlignBottom, RxTextAlignMiddle, RxTextAlignTop,
+    RxAlignRight, RxAlignLeft, RxAlignCenterHorizontally,
+    RxAlignTop, RxAlignBottom, RxAlignCenterVertically,
+    RxMargin, RxPadding, RxFontBold, RxFontItalic, RxUnderline, 
+    RxFontStyle, RxHalf2, RxColorWheel
+} from 'react-icons/rx';
 
 const Toolbar = () => {
-
-    const { page, setPageData } = useEditor();
-    const { selected, setSelected } = useDom();
-    const [path, setPath] = useState();
-
-    useEffect(() => {
-        if (!selected) return;
-        let path = [];
-        if (selected?.includes('-')) path = selected.split('-');
-        path.shift();
-        for (let i = 0; i < path.length; i++) path[i] = parseInt(path[i]);
-        setPath(path);
-    }, [selected]);
-
-    const setObjectFromPath2 = () => {
-
-    }
-
-    const setObjectFromPath = (data, path, value) => {
-        console.log('DATA', data);
-        let current = data;
-        let nearestParent = current;
-    
-        for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') {
-                nearestParent = current;
-                current = current.children[path[depth]];
-            } 
-        };
-        console.log(current, 'current!')
-        if (current?.component !== 'div') current = nearestParent;
-        // if our selected item is not a div
-
-        current.children = [...current.children, value];
-        return data;
-    };
-
-    const getValue = (data, path) => {
-        let current = data;
-    
-        for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') {
-                current = current.children[path[depth]];
-            } 
-        };
-        return current;
-    }
-
-    const deleteObjectFromPath = (data, path) => {
-
-        let value = getValue(data, path);
-        console.log('DATA', data);
-        let current = data;
-        let nearestParent = current;
-    
-        for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') {
-                nearestParent = current;
-                current = current.children[path[depth]];
-            } 
-        };
-        if (current.component !== 'div') current = nearestParent;
-        // if our selected item is not a div
-
-        current.children = current.children.filter(child => child.id !== value.id);
-        console.log('NEW DATA', data);
-        return data;
-    };
-
-    const deleteElement = () => setPageData({ ...deleteObjectFromPath(page.data, path) });
-
-    const appendElement = (preset) => setPageData({ ...setObjectFromPath(page.data, path, { ...presets[preset] }) });
-
     return (
-        <div className="grid auto-rows-min border border-black p-2 shadow-xl rounded-lg m-1">
-            <h1 className="text-xl" onClick={() => appendElement('h1')}>Insert h1</h1>
-            <h1 className="text-xl" onClick={() => appendElement('div')}>Insert Div</h1>
-            <h1 className="text-xl" onClick={() => appendElement('img')}>Insert img</h1>
-            <h1 className="text-xl" onClick={deleteElement}> Delete Element</h1>
-        </div> 
+        <div className="flex place-content-center items-center gap-1 p-1 border border-black rounded-lg ">
+
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxFontBold size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxFontItalic size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxUnderline size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg gap-x-1 items-center p-0.5">
+                    <RxFontStyle size="25px" />
+                    <h1 className="text-sm">Font</h1>
+                </div>
+
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxTextAlignLeft size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxTextAlignCenter size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxTextAlignRight size="25px" />
+                </div>
+
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxTextAlignBottom size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxTextAlignMiddle size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxTextAlignTop size="25px" />
+                </div>
+
+                <div className="flex border border-black rounded-lg gap-x-1 items-center p-0.5">
+                    <RxColorWheel size="25px" />
+                    <h1 className="text-sm">Color</h1>
+                </div>
+
+       
+  
+
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxAlignLeft size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxAlignCenterHorizontally size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxAlignRight size="25px" />
+                </div>
+
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxAlignBottom size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxAlignCenterVertically size="25px" />
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxAlignTop size="25px" />
+                </div>
+
+                <div className="flex border border-black rounded-lg gap-x-1 items-center p-0.5">
+                    <RxMargin size="25px" />
+                    <h1 className="text-sm">Margin</h1>
+                </div>
+                <div className="flex border border-black rounded-lg gap-x-1 items-center p-0.5">
+                    <RxPadding size="25px" />
+                    <h1 className="text-sm">Padding</h1>
+                </div>
+                <div className="flex border border-black rounded-lg p-0.5">
+                    <RxHalf2 size="25px" />
+                </div>
+            </div>
+
+
     )
 };
 

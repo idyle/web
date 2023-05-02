@@ -118,8 +118,9 @@ const Codebase = () => {
     }, [mounted]);
 
     return (
-        <div className="grid grid-cols-[40%_60%] m-2">
-            <div className="shadow-xl rounded-lg overflow-hidden">
+        <div className="grid grid-rows-[minmax(0,_1fr)_auto] p-2 gap-1">
+            <div className="grid grid-cols-[40%_60%] gap-1">
+                <div className="shadow-xl rounded-lg overflow-hidden">
                 <Editor
                 className="transition animate-fadein duration-300"                
                 loading=""
@@ -132,12 +133,26 @@ const Codebase = () => {
                 beforeMount={beforeMount}
                 options={{ minimap: { enabled: false }, wrappingIndent: 'indent', wordWrap: 'on' }}
                 /> 
+                </div>
+
+                <div className="grid p-2 overflow-auto shadow-xl rounded-lg border border-black">
+                    {dom}
+                </div>
             </div>
 
-            <div className="grid p-2 overflow-auto shadow-xl rounded-lg m-1">
-                {dom}
+            <div className="grid grid-flow-col border border-black rounded-lg p-1 gap-2">
+                <div className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
+                    <h1 className="text-2xl">Toggle Tailwind CSS (On)</h1>
+                </div>
+                <div className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
+                    <h1 className="text-2xl">Import Custom CSS File</h1>
+                </div>
+                <div className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
+                    <h1 className="text-2xl">Convert Docs to HTML</h1>
+                </div>
             </div>
         </div>
+
 
     )
 };
