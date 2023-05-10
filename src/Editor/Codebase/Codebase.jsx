@@ -17,46 +17,49 @@ const Codebase = () => {
 
     const [dom, setDom] = useState();
     const [string, setString] = useState();
+    const [toggle, setToggle] = useState(true);
 
     // on init: convert main JSON into string
     // on usage: convert string into JSON
 
+    const convertJSONtoHimalayaJSON = (config, toggle = true) => {
+        // we are basing this off our built in JSON
+        let children = config.children;
+        // divs, imgs, vids are exceptions
+        if (config.component === 'div') children = children?.map(child => convertJSONtoHimalayaJSON(child, toggle));
+        else children = [{ type: 'text', content: config.children || '' }];
+
+        let attributes = [];
+        for (let [key, value] of Object.entries(config)) {
+            if (key === 'id' || key === 'children' || key === 'component') continue;
+            if (key === 'className') key = 'class';
+            if (key === 'className' && !toggle) value = '';
+            attributes.push({ key, value });
+        };
+
+        // we are returning a {} consistent with himalaya JSON
+        return { tagName: config.component, attributes, children };
+        // ids are not necessary because we do not display them any way
+    };
+    
+    const convertJSONtoHimalayaJSONArray = (config, toggle = true) => {
+        let elements = [];
+        let children = config?.children;
+        if (children instanceof Array) for (const child of children) elements.push(convertJSONtoHimalayaJSON(child, toggle));
+        return elements;
+    };
+
     useEffect(() => {
         // if a page is not selected 
-        if (!page?.data) return navigate('/editor/pages');
+        // if (!page?.data) return navigate('/editor/pages');
 
         // from JSON into string
-
-        const convertJSONtoHimalayaJSON = (config) => {
-            // we are basing this off our built in JSON
-            let children = config.children;
-            if (config.component === 'h1') children = [{ type: 'text', content: config.children || '' }];
-            else children = children?.map(child => convertJSONtoHimalayaJSON(child));
-
-            let attributes = [];
-            for (let [key, value] of Object.entries(config)) {
-                if (key === 'id' || key === 'children' || key === 'component') continue;
-                if (key === 'className') key = 'class';
-                attributes.push({ key, value });
-            };
-
-            // we are returning a {} consistent with himalaya JSON
-            return { tagName: config.component, attributes, children };
-            // ids are not necessary because we do not display them any way
-        };
-        
-        const convertJSONtoHimalayaJSONArray = (config) => {
-            let elements = [];
-            let children = config?.children;
-            if (children instanceof Array) for (const child of children) elements.push(convertJSONtoHimalayaJSON(child));
-            return elements;
-        };
 
         const convertedHimalayaJSON = convertJSONtoHimalayaJSONArray(page?.data);
         const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON);
         setString(stringifiedHimalayaJSON);
-        setDom(renderElements(page?.data));
-    }, [])
+        if (page?.data) setDom(renderElements(page?.data, toggle));
+    }, [page?.id])
 
 
     const onChange = (editorValue, event ) => {
@@ -65,9 +68,10 @@ const Codebase = () => {
         const convertHimalayaJSONtoJSON = (config, id = '0') => {
 
             let children = config.children;
-            if (config.tagName === 'h1') children = children.find(child => child.type === 'text')?.content || '';
+            // divs, imgs, vids are exceptions
+            if (config.tagName === 'div') children = children.filter(child => child.type === 'element')?.map((child, i) => convertHimalayaJSONtoJSON(child, `${id}-${i}`)) || [];
             else if (config.tagName === 'img') children = null;
-            else children = children.filter(child => child.type === 'element')?.map((child, i) => convertHimalayaJSONtoJSON(child, `${id}-${i}`)) || [];
+            else children = children.find(child => child.type === 'text')?.content || '';
             // himalaya json follows this format
             console.log('CHILD DURING PARSE', children, config.children);
 
@@ -93,7 +97,7 @@ const Codebase = () => {
 
         setPageData({ ...builtInJSON });
 
-        setDom(renderElements(builtInJSON));
+        setDom(renderElements(builtInJSON, toggle));
 
     };
 
@@ -116,6 +120,12 @@ const Codebase = () => {
         if (!mounted) setLoader(true);
         else setLoader(false);
     }, [mounted]);
+
+    const toggleTailwind = () => {
+        setToggle(!toggle);
+        setDom(renderElements(page?.data, !toggle));
+
+    };
 
     return (
         <div className="grid grid-rows-[minmax(0,_1fr)_auto] p-2 gap-1">
@@ -140,9 +150,9 @@ const Codebase = () => {
                 </div>
             </div>
 
-            <div className="grid grid-flow-col border border-black rounded-lg p-1 gap-2">
+            <div onClick={toggleTailwind} className="grid grid-flow-col border border-black rounded-lg p-1 gap-2">
                 <div className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
-                    <h1 className="text-2xl">Toggle Tailwind CSS (On)</h1>
+                    <h1 className="text-2xl">Toggle Tailwind CSS ({toggle ? 'ON' : 'OFF'})</h1>
                 </div>
                 <div className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
                     <h1 className="text-2xl">Import Custom CSS File</h1>

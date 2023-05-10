@@ -3,19 +3,19 @@ import { RiGasStationFill } from 'react-icons/ri';
 import File from './File';
 import { useUtil } from '../../Contexts/Util';
 import { useAuth } from '../../Contexts/Auth';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { deployWebsite } from '../requests';
 
 const Staging = ({ website, deploy }) => {
 
-    const { user } = useAuth();
     const { prompt, notify, setIntegrator, integrator, setLoader } = useUtil();
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
+    const { pathname: origin } = useLocation();
 
     const sendFileRequest = async () => {
-        setIntegrator({ active: true, target: 'objects' });
+        setIntegrator({ active: true, target: 'objects', origin });
         notify('Sending you to objects. Please select a file to deploy.')
         navigate('/objects');
     };
@@ -30,9 +30,10 @@ const Staging = ({ website, deploy }) => {
 
     // returning
     useEffect(() => {
-        if (!integrator?.active || integrator?.target !== 'objects' || !integrator?.data) return;
-        console.log('INTEGRATOR DATA', integrator?.data);
-        setFiles([ ...files, { path: integrator?.data, index: true } ]);
+        console.log('integrator', integrator, integrator?.origin, origin);
+        if (!integrator?.active || !integrator?.data) return console.log('EHK');
+        if (integrator?.target !== 'objects' || integrator?.origin !== origin) return console.log('ehk2');
+        setFiles([ ...files, { path: integrator?.data?.name, index: true } ]);
         setIntegrator({ active: false });
     }, [integrator?.active]);
 

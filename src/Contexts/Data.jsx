@@ -36,10 +36,10 @@ const DataContext = ({ children }) => {
     const { user } = useAuth();
 
     const onLoad = async () => {
-        const token = user?.accessToken;
-        if (!token) return;
-        // attempt to retrieve from cache
         const cachedData = getDataFromSession();
+        const token = user?.accessToken;
+        if (!token) return setData({ ...cachedData });
+        // attempt to retrieve from cache
         console.log('cached data', cachedData);
         // get cache when applicable
 
@@ -80,6 +80,7 @@ const DataContext = ({ children }) => {
     const setDocs = (array) => setData({ ...data, docs: array }); 
     const setWebsite = (obj) => setData({ ...data, website: obj });
     const setMetrics = (obj) => setData({ ...data, metrics: obj });
+    const setPage = (obj) => setData({ ...data, page: obj });
 
     const values = {
         pages: data?.pages || [], setPages,
@@ -87,7 +88,8 @@ const DataContext = ({ children }) => {
         objects: data?.objects || [], setObjects,
         docs: data?.docs || [], setDocs,
         website: data?.website || '', setWebsite,
-        metrics: data?.metrics || '', setMetrics
+        metrics: data?.metrics || '', setMetrics,
+        page: data?.page || {}, setPage
     };
 
     return (

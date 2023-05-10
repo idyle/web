@@ -1,0 +1,63 @@
+const header = {
+    component: 'h1',
+    className: 'md:text-4xl text-2xl font-bold',
+    children: 'Your Header Here'
+};
+
+const text = {
+    component: 'h1',
+    className: 'md:text-2xl text-xl',
+    children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempus lorem mauris, sed pharetra eros blandit eu. Praesent a aliquam dui. Nulla elementum nisl eu massa pharetra, sed rutrum diam.'
+};
+
+const section1 = {
+    component: 'div',
+    className: 'grid',
+    children: [ { ...header, children: '1 Section' }, text ]
+};
+
+const section2 = {
+    component: 'div',
+    className: 'grid md:grid-cols-2',
+    children: [ { ...header, children: '2 Section' }, text ]
+};
+
+const section3 = {
+    component: 'div',
+    className: 'grid md:grid-cols-3',
+    children: [ { ...header, children: '3 Section' }, header, text ]
+}
+
+const img = {
+    component: 'img',
+    src: 'https://i.imgur.com/EJOjIMC.jpeg',
+    alt: 'smaple'
+};
+
+const video = {
+    
+};
+
+const button = {
+    component: 'div',
+    className: 'text-white bg-black rounded-lg select-none',
+    children: [ { ...text, children: 'Button Name' }]
+};
+
+const link = {
+    component: 'a',
+    target: '_blank',
+    className: 'md:text-2xl text-xl text-blue-500 underline',
+    href: 'https://idyle.app',
+    children: 'Go to Google'
+}
+
+const navigation = {
+    
+};
+
+module.exports = {
+
+header, text, img, section1, section2, section3, button, link
+    
+}

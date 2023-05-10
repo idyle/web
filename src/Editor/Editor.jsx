@@ -22,10 +22,10 @@ export const EditorContext = ({ children }) => {
 
     const { user } = useAuth();
     const { setLoader, notify, prompt } = useUtil();
-    const { pages, setPages } = useData();
+    const { pages, setPages, page, setPage } = useData();
 
     // const [pageRoute, setPageRoute] = useState();
-    const [page, setPage] = useState({});
+    // const [page, setPage] = useState({});
 
     const save = async (page) => {
         setLoader(true);
@@ -60,9 +60,9 @@ export const EditorContext = ({ children }) => {
     }, [page])
 
     const serialize = (object, id = '0') => {
-        console.log('objkect', object)
         let children = object.children;
         if (children instanceof Array) children = children.map((child, i) => serialize(child, `${id}-${i}`)) || [];
+        console.log('TO SERIALIZE', object, id);
         return { ...object, id, children };
     };
 

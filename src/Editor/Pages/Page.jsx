@@ -10,13 +10,13 @@ const Page = ({ page, editPage, addMode, setAddMode }) => {
     const navigate = useNavigate();
 
     const sendPage = () => {
+        if (!integrator?.active || integrator?.target !== 'editor/pages' || !integrator?.origin) return;
         setIntegrator({ ...integrator, data: page });
-        navigate('/deployer');
+        navigate(integrator?.origin);
     };
 
     const onClick = async () => {
         if (addMode) return;
-        if (integrator?.active && integrator?.target === 'editor/pages') return sendPage();
         
         setPage(page);
     };
@@ -59,7 +59,7 @@ const Page = ({ page, editPage, addMode, setAddMode }) => {
     const cancel = () => setAddMode(false);
 
     return (
-        <div className={`grid w-full items-center justify-items-center ${color} p-6 gap-3 rounded-xl ${integrationMode}`}>
+        <div onClick={sendPage} className={`grid w-full items-center justify-items-center ${color} p-6 gap-3 rounded-xl ${integrationMode}`}>
             <div className="grid items-center justify-items-center gap-2">
                 { !addMode ? <div className="flex items-center place-content-center gap-2">
                     { editName?

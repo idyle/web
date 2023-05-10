@@ -1,7 +1,7 @@
 import { AiFillCopy, AiOutlineDownload, AiOutlineDelete } from 'react-icons/ai'
 import { useAuth } from "../Contexts/Auth";
 import { useUtil } from "../Contexts/Util";
-import { deleteFile, downloadFile } from './requests';
+import { deleteFile, downloadFile, getFile } from './requests';
 import { useNavigate } from 'react-router-dom';
 
 const Object = ({ object, objects, setObjects }) => {
@@ -44,12 +44,15 @@ const Object = ({ object, objects, setObjects }) => {
 
     const integrationMode = (integrator?.active && integrator?.target === 'objects') ? `hover:bg-blue-300/50 select-none` : '';
 
-    const sendFile = () => {
+    const sendFile = async () => {
         // send data back
         console.log(integrator?.active, 'integrator status');
-        if (!integrator?.active || integrator?.target !== 'objects') return;
-        setIntegrator({ ...integrator, data: object?.name });
-        navigate('/deployer');
+        if (!integrator?.active || integrator?.target !== 'objects' || !integrator?.origin) return;
+        const updatedFile = await getFile(user?.accessToken, object?.name);
+        console.log(updatedFile);
+        if (!updatedFile) return;
+        setIntegrator({ ...integrator, data: updatedFile });
+        navigate(integrator?.origin);
     };
 
     return (

@@ -91,3 +91,25 @@ export const deleteFile = async (token, fileName) => {
         return false;
     }
 };
+
+export const getFile = async (token, fileName) => {
+    try {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        const req = await fetch(`${servicePath}/get/user/${fileName}`, options);
+        const res = await req.json();
+        if (!res?.status) return false;
+        return res?.file;
+
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};

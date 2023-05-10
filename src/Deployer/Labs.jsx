@@ -4,7 +4,7 @@ import { HiOutlineDatabase } from 'react-icons/hi';
 import { BsThreeDots } from 'react-icons/bs';
 import { useUtil } from "../Contexts/Util";
 import { useAuth } from "../Contexts/Auth";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { convertPage } from './requests';
@@ -14,8 +14,8 @@ const Labs = () => {
     const navigate = useNavigate();
     const { setIntegrator, notify, prompt, integrator, setLoader } = useUtil();
     const { user } = useAuth();
-
     const [page, setPage] = useState({});
+    const { pathname: origin } = useLocation();
 
     const remove = async () => {
         if (!(await prompt('Remove your chosen page?'))) return;
@@ -26,7 +26,7 @@ const Labs = () => {
     // sendPageRequest
     const sendPageRequest = async () => {
         console.log('CLICKED')
-        setIntegrator({ active: true, target: 'editor/pages' });
+        setIntegrator({ active: true, target: 'editor/pages', origin});
         notify('Sending you to editor/pages. Please select a page to convert.');
         navigate('/editor/pages');
     };
@@ -34,7 +34,8 @@ const Labs = () => {
     // returning
     useEffect(() => {
         console.log('INTEGREATOR IS BACK', integrator);
-        if (!integrator?.active || integrator?.target !== 'editor/pages' || !integrator?.data) return;
+        if (!integrator?.active || !integrator?.data) return;
+        if (integrator?.target !== 'editor/pages' || integrator?.origin !== origin) return;
         // directly a page
         console.log('DATA RECEIED', integrator?.data);
         setPage(integrator?.data);

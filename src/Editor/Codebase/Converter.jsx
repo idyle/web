@@ -2,9 +2,9 @@
 
 import { createElement } from 'react';
 
-export const renderElements = (config) => {
+export const renderElements = (config, toggle = true) => {
     let children = config.children;
-    if (children instanceof Array) children = children.map((e) => renderElements(e));
+    if (children instanceof Array) children = children.map((e) => renderElements(e, toggle));
 
     let attributes = {};
     for (let [key, value] of Object.entries(config)) {
@@ -14,6 +14,7 @@ export const renderElements = (config) => {
     };
 
     attributes.key = `k-${config.id}`;
+    if (!toggle) attributes.style = { all: 'initial' };
 
     return createElement(config.component, attributes, children);
 };

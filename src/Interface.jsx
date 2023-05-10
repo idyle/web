@@ -19,7 +19,7 @@ const Interface = () => {
                 <Route path="payments" element={<Payments />} />
                 <Route path="docs" element={<Documents />} />
                 <Route path="objects" element={<Objects />} />
-                <Route path="deployer" element={<Deployer />} />
+                <Route path="deployer/*" element={<Deployer />} />
                 <Route path="*" element={<Navigate to="" />} />
             </Routes>
         </div>
