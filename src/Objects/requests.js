@@ -105,6 +105,7 @@ export const getFile = async (token, fileName) => {
 
         const req = await fetch(`${servicePath}/get/user/${fileName}`, options);
         const res = await req.json();
+        console.log(res);
         if (!res?.status) return false;
         return res?.file;
 

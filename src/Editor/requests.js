@@ -2,7 +2,6 @@ const servicePath = `${process.env.REACT_APP_BASEPATH}/editor`;
 
 export const savePage = async (token, page) => {
     try {
-
         const options = {
             method: 'POST',
             headers: {
@@ -17,7 +16,6 @@ export const savePage = async (token, page) => {
 
         const req = await fetch(url, options);
         const res = await req.json();
-        console.log('set res', res);
         return res?.status;
 
     } catch (e) {
@@ -45,6 +43,29 @@ export const listPages = async (token, filter, value) => {
         console.log('res pages', res);
         if (!res?.status) return false;
         return res?.pages;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
+export const getPage = async (token, page) => {
+    try {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        const req = await fetch(`${servicePath}/get/user/${page?.id}`, options);
+        const res = await req.json();
+        console.log('delete res', res);
+        if (!res?.status) return false;
+        return res?.page;
+
     } catch (e) {
         console.error(e);
         return false;

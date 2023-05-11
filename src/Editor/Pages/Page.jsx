@@ -5,7 +5,7 @@ import { useUtil } from '../../Contexts/Util';
 import { useNavigate } from 'react-router-dom';
 
 const Page = ({ page, editPage, addMode, setAddMode }) => {
-    const { remove, page: selectedPage, setPage } = useEditor();
+    const { remove, page: selectedPage, setPage, setPageId } = useEditor();
     const { integrator, setIntegrator } = useUtil();
     const navigate = useNavigate();
 
@@ -17,10 +17,10 @@ const Page = ({ page, editPage, addMode, setAddMode }) => {
 
     const onClick = async () => {
         if (addMode) return;
-        
-        setPage(page);
+        setPageId(page?.id);
+        setPage({ ...page });
     };
-    console.log('selected', selectedPage, page);
+
     const color = `${(selectedPage?.id === page.id && !addMode) ? 'bg-black text-white' : 'border border-black text-black'}`;
     const border = `${(selectedPage?.id === page.id && !addMode) ? 'border border-white text-white' : 'border border-black text-black'}`;
     const integrationMode = (integrator?.active && integrator?.target === 'editor/pages') ? `hover:bg-blue-300/50 select-none` : '';

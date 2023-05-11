@@ -31,11 +31,14 @@ const section3 = {
 const img = {
     component: 'img',
     src: 'https://i.imgur.com/EJOjIMC.jpeg',
-    alt: 'smaple'
+    alt: 'Image'
 };
 
 const video = {
-    
+    component: 'video',
+    src: 'https://i.imgur.com/WWDmWU7.mp4',
+    alt: 'Video',
+    controls: 'true',
 };
 
 const button = {
@@ -58,6 +61,6 @@ const navigation = {
 
 module.exports = {
 
-header, text, img, section1, section2, section3, button, link
+header, text, img, section1, section2, section3, button, link, video
     
 }

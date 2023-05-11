@@ -30,30 +30,34 @@ const Elements = () => {
         if (!path.length) return setSelType('None');
         let current = page?.data;
         for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
-        setSelType(current?.component);
+        setSelType(current?.id);
     }, [path]);
 
     // entering
     const sendObjectsRequest = () => {
-        setIntegrator({ active: true, target: 'objects', origin });
+        console.log('sending req', page.data, path);
+        setIntegrator({ active: true, target: 'objects', origin, ref: { path, data: page?.data } });
         notify('Sending you to objects. Please select a file to add.');
         navigate('/objects');
     };
 
     // returning
     useEffect(() => {
-        console.log(integrator);
-        if (!integrator?.active || !integrator?.data) return console.log('EHK');
-        if (integrator?.target !== 'objects' || integrator?.origin !== origin) return console.log('ehk2');
+        if (!integrator?.active || !integrator?.data) return;
+        if (integrator?.target !== 'objects' || integrator?.origin !== origin) return;
         const file = integrator?.data;
-        if (file?.type.startsWith('image')) setPageData({ ...setObjectFromPath(page.data, path, { ...elements['img'], src: file?.url }) });
-
+        const pageRef = integrator?.ref;
+        if (file?.type.startsWith('image'))  setPageData({ ...setObjectFromPath(pageRef.data, pageRef.path, { ...elements['img'], src: file?.url }) });
+        else if (file?.type.startsWith('video'))  setPageData({ ...setObjectFromPath(pageRef.data, pageRef.path, { ...elements['video'], src: file?.url }) });
         setIntegrator({ active: false });
     }, [integrator?.active]);
 
     const updateElement = (className, merge) => setPageData({ ...updateObjectFromPath(page?.data, path, className, merge) });
     const deleteElement = () => setPageData({ ...deleteObjectFromPath(page.data, path) });
-    const appendElement = (element) => setPageData({ ...setObjectFromPath(page.data, path, { ...elements[element] }) });
+    const appendElement = (element) => {
+        console.log('PATHHHH', element, path);
+        setPageData({ ...setObjectFromPath(page.data, path, { ...elements[element] }) });
+    };
 
     return (
         <div className="grid grid-rows-[80%_20%] gap-1 p-1">
@@ -69,7 +73,7 @@ const Elements = () => {
                     <Element title="3 Section" onClick={() => appendElement('section3')} icon={ <RxLayout />} />
 
                     <Element title="Image" onClick={sendObjectsRequest} icon={ <RxImage />} />
-                    <Element title="Video" onClick={() => appendElement('img')} icon={ <RxVideo />} />
+                    <Element title="Video" onClick={sendObjectsRequest} icon={ <RxVideo />} />
 
                     <Element title="Navigation" onClick={() => appendElement('img')} icon={ <RxListBullet />} />
 

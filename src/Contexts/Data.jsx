@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./Auth";
-import { listPages } from "../Editor/requests";
+import { getPage, listPages } from "../Editor/requests";
 import { getWebsite, listDeploys } from "../Deployer/requests";
 import { listDocs } from "../Documents/requests";
 import { listFiles } from "../Objects/requests";
@@ -25,14 +25,14 @@ const DataContext = ({ children }) => {
         }
     };
 
-    const saveToSession = () =>{
+    const saveToSession = (data) =>{
         if (!data) return;
         const stringified = JSON.stringify(data);
         if (!stringified) return;
         sessionStorage.setItem('idyle-data', stringified);
     };
 
-    const [data, setData] = useState();
+    const [data, setData] = useState(getDataFromSession);
     const { user } = useAuth();
 
     const onLoad = async () => {
@@ -40,7 +40,6 @@ const DataContext = ({ children }) => {
         const token = user?.accessToken;
         if (!token) return setData({ ...cachedData });
         // attempt to retrieve from cache
-        console.log('cached data', cachedData);
         // get cache when applicable
 
         let missing = [];
@@ -72,7 +71,7 @@ const DataContext = ({ children }) => {
     useEffect(() => {
         onLoad();
     }, [user?.accessToken]);
-    useEffect(() => saveToSession(), [data]);
+    useEffect(() => saveToSession(data), [data]);
 
     const setPages = (array) => setData({ ...data, pages: array }); 
     const setDeploys = (array) => setData({ ...data, deploys: array }); 
@@ -80,7 +79,9 @@ const DataContext = ({ children }) => {
     const setDocs = (array) => setData({ ...data, docs: array }); 
     const setWebsite = (obj) => setData({ ...data, website: obj });
     const setMetrics = (obj) => setData({ ...data, metrics: obj });
-    const setPage = (obj) => setData({ ...data, page: obj });
+    const setPageId = (str) => {
+        setData({ ...data, pageId: str });
+    };
 
     const values = {
         pages: data?.pages || [], setPages,
@@ -89,7 +90,7 @@ const DataContext = ({ children }) => {
         docs: data?.docs || [], setDocs,
         website: data?.website || '', setWebsite,
         metrics: data?.metrics || '', setMetrics,
-        page: data?.page || {}, setPage
+        pageId: data?.pageId || '', setPageId
     };
 
     return (

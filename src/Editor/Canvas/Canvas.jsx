@@ -78,14 +78,10 @@ export const DomContext = ({ children }) => {
 const Canvas = () => {
 
     const { page } = useEditor();
-    const navigate = useNavigate();
     const [dom, setDom] = useState([]);
-    const { notify } = useUtil();
 
     useEffect(() => {
         // handle case where no page selected / exists
-        console.log(page);
-        console.log('CURRNET PAGE ON CANVAS', page);
         if (page?.data) setDom(renderElements(page?.data));
     }, [page?.data]);
 

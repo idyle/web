@@ -48,7 +48,9 @@ const Object = ({ object, objects, setObjects }) => {
         // send data back
         console.log(integrator?.active, 'integrator status');
         if (!integrator?.active || integrator?.target !== 'objects' || !integrator?.origin) return;
+        setLoader(true);
         const updatedFile = await getFile(user?.accessToken, object?.name);
+        setLoader(false);
         console.log(updatedFile);
         if (!updatedFile) return;
         setIntegrator({ ...integrator, data: updatedFile });

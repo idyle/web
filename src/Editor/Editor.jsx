@@ -22,16 +22,17 @@ export const EditorContext = ({ children }) => {
 
     const { user } = useAuth();
     const { setLoader, notify, prompt } = useUtil();
-    const { pages, setPages, page, setPage } = useData();
-
-    // const [pageRoute, setPageRoute] = useState();
-    // const [page, setPage] = useState({});
+    const { pages, setPages, pageId, setPageId } = useData();
+    const test = pages.find(({ id }) => id === pageId);
+    const [page, setPage] = useState((test));
 
     const save = async (page) => {
-        setLoader(true);
+        const index = pages.findIndex(( { id } ) => id === page?.id);
+        if (!(index >= 0)) return;
         const operation = await savePage(user?.accessToken, page);
-        setLoader(false);
         if (!operation) return notify('Something went wrong trying to create the page.');
+        pages[index] = page;
+        setPages([ ...pages ]);
     };
 
     const remove = async (page) => {
@@ -40,35 +41,52 @@ export const EditorContext = ({ children }) => {
         const operation = await deletePage(user?.accessToken, page);
         setLoader(false);
         if (!operation) return notify('Something went wrong trying to delete this page.');
-        console.log('removing... page', page?.route);
         setPages(pages.filter(({ id }) => id !== page?.id));
     };
 
     // useEffect(() => {
-    //     setPage(pages.find(({ route }) => route === pageRoute) || pages[0]);
-    //     console.log(pages.filter(({ route }) => route === pageRoute) || pages[0])
-    // }, [pageRoute]);
+    //     console.log('CALLED PAGE');
+    //     const index = pages.findIndex(( { id }) => id === page.id);
+    //     if (!(index >= 0)) return;
+    //     let arr = pages;
+    //     // console.log('Page on setting to array', page);
+    //     arr[index] = page;
+    //     savePage(user?.accessToken, page);
+    //     setPages([...arr]);
+    // }, [page]);
 
-    useEffect(() => {
-        console.log(page, 'page');
-        const index = pages.findIndex(( { route }) => route === page.route);
-        console.log(index);
-        if (!(index >= 0)) return;
-        pages[index] = page;
-        savePage(user?.accessToken, page);
-        setPages([...pages]);
-    }, [page])
+    // useEffect(() => {
+    //     console.log('PAGE CHANGED IS DETECTED', page);
+    //     let mutatedPages = [ ...pages ];
+    //     const index = mutatedPages.findIndex(( { id }) => id === page?.id);
+    //     if (!(index >= 0)) return;
+    //     mutatedPages[index] = { ...page };
+    //     savePage(user?.accessToken, page);
+    //     setPages([ ...mutatedPages ]);
+    // }, [page]);
+
+    // useEffect(() => {
+    //     console.log('PAGE ID CALLED');
+    //     if (!pageId) return setPage({});
+    //     setPage(pages.find(({ id }) => id === pageId) || {});
+    // }, [pageId]);
 
     const serialize = (object, id = '0') => {
-        let children = object.children;
+        let children = object.children || null;
         if (children instanceof Array) children = children.map((child, i) => serialize(child, `${id}-${i}`)) || [];
-        console.log('TO SERIALIZE', object, id);
-        return { ...object, id, children };
+        // console.log('TO SERIALIZE', object, id, children);
+        return { ...object, children, id };
     };
 
-    const setPageData = (pageData) => setPage({ ...page, data: serialize(pageData) });
+    const setPageData = (pageData) => {
+        // we will just trigger the save directly to avoid interruption from useEffect
+        // console.log('Serialized', serialize(pageData));
+        const data = { ...serialize(pageData) };
+        setPage({ ...page, data });
+        save({ ...page, data });
+    };
 
-    const values = { page, setPageData, pages, setPage, setPages, save, remove };
+    const values = { page, setPageData, pages, setPage, setPages, save, remove, setPageId };
     return ( <EditorValues.Provider value={values}>{children}</EditorValues.Provider> );
 };
 

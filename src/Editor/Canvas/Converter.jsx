@@ -16,8 +16,6 @@ export const renderElements = (config) => {
 
     attributes.key = `k-${config.id}`;
 
-    console.log('ID', config?.id, 'OF', config.component);
-    
     return (
         <Wrapper key={`w-${config.id}`}>
             {createElement(config.component, attributes, children)}

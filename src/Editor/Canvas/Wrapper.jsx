@@ -27,6 +27,7 @@ const Wrapper = ({ children }) => {
 
     const onClick = (e) => {
         e.stopPropagation();
+        console.log(children.props);
         setSelected(children.props.id);
     }
 
