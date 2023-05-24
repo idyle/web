@@ -48,12 +48,12 @@ const Page = ({ page, editPage, addMode, setAddMode }) => {
 
     const canvas = async () => {
         onClick();
-        navigate('/editor/canvas');
+        navigate(`/editor/${page?.route}?mode=canvas`);
     };
 
     const code = () => {
         onClick();
-        navigate('/editor/codebase');
+        navigate(`/editor/${page?.route}?mode=codebase`);
     };  
 
     const cancel = () => setAddMode(false);

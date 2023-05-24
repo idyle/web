@@ -5,12 +5,14 @@ import { useState } from "react";
 import { setupWebsite } from "./requests";
 import { useEffect } from "react";
 import { BiLinkExternal } from 'react-icons/bi';
+import { useData } from "../Contexts/Data";
 
-const Setup = ({ website, setWebsite }) => {
+const Setup = ({ setWebsite }) => {
 
-    console.log('from SETUP', website);
+    console.log('from SETUP');
 
     const { user } = useAuth();
+    const { resetWebsite, website } = useData();
     const { notify, setLoader, prompt } = useUtil();
 
     const [clicked, setClicked] = useState(false);
@@ -22,7 +24,8 @@ const Setup = ({ website, setWebsite }) => {
         setLoader(true);
         const operation = await setupWebsite(user?.accessToken, inputWebsite);
         setLoader(false);
-        if (operation) setWebsite(website);
+        if (!operation) return notify("An error occured trying to make the website.");
+        resetWebsite();
     };
 
     const onChange = (e) => setInputWebsite(e.target.value);

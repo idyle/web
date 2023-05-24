@@ -1,9 +1,10 @@
-import { createElement, useState } from 'react';
+import { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import Wrapper from './Wrapper';
 
 export const renderElements = (config) => {
+
     let children = config.children;
     if (children instanceof Array) children = children.map((e) => renderElements(e));
 
@@ -23,7 +24,8 @@ export const renderElements = (config) => {
     )
 };
 
-export const convertToString = (reactElement) => {
-    return renderToString(reactElement)
-}
-
+export const constructDom = (config, css) => {
+    let body = renderElements(config);
+    if (css) css = createElement("link", { rel: "stylesheet", href: css });
+    return (<div>{css}{body}</div>)
+};

@@ -7,11 +7,11 @@ import { listDeploys } from '../requests';
 import { useState } from 'react';
 import { useData } from '../../Contexts/Data';
 
-const Control = ({ website, deploy }) => {
+const Control = ({ deploy }) => {
 
     const { user } = useAuth();
     const { setLoader, notify, prompt } = useUtil();
-    const { deploys, setDeploys } = useData();
+    const { deploys, resetDeploys, website } = useData();
     // const [deploys, setDeploys] = useState([]);
  
     // useEffect(() => {
@@ -28,11 +28,19 @@ const Control = ({ website, deploy }) => {
 
     // needs deploy utility as well 
 
+    useEffect(() => {
+        if (!website) return;
+        resetDeploys();
+    }, [website])
+
     const revert = async (id) => {
         if (!id) return notify('No deploy specified.');
         if (!(await prompt(`You're about to revert back to ${id}. Make sure you still have the same files in Objects. Proceed?`))) return;
         deploy([], id);
     };
+
+    const currentDeploy = deploys.find(d => d?.id === website?.deploy);
+    console.log(currentDeploy, 'deploy', website, 'website', deploys);
 
     return (
         <div className="grid grid-rows-[auto_minmax(0,_1fr)] border border-black rounded-lg p-3 overflow-auto">
@@ -43,7 +51,17 @@ const Control = ({ website, deploy }) => {
             </div>
 
             <div className="grid gap-2 auto-rows-min overflow-auto">
-                {deploys?.map((deploy, i) => (<Deploy i={i} key={`d${i}`} revert={revert} deploy={deploy} website={website} />))}
+                {
+                currentDeploy ? <Deploy i={0} deploy={currentDeploy} revert={revert} website={website} />
+                : <div className="flex place-content-center bg-black p-2 rounded-lg text-white">
+                    <h1 className="text-3xl text-center">No deploy attached.</h1>
+                </div>
+                }
+                
+                {
+                deploys?.filter(( { id }) => id !== website?.deploy)
+                .map((deploy, i) => (<Deploy i={i+1} key={`d${i}`} revert={revert} deploy={deploy} website={website} />))
+                }
             </div>
 
         </div>

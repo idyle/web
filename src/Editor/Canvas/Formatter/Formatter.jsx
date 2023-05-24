@@ -10,6 +10,7 @@ import { useEditor } from '../../Editor';
 import { useDom } from '../Canvas';
 import formats from './formats';
 import Format from './Format';
+import Selector from './Selector';
 
 const Toolbar = () => {
 
@@ -22,26 +23,32 @@ const Toolbar = () => {
         <div className="flex place-content-center items-center gap-1 p-1 border border-black rounded-lg ">
 
             <Format icon={<RxFontBold />} onClick={() => updateElement('bold')} />
-            <Format icon={<RxFontItalic />} />
-            <Format icon={<RxUnderline />} />
+            <Format icon={<RxFontItalic onClick={() => updateElement('italic')} />} />
+            <Format icon={<RxUnderline onClick={() => updateElement('underline')} />} />
 
-            <Format title="Font" icon={<RxFontStyle />} />
+            <Format title="Font" icon={<RxFontStyle />}>
+            <input className="hidden" type="color" id="favcolor" name="favcolor" value="#ff0000" />
+            </Format>
 
-            <Format icon={<RxTextAlignLeft />} />
-            <Format icon={<RxTextAlignCenter />} />
-            <Format icon={<RxTextAlignRight />} />
-            <Format icon={<RxTextAlignBottom />} />
-            <Format icon={<RxTextAlignMiddle />} />
-            <Format icon={<RxTextAlignTop />} />
+            <Selector title="FOnt" icon={<RxColorWheel />} />
+   
+
+
+            <Format icon={<RxTextAlignLeft onClick={() => updateElement('textLeft')} />} />
+            <Format icon={<RxTextAlignCenter onClick={() => updateElement('textCenter')} />} />
+            <Format icon={<RxTextAlignRight onClick={() => updateElement('textRight')} />} />
+            <Format icon={<RxTextAlignBottom onClick={() => updateElement('textBottom')} />} />
+            <Format icon={<RxTextAlignMiddle onClick={() => updateElement('textMiddle')} />} />
+            <Format icon={<RxTextAlignTop onClick={() => updateElement('textTop')} />} />
  
             <Format title="Color" icon={<RxColorWheel />} />
 
-            <Format icon={<RxAlignLeft />} />
-            <Format icon={<RxAlignCenterHorizontally />} />
-            <Format icon={<RxAlignRight />} />
-            <Format icon={<RxAlignBottom />} />
-            <Format icon={<RxAlignCenterVertically />} />
-            <Format icon={<RxAlignTop />} />
+            <Format icon={<RxAlignLeft onClick={() => updateElement('sectionLeft')} />} />
+            <Format icon={<RxAlignCenterHorizontally onClick={() => updateElement('sectionCenter')} />} />
+            <Format icon={<RxAlignRight onClick={() => updateElement('sectionRight')} />} />
+            <Format icon={<RxAlignBottom onClick={() => updateElement('sectionTop')} />} />
+            <Format icon={<RxAlignCenterVertically onClick={() => updateElement('sectionMiddle')} />} />
+            <Format icon={<RxAlignTop onClick={() => updateElement('sectionBottom')} />} />
 
             <Format title="Margin" icon={<RxMargin />} />
             <Format title="Padding" icon={<RxPadding />} />

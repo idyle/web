@@ -3,14 +3,14 @@ import { emmetHTML } from "emmet-monaco-es";
 import { useState, useRef, useEffect } from "react";
 import { useEditor } from "../Editor";
 import { useUtil } from "../../Contexts/Util";
-import { renderElements } from "./Converter";
+import { constructDom, renderElements } from "./Converter";
 import { useDom } from "./Codebase";
 import { parse } from "himalaya";
 
 const Parser = () => {
     const { page, setPageData } = useEditor();
     const { setLoader } = useUtil();
-    const { string, toggle, setDom, convertHimalayaJSONtoJSON } = useDom();
+    const { string, toggle, css, setDom, convertHimalayaJSONtoJSON } = useDom();
     const [mounted, setMounted] = useState();
     const editorRef = useRef();
 
@@ -29,7 +29,7 @@ const Parser = () => {
     };
 
     const onChange = (editorValue) => {
-        const parsedHimalayaJSON = parse(`<div class=''>${editorValue}</div>`);
+        const parsedHimalayaJSON = parse(`<div>${editorValue}</div>`);
         // output string
         console.log('parsed himalaya json', parsedHimalayaJSON);
 
@@ -38,7 +38,7 @@ const Parser = () => {
 
         if (!builtInJSON) return;
         setPageData({ ...builtInJSON });
-        setDom(renderElements(builtInJSON, toggle));
+        setDom(constructDom(builtInJSON, toggle, css));
         // it's now possible to setDom() without classes while also saving 
         // a different case where the classes are presevered
     };

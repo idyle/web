@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { parse, stringify } from 'himalaya';
 import { useEditor } from "../Editor";
-import { renderElements } from "./Converter";
+import { constructDom, renderElements } from "./Converter";
 import Parser from "./Parser";
 import Toolbar from "./Toolbar";
 import Dom from "./Dom";
@@ -13,12 +13,11 @@ export const useDom = () => useContext(DomValues);
 
 export const DomContext = ({ children }) => {
 
-    const { page } = useEditor();
+    const { page, toggle, setToggle, css, setCss } = useEditor();
     const { pathname: origin } = useLocation();
     const { integrator } = useUtil();
     const [dom, setDom] = useState();
     const [string, setString] = useState();
-    const [toggle, setToggle] = useState(true);
 
     const convertJSONtoHimalayaJSON = (config, toggle = true) => {
         // we are basing this off our built in JSON
@@ -61,20 +60,24 @@ export const DomContext = ({ children }) => {
     };
 
     useEffect(() => {
-        if (integrator?.active && integrator?.origin === origin) return;
+        if (integrator?.active && integrator?.origin === `${origin}?mode=codebase`) return;
         // if a page is not selected 
         // if (!page?.data) return navigate('/editor/pages');
         // from JSON into string
+        if (!page?.data || !page?.id) return;
         const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
+        if (!convertedHimalayaJSON || !convertedHimalayaJSON?.tagName) return;
+        console.log('CONVERTED', convertedHimalayaJSON)
         // instead of creating a wrapper func, it's possible to just return its children
         const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON?.children || []);
+        if (!stringifiedHimalayaJSON) return;
         setString(stringifiedHimalayaJSON);
-        if (page?.data) setDom(renderElements(page?.data, toggle));
-    }, [page?.id])
+        setDom(constructDom(page?.data, toggle, css));
+    }, [page, toggle, css])
 
     const values = { 
         convertJSONtoHimalayaJSON, convertHimalayaJSONtoJSON,
-        dom, setDom, string, setString, toggle, setToggle
+        dom, setDom, string, setString, toggle, setToggle, css, setCss
     };
     return ( <DomValues.Provider value={values}>{children}</DomValues.Provider> );
 };

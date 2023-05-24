@@ -1,25 +1,21 @@
 import { Helmet } from "react-helmet";
-import Control from "./Control/Control";
-import Setup from './Setup';
-import Staging from "./Staging/Staging";
-import Labs from "./Labs";
-import { useState, useEffect } from "react";
+import Labs from "./Labs/Labs";
 import { useUtil } from "../Contexts/Util";
 import { useAuth } from "../Contexts/Auth";
-import { deployWebsite, getWebsite } from "./requests";
+import { deployWebsite } from "./requests";
 import { useData } from "../Contexts/Data";
 import Subnav from "../Templates/Subnav";
 import Subnavbutton from "../Templates/Subnavbutton";
-import { MdMiscellaneousServices, MdHome } from 'react-icons/md';
+import { MdHome } from 'react-icons/md';
 import Home from "./Home";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { IoMdFlask } from 'react-icons/io';
 
 const Deployer = () => {
 
     const { user } = useAuth();
     const { setLoader, notify } = useUtil();
-    const { website, setWebsite } = useData();
-    console.log('FROM DEPLOYER', website);
+    const { website, resetDeploys, resetWebsite } = useData();
 
     const deploy = async (files = [], revert) => {
         setLoader(true);
@@ -28,7 +24,7 @@ const Deployer = () => {
         if (!operation) return notify('Deploy failed :(');
         console.log('deploy operation', operation);
         notify("Successfully deployed your page. Due to caching, changes may take up to an hour to take effect.");
-        window.location.reload();
+        resetWebsite();
     };
 
     return (
@@ -43,12 +39,12 @@ const Deployer = () => {
 
             <Subnav type="side" mode="white">
                 <Subnavbutton icon={<MdHome />} text="Home" route="/deployer/home" />
-                <Subnavbutton icon={<MdMiscellaneousServices />} text="Others" route="/deployer/others" />
+                <Subnavbutton icon={<IoMdFlask />} text="Labs" route="/deployer/labs" />
             </Subnav>
 
             <Routes>
                 <Route path="home" element={<Home deploy={deploy} />} />
-                <Route path="others" element={<Labs />} />
+                <Route path="labs" element={<Labs />} />
                 <Route path="*" element={<Navigate to="home" />} /> 
             </Routes>
 

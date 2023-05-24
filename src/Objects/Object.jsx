@@ -1,14 +1,14 @@
 import { AiFillCopy, AiOutlineDownload, AiOutlineDelete } from 'react-icons/ai'
 import { useAuth } from "../Contexts/Auth";
 import { useUtil } from "../Contexts/Util";
-import { deleteFile, downloadFile, getFile } from './requests';
+import { deleteFile, downloadFile, getFile, publicFile } from './requests';
 import { useNavigate } from 'react-router-dom';
 
 const Object = ({ object, objects, setObjects }) => {
 
     const navigate = useNavigate();
     const { user } = useAuth();
-    const { notify, setLoader, integrator, setIntegrator } = useUtil();
+    const { notify, prompt, setLoader, integrator, setIntegrator } = useUtil();
 
     const copy = () => {
         notify('Successfully copied to clipboard');
@@ -48,12 +48,14 @@ const Object = ({ object, objects, setObjects }) => {
         // send data back
         console.log(integrator?.active, 'integrator status');
         if (!integrator?.active || integrator?.target !== 'objects' || !integrator?.origin) return;
+        if (!(await prompt('Adding this to the canvas will make your file public. Continue?'))) return;
         setLoader(true);
-        const updatedFile = await getFile(user?.accessToken, object?.name);
+        const operation = await publicFile(user?.accessToken, object?.name);
+        // const updatedFile = await getFile(user?.accessToken, object?.name);
         setLoader(false);
-        console.log(updatedFile);
-        if (!updatedFile) return;
-        setIntegrator({ ...integrator, data: updatedFile });
+        // if (!updatedFile) return;
+        const url = `https://storage.googleapis.com/idyle/${object?.path}`;
+        if (operation) setIntegrator({ ...integrator, data: { ...object, url } });
         navigate(integrator?.origin);
     };
 

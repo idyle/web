@@ -1,8 +1,9 @@
 // we'll use the same converter in Canvas but w/o the Wrapper
 
 import { createElement } from 'react';
+import { renderToString } from 'react-dom/server';
 
-export const renderElements = (config, toggle = true) => {
+export const renderElements = (config, toggle) => {
     let children = config.children;
     if (children instanceof Array) children = children.map((e) => renderElements(e, toggle));
 
@@ -19,3 +20,12 @@ export const renderElements = (config, toggle = true) => {
     return createElement(config.component, attributes, children);
 };
 
+export const constructDom = (config, toggle, css) => {
+    let body = renderElements(config, true);
+    if (toggle) toggle = createElement("script", { src: "https://cdn.tailwindcss.com" });
+    if (css) css = createElement("link", { type: 'text/css', rel: "stylesheet", href: css });
+    const string = renderToString(<html><head>{css}{toggle}</head><body>{body}</body></html>);
+    return (
+        <iframe className="w-full h-full" srcDoc={string}></iframe>
+    )
+};

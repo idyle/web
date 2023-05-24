@@ -47,20 +47,37 @@ const button = {
     children: [ { ...text, children: 'Button Name' }]
 };
 
+// const link = {
+//     component: 'a',
+//     target: '_blank',
+//     className: 'md:text-2xl text-xl text-blue-500 underline',
+//     href: '/test',
+//     children: 'Go to Google'
+// };
+
 const link = {
     component: 'a',
-    target: '_blank',
     className: 'md:text-2xl text-xl text-blue-500 underline',
-    href: 'https://idyle.app',
-    children: 'Go to Google'
+    href: 'test',
+    children: 'go test page in ur pages'
 }
 
-const navigation = {
-    
+const navBase = {
+    component: 'div',
+    className: 'grid grid-flow-col gap-1 bg-black text-white p-1',
+    children: []
+};
+
+const navPart = {
+    component: 'a',
+    className: 'md:text-2xl text-xl',
+    children: 'Sample'
 };
 
 module.exports = {
 
-header, text, img, section1, section2, section3, button, link, video
+    header, text, img, video,
+    section1, section2, section3, 
+    button, link, navBase, navPart
     
 }

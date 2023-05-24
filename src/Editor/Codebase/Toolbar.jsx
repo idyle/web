@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { renderElements } from "./Converter";
+import { constructDom, renderElements } from "./Converter";
 import { useEditor } from "../Editor";
 import { useDom } from "./Codebase";
 import { useUtil } from "../../Contexts/Util";
@@ -9,19 +9,23 @@ import { stringify } from "himalaya";
 const Toolbar = () => {
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
-    const { page } = useEditor();
-    const { toggle, setToggle, setDom, setString, string, convertJSONtoHimalayaJSON } = useDom();
+    const { page, setPage, save } = useEditor();
+    const { toggle, setToggle, setDom, setString, string, 
+        convertJSONtoHimalayaJSON, css, setCss 
+    } = useDom();
     const { integrator, setIntegrator, notify } = useUtil();
 
     const toggleTailwind = () => {
         setToggle(!toggle);
-        setDom(renderElements(page?.data, !toggle));
+        setPage({ ...page, metadata: { ...page?.metadata, toggle: !toggle }});
+        save({ ...page, metadata: { ...page?.metadata, toggle: !toggle }});
+        // setDom(renderElements(page?.data, !toggle));
     };
 
     // entering
     const sendDocsRequest = () => {
         console.log(string, 'string');
-        setIntegrator({ active: true, target: 'docs', origin, ref: string });
+        setIntegrator({ active: true, target: 'docs', origin: `${origin}?mode=codebase`, ref: string });
         notify('Sending you to docs. Please select a doc to add');
         navigate('/docs');
         // needs to handle on docs' side still
@@ -32,12 +36,12 @@ const Toolbar = () => {
 
         const render = (str) => {
             setIntegrator({ active: false });
-            if (page?.data) setDom(renderElements(page?.data, toggle));
+            if (page?.data) setDom(constructDom(page?.data, toggle, css));
             setString(str);
         };
         try {
             if (!integrator?.active || !integrator?.data) return;
-            if (integrator?.target !== 'docs' || integrator?.origin !== origin) return; 
+            if (integrator?.target !== 'docs' || integrator?.origin !== `${origin}?mode=codebase`) return; 
             const config = integrator?.data;
             // actual thing to convert
             console.log('data sent back', config);
@@ -46,22 +50,52 @@ const Toolbar = () => {
             if (!himalayaJSON) return render(integrator?.ref);
             const stringified = stringify([himalayaJSON]);
             if (!stringified) return render(integrator?.ref);
-            console.log(`${integrator?.ref}${stringified}`);
+            console.log('SETTING STRING SUCC', `${integrator?.ref}${stringified}`);
             render(`${integrator?.ref}${stringified}`);
         } catch {
             notify('Something went wrong.');
             render(integrator?.ref)
         }
-    }, [integrator?.active])
+    }, [integrator?.active]);
+
+    const sendObjectsRequest = () => {
+        // send a file reques
+        console.log('ORIGIN', origin);
+        setIntegrator({ active: true, target: 'objects', origin: `${origin}?mode=codebase`, ref: page });
+        notify('Sending you to objects. Please select a CSS file to import.');
+        navigate('/objects');
+    };
+
+    useEffect(() => {
+        if (!integrator?.active || !integrator?.data) return;
+        if (integrator?.target !== 'objects' || integrator?.origin !== `${origin}?mode=codebase`) return;
+        if (!integrator?.data?.type?.startsWith('text/css')) return notify('Invalid file');
+        console.log('PROCESS RECOGNIZED');
+        // we can only except of type text/css
+        setCss(integrator?.data?.url);
+        setPage({ ...integrator?.ref, metadata: { ...integrator?.ref?.metadata, css: integrator?.data?.url }});
+        save({ ...integrator?.ref, metadata: { ...integrator?.ref?.metadata, css: integrator?.data?.url }});
+        setIntegrator({ active: false });
+        // now we have to handle the render on codebase & canvas 
+        // we also need to transfer css & toggle to main context (done) 
+    }, [integrator?.active]);
+
+    const ejectCss = () => {
+        setCss();
+        setPage({ ...page, metadata: { ...page?.metadata, css: null }});
+        save({ ...page, metadata: { ...page?.metadata, css: null }});
+    };
 
     return (
         <div className="grid grid-flow-col border border-black rounded-lg p-1 gap-2">
             <div onClick={toggleTailwind} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
                 <h1 className="text-2xl">Toggle Tailwind CSS ({toggle ? 'ON' : 'OFF'})</h1>
             </div>
-            <div className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
-                <h1 className="text-2xl">Import Custom CSS File</h1>
-            </div>
+            { !css ? <div onClick={sendObjectsRequest} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
+                <h1 className="text-2xl">Custom CSS File (IMPORT)</h1>
+            </div> : <div onClick={ejectCss} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
+                <h1 className="text-2xl">Custom CSS File (EJECT)</h1>
+            </div> }
             <div onClick={sendDocsRequest} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
                 <h1 className="text-2xl">Convert Docs to HTML</h1>
             </div>

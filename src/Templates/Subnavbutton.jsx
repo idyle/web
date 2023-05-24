@@ -9,9 +9,11 @@ const Subnavbutton =  ({ icon, text, route, textColor = 'text-black', bgColor = 
     const [selected, setSelected] = useState(false);
 
     const navigate = useNavigate();
-    const { pathname } = useLocation();
+    const { pathname, search } = useLocation();
 
     useEffect(() => {
+        console.log(`${pathname}${search}`, route);
+        if (`${pathname}${search}` === route) return setSelected(true);
         // part starts with an initial /
         let splicedPath = pathname?.split('/') || [];
         let splicedMatch = route?.split('/') || [];
@@ -24,7 +26,7 @@ const Subnavbutton =  ({ icon, text, route, textColor = 'text-black', bgColor = 
             if (itemMatch === itemPath && i === splicedMatch.length-1) return setSelected(true);
         };
         return setSelected(false);
-    }, [pathname, route]);
+    }, [pathname, search, route]);
 
     const { mode } = useProps();
     // let mode = 'black';

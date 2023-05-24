@@ -12,7 +12,7 @@ const Objects = () => {
     const { user } = useAuth();
     const { setLoader } = useUtil();
     const { objects, setObjects } = useData();
-
+    console.log(objects, 'objects');
     const onChange = async (e) => {
         if (!e.target?.files[0]) return;
 
@@ -25,7 +25,7 @@ const Objects = () => {
         console.log(url, 'url')
         if (!url) return;
 
-        setObjects([ ...objects, { name, type, url } ])
+        setObjects([ ...objects, { name, type, ...url } ])
 
     };
 
@@ -33,11 +33,9 @@ const Objects = () => {
     // const [objects, setObjects] = useState([]);
 
     // useEffect(() => {
-    //     setLoader(true);
     //     if (!user?.accessToken) return setLoader(false);
     //     (async () => {
     //         const list = await listFiles(user?.accessToken);
-    //         setLoader(false);
     //         if (!list) return;
     //         setObjects([ ...list ]);
     //     })();

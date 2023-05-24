@@ -73,6 +73,10 @@ const DataContext = ({ children }) => {
     }, [user?.accessToken]);
     useEffect(() => saveToSession(data), [data]);
 
+    const resetObjects = async () => setObjects((await listFiles(user?.accessToken)));
+    const resetDeploys = async () => setDeploys((await listDeploys(user?.accessToken)));
+    const resetWebsite = async () => setWebsite((await getWebsite(user?.accessToken)));
+
     const setPages = (array) => setData({ ...data, pages: array }); 
     const setDeploys = (array) => setData({ ...data, deploys: array }); 
     const setObjects = (array) => setData({ ...data, objects: array }); 
@@ -85,10 +89,10 @@ const DataContext = ({ children }) => {
 
     const values = {
         pages: data?.pages || [], setPages,
-        deploys: data?.deploys || [], setDeploys,
-        objects: data?.objects || [], setObjects,
+        deploys: data?.deploys || [], setDeploys, resetDeploys,
+        objects: data?.objects || [], setObjects, resetObjects,
         docs: data?.docs || [], setDocs,
-        website: data?.website || '', setWebsite,
+        website: data?.website || '', setWebsite, resetWebsite,
         metrics: data?.metrics || '', setMetrics,
         pageId: data?.pageId || '', setPageId
     };

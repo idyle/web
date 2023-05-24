@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Elements = () => {
 
-    const { page, setPageData } = useEditor();
+    const { page, setPageData, pages } = useEditor();
     const { integrator, setIntegrator, notify } = useUtil();
     const { selected, updateObjectFromPath, setObjectFromPath, deleteObjectFromPath, path, setPath } = useDom();
     const [selType, setSelType] = useState('None');
@@ -58,6 +58,16 @@ const Elements = () => {
         console.log('PATHHHH', element, path);
         setPageData({ ...setObjectFromPath(page.data, path, { ...elements[element] }) });
     };
+    
+    const navigation = () => {
+        let part = elements['navPart'];
+        let arr = [];
+        // dupl the part
+        for (const { route: href, name: children } of pages) arr.push({ ...part, href, children });
+        let base = elements['navBase'];
+        // dupl the base
+        setPageData({ ...setObjectFromPath(page?.data, path, { ...base, children: arr }, true)});
+    };
 
     return (
         <div className="grid grid-rows-[80%_20%] gap-1 p-1">
@@ -75,7 +85,7 @@ const Elements = () => {
                     <Element title="Image" onClick={sendObjectsRequest} icon={ <RxImage />} />
                     <Element title="Video" onClick={sendObjectsRequest} icon={ <RxVideo />} />
 
-                    <Element title="Navigation" onClick={() => appendElement('img')} icon={ <RxListBullet />} />
+                    <Element title="Navigation" onClick={navigation} icon={ <RxListBullet />} />
 
                     <Element title="Button" onClick={() => appendElement('button')} icon={ <RxButton />} />
                     <Element title="Link" onClick={() => appendElement('link')} icon={ <RxLink2 />} />

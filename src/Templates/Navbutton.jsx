@@ -6,11 +6,11 @@ const Navbutton = ({ icon, text, route }) => {
     const editedIcon = cloneElement(icon, { color: "inherit", size: "25px" });
 
     const navigate = useNavigate();
-    const { pathname } = useLocation();
-
+    const { pathname, search } = useLocation();
     const [selected, setSelected] = useState(false);
 
     useEffect(() => {
+        if (`${pathname}${search}` === route) return setSelected(true);
         // part starts with an initial /
         let splicedPath = pathname?.split('/') || [];
         let splicedMatch = route?.split('/') || [];
@@ -23,7 +23,7 @@ const Navbutton = ({ icon, text, route }) => {
             if (itemMatch === itemPath && i === splicedMatch.length-1) return setSelected(true);
         };
         return setSelected(false);
-    }, [pathname, route])
+    }, [pathname, search, route])
     
     return (
         <div onClick={() => navigate(route)} className={`flex ${selected && 'bg-black text-white'} select-none w-full border rounded-lg border-black place-content-center transform transition duration-100 hover:scale-[.98]`}>

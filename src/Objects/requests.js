@@ -114,3 +114,24 @@ export const getFile = async (token, fileName) => {
         return false;
     }
 };
+
+export const publicFile = async (token, fileName) => {
+    try {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        const req = await fetch(`${servicePath}/public/user/${fileName}`, options);
+        const res = await req.json();
+        console.log(res);
+        return res?.status
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};

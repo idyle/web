@@ -97,7 +97,7 @@ export const listDeploys = async (token, filter, value) => {
     }
 };
 
-export const convertPage = async (token, pageId, customPath, stringOutput) => {
+export const connectDomain = async (token, domain) => {
     try {
 
         const options = {
@@ -108,16 +108,91 @@ export const convertPage = async (token, pageId, customPath, stringOutput) => {
             },
         };
 
-        let url = `${process.env.REACT_APP_BASEPATH}/editor/convert/user/${pageId}`;
+        let url = `${servicePath}/connect/${domain}`;
+        const req = await fetch(url, options);
+        const res = await req.json();
+        if (!res?.status) return false;
+        return res?.status;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
+export const disconnectDomain = async (token) => {
+    try {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        };
+
+        let url = `${servicePath}/disconnect`;
+        const req = await fetch(url, options);
+        const res = await req.json();
+        if (!res?.status) return false;
+        return res?.status;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
+export const convertPage = async (token, entryId, customPath, stringOutput) => {
+    try {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        };
+
+        let url = `${process.env.REACT_APP_BASEPATH}/editor/convert/user/${entryId}`;
         if (customPath) url = `${url}?type=custom`;
         if (stringOutput && customPath) url = `${url}&output=string`
         else if (stringOutput) url = `${url}?output=string`;
 
         const req = await fetch(url, options);
         const res = await req.json();
-        console.log('res of convert', res);
+        console.log('res of pages', res);
         if (!res?.status) return false;
+        if (stringOutput) return res;
         return res?.status;
+
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
+// in replacement of above func, batch convert pages 
+
+export const convertPages = async (token, stringOutput) => {
+    try {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        };
+
+        let url = `${process.env.REACT_APP_BASEPATH}/editor/batchconvert/user`;
+        if (stringOutput) url = `${url}?output=string`
+
+        const req = await fetch(url, options);
+        const res = await req.json();
+        console.log('res of pages', res);
+        if (!res?.status) return false;
+        if (stringOutput) return res;
+        return res?.status;
+        // we just access the files in docs
 
     } catch (e) {
         console.error(e);

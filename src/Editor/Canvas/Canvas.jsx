@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react';
-import { renderElements } from './Converter';
+import { constructDom, renderElements } from './Converter';
 import { useEditor } from '../Editor';
 import Elements from './Toolbar/Toolbar';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ export const DomContext = ({ children }) => {
         return data;
     };
 
-    const setObjectFromPath = (data, path, value) => {
+    const setObjectFromPath = (data, path, value, raise = false) => {
         let current = data;
         let nearestParent = current;
     
@@ -42,7 +42,9 @@ export const DomContext = ({ children }) => {
         if (current?.component !== 'div') current = nearestParent;
         // if our selected item is not a div
 
-        current.children = [...current.children, value];
+        if (raise) current.children = [ value, ...current.children ];
+        else current.children = [ ...current.children, value ];
+
         return data;
     };
 
@@ -77,28 +79,26 @@ export const DomContext = ({ children }) => {
 
 const Canvas = () => {
 
-    const { page } = useEditor();
+    const { page, css } = useEditor();
     const [dom, setDom] = useState([]);
 
     useEffect(() => {
         // handle case where no page selected / exists
-        if (page?.data) setDom(renderElements(page?.data));
-    }, [page?.data]);
+        if (!page?.data) return;
+        setDom(constructDom(page?.data, css));
+    }, [page?.data, css]);
 
     return (
         <DomContext>
-        <div className="grid h-full grid-cols-[20%_80%]">
-
-                <Toolbar />
-
-            <div className="grid grid-rows-[10%_90%] overflow-auto p-1">
-                <Formatter />
-
-                <div className="grid p-1 overflow-auto shadow-xl rounded-lg">
-                    {dom}
+            <div className="grid h-full grid-cols-[20%_80%]">
+                    <Toolbar />
+                <div className="grid grid-rows-[10%_90%] overflow-auto p-1">
+                    <Formatter />
+                    <div className="grid p-1 overflow-auto shadow-xl rounded-lg">
+                        {dom}
+                    </div>
                 </div>
             </div>
-        </div>
         </DomContext>
     )
 };
