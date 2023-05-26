@@ -72,11 +72,17 @@ const Payments = () => {
             </Helmet>
 
             <div className="grid gap-1 justify-items-center rounded-lg">
-                <h1 className="text-6xl text-center">{user?.displayName || ''}, choose a plan for You</h1>
+                <h1 className="text-4xl font-bold md:text-6xl text-center">{user?.displayName || ''}, there's a perfect plan for You.</h1>
+                <h1 className="text-2xl md:text-4xl text-center">
+                    Browse through our offerings perfectly curated to every use-case.
+                    With idyle, there's always a plan for You.
+                    
+                
+                </h1>
 
             </div>
 
-            <div className="grid grid-cols-3 gap-x-5 p-3 auto-rows-min overflow-auto">
+            <div className="grid md:grid-cols-3 gap-x-5 gap-y-2 p-3 auto-rows-min overflow-auto">
                 {plans.map((plan, i) => (<Plan key={`p${i}`} onCancel={onCancel} plan={plan} onClick={onClick} />))}
             </div>
 

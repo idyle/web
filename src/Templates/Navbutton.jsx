@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbutton = ({ icon, text, route }) => {
 
-    const editedIcon = cloneElement(icon, { color: "inherit", size: "25px" });
+    const editedIcon = cloneElement(icon, { className: 'h-[40px] w-[40px] md:h-[25px] md:w-[25px]', color: "inherit" });
 
     const navigate = useNavigate();
     const { pathname, search } = useLocation();
@@ -26,10 +26,10 @@ const Navbutton = ({ icon, text, route }) => {
     }, [pathname, search, route])
     
     return (
-        <div onClick={() => navigate(route)} className={`flex ${selected && 'bg-black text-white'} select-none w-full border rounded-lg border-black place-content-center transform transition duration-100 hover:scale-[.98]`}>
-            <div className="flex gap-1 h-[2rem] p-1 items-center">
+        <div onClick={() => navigate(route)} className={`flex p-3 md:p-0 ${selected && 'bg-black text-white'} select-none w-full md:border rounded-lg border-black place-content-center transform transition duration-100 hover:scale-[.98]`}>
+            <div className="flex gap-1 h-[2rem] md:p-1 items-center">
                 {editedIcon}
-                <h1 className='text-xl text-inherit font-semibold'>{text}</h1>
+                <h1 className='text-5xl md:text-xl text-inherit font-bold'>{text}</h1>
             </div>
         </div>
     )

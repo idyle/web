@@ -63,7 +63,7 @@ const Documents = () => {
     // }, [user?.accessToken]);
 
     return (
-        <div className='grid m-5'>
+        <div className='grid h-full m-5'>
 
             <Helmet>
                 <title>idyle - Documents</title>
@@ -72,7 +72,7 @@ const Documents = () => {
                 <link rel="canonical" href="/docs" />
             </Helmet>
             
-            <div className="grid grid-cols-2 gap-3 overflow-auto">
+            <div className="grid max-h-[50%] md:grid-rows-auto md:grid-cols-2 gap-3 overflow-auto">
 
                 <div className="grid px-3 overflow-auto grid-rows-[auto_minmax(0,_1fr)]">
                     <div className="flex items-center justify-between bg-black rounded-lg text-white p-2 select-none">

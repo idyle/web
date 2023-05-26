@@ -1,9 +1,9 @@
 const Infoline = ({ title, text }) => {
     return (
         <div className="flex items-center gap-[20px] border border-black rounded-lg p-2">
-            <h1 className="text-2xl font-black select-none">{title}</h1>
+            <h1 className="text-lg md:text-2xl font-black select-none">{title}</h1>
             <div className="flex items-center gap-[10px]">
-                <h1 className="text-2xl font-thin">{text}</h1>
+                <h1 className="text-lg md:text-2xl break-all font-thin">{text}</h1>
             </div>
         </div>
     )

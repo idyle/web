@@ -77,9 +77,9 @@ const Search = () => {
     // onFocus triggers an active state, onUnFocus triggers an inactive state
 
     return (
-        <div onFocus={onFocus} onBlur={onBlur} className="relative flex gap-1 h-[2rem] w-[20rem] border p-2 rounded-lg border-black items-center">
-            <BiSearch color="black" size="10px"/>
-            <input onChange={test} className="outline-none placeholder:text-black text-lg w-full" type="text" placeholder="Search" value={query} />
+        <div onFocus={onFocus} onBlur={onBlur} className="relative flex gap-1 h-[2rem] w-full border p-2 rounded-lg border-black items-center">
+            <BiSearch color="black" className="md:h-[10px] md:w-[10px]" />
+            <input onChange={test} className="outline-none placeholder:text-black md:text-lg w-full" type="text" placeholder="Search" value={query} />
             { (active && query) && <div className="absolute top-8 left-0 right-0 bg-white z-10 p-3 bg-black text-black border border-black rounded-lg h-max h-full max-h-60 overflow-auto">
                 <div className="grid gap-1">
                     <h1 className="text-lg">Search Results</h1>

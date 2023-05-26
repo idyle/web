@@ -12,10 +12,10 @@ const Result = ({ title, route, setQuery }) => {
         <div onMouseDown={onMouseDown} className="select-none hover:bg-black hover:text-white rounded-lg p-1 border border-black">
             <div className="flex items-center place-content-between">
                 <div className="flex items-center gap-1">
-                    <BiLinkExternal className="text-inherit"/>
+                    <BiLinkExternal className="text-inherit h-[10px] w-[10px]"/>
                     <h1 className="text-xl text-inherit">{title}</h1>
                 </div>
-                <BiRightArrowAlt className="text-inerhit"/>
+                <BiRightArrowAlt className="text-inerhit h-[10px] w-[10px]"/>
             </div>
         </div>
     )

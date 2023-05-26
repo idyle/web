@@ -33,6 +33,9 @@ module.exports = {
           '48.35%': { left: '29.5%', animationTimingFunction: 'cubic-bezier(0.4, 0.62703, 0.6, 0.90203)' },
           '100%': { left: '117.38889%' }
         },
+        progressLinearMovement: {
+          '0%': { left: '-100%' }, '50%, 100%': { left: '100%' }
+        },
         start: {
           from: { maxHeight: '0', opacity: '0' }, to: { maxHeight: '20px', opacity: '1' }
         },
@@ -64,6 +67,7 @@ module.exports = {
         }
       },
       animation: {
+        'mobilebar': 'progressLinearMovement 2.5s infinite',
         'bar1': 'growBar1 2.5s infinite, moveBar1 2.5s infinite',
         'bar2': 'growBar2 2.5s infinite, moveBar2 2.5s infinite',
         'bar': 'start 0.3s ease-in',

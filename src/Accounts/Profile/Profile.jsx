@@ -53,7 +53,7 @@ const Profile = () => {
             <div className="grid items-center justify-items-center border border-black p-2 rounded-lg">
                 {user?.photoURL ? <img className="w-[80px] h-[80px] rounded-full" src={user?.photoURL} /> : <BsPersonCircle size="80px" />}
                 {edit ? <input autoFocus className="text-center text-3xl w-1/2" onChange={onNameChange} value={name}/> : <h1 className="text-3xl">{name}</h1>}
-                <h1 className="text-3xl font-thin">{user?.email}</h1>
+                <h1 className="text-xl md:text-3xl font-thin">{user?.email}</h1>
                 <div className="justify-self-end" onClick={() => setEdit(!edit)}>
                     {edit ? <MdCheck onClick={saveInfo} size="25px" /> : <MdEdit size="25px" />}
                 </div>
@@ -65,13 +65,13 @@ const Profile = () => {
                 <h1 className="text-4xl">Developer Tools</h1>
                 <div className="flex items-center gap-[20px] border border-black rounded-lg p-2">
                     <h1 className="text-2xl font-black select-none">Access Token</h1>
-                    <div onClick={copyToClip} className="flex place-content-center bg-black p-0.5 w-1/4 rounded-lg select-none hover:scale-[.98]">
+                    <div onClick={copyToClip} className="flex place-content-center bg-black p-1 w-1/4 rounded-lg select-none hover:scale-[.98]">
                         <h1 className="text-md text-white">Get Token</h1>
                     </div>
                 </div>
             </div>
 
-            <div onClick={onSignOut} className="flex items-center place-content-center bg-black w-1/4 rounded-lg p-2 select-none hover:scale-[.98]">
+            <div onClick={onSignOut} className="flex items-center place-content-center bg-black rounded-lg p-2 select-none hover:scale-[.98]">
                 <h1 className="text-2xl text-white">Sign Out</h1>
             </div>
 

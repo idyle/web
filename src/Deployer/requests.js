@@ -111,6 +111,7 @@ export const connectDomain = async (token, domain) => {
         let url = `${servicePath}/connect/${domain}`;
         const req = await fetch(url, options);
         const res = await req.json();
+        console.log(res, 'connect stat');
         if (!res?.status) return false;
         return res?.status;
     } catch (e) {
