@@ -17,6 +17,17 @@ module.exports = {
 
     sectionTop: 'items-start',
     sectionMiddle: 'items-center',
-    sectionBottom: 'items-end'
+    sectionBottom: 'items-end',
+
+    textColor: 'text-',
+    bgColor: 'bg-',
+
+    roundedSmall: 'rounded-sm',
+    roundedLarge: 'rounded-lg'
+
+    // replace our text alignments
+    // with rounded types
+
+
 
 }

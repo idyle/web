@@ -31,6 +31,7 @@ export const DomContext = ({ children }) => {
             if (key === 'id' || key === 'children' || key === 'component') continue;
             if (key === 'className') key = 'class';
             if (key === 'className' && !toggle) value = '';
+            if (key === 'style') value = JSON.stringify(value).slice(1, -1);
             attributes.push({ key, value });
         };
 
@@ -52,6 +53,8 @@ export const DomContext = ({ children }) => {
         for (let {key, value} of config.attributes) {
             if (key === 'id') continue;
             if (key === 'class') key = 'className';
+            if (key === 'style') console.log(key, 'value', value);
+            if (key === 'style') value = JSON.parse(`{${value}}`);
             attributes[`${key}`] = value;
         };
 
@@ -60,20 +63,25 @@ export const DomContext = ({ children }) => {
     };
 
     useEffect(() => {
-        if (integrator?.active && integrator?.origin === `${origin}?mode=codebase`) return;
-        // if a page is not selected 
-        // if (!page?.data) return navigate('/editor/pages');
-        // from JSON into string
-        if (!page?.data || !page?.id) return;
-        const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
-        if (!convertedHimalayaJSON || !convertedHimalayaJSON?.tagName) return;
-        console.log('CONVERTED', convertedHimalayaJSON)
-        // instead of creating a wrapper func, it's possible to just return its children
-        const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON?.children || []);
-        if (!stringifiedHimalayaJSON) return;
-        setString(stringifiedHimalayaJSON);
-        setDom(constructDom(page?.data, toggle, css));
-    }, [page, toggle, css])
+        try {
+            if (integrator?.active && integrator?.origin === `${origin}?mode=codebase`) return;
+            // if a page is not selected 
+            // if (!page?.data) return navigate('/editor/pages');
+            // from JSON into string
+            if (!page?.data || !page?.id) return;
+            const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
+            if (!convertedHimalayaJSON || !convertedHimalayaJSON?.tagName) return;
+            console.log('CONVERTED', convertedHimalayaJSON)
+            // instead of creating a wrapper func, it's possible to just return its children
+            const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON?.children || []);
+            if (!stringifiedHimalayaJSON) return;
+            setString(stringifiedHimalayaJSON);
+            setDom(constructDom(page?.data, toggle, css));
+        } catch (e) {
+            console.log(e);
+            return;
+        }
+    }, [page?.id, toggle, css])
 
     const values = { 
         convertJSONtoHimalayaJSON, convertHimalayaJSONtoJSON,

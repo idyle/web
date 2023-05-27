@@ -51,7 +51,7 @@ const Pages = () => {
                 </div>
             </div>
 
-            <div className="grid auto-rows-min grid-cols-3 gap-3 px-5 justify-items-center items-center overflow-auto">
+            <div className="grid auto-rows-min md:grid-cols-3 gap-3 px-5 justify-items-center items-center overflow-auto">
                 { addPageMode && <Page page={config} editPage={editPage} addMode={addPageMode} setAddMode={setAddPageMode} /> }
                 {pages.map((page, i) => (<Page key={`p${i}`} page={page} editPage={editPage} />))}
             </div>

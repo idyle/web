@@ -2,6 +2,7 @@ import { useEditor } from "../../Editor";
 import { useDom } from "../Canvas";
 import elements from './elements';
 import { useEffect, useState } from "react";
+import { MdPages } from "react-icons/md";
 import { RxText, RxSection, RxImage, RxVideo, RxLayout, RxViewVertical, RxListBullet, RxBarChart, RxLetterCaseCapitalize, RxButton, RxLink2 } from 'react-icons/rx';
 import { AiFillDelete, AiOutlineReload } from 'react-icons/ai';
 import Element from './Element';
@@ -12,7 +13,7 @@ const Elements = () => {
 
     const { page, setPageData, pages } = useEditor();
     const { integrator, setIntegrator, notify } = useUtil();
-    const { selected, updateObjectFromPath, setObjectFromPath, deleteObjectFromPath, path, setPath } = useDom();
+    const { selected, updateObjectFromPath, updateFromPath, setObjectFromPath, deleteObjectFromPath, path, setPath } = useDom();
     const [selType, setSelType] = useState('None');
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
@@ -36,7 +37,7 @@ const Elements = () => {
     // entering
     const sendObjectsRequest = () => {
         console.log('sending req', page.data, path);
-        setIntegrator({ active: true, target: 'objects', origin, ref: { path, data: page?.data } });
+        setIntegrator({ active: true, target: 'objects', origin: `${origin}?mode=canvas`, ref: { path, data: page?.data } });
         notify('Sending you to objects. Please select a file to add.');
         navigate('/objects');
     };
@@ -44,7 +45,7 @@ const Elements = () => {
     // returning
     useEffect(() => {
         if (!integrator?.active || !integrator?.data) return;
-        if (integrator?.target !== 'objects' || integrator?.origin !== origin) return;
+        if (integrator?.target !== 'objects' || integrator?.origin !== `${origin}?mode=canvas`) return;
         const file = integrator?.data;
         const pageRef = integrator?.ref;
         if (file?.type.startsWith('image'))  setPageData({ ...setObjectFromPath(pageRef.data, pageRef.path, { ...elements['img'], src: file?.url }) });
@@ -52,12 +53,20 @@ const Elements = () => {
         setIntegrator({ active: false });
     }, [integrator?.active]);
 
-    const updateElement = (className, merge) => setPageData({ ...updateObjectFromPath(page?.data, path, className, merge) });
     const deleteElement = () => setPageData({ ...deleteObjectFromPath(page.data, path) });
     const appendElement = (element) => {
         console.log('PATHHHH', element, path);
         setPageData({ ...setObjectFromPath(page.data, path, { ...elements[element] }) });
     };
+
+    const clearFunc = (current) => {
+        console.log('received current', current);
+        current.style = {};
+        current.className = '';
+        return current;
+    };
+
+    const clear = () => setPageData({ ...updateFromPath(page?.data, path, clearFunc) })
     
     const navigation = () => {
         let part = elements['navPart'];
@@ -68,6 +77,23 @@ const Elements = () => {
         // dupl the base
         setPageData({ ...setObjectFromPath(page?.data, path, { ...base, children: arr }, true)});
     };
+
+    // entering
+    const sendPagesRequest = () => {
+        setIntegrator({ active: true, target: 'editor/pages', origin: `${origin}?mode=canvas`, ref: { path, data: page?.data } });
+        notify('Sending you to pages. Please select a pages to add.');
+        navigate('/editor/pages');
+    };
+
+    // returning
+    useEffect(() => {
+        if (!integrator?.active || !integrator?.data) return;
+        if (integrator?.target !== 'editor/pages' || integrator?.origin !== `${origin}?mode=canvas`) return;
+        const page = integrator?.data;
+        const pageRef = integrator?.ref;
+        setPageData({ ...setObjectFromPath(pageRef.data, pageRef.path, { ...elements['navPart'], href: page?.route, children: page?.name  }) });
+        setIntegrator({ active: false });
+    }, [integrator?.active]);
 
     return (
         <div className="grid grid-rows-[80%_20%] gap-1 p-1">
@@ -86,6 +112,7 @@ const Elements = () => {
                     <Element title="Video" onClick={sendObjectsRequest} icon={ <RxVideo />} />
 
                     <Element title="Navigation" onClick={navigation} icon={ <RxListBullet />} />
+                    <Element title="Page" onClick={sendPagesRequest} icon={ <MdPages />} />
 
                     <Element title="Button" onClick={() => appendElement('button')} icon={ <RxButton />} />
                     <Element title="Link" onClick={() => appendElement('link')} icon={ <RxLink2 />} />
@@ -94,7 +121,7 @@ const Elements = () => {
 
             <div className="grid border border-black p-1 gap-1 rounded-lg">
                 <h1 className="text-2xl text-center">Selected: {selType}</h1>
-                <div onClick={() => updateElement('', false)} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
+                <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
                     <AiOutlineReload size="25px" />
                     <h1 className="text-xl">Reset Styles</h1>
                 </div>

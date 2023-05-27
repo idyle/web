@@ -1,12 +1,9 @@
 import { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react';
-import { constructDom, renderElements } from './Converter';
+import { constructDom } from './Converter';
 import { useEditor } from '../Editor';
-import Elements from './Toolbar/Toolbar';
-import { useNavigate } from 'react-router-dom';
 import Toolbar from './Toolbar/Toolbar';
 import Formatter from './Formatter/Formatter';
-import { useUtil } from '../../Contexts/Util';
 
 const DomValues = createContext();
 export const useDom = () => useContext(DomValues);
@@ -15,6 +12,53 @@ export const DomContext = ({ children }) => {
     const [selected, setSelected] = useState('0');
     const [hovered, setHovered] = useState('');
     const [path, setPath] = useState([]);
+
+    const updateFromPath = (data, path, func) => {
+        let current = data;
+        for (let depth = 0; depth < path.length; depth++) {
+            if (current.component === 'div') current = current.children[path[depth]];
+            else current = current[path[depth]];
+        };
+        current = { ...func(current) };
+        // arbitrary func to generalize process
+        return data;
+    };
+
+    const updateStylesFromPath = (data, path, value) => {
+        let current = data;
+        for (let depth = 0; depth < path.length; depth++) {
+            if (current.component === 'div') current = current.children[path[depth]];
+            else current = current[path[depth]];
+        };
+        current.style = { ...current.style, ...value };
+        return data;
+    };
+
+    const updateClassFromPath = (data, path, value) => {
+        let current = data;
+        for (let depth = 0; depth < path.length; depth++) {
+            if (current.component === 'div') current = current.children[path[depth]];
+            else current = current[path[depth]];
+        };
+
+        let properties = current.className?.split(' ') || [];
+        const index = properties.findIndex(prop => prop === value);
+        if (index >= 0) properties.splice(index, 1);
+        else properties.push(value);
+
+        current.className = properties.join(" ");
+        return data;
+    };
+
+    const updateChildrenFromPath = (data, path, value) => {
+        let current = data;
+        for (let depth = 0; depth < path.length; depth++) {
+            if (current.component === 'div') current = current.children[path[depth]];
+            else current = current[path[depth]];
+        };
+        current.children = value;
+        return data;
+    };
 
     const updateObjectFromPath = (data, path, value, merge = true) => {
         let current = data;
@@ -73,6 +117,8 @@ export const DomContext = ({ children }) => {
     const values = { 
         selected, setSelected, hovered, setHovered, path, setPath,
         updateObjectFromPath, setObjectFromPath, deleteObjectFromPath,
+        updateChildrenFromPath, updateClassFromPath, updateStylesFromPath,
+        updateFromPath
     };
     return ( <DomValues.Provider value={values}>{children}</DomValues.Provider> );
 };

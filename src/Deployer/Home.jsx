@@ -7,7 +7,7 @@ const Home = ({ deploy }) => {
 
     const { website, setWebsite} = useData();
     return (
-        <div className="grid grid-cols-2 gap-3 overflow-auto">
+        <div className="grid md:grid-cols-2 gap-3 overflow-auto">
             <div className="grid grid-rows-[auto_minmax(0,_1fr)] gap-1 overflow-auto">
                 <Setup website={website} setWebsite={setWebsite} />
                 <Control website={website} deploy={deploy} />

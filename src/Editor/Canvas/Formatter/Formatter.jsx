@@ -4,56 +4,48 @@ import {
     RxAlignRight, RxAlignLeft, RxAlignCenterHorizontally,
     RxAlignTop, RxAlignBottom, RxAlignCenterVertically,
     RxMargin, RxPadding, RxFontBold, RxFontItalic, RxUnderline, 
-    RxFontStyle, RxHalf2, RxColorWheel
+    RxFontStyle, RxHalf2, RxColorWheel, RxSquare, RxCircle
 } from 'react-icons/rx';
 import { useEditor } from '../../Editor';
 import { useDom } from '../Canvas';
 import formats from './formats';
 import Format from './Format';
 import Selector from './Selector';
+import Inputter from './Inputter';
 
 const Toolbar = () => {
 
     const { page, setPageData } = useEditor();
-    const { path, updateObjectFromPath } = useDom();
+    const { path, updateObjectFromPath, updateClassFromPath } = useDom();
 
-    const updateElement = (format) => setPageData({ ...updateObjectFromPath(page?.data, path, formats[format]) });
+    const updateElement = (format) => setPageData({ ...updateClassFromPath(page?.data, path, formats[format]) });
 
     return (
         <div className="flex place-content-center items-center gap-1 p-1 border border-black rounded-lg ">
 
-            <Format icon={<RxFontBold />} onClick={() => updateElement('bold')} />
-            <Format icon={<RxFontItalic onClick={() => updateElement('italic')} />} />
-            <Format icon={<RxUnderline onClick={() => updateElement('underline')} />} />
+            <Format icon={<RxFontBold />} format="bold" />
+            <Format icon={<RxFontItalic />} format="italic" />
+            <Format icon={<RxUnderline/>} format="underline" />
+            <Inputter format="fontSize" icon={<RxFontStyle />} />
 
-            <Format title="Font" icon={<RxFontStyle />}>
-            <input className="hidden" type="color" id="favcolor" name="favcolor" value="#ff0000" />
-            </Format>
+            <Selector format="color" icon={<RxColorWheel />} />
 
-            <Selector title="FOnt" icon={<RxColorWheel />} />
-   
-
-
-            <Format icon={<RxTextAlignLeft onClick={() => updateElement('textLeft')} />} />
-            <Format icon={<RxTextAlignCenter onClick={() => updateElement('textCenter')} />} />
-            <Format icon={<RxTextAlignRight onClick={() => updateElement('textRight')} />} />
-            <Format icon={<RxTextAlignBottom onClick={() => updateElement('textBottom')} />} />
-            <Format icon={<RxTextAlignMiddle onClick={() => updateElement('textMiddle')} />} />
-            <Format icon={<RxTextAlignTop onClick={() => updateElement('textTop')} />} />
+            <Format icon={<RxTextAlignLeft />} format="textLeft"  />
+            <Format icon={<RxTextAlignCenter />} format="textCenter"  />
+            <Format icon={<RxTextAlignRight />} format="textRight"  />
  
-            <Format title="Color" icon={<RxColorWheel />} />
+            <Selector format="backgroundColor"  icon={<RxHalf2 />} />
 
-            <Format icon={<RxAlignLeft onClick={() => updateElement('sectionLeft')} />} />
-            <Format icon={<RxAlignCenterHorizontally onClick={() => updateElement('sectionCenter')} />} />
-            <Format icon={<RxAlignRight onClick={() => updateElement('sectionRight')} />} />
-            <Format icon={<RxAlignBottom onClick={() => updateElement('sectionTop')} />} />
-            <Format icon={<RxAlignCenterVertically onClick={() => updateElement('sectionMiddle')} />} />
-            <Format icon={<RxAlignTop onClick={() => updateElement('sectionBottom')} />} />
+            <Format icon={<RxAlignLeft />} format="sectionLeft"  />
+            <Format icon={<RxAlignCenterHorizontally />} format="sectionCenter"  />
+            <Format icon={<RxAlignRight />} format="sectionRight"  />
+            <Format icon={<RxAlignBottom />} format="sectionTop" />
+            <Format icon={<RxAlignCenterVertically />} format="sectionMiddle" />
+            <Format icon={<RxAlignTop />} format="sectionBottom" />
+            <Inputter format="margin" icon={<RxMargin />} />
 
-            <Format title="Margin" icon={<RxMargin />} />
-            <Format title="Padding" icon={<RxPadding />} />
-
-            <Format icon={<RxHalf2 />} />
+            <Format icon={<RxSquare />} format="roundedSmall" />
+            <Format icon={<RxCircle />} format="roundedLarge" />
 
         </div>
     )
