@@ -70,6 +70,7 @@ const Viewer = ({ doc, setDocs, docs }) => {
                 className="" 
                 loading="" 
                 defaultLanguage="json"
+                fixedOverflowWidgets={true}
                 value={string}
                 onChange={onChange}
                 onMount={onMount}

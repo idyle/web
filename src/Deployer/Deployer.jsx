@@ -28,7 +28,7 @@ const Deployer = () => {
     };
 
     return (
-        <div className="grid grid-cols-[15%_85%] m-3 gap-1 ">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 md:grid-cols-[15%_85%] p-3 gap-1 ">
 
             <Helmet>
                 <title>idyle - Deployer</title>
@@ -47,20 +47,6 @@ const Deployer = () => {
                 <Route path="labs" element={<Labs />} />
                 <Route path="*" element={<Navigate to="home" />} /> 
             </Routes>
-
-            {/* control, staging */}
-            {/* labs,  */}
-
-            {/* // <div className="grid grid-cols-2 gap-3 overflow-auto">
-            //     <div className="grid grid-rows-[auto_minmax(0,_1fr)] gap-1 overflow-auto">
-            //         <Setup website={website} setWebsite={setWebsite} />
-            //         <Control website={website} deploy={deploy} />
-            //     </div>    
-            //     <div className="grid gap-3 grid-rows-[4fr_2fr] overflow-auto">
-            //         <Staging website={website} deploy={deploy} />
-            //         <Labs />
-            //     </div>
-            // </div> */}
 
         </div>
     )

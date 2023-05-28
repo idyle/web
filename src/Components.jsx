@@ -8,7 +8,7 @@ const Components = () => {
 
     const { loader } = useUtil();
     return (
-        <div className={`${loader && 'animate-pulse pointer-events-none select-none'}`}>
+        <div className={`${loader && 'animate-pulse pointer-events-none select-none h-full'}`}>
             <Routes>
                 <Route path="login/*" element={<Login />} />
                 <Route path="actions" element={<Actions />} />

@@ -52,7 +52,7 @@ const Convert = () => {
     return (
         <div className="grid auto-rows-min p-3 gap-2 border-b-4 border-black">
             <h1 className="text-5xl text-center">Convert Custom Data</h1>
-            <div onClick={sendPageRequest} className="flex flex-wrap items-center gap-2 place-content-center border border-black rounded-xl select-none hover:scale-[.98]">
+            <div onClick={sendPageRequest} className="flex p-0.5 flex-wrap items-center gap-2 place-content-center border border-black rounded-xl select-none hover:scale-[.98]">
                 <h1 className="text-4xl text-center">Select Data from Docs</h1>
             </div>
 

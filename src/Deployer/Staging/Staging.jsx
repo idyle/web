@@ -82,7 +82,7 @@ const Staging = ({ website, deploy }) => {
             <div className="grid">
                 <div className="flex items-center gap-2 p-2">
                     <RiGasStationFill size="40px" />
-                    <h1 className="text-6xl">Staging Area</h1>
+                    <h1 className="text-5xl md:text-6xl">Staging Area</h1>
                 </div>
 
             <div onClick={sendFileRequest} className="flex items-center gap-2 place-content-center border border-white rounded-xl select-none hover:scale-[.98]">

@@ -30,7 +30,7 @@ export const DomContext = ({ children }) => {
             if (current.component === 'div') current = current.children[path[depth]];
             else current = current[path[depth]];
         };
-        current.style = { ...current.style, ...value };
+        if (current) current.style = { ...current.style, ...value };
         return data;
     };
 

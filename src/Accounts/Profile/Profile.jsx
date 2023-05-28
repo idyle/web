@@ -65,7 +65,7 @@ const Profile = () => {
                 <h1 className="text-4xl">Developer Tools</h1>
                 <div className="flex items-center gap-[20px] border border-black rounded-lg p-2">
                     <h1 className="text-2xl font-black select-none">Access Token</h1>
-                    <div onClick={copyToClip} className="flex place-content-center bg-black p-1 w-1/4 rounded-lg select-none hover:scale-[.98]">
+                    <div onClick={copyToClip} className="flex place-content-center bg-black p-1 rounded-lg select-none hover:scale-[.98]">
                         <h1 className="text-md text-white">Get Token</h1>
                     </div>
                 </div>

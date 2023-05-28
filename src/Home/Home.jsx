@@ -10,42 +10,43 @@ import { Helmet } from "react-helmet";
 
 const Home = () => {
     return (
-        <div className="grid grid-rows-9 grid-cols-9 gap-2 m-6">
+        <div className="grid md:grid-rows-9 md:grid-cols-9 gap-2 p-3">
             <Helmet>
                 <title>idyle - Home</title>
                 <meta name="description" content="Home" />
                 <meta name="keywords" content="Home" />
                 <link rel="canonical" href="/" />
             </Helmet>
-            <div className="col-span-2 row-span-6 bg-black text-white rounded-lg p-1 overflow-hidden">
+
+            <div className="grid md:col-span-2 md:row-span-6 bg-black text-white rounded-lg p-1 hidden md:block md:overflow-hidden">
                 <Editor />
             </div>
 
-            <div className="col-span-4 row-span-1 bg-black text-white rounded-lg p-1">
+            <div className="grid md:col-span-4 md:row-span-1 bg-black text-white rounded-lg p-1">
                 <Accounts />
             </div>
 
-            <div className="grid col-span-3 row-span-3 bg-black text-white rounded-lg p-1 overflow-hidden">
+            <div className="grid md:col-span-3 md:row-span-3 bg-black text-white rounded-lg p-1 hidden md:block md:overflow-hidden">
                 <Documents />
             </div>
 
-            <div className="col-span-4 row-span-2 bg-black text-white rounded-lg p-1">
+            <div className="md:col-span-4 md:row-span-2 bg-black text-white rounded-lg p-1">
                 <Payments />
             </div>
 
-            <div className="grid items-center justify-items-center col-span-5 row-span-3 p-1">
+            <div className="grid items-center justify-items-center md:col-span-5 md:row-span-3 p-1">
                 <Welcome />
             </div>
 
-            <div className="grid col-span-2 row-span-6 bg-black text-white rounded-lg p-1">
+            <div className="grid md:col-span-2 md:row-span-6 bg-black text-white rounded-lg p-1">
                 <Deployer />
             </div>
 
-            <div className="grid items-center justify-items-center col-span-4 row-span-3 bg-black text-white rounded-lg p-1">
+            <div className="grid items-center justify-items-center md:col-span-4 md:row-span-3 bg-black text-white rounded-lg p-1">
                 <Metrics />
             </div>
 
-            <div className="grid items-center justify-items-center col-span-3 row-span-3 bg-black text-white rounded-lg p-1">
+            <div className="grid items-center justify-items-center md:col-span-3 md:row-span-3 bg-black text-white rounded-lg p-1 hidden md:block">
                 <Objects />
             </div>
         </div>

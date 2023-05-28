@@ -54,7 +54,7 @@ const Connect = () => {
     return (
         <div className="grid auto-rows-min rounded-lg p-2 gap-2">
             <h1 className="text-5xl text-center">Connect a Custom Domain</h1>
-            { !website?.domain ? <div className="grid grid-cols-3 gap-1 border border-black rounded-lg">
+            { !website?.domain ? <div className="grid md:grid-cols-3 gap-1 border border-black rounded-lg">
                 <div className="grid">
                     <h1 className="text-4xl text-center">Subdomain</h1>
                     <input value={sub} onChange={onSubChange} type="text" className="text-center text-3xl border-b-2 border-black w-full" placeholder="www" />
@@ -71,7 +71,7 @@ const Connect = () => {
                 </div>
             </div> : <div className="flex place-content-center items-center gap-1 bg-gray-200 rounded-lg p-1">
                 <MdLock size="30px" />
-                <h1 className="text-5xl text-center">{website?.domain?.name}</h1>
+                <h1 className="text-3xl md:text-5xl text-center">{website?.domain?.name}</h1>
             </div> }
 
             { !website?.domain ? <div onClick={connect} className="grid items-center justify-items-center bg-black text-white p-2 gap-1 rounded-lg select-none hover:scale-[.98]">

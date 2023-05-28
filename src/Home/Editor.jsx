@@ -12,28 +12,12 @@ const Editor = () => {
                     pages.map((page, i) => {
                         return (
                             <div key={`h-p-${i}`} className="grid justify-items-center items-center gap-1 border border-white rounded-lg select-none">
-                                <h1 className="text-3xl font-bold">{page?.name}</h1>
-                                <h1 className="text-3xl">/{page?.route}</h1>
+                                <h1 className="text-3xl font-bold text-center break-all">{page?.name}</h1>
+                                <h1 className="text-3xl text-center break-all">/{page?.route}</h1>
                             </div>
                         )
                     })
                 }
-                {/* <div className="grid justify-items-center items-center gap-1 border border-white rounded-lg select-none">
-                    <h1 className="text-3xl font-bold">Page Name</h1>
-                    <h1 className="text-3xl">/route</h1>
-                </div>
-                <div className="grid justify-items-center items-center gap-1 border border-white rounded-lg select-none">
-                    <h1 className="text-3xl font-bold">Page Name</h1>
-                    <h1 className="text-3xl">/route</h1>
-                </div>
-                <div className="grid justify-items-center items-center gap-1 border border-white rounded-lg select-none">
-                    <h1 className="text-3xl font-bold">Page Name</h1>
-                    <h1 className="text-3xl">/route</h1>
-                </div>
-                <div className="grid justify-items-center items-center gap-1 border border-white rounded-lg select-none">
-                    <h1 className="text-3xl font-bold">Page Name</h1>
-                    <h1 className="text-3xl">/route</h1>
-                </div> */}
             </div>
             <h1 className="text-4xl font-bold">Pages</h1>
         </div>

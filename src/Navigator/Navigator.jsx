@@ -24,7 +24,7 @@ const Navigator = () => {
                 <BiMenu size="45px" />
             </div> */}
 
-            <div className={`${mobileClicked ? 'h-full' : 'hidden'} top-0 left-0 right-0 md:block absolute md:static md:h-auto md:w-auto`}>
+            <div className={`${mobileClicked ? 'h-full' : 'hidden'} top-0 left-0 right-0 md:block absolute md:static md:h-auto md:w-auto z-50`}>
     
                 <div onClick={() => setMobileClicked(false)} className="absolute right-1 top-[1px] md:hidden">
                     <BiX size="45px" />

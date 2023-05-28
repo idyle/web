@@ -10,7 +10,7 @@ ga.initialize(process.env.REACT_APP_GA_ID);
 const App = () => {
     return (
         <Contexts>
-            <div className='h-screen grid grid-rows-[auto_minmax(0,_1fr)]'>
+            <div className='grid grid-rows-[auto_minmax(0,_1fr)] h-screen'>
                 <Loader />
                 <Components />
                 <Notifier />

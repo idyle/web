@@ -82,7 +82,7 @@ const Payments = () => {
 
             </div>
 
-            <div className="grid md:grid-cols-3 gap-x-5 gap-y-2 p-3 auto-rows-min overflow-auto">
+            <div className="grid md:grid-cols-3 gap-x-5 gap-y-2 p-3 auto-rows-min md:overflow-auto">
                 {plans.map((plan, i) => (<Plan key={`p${i}`} onCancel={onCancel} plan={plan} onClick={onClick} />))}
             </div>
 

@@ -15,7 +15,7 @@ const Notifier = () => {
 
     return (
         <div>
-            <div className={`flex items-center place-content-center gap-1 bg-black ${notifier?.active ? 'h-[40px]' : 'h-0'} overflow-hidden absolute bottom-0 left-0 right-0 shadow ease-in duration-300`}>
+            <div className={`flex items-center place-content-center gap-1 bg-black ${notifier?.active ? 'h-[40px]' : 'h-0'} overflow-hidden fixed bottom-0 left-0 right-0 shadow ease-in duration-300`}>
                 <HiOutlineInformationCircle className="text-white" />
                 <h1 className="text-lg text-white">{notifier?.message}</h1>
             </div> 

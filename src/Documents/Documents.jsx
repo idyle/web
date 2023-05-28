@@ -63,7 +63,7 @@ const Documents = () => {
     // }, [user?.accessToken]);
 
     return (
-        <div className='grid h-full m-5'>
+        <div className='grid m-5'>
 
             <Helmet>
                 <title>idyle - Documents</title>
@@ -72,7 +72,7 @@ const Documents = () => {
                 <link rel="canonical" href="/docs" />
             </Helmet>
             
-            <div className="grid max-h-[50%] md:grid-rows-auto md:grid-cols-2 gap-3 overflow-auto">
+            <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 md:gap-3 overflow-hidden">
 
                 <div className="grid px-3 overflow-auto grid-rows-[auto_minmax(0,_1fr)]">
                     <div className="flex items-center justify-between bg-black rounded-lg text-white p-2 select-none">
@@ -80,7 +80,7 @@ const Documents = () => {
                         <AiOutlinePlus onClick={add} className="text-inherit" size="30px" />
                     </div>
 
-                    <div className="grid p-3 gap-2 overflow-auto auto-rows-min">
+                    <div className="grid p-3 md:gap-2 overflow-auto auto-rows-min">
                         {
                             docs.map((ownDoc, i) => (<Document key={`d${i}`} doc={ownDoc} currentDoc={selectedDoc} onClick={onClick} />))
                         }
@@ -88,7 +88,7 @@ const Documents = () => {
                     </div>
                 </div>
 
-                { selectedDoc ? <div className="grid overflow-hidden gap-2 grid-rows-[minmax(0,_1fr)_auto]">
+                { selectedDoc ? <div className="grid overflow-hidden md:gap-2 grid-rows-[minmax(0,_1fr)_auto]">
                     <Viewer doc={selectedDoc} docs={docs} setDocs={setDocs} />
                     <div className="flex items-center border border-black justify-between rounded-lg p-2 select-none">
                         <h1 className="text-3xl text-inherit">Document</h1>

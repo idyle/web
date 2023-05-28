@@ -50,6 +50,7 @@ const Parser = () => {
         theme="vs-dark"
         defaultLanguage="html"
         value={string}
+        fixedOverflowWidgets={true}
         defaultValue={string}
         onChange={onChange}
         onMount={onMount}

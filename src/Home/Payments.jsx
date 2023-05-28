@@ -11,7 +11,7 @@ const Payments = () => {
     const plan = user?.planType && plans?.find(({ id }) => id === user?.planType)?.name;
 
     return (
-        <div className="grid h-full items-center justify-items-center px-2">
+        <div className="grid h-full items-center justify-items-center p-2">
             <div className="grid items-center justify-items-center">
             <div className="flex items-center gap-2">
                 { plan ? <AiOutlineCheck size="30px" /> : <AiOutlineClose size="30px" /> }
