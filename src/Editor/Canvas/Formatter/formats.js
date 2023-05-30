@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     bold: 'font-bold',
     italic: 'italic',
     underline: 'underline',

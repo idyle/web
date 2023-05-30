@@ -72,7 +72,7 @@ const Documents = () => {
                 <link rel="canonical" href="/docs" />
             </Helmet>
             
-            <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 md:gap-3 overflow-hidden">
+            <div className="grid grid-rows-[30%_70%] md:grid-rows-1 md:grid-cols-2 md:gap-3 overflow-hidden">
 
                 <div className="grid px-3 overflow-auto grid-rows-[auto_minmax(0,_1fr)]">
                     <div className="flex items-center justify-between bg-black rounded-lg text-white p-2 select-none">

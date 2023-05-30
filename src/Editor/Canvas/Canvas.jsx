@@ -129,17 +129,18 @@ const Canvas = () => {
     const [dom, setDom] = useState([]);
 
     useEffect(() => {
-        // handle case where no page selected / exists
-        if (!page?.data) return;
+        console.log('entered canvas!', page?.data, page?.id);
+        if (!page?.id || !page?.data) return;
         setDom(constructDom(page?.data, css));
-    }, [page?.data, css]);
+    }, [page?.id, page?.data, css]);
 
     return (
         <DomContext>
-            <div className="grid h-full grid-cols-[20%_80%]">
+            <div className="grid grid-rows-[30%_70%] md:grid-rows-1 md:grid-cols-[20%_80%] overflow-auto">
                     <Toolbar />
-                <div className="grid grid-rows-[10%_90%] overflow-auto p-1">
+                <div className="grid grid-rows-[20%_80%] md:grid-rows-[10%_90%] p-1">
                     <Formatter />
+
                     <div className="grid p-1 overflow-auto shadow-xl rounded-lg">
                         {dom}
                     </div>

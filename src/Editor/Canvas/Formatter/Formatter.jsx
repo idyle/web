@@ -21,7 +21,7 @@ const Toolbar = () => {
     const updateElement = (format) => setPageData({ ...updateClassFromPath(page?.data, path, formats[format]) });
 
     return (
-        <div className="flex place-content-center items-center gap-1 p-1 border border-black rounded-lg ">
+        <div className="flex flex-wrap place-content-center items-center gap-1 p-1 rounded-lg">
 
             <Format icon={<RxFontBold />} format="bold" />
             <Format icon={<RxFontItalic />} format="italic" />

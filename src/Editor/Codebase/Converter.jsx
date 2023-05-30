@@ -22,9 +22,11 @@ export const renderElements = (config, toggle) => {
 
 export const constructDom = (config, toggle, css) => {
     let body = renderElements(config, true);
+    console.log('RENDERED config', config, body);
     if (toggle) toggle = createElement("script", { src: "https://cdn.tailwindcss.com" });
     if (css) css = createElement("link", { type: 'text/css', rel: "stylesheet", href: css });
     const string = renderToString(<html><head>{css}{toggle}</head><body>{body}</body></html>);
+    console.log('fINAL STRINGGG', string);
     return (
         <iframe className="w-full h-full" srcDoc={string}></iframe>
     )

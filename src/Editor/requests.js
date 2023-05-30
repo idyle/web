@@ -16,10 +16,13 @@ export const savePage = async (token, page) => {
 
         const req = await fetch(url, options);
         const res = await req.json();
+        console.log(res?.status, 'res NEW TEST');
+        if (res?.status) return res;
         return res?.status;
 
     } catch (e) {
         console.error(e);
+        console.log('errorrrrr');
         return false;
     }
 };

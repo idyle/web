@@ -9,7 +9,7 @@ const Inputter = ({ icon, format }) => {
     
     const { setPageData, page } = useEditor();
     const { path, updateFromPath, updateStylesFromPath } = useDom();
-    const [px, setPx] = useState(0);
+    const [px, setPx] = useState();
 
     const func = (current) => {
         let properties = current.className?.split(' ') || [];

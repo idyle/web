@@ -96,10 +96,10 @@ const Elements = () => {
     }, [integrator?.active]);
 
     return (
-        <div className="grid grid-rows-[80%_20%] gap-1 p-1">
+        <div className="grid md:grid-rows-[80%_20%] gap-1 p-1">
             <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-1 shadow-xl border border-black rounded-lg gap-1">
                 <h1 className="text-3xl font-bold text-center">Elements</h1>
-                <div className="grid auto-rows-min gap-1 p-1 overflow-auto">
+                <div className="grid grid-flow-col md:grid-flow-row gap-1 p-1 overflow-auto">
 
                     <Element title="Header" onClick={() => appendElement('header')} icon={ <RxLetterCaseCapitalize />} />
                     <Element title="Text" onClick={() => appendElement('text')} icon={ <RxText />} />
@@ -119,16 +119,19 @@ const Elements = () => {
                 </div> 
             </div>
 
-            <div className="grid border border-black p-1 gap-1 rounded-lg">
+            <div className="grid border border-black p-1 gap-1 rounded-lg md:overflow-auto">
                 <h1 className="text-2xl text-center">Selected: {selType}</h1>
-                <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
-                    <AiOutlineReload size="25px" />
-                    <h1 className="text-xl">Reset Styles</h1>
+                <div className="grid grid-flow-col md:grid-flow-row p-1 gap-1">
+                    <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
+                        <AiOutlineReload size="25px" />
+                        <h1 className="text-xl text-center">Reset Styles</h1>
+                    </div>
+                    <div onClick={deleteElement} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
+                        <AiFillDelete size="25px" />
+                        <h1 className="text-xl text-center">Delete Element</h1>
+                    </div>
                 </div>
-                <div onClick={deleteElement} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
-                    <AiFillDelete size="25px" />
-                    <h1 className="text-xl">Delete Element</h1>
-                </div>
+
             </div>
         </div>
     )

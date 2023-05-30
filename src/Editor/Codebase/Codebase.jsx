@@ -64,19 +64,20 @@ export const DomContext = ({ children }) => {
 
     useEffect(() => {
         try {
-            if (integrator?.active && integrator?.origin === `${origin}?mode=codebase`) return;
-            // if a page is not selected 
-            // if (!page?.data) return navigate('/editor/pages');
-            // from JSON into string
+            if (integrator?.active && integrator?.origin === `${origin}?mode=codebase`) return console.log('IS ACTIVE');
+            console.log('DATA', page);
             if (!page?.data || !page?.id) return;
             const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
-            if (!convertedHimalayaJSON || !convertedHimalayaJSON?.tagName) return;
+            if (!convertedHimalayaJSON) return;
             console.log('CONVERTED', convertedHimalayaJSON)
             // instead of creating a wrapper func, it's possible to just return its children
             const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON?.children || []);
+            console.log('STRINGIFIED', stringifiedHimalayaJSON);
             if (!stringifiedHimalayaJSON) return;
+            const cDom = constructDom(page?.data, toggle, css);
+            console.log('CONSDTRUCTED DOM', cDom);
             setString(stringifiedHimalayaJSON);
-            setDom(constructDom(page?.data, toggle, css));
+            setDom(cDom);
         } catch (e) {
             console.log(e);
             return;
@@ -95,7 +96,7 @@ const Codebase = () => {
     return (
         <DomContext>
         <div className="grid grid-rows-[minmax(0,_1fr)_auto] p-2 gap-1">
-            <div className="grid grid-cols-[40%_60%] gap-1">
+            <div className="grid grid-rows-[40%_60%] md:grid-rows-1 grid-cols-1 md:grid-cols-[40%_60%] gap-1">
                 <div className="shadow-xl rounded-lg overflow-hidden">
                     <Parser />
                 </div>

@@ -74,7 +74,7 @@ const navPart = {
     children: 'Sample'
 };
 
-module.exports = {
+export default {
 
     header, text, img, video,
     section1, section2, section3, 

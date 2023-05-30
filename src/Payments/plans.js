@@ -12,7 +12,8 @@ export default
                 "Basic Request Quota",
                 "Basic Data Features",
                 "1 Custom Domain + SSL"
-            ]
+            ],
+            active: true
         },
         {
             id: 'price_1MxQUYBVlu9NzRVaf0TudX3i',
@@ -26,7 +27,8 @@ export default
                 "Premium Request Quota",
                 "Basic Data Features",
                 "2 Custom Domains + SSL"
-            ]
+            ],
+            active: false
         },
         {
             id: 'price_1MxQUwBVlu9NzRVaHaga7OPV',
@@ -40,6 +42,7 @@ export default
                 "Premium Request Quota",
                 "Premium Data Features",
                 "5 Custom Domains + SSL"
-            ]
+            ],
+            active: false
         }
     ]

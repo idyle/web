@@ -5,6 +5,8 @@ import { useDom } from "./Codebase";
 import { useUtil } from "../../Contexts/Util";
 import { useLocation, useNavigate } from "react-router-dom";
 import { stringify } from "himalaya";
+import { SiTailwindcss, SiCss3 } from 'react-icons/si';
+import { HiOutlineDatabase } from 'react-icons/hi';
 
 const Toolbar = () => {
     const navigate = useNavigate();
@@ -88,16 +90,20 @@ const Toolbar = () => {
 
     return (
         <div className="grid grid-flow-col border border-black rounded-lg p-1 gap-2">
-            <div onClick={toggleTailwind} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
-                <h1 className="text-2xl">Toggle Tailwind CSS ({toggle ? 'ON' : 'OFF'})</h1>
+            <div onClick={toggleTailwind} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
+                <SiTailwindcss size="25px" />
+                <h1 className="text-2xl text-center hidden md:block">Toggle Tailwind CSS ({toggle ? 'ON' : 'OFF'})</h1>
             </div>
-            { !css ? <div onClick={sendObjectsRequest} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
-                <h1 className="text-2xl">Custom CSS File (IMPORT)</h1>
-            </div> : <div onClick={ejectCss} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
-                <h1 className="text-2xl">Custom CSS File (EJECT)</h1>
+            { !css ? <div onClick={sendObjectsRequest} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
+                <SiCss3 size="25px" />
+                <h1 className="text-2xl text-center hidden md:block">Custom CSS File (IMPORT)</h1>
+            </div> : <div onClick={ejectCss} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
+                <SiCss3 size="25px" />
+                <h1 className="text-2xl text-center hidden md:block">Custom CSS File (EJECT)</h1>
             </div> }
-            <div onClick={sendDocsRequest} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98]">
-                <h1 className="text-2xl">Convert Docs to HTML</h1>
+            <div onClick={sendDocsRequest} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
+                <HiOutlineDatabase size="25px" />
+                <h1 className="text-2xl text-center hidden md:block">Convert Docs to HTML</h1>
             </div>
         </div>
     );

@@ -38,10 +38,10 @@ export const EditorContext = ({ children }) => {
 
     const save = async (page) => {
         const index = pages.findIndex(( { id } ) => id === page?.id);
-        if (!(index >= 0)) return;
+        if (!(index >= 0)) return console.log('INDEX NOT FOUND', pages, index, !(index >= 0));
         const operation = await savePage(user?.accessToken, page);
         if (!operation) return notify('Something went wrong trying to create the page.');
-        pages[index] = page;
+        pages[index] = { ...page, id: operation?.id };
         setPages([ ...pages ]);
     };
 
@@ -91,7 +91,7 @@ const Editor = () => {
     }, [pageId]);
 
     return (
-        <div className='grid h-full grid-rows-[auto_minmax(0,_1fr)] m-1'>
+        <div className='grid grid-rows-[auto_minmax(0,_1fr)] m-1'>
 
             <Helmet>
                 <title>idyle - Editor</title>

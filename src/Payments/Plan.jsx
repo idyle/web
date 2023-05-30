@@ -53,11 +53,6 @@ const Plan = ({ plan, onClick, onCancel }) => {
                         <h1 className="text-3xl text-center">Selected Plan</h1>
                     </div>
 
-                    {/* <div className="flex items-center">
-                    <AiOutlineCheck size="30px" />
-                        <h1 className="text-3xl text-center">Selected Plan</h1>
-                    </div> */}
-
 
                     <div className="grid justify-items-center items-center">
                         <h1 className="text-2xl  text-center">Renews {subscription?.date} {subscription?.day}</h1>
@@ -65,9 +60,19 @@ const Plan = ({ plan, onClick, onCancel }) => {
                     </div>
                 </div>
                 :
+                <>
+                {
+                    plan?.active ?
                 <div id={plan?.id} onClick={onClick} className="grid w-full p-1 items-center justify-items-center border border-black hover:bg-black hover:text-white rounded-xl select-none">
                     <h1 className="text-3xl text-center">Select Plan</h1>
-                </div>
+                </div> 
+                :
+                <div id={plan?.id} className="grid w-full p-1 items-center justify-items-center border border-black rounded-xl select-none bg-gray-100">
+                    <h1 className="text-3xl text-center">Coming Soon</h1>
+                </div> 
+                }
+                </>
+                
             }
 
 

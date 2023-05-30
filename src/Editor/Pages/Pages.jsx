@@ -27,16 +27,12 @@ const Pages = () => {
         if (page?.route === config?.route) return notify('Please change the route');
         const routeIndex = pages.findIndex(({ route }) => route === page?.route);
         const pageIndex = pages.findIndex(({ id }) => id === page?.id);
-        console.log('index', routeIndex);
         if (routeIndex >= 0 && pageIndex !== routeIndex) return notify('This route already exists.');
-        console.log('PREPARING FOR EDIT');
-        save(page);
         let arr = pages;
         if (addPageMode) arr.push(page);
         else arr[pageIndex] = page;
         setPages([ ...arr ]);
-        setPage({});
-        console.log('PAGES', pages);
+        save(page);
     };
     // must be staged
 
