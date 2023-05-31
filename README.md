@@ -1,6 +1,6 @@
-# [idyle/app](https://idyle.app)
+# [idyle/web](https://idyle.app)
 
-idyle's multi-service website and application.
+idyle's multi-service website and platform.
 
 ## About
 
@@ -17,7 +17,7 @@ These services are accessible at `https://idyle.app`.
 
 ## Technologies and Services
 
-* The entire application is built on [ReactJS](https://reactjs.org) and connects to `idyle/api`. 
+* The entire website is built on [ReactJS](https://reactjs.org) and connects to `idyle/api`. 
 
 * Styling and design is done through [TailwindCSS](https://tailwindcss.com) and authentication through [Google Firebase](https://firebase.com).
 
@@ -33,7 +33,7 @@ These services are accessible at `https://idyle.app`.
 
 ### Environment Variables
 
-The following enviornment variables are required to start the application. This sensitive information is only accesible with internal authorization.
+The following enviornment variables are required to start the website. This sensitive information is only accesible with internal authorization.
 
 ```
 REACT_APP_API_KEY=
