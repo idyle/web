@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./Auth";
-import { getPage, listPages } from "../Editor/requests";
-import { getWebsite, listDeploys } from "../Deployer/requests";
-import { listDocs } from "../Documents/requests";
-import { listFiles } from "../Objects/requests";
-import { getMetrics } from "../Payments/requests";
+import { listPages } from "../Components/Interface/Editor/requests";
+import { getWebsite, listDeploys } from "../Components/Interface/Deployer/requests";
+import { listDocs } from '../Components/Interface/Documents/requests';
+import { listFiles } from "../Components/Interface/Objects/requests";
+import { getMetrics } from "../Components/Interface/Payments/requests";
 
 const DataValues = createContext();
 export const useData = () => useContext(DataValues);
