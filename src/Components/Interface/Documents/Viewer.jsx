@@ -4,7 +4,7 @@ import { useUtil } from "../../../Contexts/Util";
 
 const Viewer = ({ doc, setDocs, docs }) => {
 
-    const { setLoader } = useUtil();
+    const { load } = useUtil();
     const [mounted, setMounted] = useState(false);
 
     const { id, ...newDocs } = doc;
@@ -17,11 +17,16 @@ const Viewer = ({ doc, setDocs, docs }) => {
         setString(JSON.stringify(newDoc));
     }, [doc]);
 
-    const onMount = async (editor) => setMounted(true);
+    const onMount = async (editor) => {
+        console.log(mounted);
+        setMounted(true)
+    };
 
     useEffect(() => {
-        if (!mounted) return setLoader(true);
-        setLoader(false);
+        console.log('m state', mounted);
+        if (!mounted) return load(true);
+        console.log('mounted!');
+        load(false);
         
     }, [mounted]);
 

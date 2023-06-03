@@ -5,7 +5,7 @@ import Subnav from '../Templates/Subnav';
 import Subnavbutton from '../Templates/Subnavbutton';
 import Pages from './Pages/Pages';
 import { createContext, useContext, useState } from 'react';
-import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
@@ -20,7 +20,7 @@ export const useEditor = () => useContext(EditorValues);
 export const EditorContext = ({ children }) => {
 
     const { user } = useAuth();
-    const { setLoader, notify, prompt } = useUtil();
+    const { load, notify, prompt } = useUtil();
     const { pages, setPages, pageId, setPageId } = useData();
     const pageQuery = pages?.find(({ id }) => id === pageId);
     console.log('PAGE Q', pageQuery);
@@ -47,9 +47,9 @@ export const EditorContext = ({ children }) => {
 
     const remove = async (page) => {
         if (!(await prompt("You're about to delete a page. This action cannot be undone. Proceed?"))) return;
-        setLoader(true);
+        load(true);
         const operation = await deletePage(user?.accessToken, page);
-        setLoader(false);
+        load(false);
         if (!operation) return notify('Something went wrong trying to delete this page.');
         setPages(pages.filter(({ id }) => id !== page?.id));
     };
@@ -82,8 +82,6 @@ const Editor = () => {
 
     const { pages, pageId } = useData();
     const [pageRoute, setPageRoute] = useState('');
-    const { pathname: path } = useLocation();
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (!pages?.length || !pageId) return;

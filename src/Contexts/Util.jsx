@@ -4,7 +4,7 @@ const UtilValues = createContext();
 export const useUtil = () => useContext(UtilValues);
 
 const UtilContext = ({ children }) => {
-    const [loader, setLoader] = useState(false);
+    const [loading, load] = useState(false);
     const [notifier, setNotifier] = useState({ active: false });
     const notify = (message, time = 3000) => setNotifier({ message, active: true, time });
     const [prompter, setPrompter] = useState({ active: false });
@@ -12,7 +12,7 @@ const UtilContext = ({ children }) => {
     const [integrator, setIntegrator] = useState({ active: false });
     const integrate = (origin) => new Promise(resolve => setIntegrator({ resolve, origin, active: true }) )
     const values = { 
-        loader, setLoader, 
+        loading, load, 
         notifier, notify, setNotifier, 
         prompter, prompt, setPrompter,
         integrator, integrate, setIntegrator 

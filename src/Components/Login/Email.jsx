@@ -8,7 +8,7 @@ import Providers from './Providers';
 const Email = () => {
     const [credentials, setCredentials] = useState({});
     const { transit, setTransit, handleDuplicateError } = useSignIn();
-    const { setLoader, notify } = useUtil();
+    const { load, notify } = useUtil();
     const navigate = useNavigate();
 
     const onChange = (e) => {
@@ -21,7 +21,7 @@ const Email = () => {
         if (transit) return;
         try {
             setTransit(true);
-            setLoader(true);
+            load(true);
             const { email = '', password = '' } = credentials;
             console.log('email pass', email, password);
             const test = await signInWithEmailAndPassword(getAuth(), email, password);
@@ -48,13 +48,11 @@ const Email = () => {
                 <input id="email" onChange={onChange} className="rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" />
                 <input id="password" onChange={onChange} className="rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="Password" />
                 <h1 onClick={() => navigate('/login/reset')} className="text-lg underline select-none">Forgot Password?</h1>
-
                 <div onClick={onClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border rounded-lg bg-black hover:scale-[.98]">
                     <h1 className='text-2xl text-white font-semibold'>Continue</h1>
                 </div>
             </div>
             <h1 className="text-xl"> - OR -</h1>
-
             <Providers />
         </>
     )

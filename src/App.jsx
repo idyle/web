@@ -3,6 +3,7 @@ import Loader from './Utilities/Loader';
 import Prompter from './Utilities/Prompter';
 import Contexts from './Contexts/Contexts';
 import Components from './Components/Components';
+import Spinner from './Utilities/Spinner';
 
 const App = () => {
     return (
@@ -12,6 +13,7 @@ const App = () => {
                 <Components />
                 <Notifier />
                 <Prompter />
+                <Spinner />
             </div>
         </Contexts>
     )

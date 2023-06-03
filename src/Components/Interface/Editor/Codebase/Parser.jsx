@@ -9,15 +9,15 @@ import { parse } from "himalaya";
 
 const Parser = () => {
     const { page, setPageData } = useEditor();
-    const { setLoader } = useUtil();
+    const { load } = useUtil();
     const { string, toggle, css, setDom, convertHimalayaJSONtoJSON } = useDom();
     const [mounted, setMounted] = useState();
     const editorRef = useRef();
 
     useEffect(() => {
         if (!page?.data) return;
-        if (!mounted) setLoader(true);
-        else setLoader(false);
+        if (!mounted) load(true);
+        else load(false);
     }, [mounted]);
 
     const beforeMount = (monaco) => emmetHTML(monaco);

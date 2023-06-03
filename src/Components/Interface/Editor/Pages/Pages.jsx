@@ -2,7 +2,6 @@ import { MdAddCircle } from 'react-icons/md';
 import { useEditor } from '../Editor';
 import Page from './Page';
 import { useUtil } from '../../../../Contexts/Util';
-
 import { useState } from 'react';
 
 const Pages = () => {

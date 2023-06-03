@@ -8,15 +8,15 @@ import { useEffect } from "react";
 const Metrics = () => {
 
     const { user } = useAuth();
-    const { setLoader, notify } = useUtil();
+    const { load, notify } = useUtil();
     const { metrics, setMetrics } = useData();
 
     useEffect(() => {
         if (!user?.accessToken) return;
         (async () => {
-            setLoader(true);
+            load(true);
             const metrics = await getMetrics(user?.accessToken);
-            setLoader(false);
+            load(false);
             if (!metrics) return notify('Failed to get metrics');
             setMetrics(metrics);
         })();

@@ -9,7 +9,7 @@ import Minprovider from "./Minprovider";
 
 const Providers = ({ layout = 'default' }) => {
 
-    const { setLoader, notify } = useUtil();
+    const { load, notify } = useUtil();
     const { transit, setTransit, linkage, setLinkage, handleDuplicateError } = useSignIn();
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const Providers = ({ layout = 'default' }) => {
                     // lets get the credential
                     
                     setLinkage(JSON.stringify(e));
-                    setLoader(true);
+                    load(true);
                     setTransit(true);
                     await signInWithRedirect(getAuth(), serviceProvider);
                 }
@@ -61,7 +61,7 @@ const Providers = ({ layout = 'default' }) => {
         console.log('transit status', transit);
         if (transit) return;
         // call the loader and mark the progress as true
-        setLoader(true);
+        load(true);
         setTransit(true);
         await signInWithRedirect(getAuth(), provider);
         // the result is handled separately

@@ -5,6 +5,7 @@ import { getWebsite, listDeploys } from "../Components/Interface/Deployer/reques
 import { listDocs } from '../Components/Interface/Documents/requests';
 import { listFiles } from "../Components/Interface/Objects/requests";
 import { getMetrics } from "../Components/Interface/Payments/requests";
+import { useUtil } from "./Util";
 
 const DataValues = createContext();
 export const useData = () => useContext(DataValues);
@@ -34,6 +35,7 @@ const DataContext = ({ children }) => {
 
     const [data, setData] = useState(getDataFromSession);
     const { user } = useAuth();
+    const { load } = useUtil();
 
     const onLoad = async () => {
         const cachedData = getDataFromSession();
@@ -58,7 +60,9 @@ const DataContext = ({ children }) => {
             getWebsite(token), getMetrics(token)
         ], requestedData = {};
 
+        load(true);
         const results = await Promise.all(requests);
+        load(false);
         for (let i = 0; i < results.length; i++) {
             const result = results[i];
             const key = keys[i];

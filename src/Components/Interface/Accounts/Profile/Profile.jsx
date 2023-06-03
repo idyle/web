@@ -49,7 +49,6 @@ const Profile = () => {
             <div className="flex items-center p-2">
                 <h1 className="text-6xl">Your Account</h1>
             </div>
-
             <div className="grid items-center justify-items-center border border-black p-2 rounded-lg">
                 {user?.photoURL ? <img className="w-[80px] h-[80px] rounded-full" src={user?.photoURL} /> : <BsPersonCircle size="80px" />}
                 {edit ? <input autoFocus className="text-center text-3xl w-1/2" onChange={onNameChange} value={name}/> : <h1 className="text-3xl">{name}</h1>}
@@ -58,9 +57,7 @@ const Profile = () => {
                     {edit ? <MdCheck onClick={saveInfo} size="25px" /> : <MdEdit size="25px" />}
                 </div>
             </div>
-        
             <Infotable info={info} />
-
             <div className="grid p-3 gap-2">
                 <h1 className="text-4xl">Developer Tools</h1>
                 <div className="flex items-center gap-[20px] border border-black rounded-lg p-2">
@@ -70,11 +67,9 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-
             <div onClick={onSignOut} className="flex items-center place-content-center bg-black rounded-lg p-2 select-none hover:scale-[.98]">
                 <h1 className="text-2xl text-white">Sign Out</h1>
             </div>
-
         </div>
     )
 };

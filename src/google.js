@@ -11,4 +11,4 @@ const config = {
 };
 
 initializeApp(config);
-ga.initialize(process.env.REACT_APP_GA_ID);
+ga.initialize(process.env.REACT_APP_MEASUREMENT_ID);

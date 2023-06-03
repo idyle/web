@@ -1,19 +1,18 @@
-import { MdCheck, MdInfoOutline, MdRadioButtonChecked } from "react-icons/md";
+import { MdCheck, MdInfoOutline } from "react-icons/md";
 import { useUtil } from "../../../Contexts/Util";
 import { useAuth } from "../../../Contexts/Auth";
 import { useState } from "react";
 import { setupWebsite } from "./requests";
-import { useEffect } from "react";
 import { BiLinkExternal } from 'react-icons/bi';
 import { useData } from "../../../Contexts/Data";
 
-const Setup = ({ setWebsite }) => {
+const Setup = () => {
 
     console.log('from SETUP');
 
     const { user } = useAuth();
     const { resetWebsite, website } = useData();
-    const { notify, setLoader, prompt } = useUtil();
+    const { notify, load, prompt } = useUtil();
 
     const [clicked, setClicked] = useState(false);
     const [inputWebsite, setInputWebsite] = useState('');
@@ -21,9 +20,9 @@ const Setup = ({ setWebsite }) => {
     const onClick = async () => {
         if (!inputWebsite) return notify('No website name inputted.');
         if (!(await prompt('You are about to create a website. This action is permanent. Proceed?'))) return;
-        setLoader(true);
+        load(true);
         const operation = await setupWebsite(user?.accessToken, inputWebsite);
-        setLoader(false);
+        load(false);
         if (!operation) return notify("An error occured trying to make the website.");
         resetWebsite();
     };
@@ -36,7 +35,6 @@ const Setup = ({ setWebsite }) => {
 
     return (
         <div className="grid auto-rows-min overflow-auto bg-black rounded-lg text-white p-3">
-
             <div className="flex items-center justify-between gap-1">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                     <h1 className="text-center text-2xl md:text-3xl font-bold">Website</h1>
@@ -52,7 +50,6 @@ const Setup = ({ setWebsite }) => {
                 <MdInfoOutline size="20px" />
                 <div className="text-xl">This is a one-time only setup. Once saved, a website name cannot be changed.</div>
             </div> }
-       
         </div>
     )
 };

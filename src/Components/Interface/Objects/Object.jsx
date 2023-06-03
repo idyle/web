@@ -8,7 +8,7 @@ const Object = ({ object, objects, setObjects }) => {
 
     const navigate = useNavigate();
     const { user } = useAuth();
-    const { notify, prompt, setLoader, integrator, setIntegrator } = useUtil();
+    const { notify, prompt, load, integrator, setIntegrator } = useUtil();
 
     const copy = () => {
         notify('Successfully copied to clipboard');
@@ -17,9 +17,9 @@ const Object = ({ object, objects, setObjects }) => {
 
     const download = async () => {
 
-        setLoader(true);
+        load(true);
         const file = await downloadFile(user?.accessToken, object.name);
-        setLoader(false);
+        load(false);
         if (!file) return;
 
         const data = Uint8Array.from(file.data);
@@ -34,9 +34,9 @@ const Object = ({ object, objects, setObjects }) => {
 
     const remove = async () => {
 
-        setLoader(true);
+        load(true);
         const op = await deleteFile(user?.accessToken, object.name);
-        setLoader(false);
+        load(false);
         if (!op) return notify('Something went wrong...');
         setObjects(objects.filter(( { name }) => name !== object.name));
         
@@ -49,10 +49,10 @@ const Object = ({ object, objects, setObjects }) => {
         console.log(integrator?.active, 'integrator status');
         if (!integrator?.active || integrator?.target !== 'objects' || !integrator?.origin) return;
         if (!(await prompt('Adding this to the canvas will make your file public. Continue?'))) return;
-        setLoader(true);
+        load(true);
         const operation = await publicFile(user?.accessToken, object?.name);
         // const updatedFile = await getFile(user?.accessToken, object?.name);
-        setLoader(false);
+        load(false);
         // if (!updatedFile) return;
         const url = `https://storage.googleapis.com/idyle/${object?.path}`;
         if (operation) setIntegrator({ ...integrator, data: { ...object, url } });

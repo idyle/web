@@ -3,16 +3,17 @@ import Actions from "./Actions/Actions";
 import Interface from "./Interface/Interface";
 import { useUtil } from "../Contexts/Util";
 import { Routes, Route } from 'react-router-dom';
+import Spinner from "../Utilities/Spinner";
 
 const Components = () => {
 
-    const { loader } = useUtil();
+    const { loading } = useUtil();
     return (
-        <div className={`${loader && 'animate-pulse pointer-events-none select-none h-full'}`}>
+        <div>
             <Routes>
-                <Route path="login/*" element={<Login />} />
-                <Route path="actions" element={<Actions />} />
-                <Route path ="*" element={<Interface />} />
+                    <Route path="login/*" element={<Login />} />
+                    <Route path="actions" element={<Actions />} />
+                    <Route path ="*" element={<Interface />} />
             </Routes>
         </div>
     )

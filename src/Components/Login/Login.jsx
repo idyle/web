@@ -12,7 +12,7 @@ export const useSignIn = () => useContext(SignInValues);
 
 export const SignInContext = ({ children }) => {
     const { auth } = useAuth();
-    const { setLoader, notify } = useUtil();
+    const { load, notify } = useUtil();
     const [transit, setTransit] = useState(localStorage.getItem('transit'));
     const [linkage, setLinkage] = useState(localStorage.getItem('linkage'));
 
@@ -28,8 +28,8 @@ export const SignInContext = ({ children }) => {
 
     useEffect(() => {
         // sets off loader due to a transit state
-        if (transit && !auth) return setLoader(true);
-        setLoader(false);
+        if (transit && !auth) return load(true);
+        load(false);
     }, [transit, auth]);
 
     const handleDuplicateError = (e) => {
@@ -43,25 +43,21 @@ export const SignInContext = ({ children }) => {
 };
 
 const Login = () => {
-
-
-
-
     return (
         <SignInContext>
-        <div className="grid justify-items-center items-center h-full w-full">
-            <div className="grid h-[90%] w-[400px] my-10 p-6 gap-4 auto-rows-min justify-items-center border border-black rounded-xl shadow-xl overflow-auto">
-                <div className="grid gap-7 items-center justify-items-center">
-                    <h1 className="text-6xl">idyle</h1>
+            <div className="grid justify-items-center items-center h-full w-full">
+                <div className="grid h-[90%] w-[400px] my-10 p-6 gap-4 auto-rows-min justify-items-center border border-black rounded-xl shadow-xl overflow-auto">
+                    <div className="grid gap-7 items-center justify-items-center">
+                        <h1 className="text-6xl">idyle</h1>
+                    </div>
+                    <Routes>
+                        <Route path="register" element={ <Register /> } /> 
+                        <Route path="login" element={ <Email /> } /> 
+                        <Route path="reset" element={ <Reset /> } /> 
+                        <Route path="*" element={<Navigate to="login" />} /> 
+                    </Routes>
                 </div>
-                <Routes>
-                    <Route path="register" element={ <Register /> } /> 
-                    <Route path="login" element={ <Email /> } /> 
-                    <Route path="reset" element={ <Reset /> } /> 
-                    <Route path="*" element={<Navigate to="login" />} /> 
-                </Routes>
             </div>
-        </div>
         </SignInContext>
     )
 };

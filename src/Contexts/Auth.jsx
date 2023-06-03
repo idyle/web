@@ -9,31 +9,18 @@ export const useAuth = () => useContext(AuthValues);
 const AuthContext = ({ children }) => {
     const [auth, setAuth] = useState(localStorage.getItem('idyle-auth'));
     const [user, setUser] = useState();
-    const { loader, setLoader } = useUtil();
+    const { load } = useUtil();
     const navigate = useNavigate();
     const { pathname } = useLocation();
+
     useEffect(() => {
         const split = pathname.split('/')[1];
-        
-        if (split === 'login' && auth === 'auth') {
-            navigate('/');
-            return setLoader(false);
-        }
-        if ((split !== 'login' && split !== 'actions') && auth !== 'auth') {
-            return navigate('/login');
-        }
+        if (split === 'login' && auth === 'auth') return navigate('/');
+        if ((split !== 'login' && split !== 'actions') && auth !== 'auth') return navigate('/login');
     }, [pathname, auth]);
-    useEffect(() => {
-        if (!auth && !user) return;
-        if (auth && !user) {
-            setLoader(true);
-        }
-        else if (auth && user) setLoader(false);
-    }, [auth, user]);
 
     useEffect(() => onAuthStateChanged(getAuth(), async user => {
         const latest = await user?.getIdTokenResult(true);
-        console.log('THE USER', latest?.claims);
         if (user && latest) setUser({ ...user, ...latest?.claims });
         // quick fix, combining base user details + latest info (from refresh)
         const auth = user?.uid ? 'auth' : '';

@@ -10,13 +10,10 @@ const Labs = () => {
                 <IoMdFlask size="40px" />
                 <h1 className="text-5xl md:text-6xl">Deploy Labs</h1>
             </div>
-
             <div className="grid">
-            <Convert />
-            <Connect />
-            </div>
-       
-
+                <Convert />
+                <Connect />
+            </div> 
         </div>
     )
 };

@@ -9,6 +9,9 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
+        spinnerCircle: {
+          '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(360deg)' }
+        },
         growBar1: {
           '0%': { 'animation-timing-function': 'linear', transform: 'scaleX(0.1)' },
           '36.6%': { 'animation-timing-function': 'cubic-bezier(0.33473, 0.12482, 0.78584, 1)', transform: 'scaleX(0.1)' },
@@ -67,6 +70,7 @@ module.exports = {
         }
       },
       animation: {
+        'spinner': 'spinnerCircle 0.4s linear infinite',
         'mobilebar': 'progressLinearMovement 2.5s infinite',
         'bar1': 'growBar1 2.5s infinite, moveBar1 2.5s infinite',
         'bar2': 'growBar2 2.5s infinite, moveBar2 2.5s infinite',

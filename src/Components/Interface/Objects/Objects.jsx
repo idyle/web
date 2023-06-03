@@ -3,14 +3,14 @@ import { AiOutlinePartition, AiOutlineFile, AiOutlineLink, AiOutlineUpload } fro
 import { useAuth } from '../../../Contexts/Auth';
 import { useUtil } from '../../../Contexts/Util';
 import Object from './Object';
-import { listFiles, uploadFile } from './requests';
+import { uploadFile } from './requests';
 import { Helmet } from "react-helmet";
 import { useData } from '../../../Contexts/Data';
 
 const Objects = () => {
 
     const { user } = useAuth();
-    const { setLoader } = useUtil();
+    const { load } = useUtil();
     const { objects, setObjects } = useData();
     console.log(objects, 'objects');
     const onChange = async (e) => {
@@ -19,10 +19,10 @@ const Objects = () => {
         const name = e.target?.files[0]?.name;
         const type = e.target?.files[0]?.type;
 
-        setLoader(true);
+        load(true);
         console.log('UPLOADING FILE');
         const url = await uploadFile(user?.accessToken, e.target.files[0]);
-        setLoader(false);
+        load(false);
         console.log(url, 'url')
         if (!url) return;
 

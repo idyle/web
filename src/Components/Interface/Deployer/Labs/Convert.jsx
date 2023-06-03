@@ -11,7 +11,7 @@ const Convert = () => {
 
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
-    const { setIntegrator, notify, prompt, integrator, setLoader } = useUtil();
+    const { setIntegrator, notify, prompt, integrator, load } = useUtil();
     const { user } = useAuth();
     const { resetObjects } = useData();
     const [doc, setDoc] = useState();
@@ -40,9 +40,9 @@ const Convert = () => {
 
     const onConvert = async () => {
         if (!doc?.id) return;
-        setLoader(true);
+        load(true);
         const operation = await convertPage(user?.accessToken, doc?.id, true);
-        setLoader(false);
+        load(false);
         if (!operation) return notify('Something went wrong converting the doc.');
         notify('Successfully converted the doc. Sending you to objects.');
         resetObjects();

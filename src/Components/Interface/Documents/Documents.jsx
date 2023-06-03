@@ -5,12 +5,12 @@ import Document from "./Document";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
-import { listDocs, removeDoc, setDoc } from "./requests";
+import { removeDoc, setDoc } from "./requests";
 import { useData } from "../../../Contexts/Data";
 
 const Documents = () => {
 
-    const { setLoader, notify } = useUtil();
+    const { load, notify } = useUtil();
     const { user } = useAuth();
     const { docs, setDocs } = useData();
 
@@ -33,34 +33,23 @@ const Documents = () => {
         if (!user?.accessToken || !selectedDoc?.id) return;
         const actualDoc = docs.find(({ id }) => id === selectedDoc?.id);
         if (!actualDoc) return notify('Something went wrong...');
-        setLoader(true);
+        load(true);
         const op = await setDoc(user?.accessToken, actualDoc);
-        setLoader(false);
+        load(false);
         if (!op) return notify('Something went wrong...');
         return notify('Successfully updated doc');
     };
 
     const remove = async () => {
         if (!user?.accessToken || !selectedDoc?.id) return;
-        setLoader(true);
+        load(true);
         const op = await removeDoc(user?.accessToken, selectedDoc.id);
-        setLoader(false);
+        load(false);
         if (!op) return notify('Something went wrong...');
         setSelectedDoc();
         setDocs(docs.filter(({ id }) => id !== selectedDoc.id));
         return notify('Successfully removed doc');
     };
-
-    // useEffect(() => {
-    //     setLoader(true);
-    //     if (!user?.accessToken) return setLoader(false);
-    //     (async () => {
-    //         const list = await listDocs(user?.accessToken);
-    //         if (!list) return setLoader(false);;
-    //         setDocs([ ...list ]);
-    //         return setLoader(false);
-    //     })();
-    // }, [user?.accessToken]);
 
     return (
         <div className='grid m-5'>
@@ -84,7 +73,6 @@ const Documents = () => {
                         {
                             docs.map((ownDoc, i) => (<Document key={`d${i}`} doc={ownDoc} currentDoc={selectedDoc} onClick={onClick} />))
                         }
-
                     </div>
                 </div>
 
@@ -105,7 +93,6 @@ const Documents = () => {
                 }
                 
             </div>
-
         </div>
     )
 };

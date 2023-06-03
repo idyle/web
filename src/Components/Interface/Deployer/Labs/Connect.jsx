@@ -8,7 +8,7 @@ import { useAuth } from "../../../../Contexts/Auth";
 const Connect = () => {
     const { user } = useAuth();
     const { website, resetWebsite } = useData();
-    const { notify, prompt, setLoader } = useUtil();
+    const { notify, prompt, load } = useUtil();
     const [sub, setSub] = useState('');
     const [domain, setDomain] = useState('');
     const [tld, setTld] = useState('');
@@ -17,9 +17,9 @@ const Connect = () => {
         if (!domain || !tld) return notify('No domain or tld (.com) specified.');
         let host = `${domain}.${tld}`;
         if (sub) host = `${sub}.${host}`;
-        setLoader(true);
+        load(true);
         const operation = await connectDomain(user?.accessToken, host);
-        setLoader(false);
+        load(false);
         if (!operation) return notify('Something went wrong...');
         notify(`Success! Please CNAME to ${website?.name}.idyle.app to complete the connection.`, 10000)
         resetWebsite();
@@ -28,9 +28,9 @@ const Connect = () => {
     const disconnect = async () => {
         if (!(await prompt('Are you sure you want to disconnect your domain?'))) return;
         if (!website?.domain) return notify('No domain available.');
-        setLoader(true);
+        load(true);
         const operation = await disconnectDomain(user?.accessToken);
-        setLoader(false);
+        load(false);
         if (!operation) return notify('Something went wrong...');
         resetWebsite();
         // reset to trigger a reload/resave

@@ -14,7 +14,7 @@ const Payments = () => {
    
 
     const { user } = useAuth();
-    const { setLoader, notify } = useUtil();
+    const { load, notify } = useUtil();
 
     const [searchParams] = useSearchParams();
 
@@ -22,11 +22,11 @@ const Payments = () => {
         const sessionId = searchParams?.get('session');
         if (!sessionId || !user) return;
         (async () => {
-            setLoader(true);
+            load(true);
             
             const { token } = await getAuth().currentUser.getIdTokenResult(true);
             const confirm = await confirmCheckout(token, sessionId);
-            setLoader(false);
+            load(false);
             if (!confirm) return;
             window.location.replace(`${window.location.origin}${window.location.pathname}`);
             // propagate to user
@@ -39,11 +39,11 @@ const Payments = () => {
         if (user?.planType) return notify('To select another plan, cancel the one you have.'); 
         // if user already owns plan 
         if (!id) return;
-        setLoader(true);
+        load(true);
         const { token } = await getAuth().currentUser.getIdTokenResult(true);
 
         const link = await getCheckout(token, id);
-        setLoader(false);
+        load(false);
         if (!link) return;
         window.location.replace(link);
         // navigate to checkout
@@ -53,9 +53,9 @@ const Payments = () => {
         if (!user?.planId) return;
         const { token } = await getAuth().currentUser.getIdTokenResult(true);
         if (!token) return;
-        setLoader(true);
+        load(true);
         const operation = await cancelPlan(token, user?.planId);
-        setLoader(false);
+        load(false);
         if (!operation) return;
         window.location.reload();
     };
