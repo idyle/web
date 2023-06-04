@@ -39,10 +39,16 @@ export const EditorContext = ({ children }) => {
     const save = async (page) => {
         const index = pages.findIndex(( { id } ) => id === page?.id);
         if (!(index >= 0)) return console.log('INDEX NOT FOUND', pages, index, !(index >= 0));
-        const operation = await savePage(user?.accessToken, page);
-        if (!operation) return notify('Something went wrong trying to create the page.');
-        pages[index] = { ...page, id: operation?.id };
+        const lastPageData = pages[index];
+        pages[index] = { ...page, id: pages[index]?.id };
+        setPage({ ...page });
         setPages([ ...pages ]);
+        const operation = await savePage(user?.accessToken, page);
+        if (operation) return;
+        notify('Something went wrong trying to save the page.');
+        pages[index] = lastPageData;
+        setPages([ ...pages ]);
+        setPage({ ...lastPageData });
     };
 
     const remove = async (page) => {
@@ -61,13 +67,7 @@ export const EditorContext = ({ children }) => {
         return { ...object, children, id };
     };
 
-    const setPageData = (pageData) => {
-        // we will just trigger the save directly to avoid interruption from useEffect
-        // console.log('Serialized', serialize(pageData));
-        const data = { ...serialize(pageData) };
-        setPage({ ...page, data });
-        save({ ...page, data });
-    };
+    const setPageData = (pageData) => save({ ...page, data: { ...serialize(pageData) } });
 
     const values = { 
         page, setPage, pages, setPages,

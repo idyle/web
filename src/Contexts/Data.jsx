@@ -87,8 +87,11 @@ const DataContext = ({ children }) => {
     const setDocs = (array) => setData({ ...data, docs: array }); 
     const setWebsite = (obj) => setData({ ...data, website: obj });
     const setMetrics = (obj) => setData({ ...data, metrics: obj });
-    const setPageId = (str) => {
-        setData({ ...data, pageId: str });
+    const setPageId = (str) => setData({ ...data, pageId: str });
+    
+    const resetData = () => {
+        setData();
+        sessionStorage.setItem('idyle-data', '');
     };
 
     const values = {
@@ -98,7 +101,8 @@ const DataContext = ({ children }) => {
         docs: data?.docs || [], setDocs,
         website: data?.website || '', setWebsite, resetWebsite,
         metrics: data?.metrics || '', setMetrics,
-        pageId: data?.pageId || '', setPageId
+        pageId: data?.pageId || '', setPageId,
+        resetData
     };
 
     return (

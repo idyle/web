@@ -6,11 +6,16 @@ import Infotable from './Infotable';
 import { useState, useEffect } from "react";
 import { updateProfile } from "firebase/auth";
 import { BsPersonCircle } from 'react-icons/bs';
+import { useData } from "../../../../Contexts/Data";
 
 const Profile = () => {
     const { user } = useAuth();
     const { notify } = useUtil();
-    const onSignOut = () => signOut(getAuth());
+    const { resetData } = useData();
+    const onSignOut = () => {
+        signOut(getAuth());
+        resetData();
+    };
 
     const copyToClip = () => {
         notify('Successfully copied to clipboard');

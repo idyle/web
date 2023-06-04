@@ -16,16 +16,18 @@ const Parser = () => {
 
     useEffect(() => {
         if (!page?.data) return;
-        if (!mounted) load(true);
-        else load(false);
+        if (!mounted) return load(true);
+        // editorRef.getAction('editor.action.formatDocument')?.run();
+        load(false);
     }, [mounted]);
 
     const beforeMount = (monaco) => emmetHTML(monaco);
     const onMount = (editor) => {
+        console.log('MOUNTEDDDDDDD')
         console.log('editor, ', editor, editor.getPosition());
         editor.getAction('editor.action.formatDocument')?.run();
-        setMounted(true);
         editorRef.current = editor;
+        setMounted(true);
     };
 
     const onChange = (editorValue) => {
@@ -52,6 +54,9 @@ const Parser = () => {
         value={string}
         fixedOverflowWidgets={true}
         defaultValue={string}
+        autoIndent={true}
+        formatOnPaste={true}
+        formatOnType={true}
         onChange={onChange}
         onMount={onMount}
         beforeMount={beforeMount}

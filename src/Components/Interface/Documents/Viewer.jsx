@@ -14,15 +14,16 @@ const Viewer = ({ doc, setDocs, docs }) => {
     useEffect(() => {
         const { id, ...newDoc } = doc;
         setValue(newDoc);
-        setString(JSON.stringify(newDoc));
+        setString(JSON.stringify(value, null, 2));
     }, [doc]);
 
     const onMount = async (editor) => {
-        console.log(mounted);
+        setString(JSON.stringify(value, null, 2));
         setMounted(true)
     };
 
     useEffect(() => {
+        setString(JSON.stringify(value, null, 2));
         console.log('m state', mounted);
         if (!mounted) return load(true);
         console.log('mounted!');
@@ -44,17 +45,9 @@ const Viewer = ({ doc, setDocs, docs }) => {
     const onChange = async (val) => {
         try {
             const parsedDoc = JSON.parse(val);
-            // if the value to change is the same as the doc, return
-            console.log('val', JSON.stringify(parsedDoc) , 'stringifed', JSON.stringify(newDocs), 'test', JSON.stringify(parsedDoc)  === JSON.stringify(newDocs));
             if (JSON.stringify(parsedDoc) === JSON.stringify(newDocs)) return;
-
-
-
-            
             const index = docs.findIndex(doc => doc.id === id);
-
             if (index < 0) return;
-
             docs[index] = { ...parsedDoc, id };
             setDocs([ ...docs ]);
             setValue({ ...parsedDoc });
@@ -63,6 +56,8 @@ const Viewer = ({ doc, setDocs, docs }) => {
             return;
         }
     };
+
+    const beforeMount = () => setString(JSON.stringify(value, null, 2));
 
     const prettify = () => {
         console.log('prettifiyg', value);
@@ -77,7 +72,11 @@ const Viewer = ({ doc, setDocs, docs }) => {
                 defaultLanguage="json"
                 fixedOverflowWidgets={true}
                 value={string}
+                autoIndent={true}
+                formatOnPaste={true}
+                formatOnType={true}
                 onChange={onChange}
+                beforeMount={beforeMount}
                 onMount={onMount}
                 options={config}
             />
