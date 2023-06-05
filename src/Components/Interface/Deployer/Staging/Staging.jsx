@@ -10,7 +10,7 @@ import Page from './Page';
 
 const Staging = ({ deploy }) => {
 
-    const { prompt, notify, setIntegrator, integrator, load } = useUtil();
+    const { confirm, notify, setIntegrator, integrator, load } = useUtil();
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
     const { pages: pagesFromEditor, resetObjects, objects } = useData();
@@ -37,13 +37,13 @@ const Staging = ({ deploy }) => {
 
 
     const removePage = async (pageId) => {
-        if (!(await prompt('Remove your chosen page?'))) return;
+        if (!(await confirm('Remove your chosen page?'))) return;
         setPages(pages.filter(page => page.id !== pageId));
         notify('Removed the file.');
     };
 
     const removeFile = async (filePath) => {
-        if (!(await prompt('Remove your chosen file?'))) return;
+        if (!(await confirm('Remove your chosen file?'))) return;
         setFiles(files.filter(file => file.path !== filePath));
         notify('Removed the file.');
     };
@@ -51,7 +51,7 @@ const Staging = ({ deploy }) => {
     const onDeploy = async () => {
         if (!files.length && !pages?.length) return notify('You added no pages or files.');
         if (!index) return notify('You must specify an index.');
-        if (!(await prompt("You're about to make a deploy. Proceed?"))) return;
+        if (!(await confirm("You're about to make a deploy. Proceed?"))) return;
 
         // let's first run a batch convert on our pages 
         console.log(files, 'FILES BEING DEPLOYED');

@@ -1,9 +1,10 @@
 import Notifier from './Utilities/Notifier';
 import Loader from './Utilities/Loader';
-import Prompter from './Utilities/Prompter';
+import Confirmer from './Utilities/Confirmer';
 import Contexts from './Contexts/Contexts';
 import Components from './Components/Components';
 import Spinner from './Utilities/Spinner';
+import Prompter from './Utilities/Prompter';
 
 const App = () => {
     return (
@@ -12,6 +13,7 @@ const App = () => {
                 <Loader />
                 <Components />
                 <Notifier />
+                <Confirmer />
                 <Prompter />
                 <Spinner />
             </div>

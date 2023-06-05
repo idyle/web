@@ -6,7 +6,7 @@ import { useData } from '../../../../Contexts/Data';
 
 const Control = ({ deploy }) => {
 
-    const { notify, prompt } = useUtil();
+    const { notify, confirm } = useUtil();
     const { deploys, resetDeploys, website } = useData();
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const Control = ({ deploy }) => {
 
     const revert = async (id) => {
         if (!id) return notify('No deploy specified.');
-        if (!(await prompt(`You're about to revert back to ${id}. Make sure you still have the same files in Objects. Proceed?`))) return;
+        if (!(await confirm(`You're about to revert back to ${id}. Make sure you still have the same files in Objects. Proceed?`))) return;
         deploy([], id);
     };
 

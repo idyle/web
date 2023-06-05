@@ -20,17 +20,15 @@ export const useEditor = () => useContext(EditorValues);
 export const EditorContext = ({ children }) => {
 
     const { user } = useAuth();
-    const { load, notify, prompt } = useUtil();
+    const { load, notify, confirm } = useUtil();
     const { pages, setPages, pageId, setPageId } = useData();
     const pageQuery = pages?.find(({ id }) => id === pageId);
-    console.log('PAGE Q', pageQuery);
     const [page, setPage] = useState(pageQuery);
     const [css, setCss] = useState(pageQuery?.metadata?.css);
     const [toggle, setToggle] = useState(pageQuery?.metadata?.toggle);
 
     useEffect(() => {
         const p = pages.find(({ id }) => id === pageId);
-        console.log('p', p);
         if (!p || !pageId || !pages) return;
         setCss(p?.metadata?.css);
         setToggle(p?.metadata?.toggle);
@@ -52,7 +50,7 @@ export const EditorContext = ({ children }) => {
     };
 
     const remove = async (page) => {
-        if (!(await prompt("You're about to delete a page. This action cannot be undone. Proceed?"))) return;
+        if (!(await confirm("You're about to delete a page. This action cannot be undone. Proceed?"))) return;
         load(true);
         const operation = await deletePage(user?.accessToken, page);
         load(false);
@@ -106,7 +104,6 @@ const Editor = () => {
                     <Routes>
                         <Route path="pages" element={<Pages />} />
                         <Route path="*" element={<Router />} />
-                        {/* <Route path="*" element={<Navigate to="pages" />} /> */}
                     </Routes>
             </EditorContext>
         </div>

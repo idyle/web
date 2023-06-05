@@ -8,7 +8,7 @@ const Object = ({ object, objects, setObjects }) => {
 
     const navigate = useNavigate();
     const { user } = useAuth();
-    const { notify, prompt, load, integrator, setIntegrator } = useUtil();
+    const { notify, confirm, load, integrator, setIntegrator } = useUtil();
 
     const copy = () => {
         notify('Successfully copied to clipboard');
@@ -48,7 +48,7 @@ const Object = ({ object, objects, setObjects }) => {
         // send data back
         console.log(integrator?.active, 'integrator status');
         if (!integrator?.active || integrator?.target !== 'objects' || !integrator?.origin) return;
-        if (!(await prompt('Adding this to the canvas will make your file public. Continue?'))) return;
+        if (!(await confirm('Adding this to the canvas will make your file public. Continue?'))) return;
         load(true);
         const operation = await publicFile(user?.accessToken, object?.name);
         // const updatedFile = await getFile(user?.accessToken, object?.name);

@@ -12,14 +12,14 @@ const Setup = () => {
 
     const { user } = useAuth();
     const { resetWebsite, website } = useData();
-    const { notify, load, prompt } = useUtil();
+    const { notify, load, confirm } = useUtil();
 
     const [clicked, setClicked] = useState(false);
     const [inputWebsite, setInputWebsite] = useState('');
     
     const onClick = async () => {
         if (!inputWebsite) return notify('No website name inputted.');
-        if (!(await prompt('You are about to create a website. This action is permanent. Proceed?'))) return;
+        if (!(await confirm('You are about to create a website. This action is permanent. Proceed?'))) return;
         load(true);
         const operation = await setupWebsite(user?.accessToken, inputWebsite);
         load(false);

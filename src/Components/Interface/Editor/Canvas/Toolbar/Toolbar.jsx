@@ -4,7 +4,7 @@ import elements from './elements';
 import { useEffect, useState } from "react";
 import { MdPages } from "react-icons/md";
 import { RxText, RxSection, RxImage, RxVideo, RxLayout, RxViewVertical, RxListBullet, RxBarChart, RxLetterCaseCapitalize, RxButton, RxLink2 } from 'react-icons/rx';
-import { AiFillDelete, AiOutlineReload } from 'react-icons/ai';
+import { AiFillDelete, AiOutlineReload, AiFillEdit } from 'react-icons/ai';
 import Element from './Element';
 import { useUtil } from "../../../../../Contexts/Util";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,9 +12,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 const Elements = () => {
 
     const { page, setPageData, pages } = useEditor();
-    const { integrator, setIntegrator, notify } = useUtil();
-    const { selected, updateObjectFromPath, updateFromPath, setObjectFromPath, deleteObjectFromPath, path, setPath } = useDom();
-    const [selType, setSelType] = useState('None');
+    const { integrator, setIntegrator, notify, prompt } = useUtil();
+    const { selected, updateFromPath, setObjectFromPath, deleteObjectFromPath, updateObjectFromPathCustom, path, setPath } = useDom();
+    const [selData, setSelData] = useState('None');
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
 
@@ -28,10 +28,10 @@ const Elements = () => {
     }, [selected]);
 
     useEffect(() => {
-        if (!path.length) return setSelType('None');
+        if (!path.length) return setSelData({});
         let current = page?.data;
         for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
-        setSelType(current?.id);
+        setSelData(current);
     }, [path]);
 
     // entering
@@ -54,19 +54,34 @@ const Elements = () => {
     }, [integrator?.active]);
 
     const deleteElement = () => setPageData({ ...deleteObjectFromPath(page.data, path) });
-    const appendElement = (element) => {
-        console.log('PATHHHH', element, path);
-        setPageData({ ...setObjectFromPath(page.data, path, { ...elements[element] }) });
-    };
+    const appendElement = (element) => setPageData({ ...setObjectFromPath(page.data, path, { ...elements[element] }) });
 
     const clearFunc = (current) => {
-        console.log('received current', current);
+        // brand new way of updating with arbitrary function
         current.style = {};
         current.className = '';
         return current;
     };
 
-    const clear = () => setPageData({ ...updateFromPath(page?.data, path, clearFunc) })
+    const clear = () => setPageData({ ...updateFromPath(page?.data, path, clearFunc) });
+
+    const editProps = async () => {
+        if (!path?.length) return;
+        // if we don't have a selected item
+        console.log('SELDATA', selData);
+        let config = { key: 'className', value: selData?.className || '' };
+        // our default editable config
+        if (selData?.component === 'img' || selData?.component === 'video') config = { key: 'alt', value: selData?.alt || '' };
+        else if (selData?.component === 'a') config = { key: 'href', value: selData?.href || '' };
+
+        const input = await prompt(config?.value);
+        console.log('THE INPUT', input);
+        if (!input) return;
+        let obj = {};
+        obj[config?.key] = input;
+        console.log('STAGED OBJ', obj);
+        setPageData({ ...updateObjectFromPathCustom(page?.data, path, config?.key, input) });
+    };
     
     const navigation = () => {
         let part = elements['navPart'];
@@ -96,7 +111,7 @@ const Elements = () => {
     }, [integrator?.active]);
 
     return (
-        <div className="grid md:grid-rows-[80%_20%] gap-1 p-1">
+        <div className="grid md:grid-rows-[70%_30%] gap-1 p-1">
             <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-1 shadow-xl border border-black rounded-lg gap-1">
                 <h1 className="text-3xl font-bold text-center">Elements</h1>
                 <div className="grid grid-flow-col md:grid-flow-row gap-1 p-1 overflow-auto">
@@ -120,7 +135,7 @@ const Elements = () => {
             </div>
 
             <div className="grid border border-black p-1 gap-1 rounded-lg md:overflow-auto">
-                <h1 className="text-2xl text-center">Selected: {selType}</h1>
+                <h1 className="text-2xl text-center">Selected: {selData?.id || 'None'}</h1>
                 <div className="grid grid-flow-col md:grid-flow-row p-1 gap-1">
                     <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
                         <AiOutlineReload size="25px" />
@@ -129,6 +144,10 @@ const Elements = () => {
                     <div onClick={deleteElement} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
                         <AiFillDelete size="25px" />
                         <h1 className="text-xl text-center">Delete Element</h1>
+                    </div>
+                    <div onClick={editProps} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
+                        <AiFillEdit size="25px" />
+                        <h1 className="text-xl text-center">Edit Property</h1>
                     </div>
                 </div>
 

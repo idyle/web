@@ -6,8 +6,6 @@ import { Routes, Route } from 'react-router-dom';
 import Spinner from "../Utilities/Spinner";
 
 const Components = () => {
-
-    const { loading } = useUtil();
     return (
         <div>
             <Routes>

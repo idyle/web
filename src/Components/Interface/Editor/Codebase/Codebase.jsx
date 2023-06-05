@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { parse, stringify } from 'himalaya';
+import { stringify } from 'himalaya';
 import { useEditor } from "../Editor";
 import { constructDom, renderElements } from "./Converter";
 import Parser from "./Parser";
@@ -29,8 +29,9 @@ export const DomContext = ({ children }) => {
         let attributes = [];
         for (let [key, value] of Object.entries(config)) {
             if (key === 'id' || key === 'children' || key === 'component') continue;
+            if (value instanceof Array && value?.length < 1) continue;
+            if (typeof value === 'object' && Object.values(value)?.length < 1) continue;
             if (key === 'className') key = 'class';
-            if (key === 'className' && !toggle) value = '';
             if (key === 'style') value = JSON.stringify(value).slice(1, -1);
             attributes.push({ key, value });
         };
@@ -50,10 +51,10 @@ export const DomContext = ({ children }) => {
         // himalaya json follows this format
 
         let attributes = {};
-        for (let {key, value} of config.attributes) {
+        for (let { key, value } of config.attributes) {
             if (key === 'id') continue;
+            if (!key || !value) continue;
             if (key === 'class') key = 'className';
-            if (key === 'style') console.log(key, 'value', value);
             if (key === 'style') value = JSON.parse(`{${value}}`);
             attributes[`${key}`] = value;
         };

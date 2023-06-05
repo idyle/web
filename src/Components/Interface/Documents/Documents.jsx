@@ -13,8 +13,6 @@ const Documents = () => {
     const { load, notify } = useUtil();
     const { user } = useAuth();
     const { docs, setDocs } = useData();
-
-    // const [docs, setDocs] = useState([]);
     const [selectedDoc, setSelectedDoc] = useState();
 
     const onClick = (e) => {

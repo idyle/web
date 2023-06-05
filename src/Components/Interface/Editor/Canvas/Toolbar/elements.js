@@ -1,12 +1,14 @@
 const header = {
     component: 'h1',
-    className: 'md:text-4xl text-2xl font-bold',
+    className: 'text-2xl font-bold',
+    style: { fontSize: '24px', lineHeight: '32px' },
     children: 'Your Header Here'
 };
 
 const text = {
     component: 'h1',
-    className: 'md:text-2xl text-xl',
+    className: 'text-xl',
+    style: { fontSize: '20px', lineHeight: '28px' },
     children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempus lorem mauris, sed pharetra eros blandit eu. Praesent a aliquam dui. Nulla elementum nisl eu massa pharetra, sed rutrum diam.'
 };
 
@@ -42,24 +44,17 @@ const video = {
 };
 
 const button = {
-    component: 'div',
-    className: 'text-white bg-black rounded-lg select-none',
+    component: 'a',
+    className: 'text-white bg-black rounded-lg select-none block',
+    href: 'test',
     children: [ { ...text, children: 'Button Name' }]
 };
-
-// const link = {
-//     component: 'a',
-//     target: '_blank',
-//     className: 'md:text-2xl text-xl text-blue-500 underline',
-//     href: '/test',
-//     children: 'Go to Google'
-// };
 
 const link = {
     component: 'a',
     className: 'md:text-2xl text-xl text-blue-500 underline',
     href: 'test',
-    children: 'go test page in ur pages'
+    children: 'Link'
 }
 
 const navBase = {

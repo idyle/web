@@ -11,7 +11,7 @@ const Convert = () => {
 
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
-    const { setIntegrator, notify, prompt, integrator, load } = useUtil();
+    const { setIntegrator, notify, confirm, integrator, load } = useUtil();
     const { user } = useAuth();
     const { resetObjects } = useData();
     const [doc, setDoc] = useState();
@@ -33,7 +33,7 @@ const Convert = () => {
     }, [integrator?.active]);
 
     const remove = async () => {
-        if (!(await prompt('Remove your chosen doc?'))) return;
+        if (!(await confirm('Remove your chosen doc?'))) return;
         setDoc();
         notify('Removed the doc.');
     };

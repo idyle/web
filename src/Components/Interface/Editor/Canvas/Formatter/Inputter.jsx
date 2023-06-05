@@ -5,47 +5,70 @@ import { useDom } from '../Canvas';
 
 const Inputter = ({ icon, format }) => {
 
-    const editedIcon = cloneElement(icon, { ...icon?.props, size: "25px" });
-    
+    const editedIcon = cloneElement(icon, { ...icon?.props, size: "25px" });   
     const { setPageData, page } = useEditor();
-    const { path, updateFromPath, updateStylesFromPath } = useDom();
-    const [px, setPx] = useState();
+    const { path, updateStylesFromPath } = useDom();
+    const [px, setPx] = useState(0);
 
-    const func = (current) => {
-        let properties = current.className?.split(' ') || [];
-        const index = properties.findIndex(p => (p.startsWith('text-') && p.endsWith('xl')));
-        if (index >= 0) properties.splice(index, 1);
-        else properties.push(`text-${px}xl`);
-        current.className = properties.join(" ");
-        return current;
+    // rather than a useEffect, create a func that updates the element
+    // in addition: display the default value by setPx()
+
+    const updateElement = (entry) => {
+        let obj = {};
+        obj['lineHeight'] = `${entry + 8}px`;
+        obj[format] = `${entry}px`;
+        setPageData({ ...updateStylesFromPath(page?.data, path, { ...obj }) });
     };
 
     useEffect(() => {
-        if (typeof px !== 'number') return;
-        console.log('PX', px);
-        let obj = {};
-        obj[format] = `${px}px`;
-        setPageData({ ...updateStylesFromPath(page?.data, path, { ...obj }) })
-    }, [px])
+        if (!path.length) return setPx(0);
+        // if none is selected, px === 0 
+        let current = page?.data;
+        for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
+        const properties = current?.style || {};
+        if (!properties[format]) return setPx(0);
+        // if none is selected, we'll default to px === 0
+        const number = parseInt(properties[format]?.split('px')?.[0]);
+        // expect eg: 10px -> into str 10 -> into int 10
+        if (number) setPx(number);
+    }, [path, updateElement]);
 
     const onChange = (e) => {
-        console.log('HI');
         const entry = parseInt(e.target.value);
-        if (entry < 1 || entry > 100) return;
-        else if (entry >= 1 && entry <= 100) return setPx(entry);
-        else setPx(0);
+        console.log('result entry', entry, typeof entry);
+        if (entry < 1 || entry > 100 || isNaN(entry)) return setPx(0);
+        setPx(entry);
+        updateElement(entry);
     };
 
     const add = () => {
         if ((px + 1) > 100) return;
         setPx(px + 1);
+        updateElement(px + 1);
     };
 
     const deduct = () => {
         if ((px - 1) < 0) return;
         setPx(px - 1);
+        updateElement(px - 1);
     };
 
+    // const func = (current) => {
+    //     let properties = current.className?.split(' ') || [];
+    //     const index = properties.findIndex(p => (p.startsWith('text-') && p.endsWith('xl')));
+    //     if (index >= 0) properties.splice(index, 1);
+    //     else properties.push(`text-${px}xl`);
+    //     current.className = properties.join(" ");
+    //     return current;
+    // };
+
+    // useEffect(() => {
+    //     if (typeof px !== 'number') return;
+    //     console.log('PX', px);
+    //     let obj = {};
+    //     obj[format] = `${px}px`;
+    //     setPageData({ ...updateStylesFromPath(page?.data, path, { ...obj }) })
+    // }, [px])
 
     return (
         <div className="flex border p-0.5 gap-x-0.5 border-black select-none rounded-lg items-center">

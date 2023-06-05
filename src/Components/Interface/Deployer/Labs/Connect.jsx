@@ -8,7 +8,7 @@ import { useAuth } from "../../../../Contexts/Auth";
 const Connect = () => {
     const { user } = useAuth();
     const { website, resetWebsite } = useData();
-    const { notify, prompt, load } = useUtil();
+    const { notify, confirm, load } = useUtil();
     const [sub, setSub] = useState('');
     const [domain, setDomain] = useState('');
     const [tld, setTld] = useState('');
@@ -26,7 +26,7 @@ const Connect = () => {
     };
 
     const disconnect = async () => {
-        if (!(await prompt('Are you sure you want to disconnect your domain?'))) return;
+        if (!(await confirm('Are you sure you want to disconnect your domain?'))) return;
         if (!website?.domain) return notify('No domain available.');
         load(true);
         const operation = await disconnectDomain(user?.accessToken);

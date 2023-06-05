@@ -60,6 +60,19 @@ export const DomContext = ({ children }) => {
         return data;
     };
 
+    const updateObjectFromPathCustom = (data, path, key, value) => {
+        let current = data;
+    
+        for (let depth = 0; depth < path.length; depth++) {
+            if (current.component === 'div') current = current.children[path[depth]];
+            else current = current[path[depth]];
+        };
+
+        current[key] = value;
+        console.log('rECEIVING FROM PATH WITH SPREAD', current);
+        return data;
+    };
+
     const updateObjectFromPath = (data, path, value, merge = true) => {
         let current = data;
     
@@ -118,7 +131,7 @@ export const DomContext = ({ children }) => {
         selected, setSelected, hovered, setHovered, path, setPath,
         updateObjectFromPath, setObjectFromPath, deleteObjectFromPath,
         updateChildrenFromPath, updateClassFromPath, updateStylesFromPath,
-        updateFromPath
+        updateFromPath, updateObjectFromPathCustom
     };
     return ( <DomValues.Provider value={values}>{children}</DomValues.Provider> );
 };

@@ -27,19 +27,19 @@ const Wrapper = ({ children }) => {
 
     const onClick = (e) => {
         e.stopPropagation();
-        console.log(children.props);
         setSelected(children.props.id);
     };
 
+    const onChange = (e) => setValue(e.target.value);
+
     const onDoubleClick = (e) => {
         e.stopPropagation();
+        // enabling a particular edit mode
         console.log('called', children);
         // if typeof is not string, return
         if (typeof children?.props?.children !== 'string') return;
         setEdit(true);
     };
-
-    const onChange = (e) => setValue(e.target.value);
 
     const onBlur = (e) => {
         e.stopPropagation();
