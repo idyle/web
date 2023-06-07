@@ -3,9 +3,9 @@
 import { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
 
-export const renderElements = (config, toggle) => {
+export const renderElements = (config) => {
     let children = config.children;
-    if (children instanceof Array) children = children.map((e) => renderElements(e, toggle));
+    if (children instanceof Array) children = children.map((e) => renderElements(e));
 
     let attributes = {};
     for (let [key, value] of Object.entries(config)) {
@@ -15,18 +15,16 @@ export const renderElements = (config, toggle) => {
     };
 
     attributes.key = `k-${config.id}`;
-    if (!toggle) attributes.style = { all: 'initial' };
-
     return createElement(config.component, attributes, children);
 };
 
-export const constructDom = (config, toggle, css) => {
-    let body = renderElements(config, true);
-    console.log('RENDERED config', config, body);
+export const constructDom = (config, toggle, css, fontFamily, origin) => {
+    console.log('font from cb', fontFamily, 'FROM', origin);
+    let body = renderElements(config);
+    if (fontFamily) body = createElement("div", { style: { fontFamily } }, body);
     if (toggle) toggle = createElement("script", { src: "https://cdn.tailwindcss.com" });
     if (css) css = createElement("link", { type: 'text/css', rel: "stylesheet", href: css });
     const string = renderToString(<html><head>{css}{toggle}</head><body>{body}</body></html>);
-    console.log('fINAL STRINGGG', string);
     return (
         <iframe className="w-full h-full" srcDoc={string}></iframe>
     )

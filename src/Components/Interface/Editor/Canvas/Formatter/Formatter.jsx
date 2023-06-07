@@ -1,24 +1,16 @@
 import { 
     RxTextAlignCenter, RxTextAlignLeft, RxTextAlignRight, 
-    RxTextAlignBottom, RxTextAlignMiddle, RxTextAlignTop,
     RxAlignRight, RxAlignLeft, RxAlignCenterHorizontally,
     RxAlignTop, RxAlignBottom, RxAlignCenterVertically,
     RxMargin, RxPadding, RxFontBold, RxFontItalic, RxUnderline, 
-    RxFontStyle, RxHalf2, RxColorWheel, RxSquare, RxCircle
+    RxFontStyle, RxHalf2, RxColorWheel, RxFontSize, RxCircle
 } from 'react-icons/rx';
-import { useEditor } from '../../Editor';
-import { useDom } from '../Canvas';
-import formats from './formats';
 import Format from './Format';
-import Selector from './Selector';
-import Inputter from './Inputter';
+import Color from './Color';
+import Sizing from './Sizing';
+import Fonts from './Fonts';
 
 const Toolbar = () => {
-
-    const { page, setPageData } = useEditor();
-    const { path, updateObjectFromPath, updateClassFromPath } = useDom();
-
-    const updateElement = (format) => setPageData({ ...updateClassFromPath(page?.data, path, formats[format]) });
 
     return (
         <div className="flex flex-wrap place-content-center items-center gap-1 p-1 rounded-lg">
@@ -26,15 +18,16 @@ const Toolbar = () => {
             <Format icon={<RxFontBold />} format="bold" />
             <Format icon={<RxFontItalic />} format="italic" />
             <Format icon={<RxUnderline/>} format="underline" />
-            <Inputter format="fontSize" icon={<RxFontStyle />} />
+            <Sizing format="fontSize" icon={<RxFontSize />} />
+            <Fonts icon={<RxFontStyle />} />
 
-            <Selector format="color" icon={<RxColorWheel />} />
+            <Color format="color" icon={<RxColorWheel />} />
 
             <Format icon={<RxTextAlignLeft />} format="textLeft"  />
             <Format icon={<RxTextAlignCenter />} format="textCenter"  />
             <Format icon={<RxTextAlignRight />} format="textRight"  />
  
-            <Selector format="backgroundColor"  icon={<RxHalf2 />} />
+            <Color format="backgroundColor"  icon={<RxHalf2 />} />
 
             <Format icon={<RxAlignLeft />} format="sectionLeft"  />
             <Format icon={<RxAlignCenterHorizontally />} format="sectionCenter"  />
@@ -42,9 +35,9 @@ const Toolbar = () => {
             <Format icon={<RxAlignBottom />} format="sectionTop" />
             <Format icon={<RxAlignCenterVertically />} format="sectionMiddle" />
             <Format icon={<RxAlignTop />} format="sectionBottom" />
-            <Inputter format="margin" icon={<RxMargin />} />
+            <Sizing format="margin" icon={<RxMargin />} />
+            <Sizing format="padding" icon={<RxPadding />} />
 
-            <Format icon={<RxSquare />} format="roundedSmall" />
             <Format icon={<RxCircle />} format="roundedLarge" />
 
         </div>

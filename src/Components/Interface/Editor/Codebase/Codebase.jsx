@@ -13,7 +13,7 @@ export const useDom = () => useContext(DomValues);
 
 export const DomContext = ({ children }) => {
 
-    const { page, toggle, setToggle, css, setCss } = useEditor();
+    const { page, toggle, setToggle, css, setCss, font } = useEditor();
     const { pathname: origin } = useLocation();
     const { integrator } = useUtil();
     const [dom, setDom] = useState();
@@ -70,12 +70,10 @@ export const DomContext = ({ children }) => {
             if (!page?.data || !page?.id) return;
             const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
             if (!convertedHimalayaJSON) return;
-            console.log('CONVERTED', convertedHimalayaJSON)
             // instead of creating a wrapper func, it's possible to just return its children
             const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON?.children || []);
-            console.log('STRINGIFIED', stringifiedHimalayaJSON);
             if (!stringifiedHimalayaJSON) return;
-            const cDom = constructDom(page?.data, toggle, css);
+            const cDom = constructDom(page?.data, toggle, css, font, 'MAIN');
             console.log('CONSDTRUCTED DOM', cDom);
             setString(stringifiedHimalayaJSON);
             setDom(cDom);
@@ -83,7 +81,7 @@ export const DomContext = ({ children }) => {
             console.log(e);
             return;
         }
-    }, [page?.id, toggle, css])
+    }, [page?.id, toggle, css, font])
 
     const values = { 
         convertJSONtoHimalayaJSON, convertHimalayaJSONtoJSON,

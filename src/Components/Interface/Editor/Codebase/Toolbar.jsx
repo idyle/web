@@ -13,7 +13,7 @@ const Toolbar = () => {
     const { pathname: origin } = useLocation();
     const { page, setPage, save } = useEditor();
     const { toggle, setToggle, setDom, setString, string, 
-        convertJSONtoHimalayaJSON, css, setCss 
+        convertJSONtoHimalayaJSON, css, setCss, font 
     } = useDom();
     const { integrator, setIntegrator, notify } = useUtil();
 
@@ -38,7 +38,7 @@ const Toolbar = () => {
 
         const render = (str) => {
             setIntegrator({ active: false });
-            if (page?.data) setDom(constructDom(page?.data, toggle, css));
+            if (page?.data) setDom(constructDom(page?.data, toggle, css, font, 'TOOLBAR'));
             setString(str);
         };
         try {

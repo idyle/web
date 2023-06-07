@@ -26,25 +26,34 @@ export const EditorContext = ({ children }) => {
     const [page, setPage] = useState(pageQuery);
     const [css, setCss] = useState(pageQuery?.metadata?.css);
     const [toggle, setToggle] = useState(pageQuery?.metadata?.toggle);
+    const [font, setFont] = useState(pageQuery?.metadata?.font);
 
     useEffect(() => {
         const p = pages.find(({ id }) => id === pageId);
         if (!p || !pageId || !pages) return;
         setCss(p?.metadata?.css);
         setToggle(p?.metadata?.toggle);
+        setFont(p?.metadata?.font);
+        console.log('RELOAD occured', p?.metadata?.font);
     }, [pages, pageId]);
 
     const save = async (page) => {
         const index = pages.findIndex(( { id } ) => id === page?.id);
         if (!(index >= 0)) return console.log('INDEX NOT FOUND', pages, index, !(index >= 0));
+        // a page must be created
         const lastPageData = pages[index];
-        pages[index] = { ...page, id: pages[index]?.id };
+        pages[index] = { ...page, id: lastPageData?.id };
         setPage({ ...page });
         setPages([ ...pages ]);
         const operation = await savePage(user?.accessToken, page);
+        if (!lastPageData?.id) {
+            pages[index] = { ...lastPageData, id: operation?.id };
+            setPages([ ...pages ]);
+            setPage({ ...lastPageData, id: operation?.id });
+        };
         if (operation) return;
         notify('Something went wrong trying to save the page.');
-        pages[index] = lastPageData;
+        pages[index] = { ...lastPageData };
         setPages([ ...pages ]);
         setPage({ ...lastPageData });
     };
@@ -66,12 +75,13 @@ export const EditorContext = ({ children }) => {
     };
 
     const setPageData = (pageData) => save({ ...page, data: { ...serialize(pageData) } });
+    const setPageMetadata = (pageMetadata) => save({ ...page, metadata: { ...page?.metadata, ...pageMetadata } });
 
     const values = { 
         page, setPage, pages, setPages,
-        setPageData, setPageId,
+        setPageData, setPageId, setPageMetadata,
         save, remove,
-        toggle, setToggle, css, setCss 
+        toggle, setToggle, css, setCss, font, setFont,
     };
     return ( <EditorValues.Provider value={values}>{children}</EditorValues.Provider> );
 };

@@ -12,7 +12,6 @@ const Subnavbutton =  ({ icon, text, route, textColor = 'text-black', bgColor = 
     const { pathname, search } = useLocation();
 
     useEffect(() => {
-        console.log(`${pathname}${search}`, route);
         if (`${pathname}${search}` === route) return setSelected(true);
         // part starts with an initial /
         let splicedPath = pathname?.split('/') || [];

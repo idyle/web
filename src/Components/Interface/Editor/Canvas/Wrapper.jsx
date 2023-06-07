@@ -44,10 +44,10 @@ const Wrapper = ({ children }) => {
     const onBlur = (e) => {
         e.stopPropagation();
         if (!edit) return;
+        setEdit(false);
         if (children.props.children === value) return;
         // no changes needed
         setPageData({ ...updateChildrenFromPath(page?.data, path, value) });
-        setEdit(false);
         // run update based on path
     };
 

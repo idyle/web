@@ -3,7 +3,7 @@ import { cloneElement, useEffect, useState } from 'react';
 import { useEditor } from '../../Editor';
 import { useDom } from '../Canvas';
 
-const Inputter = ({ icon, format }) => {
+const Sizing = ({ icon, format }) => {
 
     const editedIcon = cloneElement(icon, { ...icon?.props, size: "25px" });   
     const { setPageData, page } = useEditor();
@@ -53,23 +53,6 @@ const Inputter = ({ icon, format }) => {
         updateElement(px - 1);
     };
 
-    // const func = (current) => {
-    //     let properties = current.className?.split(' ') || [];
-    //     const index = properties.findIndex(p => (p.startsWith('text-') && p.endsWith('xl')));
-    //     if (index >= 0) properties.splice(index, 1);
-    //     else properties.push(`text-${px}xl`);
-    //     current.className = properties.join(" ");
-    //     return current;
-    // };
-
-    // useEffect(() => {
-    //     if (typeof px !== 'number') return;
-    //     console.log('PX', px);
-    //     let obj = {};
-    //     obj[format] = `${px}px`;
-    //     setPageData({ ...updateStylesFromPath(page?.data, path, { ...obj }) })
-    // }, [px])
-
     return (
         <div className="flex border p-0.5 gap-x-0.5 border-black select-none rounded-lg items-center">
             {editedIcon}
@@ -84,4 +67,4 @@ const Inputter = ({ icon, format }) => {
     );
 };
 
-export default Inputter;
+export default Sizing;

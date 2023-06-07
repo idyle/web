@@ -138,22 +138,20 @@ export const DomContext = ({ children }) => {
 
 const Canvas = () => {
 
-    const { page, css } = useEditor();
+    const { page, css, font } = useEditor();
     const [dom, setDom] = useState([]);
 
     useEffect(() => {
-        console.log('entered canvas!', page?.data, page?.id);
         if (!page?.id || !page?.data) return;
-        setDom(constructDom(page?.data, css));
-    }, [page?.id, page?.data, css]);
+        setDom(constructDom(page?.data, css, font));
+    }, [page?.id, page?.data, css, font]);
 
     return (
         <DomContext>
-            <div className="grid grid-rows-[30%_70%] md:grid-rows-1 md:grid-cols-[20%_80%] overflow-auto">
+            <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 md:grid-cols-[auto_minmax(0,_1fr)] overflow-auto">
                     <Toolbar />
-                <div className="grid grid-rows-[20%_80%] md:grid-rows-[10%_90%] p-1">
+                <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-1">
                     <Formatter />
-
                     <div className="grid p-1 overflow-auto shadow-xl rounded-lg">
                         {dom}
                     </div>

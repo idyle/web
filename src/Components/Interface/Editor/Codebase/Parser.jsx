@@ -8,7 +8,7 @@ import { useDom } from "./Codebase";
 import { parse } from "himalaya";
 
 const Parser = () => {
-    const { page, setPageData } = useEditor();
+    const { page, setPageData, font } = useEditor();
     const { load } = useUtil();
     const { string, toggle, css, setDom, convertHimalayaJSONtoJSON } = useDom();
     const [mounted, setMounted] = useState();
@@ -33,14 +33,10 @@ const Parser = () => {
     const onChange = (editorValue) => {
         const parsedHimalayaJSON = parse(`<div>${editorValue}</div>`);
         // output string
-        console.log('parsed himalaya json', parsedHimalayaJSON);
-
         const builtInJSON = convertHimalayaJSONtoJSON(parsedHimalayaJSON[0]);
-        console.log('standard json', builtInJSON);
-
         if (!builtInJSON) return;
         setPageData({ ...builtInJSON });
-        setDom(constructDom(builtInJSON, toggle, css));
+        setDom(constructDom(builtInJSON, toggle, css, font, 'PARSER'));
         // it's now possible to setDom() without classes while also saving 
         // a different case where the classes are presevered
     };

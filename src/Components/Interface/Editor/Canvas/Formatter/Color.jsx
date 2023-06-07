@@ -1,9 +1,8 @@
-import { cloneElement, useState } from "react";
-import formats from "./formats";
+import { cloneElement, useState, useEffect } from "react";
 import { useEditor } from "../../Editor";
 import { useDom } from "../Canvas";
 
-const Selector = ({ title, icon, format, onClick }) => {
+const Color = ({ icon, format }) => {
     const editedIcon = cloneElement(icon, { color: "inherit", size: "25px" });
 
     const { setPageData, page } = useEditor();
@@ -12,14 +11,24 @@ const Selector = ({ title, icon, format, onClick }) => {
     const onChange = (e) => setColor(e.target.value);
 
     const onBlur = () => {
-        console.log('BLUR BLUR');
         let obj = {};
         obj[format] = color;
         setPageData({ ...updateStylesFromPath(page?.data, path, { ...obj }) });
     };
 
+    useEffect(() => {
+        if (!path.length) return setColor('');
+        // if none is selected, color === ''
+        let current = page?.data;
+        for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
+        const properties = current?.style || {};
+        if (!properties[format]) return setColor('');
+        // if none is selected, we'll default to color === ''
+        setColor(properties[format]);
+    }, [path]);
+
     return (
-        <div className={`flex border border-black rounded-lg ${title && 'gap-x-1'} items-center p-0.5 hover:bg-gray-300 select-none`}>
+        <div className={`flex border border-black rounded-lg items-center p-0.5 hover:bg-gray-300 select-none`}>
             <label htmlFor="color">
                 {editedIcon}
             </label>
@@ -29,4 +38,4 @@ const Selector = ({ title, icon, format, onClick }) => {
     )
 };
 
-export default Selector;
+export default Color;

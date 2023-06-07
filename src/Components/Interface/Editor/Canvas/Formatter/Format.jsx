@@ -3,7 +3,7 @@ import { useDom } from "../Canvas";
 import formats from "./formats";
 import { useEditor } from "../../Editor";
 
-const Format = ({ title, icon, onClick, format }) => {
+const Format = ({ title, icon, format }) => {
     const { path, updateClassFromPath } = useDom();
     const { page, setPageData } = useEditor();
     const [styles, setStyles] = useState('');
@@ -19,7 +19,6 @@ const Format = ({ title, icon, onClick, format }) => {
         if (properties.find(prop => prop === formats[format])) return setStyles(true)
         setStyles(false);
     }, [path, updateElement]);
-
 
     return (
         <div onClick={updateElement} className={`flex border border-black rounded-lg ${title && 'gap-x-1'} items-center p-0.5 ${styles && 'bg-gray-300'} hover:bg-gray-300 select-none`}>

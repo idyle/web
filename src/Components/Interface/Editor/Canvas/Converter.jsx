@@ -24,8 +24,9 @@ export const renderElements = (config) => {
     )
 };
 
-export const constructDom = (config, css) => {
+export const constructDom = (config, css, fontFamily) => {
     let body = renderElements(config);
+    if (fontFamily) body = createElement("div", { style: { fontFamily } }, body);
     if (css) css = createElement("link", { rel: "stylesheet", href: css });
     return (<div>{css}{body}</div>)
 };
