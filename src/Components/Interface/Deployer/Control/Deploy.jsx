@@ -12,7 +12,7 @@ const Deploy = ({ i, deploy, website, revert }) => {
         <div className={`flex items-center ${selected ? 'bg-black text-white' : 'border border-black'} rounded-xl p-2 justify-between`}>
             <div className="grid p-2">
                 <h1 className="text-4xl font-bold">Deploy #{i+1}</h1>
-                <h1 className="text-3xl">Deploy ID: {deploy?.id}</h1>
+                <h1 className="text-3xl break-all">Deploy ID: {deploy?.id}</h1>
                 <h1 className="text-3xl">Created at: {date}</h1>
             </div>
             { selected ? <MdRadioButtonChecked size="40px" /> : <GrPowerReset onClick={onRevert} size="40px" /> }

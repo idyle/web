@@ -73,12 +73,7 @@ const Payments = () => {
 
             <div className="grid gap-1 justify-items-center rounded-lg">
                 <h1 className="text-4xl font-bold md:text-6xl text-center">{user?.displayName || ''}, there's a perfect plan for You.</h1>
-                <h1 className="text-2xl md:text-4xl text-center">
-                    Browse through our offerings perfectly curated for every use-case.
-                    With idyle, there's always a plan for You.
-                    
-                
-                </h1>
+
 
             </div>
 

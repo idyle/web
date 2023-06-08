@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet";
 import Viewer from "./Viewer";
 import { AiOutlinePlus, AiFillDelete, AiOutlineCheck } from 'react-icons/ai';
 import Document from "./Document";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
 import { removeDoc, setDoc } from "./requests";
@@ -14,12 +14,15 @@ const Documents = () => {
     const { user } = useAuth();
     const { docs, setDocs } = useData();
     const [selectedDoc, setSelectedDoc] = useState();
+    const [mobileClicked, setMobileClicked] = useState(false);
 
     const onClick = (e) => {
         const newDoc = docs.find(({ id }) => id === e.currentTarget.id);
-        if (!newDoc) return;
+        console.log('ONCLICK CALLED', newDoc, e.currentTarget.id);
+        if (!newDoc) return console.log('NO DOC FOUND');
         const stagedDoc = { ...newDoc, id: e.currentTarget.id };
         setSelectedDoc({ ...stagedDoc });
+        setMobileClicked(true);
     };
 
     const add = () => {
@@ -59,9 +62,10 @@ const Documents = () => {
                 <link rel="canonical" href="/docs" />
             </Helmet>
             
-            <div className="grid grid-rows-[30%_70%] md:grid-rows-1 md:grid-cols-2 md:gap-3 overflow-hidden">
+            <div className="grid md:grid-cols-2 md:gap-3 md:overflow-auto">
 
-                <div className="grid px-3 overflow-auto grid-rows-[auto_minmax(0,_1fr)]">
+                {/* md:grid should exist regardless  */}
+                 <div className={`${!mobileClicked ? 'grid' : 'hidden'} md:grid px-3 md:overflow-auto grid-rows-[auto_minmax(0,_1fr)]`}>
                     <div className="flex items-center justify-between bg-black rounded-lg text-white p-2 select-none">
                         <h1 className="text-3xl justify-self-start text-inherit">Documents</h1>
                         <AiOutlinePlus onClick={add} className="text-inherit" size="30px" />
@@ -72,23 +76,25 @@ const Documents = () => {
                             docs.map((ownDoc, i) => (<Document key={`d${i}`} doc={ownDoc} currentDoc={selectedDoc} onClick={onClick} />))
                         }
                     </div>
-                </div>
+                </div> 
 
-                { selectedDoc ? <div className="grid overflow-hidden md:gap-2 grid-rows-[minmax(0,_1fr)_auto]">
+                {/* selected doc dictates init */}
+                { selectedDoc ? <div className={`${mobileClicked ? 'grid' : 'hidden'} md:grid overflow-hidden md:gap-2 grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-[minmax(0,_1fr)_auto]`}>
                     <Viewer doc={selectedDoc} docs={docs} setDocs={setDocs} />
-                    <div className="flex items-center border border-black justify-between rounded-lg p-2 select-none">
+                    <div className="order-1 md:order-2 flex items-center border border-black justify-between rounded-lg p-2 select-none">
                         <h1 className="text-3xl text-inherit">Document</h1>
                         <div className="flex items-center gap-1">
                             <AiFillDelete onClick={remove} className="text-inherit" size="30px" />
                             <AiOutlineCheck onClick={check} className="text-inherit" size="30px" />
+                            <div onClick={() => setMobileClicked(false)} className="flex md:hidden items-center rounded-lg p-1 bg-black text-white">
+                                <h1 className="text-2xl">View Docs</h1>
+                            </div>
                         </div>
                     </div>
                 </div> :
-                <div className="grid items-center justify-items-center border border-black rounded-lg">
+                <div className="hidden md:grid items-center justify-items-center border border-black rounded-lg">
                     <h1 className="text-5xl">Select a doc</h1>
-                </div>
-
-                }
+                </div> }
                 
             </div>
         </div>

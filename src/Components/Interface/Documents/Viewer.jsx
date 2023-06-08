@@ -14,7 +14,7 @@ const Viewer = ({ doc, setDocs, docs }) => {
     useEffect(() => {
         const { id, ...newDoc } = doc;
         setValue(newDoc);
-        setString(JSON.stringify(value, null, 2));
+        setString(JSON.stringify(newDoc, null, 2));
     }, [doc]);
 
     const onMount = async (editor) => {
@@ -65,7 +65,7 @@ const Viewer = ({ doc, setDocs, docs }) => {
     };
 
     return (
-        <div onBlur={prettify} className="transition animate-fadein duration-300 border border-black p-3 shadow-xl rounded-lg overflow-hidden">
+        <div onBlur={prettify} className="order-2 md:order-1 transition animate-fadein duration-300 border border-black p-3 shadow-xl rounded-lg overflow-hidden">
             <Editor 
                 className="" 
                 loading="" 

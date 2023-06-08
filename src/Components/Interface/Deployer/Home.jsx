@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useData } from "../../../Contexts/Data";
 import Control from "./Control/Control";
 import Setup from "./Setup";
@@ -6,13 +7,26 @@ import Staging from "./Staging/Staging";
 const Home = ({ deploy }) => {
 
     const { website, setWebsite} = useData();
+    const [staging, setStaging] = useState(true);
+
     return (
-        <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 gap-3 overflow-hidden">
-            <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:gap-1 overflow-auto">
-                <Setup website={website} setWebsite={setWebsite} />
-                <Control website={website} deploy={deploy} />
-            </div>    
-            <Staging website={website} deploy={deploy} />
+        <div className="grid md:grid-cols-2 gap-3 md:overflow-auto">
+
+                <div className={`${staging ? 'hidden' : 'grid'} md:grid grid-rows-[auto_auto_minmax(0,_1fr)] md:gap-1 md:overflow-auto`}>
+                    <div onClick={() => setStaging(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                        <h1 className="text-2xl">Back to Staging</h1>
+                    </div>
+                    <Setup website={website} setWebsite={setWebsite} />
+                    <Control website={website} deploy={deploy} />
+                </div> 
+           
+
+            <div className={`${!staging ? 'hidden' : 'grid'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
+                <div onClick={() => setStaging(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                    <h1 className="text-2xl">Go to Deploys</h1>
+                </div>
+                <Staging website={website} deploy={deploy} />
+            </div>   
         </div>
     )
 };

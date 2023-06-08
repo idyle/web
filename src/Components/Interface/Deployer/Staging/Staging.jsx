@@ -76,7 +76,7 @@ const Staging = ({ deploy }) => {
     // (deploy) 2: initiate deploy
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] bg-black text-white rounded-lg p-3 gap-2 overflow-auto">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] bg-black text-white rounded-lg p-3 gap-2 md:overflow-auto">
             <div className="grid">
                 <div className="flex items-center gap-2 p-2">
                     <RiGasStationFill size="40px" />
@@ -87,7 +87,7 @@ const Staging = ({ deploy }) => {
                 </div>
             </div>
 
-            <div className="grid auto-rows-min rounded-lg p-2 border border-white overflow-auto">
+            <div className="grid auto-rows-min rounded-lg p-2 border border-white md:overflow-auto">
                 {pages?.map((page, i) => (<Page page={page} key={`p-d${i}`} setIndex={setIndex} index={index} remove={removePage} />))}
                 {files?.map((file, i) => (<File file={file} key={`f${i}`} setIndex={setIndex} index={index} remove={removeFile} />))}
             </div>

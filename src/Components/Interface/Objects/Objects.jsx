@@ -31,7 +31,7 @@ const Objects = () => {
     };
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)_auto] m-5 gap-2">
+        <div className="grid md:grid-rows-[auto_minmax(0,_1fr)_auto] m-5 gap-2">
 
             <Helmet>
                 <title>idyle - Objects</title>
@@ -40,7 +40,7 @@ const Objects = () => {
                 <link rel="canonical" href="/objects" />
             </Helmet>
 
-            <div className="grid md:grid-cols-4 items-center justify-items-center border-2 border-black rounded-lg p-3">
+            <div className="hidden md:grid md:grid-cols-4 items-center justify-items-center border-2 border-black rounded-lg p-3">
                 <div className="flex items-center select-none gap-2">
                     <h1 className="text-2xl font-bold">Aa</h1>
                     <h1 className="text-3xl">File Name</h1>
@@ -59,21 +59,17 @@ const Objects = () => {
                 </div>
             </div>
 
-
-            <div className="grid p-2 gap-3 auto-rows-min overflow-auto">
+            <div className="order-2 grid p-2 gap-3 auto-rows-min md:overflow-auto">
                 { objects.map((object, i) => (<Object key={`o${i}`} object={object} objects={objects} setObjects={setObjects} />)) }
             </div>
 
-            <div className="grid grid-flow-col items-center justify-items-center bg-black text-white p-3 gap-3 rounded-lg border-l-2 border-white">
+            <div className="order-1 md:order-3 grid grid-flow-col items-center justify-items-center bg-black text-white p-3 gap-3 rounded-lg border-l-2 border-white">
                 <h1 className="text-4xl justify-self-end">Objects</h1>
                 <label className="grid grid-flow-col justify-self-start" htmlFor="file">
                     <AiOutlineUpload size="40px" />
                 </label>
                 <input type="file" className="hidden" onChange={onChange} id="file" />
             </div>
-
-
-
         </div>
     )
 };

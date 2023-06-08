@@ -1,4 +1,4 @@
-import { AiFillCopy, AiOutlineDownload, AiOutlineDelete } from 'react-icons/ai'
+import { AiFillCopy, AiOutlineDownload, AiOutlineDelete, AiOutlineFile } from 'react-icons/ai'
 import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
 import { deleteFile, downloadFile, getFile, publicFile } from './requests';
@@ -60,7 +60,8 @@ const Object = ({ object, objects, setObjects }) => {
     };
 
     return (
-        <div onClick={sendFile} className={`grid md:grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg p-2 ${integrationMode}`}>
+        <div onClick={sendFile} className={`grid grid-cols-2 md:grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg p-2 ${integrationMode}`}>
+            <AiOutlineFile className="block md:hidden" size="50px" />
             <h1 className="text-2xl text-center break-all">{object.name}</h1>
             <h1 className="text-2xl">{object.type}</h1>
             <div onClick={copy} className="flex items-center border border-black select-none p-1 gap-1 rounded-lg hover:bg-black hover:text-white">
