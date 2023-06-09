@@ -7,6 +7,7 @@ import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
 import { removeDoc, setDoc } from "./requests";
 import { useData } from "../../../Contexts/Data";
+import { MdSwapHoriz } from "react-icons/md";
 
 const Documents = () => {
 
@@ -87,7 +88,7 @@ const Documents = () => {
                             <AiFillDelete onClick={remove} className="text-inherit" size="30px" />
                             <AiOutlineCheck onClick={check} className="text-inherit" size="30px" />
                             <div onClick={() => setMobileClicked(false)} className="flex md:hidden items-center rounded-lg p-1 bg-black text-white">
-                                <h1 className="text-2xl">View Docs</h1>
+                                <h1 className="text-xl text-center">View Docs</h1>
                             </div>
                         </div>
                     </div>

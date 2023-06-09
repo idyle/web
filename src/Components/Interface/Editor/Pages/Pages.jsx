@@ -42,7 +42,7 @@ const Pages = () => {
 
                 <div onClick={addPage} className="flex w-full items-center place-content-center border-black border rounded-lg select-none p-3 gap-x-1 hover:scale-[.98]">
                     <MdAddCircle size="30px" />
-                    <h1 className="text-4xl">Create a New Page</h1>
+                    <h1 className="text-4xl text-center">Create a New Page</h1>
                 </div>
             </div>
 

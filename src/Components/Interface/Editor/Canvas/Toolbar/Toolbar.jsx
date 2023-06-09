@@ -111,7 +111,7 @@ const Elements = () => {
     }, [integrator?.active]);
 
     return (
-        <div className="grid grid-cols-[80%_20%] md:grid-cols-none  md:grid-rows-[70%_30%] gap-1 p-1">
+        <div className="grid  md:grid-rows-[70%_30%] gap-1 p-1">
             <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-1 shadow-xl border border-black rounded-lg gap-1">
                 <h1 className="text-3xl font-bold text-center hidden md:block">Elements</h1>
                 <div className="grid grid-flow-col md:grid-flow-row gap-1 p-1 overflow-auto">

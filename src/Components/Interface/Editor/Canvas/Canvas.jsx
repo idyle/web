@@ -4,6 +4,7 @@ import { constructDom } from './Converter';
 import { useEditor } from '../Editor';
 import Toolbar from './Toolbar/Toolbar';
 import Formatter from './Formatter/Formatter';
+import { MdSwapHoriz } from 'react-icons/md';
 
 const DomValues = createContext();
 export const useDom = () => useContext(DomValues);
@@ -140,6 +141,7 @@ const Canvas = () => {
 
     const { page, css, font } = useEditor();
     const [dom, setDom] = useState([]);
+    const [toolbar, setToolbar] = useState(true);
 
     useEffect(() => {
         if (!page?.id || !page?.data) return;
@@ -148,10 +150,25 @@ const Canvas = () => {
 
     return (
         <DomContext>
-            <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 md:grid-cols-[auto_minmax(0,_1fr)] overflow-auto">
+            <div className={`grid ${toolbar ? 'grid-rows-[auto_minmax(0,_1fr)]' : 'grid-rows-1'} md:grid-rows-1 md:grid-cols-[auto_minmax(0,_1fr)] overflow-auto`}>
+                
+                <div className={`${toolbar ? 'grid' : 'hidden'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
+                    <div onClick={() => setToolbar(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                        <MdSwapHoriz size="30px" />
+                        <h1 className="text-2xl">Switch to Formatter</h1>
+                    </div>
                     <Toolbar />
-                <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-1">
-                    <Formatter />
+                </div>
+
+                <div className={`grid ${!toolbar ? 'grid-rows-[auto_minmax(0,_1fr)]' : 'grid-rows-1'} md:grid-rows-[auto_minmax(0,_1fr)]`}>
+                    <div className={`${toolbar ? 'hidden' : 'grid'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
+                        <div onClick={() => setToolbar(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                            <MdSwapHoriz size="30px" />
+                            <h1 className="text-2xl">Switch to Toolbar</h1>
+                        </div>
+                        <Formatter />
+                    </div>
+
                     <div className="grid p-1 overflow-auto shadow-xl rounded-lg">
                         {dom}
                     </div>

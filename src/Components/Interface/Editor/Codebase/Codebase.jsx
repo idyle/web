@@ -1,10 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { stringify } from 'himalaya';
 import { useEditor } from "../Editor";
-import { constructDom, renderElements } from "./Converter";
+import { constructDom } from "./Converter";
 import Parser from "./Parser";
 import Toolbar from "./Toolbar";
 import Dom from "./Dom";
+import { MdSwapHoriz } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 import { useUtil } from "../../../../Contexts/Util";
 
@@ -66,7 +67,6 @@ export const DomContext = ({ children }) => {
     useEffect(() => {
         try {
             if (integrator?.active && integrator?.origin === `${origin}?mode=codebase`) return console.log('IS ACTIVE');
-            console.log('DATA', page);
             if (!page?.data || !page?.id) return;
             const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
             if (!convertedHimalayaJSON) return;
@@ -74,7 +74,6 @@ export const DomContext = ({ children }) => {
             const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON?.children || []);
             if (!stringifiedHimalayaJSON) return;
             const cDom = constructDom(page?.data, toggle, css, font, 'MAIN');
-            console.log('CONSDTRUCTED DOM', cDom);
             setString(stringifiedHimalayaJSON);
             setDom(cDom);
         } catch (e) {
@@ -92,19 +91,35 @@ export const DomContext = ({ children }) => {
 
 const Codebase = () => {
 
+    const [parser, setParser] = useState(true);
+
     return (
         <DomContext>
-        <div className="grid grid-rows-[minmax(0,_1fr)_auto] p-2 gap-1">
-            <div className="grid grid-rows-[40%_60%] md:grid-rows-1 grid-cols-1 md:grid-cols-[40%_60%] gap-1">
-                <div className="shadow-xl rounded-lg overflow-hidden">
-                    <Parser />
-                </div>
-                
-                <Dom />
-            </div>
+            <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-[minmax(0,_1fr)_auto] p-2 gap-1">
+                <div className="order-2 md:order-1 grid grid-cols-1 md:grid-cols-[40%_60%] gap-1">
 
-            <Toolbar />
-        </div>
+                    <div className={`${parser ? 'grid' : 'hidden'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 overflow-hidden`}>
+                        <div onClick={() => setParser(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                            <MdSwapHoriz size="30px" />
+                            <h1 className="text-2xl">Switch to Dom</h1>
+                        </div>
+                        <div className="shadow-xl rounded-lg overflow-hidden">
+                            <Parser />
+                        </div>
+                    </div>
+                    
+                    <div className={`${parser ? 'hidden' : 'grid'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
+                        <div onClick={() => setParser(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                            <MdSwapHoriz size="30px" />
+                            <h1 className="text-2xl">Switch to Parser</h1>
+                        </div>
+                        <Dom />
+                    </div>
+
+                </div>
+
+                <Toolbar/>
+            </div>
         </DomContext>
 
     )

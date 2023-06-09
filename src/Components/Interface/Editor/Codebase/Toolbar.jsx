@@ -89,7 +89,7 @@ const Toolbar = () => {
     };
 
     return (
-        <div className="grid grid-flow-col border border-black rounded-lg p-1 gap-2">
+        <div className="order-1 md:order-2 grid grid-flow-col border border-black rounded-lg p-1 gap-2">
             <div onClick={toggleTailwind} className="flex items-center place-content-center bg-black text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
                 <SiTailwindcss size="25px" />
                 <h1 className="text-2xl text-center hidden md:block">Toggle Tailwind CSS ({toggle ? 'ON' : 'OFF'})</h1>
