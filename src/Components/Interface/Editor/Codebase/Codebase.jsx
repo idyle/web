@@ -66,7 +66,7 @@ export const DomContext = ({ children }) => {
 
     useEffect(() => {
         try {
-            if (integrator?.active && integrator?.origin === `${origin}?mode=codebase`) return console.log('IS ACTIVE');
+            if (integrator?.active && integrator?.origin === `${origin}?mode=codebase`) return;
             if (!page?.data || !page?.id) return;
             const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
             if (!convertedHimalayaJSON) return;
@@ -76,8 +76,7 @@ export const DomContext = ({ children }) => {
             const cDom = constructDom(page?.data, toggle, css, font, 'MAIN');
             setString(stringifiedHimalayaJSON);
             setDom(cDom);
-        } catch (e) {
-            console.log(e);
+        } catch {
             return;
         }
     }, [page?.id, toggle, css, font])

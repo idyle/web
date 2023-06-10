@@ -15,7 +15,6 @@ const Prompter = () => {
     };
 
     const onConfirm = async () => {
-        console.log('VALUE', value);
         await prompter?.resolve(value);
         setPrompter({ ...prompter, active: false });
     };

@@ -13,7 +13,7 @@ const Staging = ({ deploy }) => {
     const { confirm, notify, setIntegrator, integrator, load } = useUtil();
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
-    const { pages: pagesFromEditor, resetObjects, objects } = useData();
+    const { pages: pagesFromEditor, resetObjects } = useData();
     const { user } = useAuth();
     const [files, setFiles] = useState([]);
     const [pages, setPages] = useState(pagesFromEditor);
@@ -28,9 +28,8 @@ const Staging = ({ deploy }) => {
 
     // returning
     useEffect(() => {
-        console.log('integrator', integrator, integrator?.origin, origin);
-        if (!integrator?.active || !integrator?.data) return console.log('EHK');
-        if (integrator?.target !== 'objects' || integrator?.origin !== origin) return console.log('ehk2');
+        if (!integrator?.active || !integrator?.data) return;
+        if (integrator?.target !== 'objects' || integrator?.origin !== origin) return;
         setFiles([ ...files, { path: integrator?.data?.name } ]);
         setIntegrator({ active: false });
     }, [integrator?.active]);
@@ -54,9 +53,8 @@ const Staging = ({ deploy }) => {
         if (!(await confirm("You're about to make a deploy. Proceed?"))) return;
 
         // let's first run a batch convert on our pages 
-        console.log(files, 'FILES BEING DEPLOYED');
         if (!pages?.length) return deploy(files);
-        notify('Beginning conversion on the pages first');
+        notify('Beginning conversion on the pages first...');
         load(true);
         const batch = await convertPages(user?.accessToken);
         load(false);
@@ -65,7 +63,7 @@ const Staging = ({ deploy }) => {
         // let pageFiles = pages.map(( { route }) => ({ path: objects?.find(( { name } ) => name === `${route}.html`)?.path }));
         let pageFiles = pages.map(( { route, id }) => ({ path: `${route}.html`, index: (id === index) }));
         let objectFiles = files.map(( { path } ) => ({ path, index: (path === index) }));
-        console.log([ ...objectFiles, ...pageFiles ]);
+        notify('Now initiating deploy...');
         deploy([ ...objectFiles, ...pageFiles ]);
     };
 

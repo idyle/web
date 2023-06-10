@@ -16,7 +16,6 @@ export const uploadFile = async (token, file) => {
 
         const req = await fetch(`${servicePath}/upload/user/${file.name}`, options);
         const res = await req.json();
-        console.log('RES OF UPLOAD', res);
         if (!res?.status) return false;
         return res?.file;
 
@@ -105,7 +104,6 @@ export const getFile = async (token, fileName) => {
 
         const req = await fetch(`${servicePath}/get/user/${fileName}`, options);
         const res = await req.json();
-        console.log(res);
         if (!res?.status) return false;
         return res?.file;
 
@@ -128,7 +126,6 @@ export const publicFile = async (token, fileName) => {
 
         const req = await fetch(`${servicePath}/public/user/${fileName}`, options);
         const res = await req.json();
-        console.log(res);
         return res?.status
     } catch (e) {
         console.error(e);

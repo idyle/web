@@ -23,8 +23,6 @@ const Parser = () => {
 
     const beforeMount = (monaco) => emmetHTML(monaco);
     const onMount = (editor) => {
-        console.log('MOUNTEDDDDDDD')
-        console.log('editor, ', editor, editor.getPosition());
         editor.getAction('editor.action.formatDocument')?.run();
         editorRef.current = editor;
         setMounted(true);

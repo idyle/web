@@ -46,7 +46,6 @@ const Object = ({ object, objects, setObjects }) => {
 
     const sendFile = async () => {
         // send data back
-        console.log(integrator?.active, 'integrator status');
         if (!integrator?.active || integrator?.target !== 'objects' || !integrator?.origin) return;
         if (!(await confirm('Adding this to the canvas will make your file public. Continue?'))) return;
         load(true);

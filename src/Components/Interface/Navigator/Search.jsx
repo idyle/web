@@ -5,8 +5,6 @@ import { routes } from './routes';
 
 const Search = () => {
 
-    const [data] = useState(routes);
-
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
 
@@ -14,43 +12,45 @@ const Search = () => {
 
         const parseQuery = () => {
 
-            // 1st: phrase match (a===b)
-            const phraseMatch = data.find(({ title }) => query === title);
-            console.log('phrasematch', phraseMatch);
+            const search = query.toLowerCase();
+            // 1st: phrase match (a === b)
+            const phraseMatch = routes.find(({ title }) => search === title.toLowerCase());
             if (phraseMatch) return [ phraseMatch ];
         
             // 2nd: character match (a[i] === b[i]) - highest character match
             let characterMatches = [];
-            for (let { title, route } of data) {
+            for (let { title, route } of routes) {
                 let score = 0;
-                for (let i = 0; i < query.length; i++) {
-                    const letterQuery = query[i];
-                    const item = title[i];
+                for (let i = 0; i < title.length; i++) {
+                    const letterQuery = search[i];
+                    const item = title[i]?.toLowerCase();
                     if (letterQuery === item) score++;
                 };
-                if (score) characterMatches.push({ title, route, score });
+                if ((score / title.length) >= 0.75) return [{ title, route }];
+                // if there is 75% certainty of a result, return
+                if (score) characterMatches.push({ title, route, score, relative: (score / title.length) });
                 // only routes with a score > 0 will be included
             };
-            console.log('charac match', characterMatches);
-            if (characterMatches.length) return characterMatches.sort((a, b) => b.score - a.score);
+            // if a character match was found 
+            if (characterMatches?.length) characterMatches = characterMatches.sort((a, b) => b.score - a.score);
+            // limiting our pool to 3 results
+            if (characterMatches?.length > 3) characterMatches.splice(1, 3);
+            if (characterMatches?.length) return characterMatches;
     
             // 3rd: character inclusion (a.includes(b[i]) - highest character inclusion
             let characterIncls = [];
-            for (let { title, route } of data) {
+            for (let { title, route } of routes) {
                 let score = 0;
-                for (let i = 0; i < query.length; i++) {
-                    const letterTitle = title[i];
-                    if (query.includes(letterTitle)) score++
+                for (let i = 0; i < search.length; i++) {
+                    const letterTitle = title[i].toLowerCase();
+                    if (search.includes(letterTitle)) score++
                 };
-                console.log('for title query', title, query, 'score', score);
                 if (score) characterIncls.push({ title, route, score });
             };
-            console.log('charac incl', characterIncls);
             if (characterIncls.length) return characterIncls.sort((a, b) => b.score - a.score);
     
             // 4th: phrase inclusion (a.includes(b))
-            const phraseIncl = data.filter(({ title }) => title.includes(query));
-            console.log('phrase match', phraseIncl);
+            const phraseIncl = routes.filter(({ title }) => title.toLowerCase().includes(search));
             if (phraseIncl.length) return phraseIncl;
     
             // if no match at all
@@ -63,10 +63,7 @@ const Search = () => {
 
 
 
-    const test = (e) => {
-        setQuery(e.target.value);
-    };
-
+    const onChange = (e) => setQuery(e.currentTarget.value);
     const [active, setActive] = useState(false);
     const onFocus = (e) => {
         setActive(true);
@@ -79,7 +76,7 @@ const Search = () => {
     return (
         <div onFocus={onFocus} onBlur={onBlur} className="relative flex gap-1 h-[2rem] w-full border p-2 rounded-lg border-black items-center">
             <BiSearch color="black" className="md:h-[10px] md:w-[10px]" />
-            <input onChange={test} className="outline-none placeholder:text-black md:text-lg w-full" type="text" placeholder="Search" value={query} />
+            <input onChange={onChange} className="outline-none placeholder:text-black md:text-lg w-full" type="text" placeholder="Search" value={query} />
             { (active && query) && <div className="absolute top-8 left-0 right-0 bg-white z-10 p-3 bg-black text-black border border-black rounded-lg h-max h-full max-h-60 overflow-auto">
                 <div className="grid gap-1">
                     <h1 className="text-lg">Search Results</h1>

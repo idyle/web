@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const UtilValues = createContext();
 export const useUtil = () => useContext(UtilValues);
@@ -12,7 +12,7 @@ const UtilContext = ({ children }) => {
     const [prompter, setPrompter] = useState({ active: false });
     const prompt = (data) => new Promise(resolve => setPrompter({ resolve, data, active: true }));
     const [integrator, setIntegrator] = useState({ active: false });
-    const integrate = (origin) => new Promise(resolve => setIntegrator({ resolve, origin, active: true }) )
+    const integrate = (origin) => new Promise(resolve => setIntegrator({ resolve, origin, active: true }) );
     const values = { 
         loading, load, 
         notifier, notify, setNotifier, 

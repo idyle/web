@@ -35,7 +35,6 @@ const Sizing = ({ icon, format }) => {
 
     const onChange = (e) => {
         const entry = parseInt(e.target.value);
-        console.log('result entry', entry, typeof entry);
         if (entry < 1 || entry > 100 || isNaN(entry)) return setPx(0);
         setPx(entry);
         updateElement(entry);

@@ -20,8 +20,7 @@ const Reset = () => {
             notify('email sent!', test);
             load(false);
         } catch (e) {
-            console.log(e);
-
+            console.error(e);
         }
     };
 

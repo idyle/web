@@ -17,7 +17,7 @@ const Router = () => {
         // if we have no params at the moment
         const paramsRoute = pages?.find(( { id }) => id === pageId)?.route;
         // access route
-        if (paramsRoute === params?.['*']) return console.log('true'); 
+        if (paramsRoute === params?.['*']) return; 
         // if routes are not same
         const paramsPage = pages?.find(( { route }) => route === params?.['*']);
         if (!paramsPage?.id) return navigate('/editor/pages');

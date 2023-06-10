@@ -13,7 +13,6 @@ export const setupWebsite = async (token, website) => {
 
         const req = await fetch(`${servicePath}/setup/${website}`, options);
         const res = await req.json();
-        console.log('res', res);
         return res?.status;
 
     } catch (e) {
@@ -35,7 +34,6 @@ export const getWebsite = async (token) => {
 
         const req = await fetch(`${servicePath}/get`, options);
         const res = await req.json();
-        console.log('res', res);
         if (!res?.status) return false;
         return res?.website;
 
@@ -62,7 +60,6 @@ export const deployWebsite = async (token, website, files, revertDeployId) => {
 
         const req = await fetch(url, options);
         const res = await req.json();
-        console.log('deploy', res);
         if (!res?.status) return false;
         return res;
 
@@ -111,7 +108,6 @@ export const connectDomain = async (token, domain) => {
         let url = `${servicePath}/connect/${domain}`;
         const req = await fetch(url, options);
         const res = await req.json();
-        console.log(res, 'connect stat');
         if (!res?.status) return false;
         return res?.status;
     } catch (e) {
@@ -160,7 +156,6 @@ export const convertPage = async (token, entryId, customPath, stringOutput) => {
 
         const req = await fetch(url, options);
         const res = await req.json();
-        console.log('res of pages', res);
         if (!res?.status) return false;
         if (stringOutput) return res;
         return res?.status;
@@ -189,7 +184,6 @@ export const convertPages = async (token, stringOutput) => {
 
         const req = await fetch(url, options);
         const res = await req.json();
-        console.log('res of pages', res);
         if (!res?.status) return false;
         if (stringOutput) return res;
         return res?.status;

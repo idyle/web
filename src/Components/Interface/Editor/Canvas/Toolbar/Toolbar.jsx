@@ -36,7 +36,6 @@ const Elements = () => {
 
     // entering
     const sendObjectsRequest = () => {
-        console.log('sending req', page.data, path);
         setIntegrator({ active: true, target: 'objects', origin: `${origin}?mode=canvas`, ref: { path, data: page?.data } });
         notify('Sending you to objects. Please select a file to add.');
         navigate('/objects');
@@ -68,18 +67,15 @@ const Elements = () => {
     const editProps = async () => {
         if (!path?.length) return;
         // if we don't have a selected item
-        console.log('SELDATA', selData);
         let config = { key: 'className', value: selData?.className || '' };
         // our default editable config
         if (selData?.component === 'img' || selData?.component === 'video') config = { key: 'alt', value: selData?.alt || '' };
         else if (selData?.component === 'a') config = { key: 'href', value: selData?.href || '' };
 
         const input = await prompt(config?.value);
-        console.log('THE INPUT', input);
         if (!input) return;
         let obj = {};
         obj[config?.key] = input;
-        console.log('STAGED OBJ', obj);
         setPageData({ ...updateObjectFromPathCustom(page?.data, path, config?.key, input) });
     };
     

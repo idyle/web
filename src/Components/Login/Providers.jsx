@@ -16,28 +16,21 @@ const Providers = ({ layout = 'default' }) => {
         (async () => {
             try {
                 const result = await getRedirectResult(getAuth());
-                console.log('result', result);
-                console.log('linkage', linkage);
                 if (linkage) {
                     const e = JSON.parse(linkage);
-                    console.log(e, 'e');
                     const credential = OAuthProvider.credentialFromError(e);
-                    console.log('parsed creds', credential);
                     const t = await linkWithCredential(result.user, credential);
-                    console.log('credential linkage', t);
                     notify("We've linked your accounts");
                     setLinkage();
                 }
                 // we need to use credential linkage
                 setTransit();
             } catch (e) {
-                console.log(e);
+                console.error(e);
                 setTransit();
                 if (e.code === 'auth/account-exists-with-different-credential') {
-                    console.log(e.customData, 'email');
                     notify("You're using another providr")
                     const providers = await fetchSignInMethodsForEmail(getAuth(), e?.customData?.email);
-                    console.log('providers', providers);
                     const provider = providers.find(p => p === 'google.com' || p === 'facebook.com' || p === 'github.com');
                     if (!provider) return notify('Youre using another provider');
                     let serviceProvider;
@@ -45,7 +38,6 @@ const Providers = ({ layout = 'default' }) => {
                     else if (provider === 'facebook.com') serviceProvider = new FacebookAuthProvider();
                     else if (provider === 'github.com') serviceProvider = new GithubAuthProvider();
                     else return notify('ANothe rprovider being used;')
-                    console.log('serviceprovider', provider, serviceProvider);
                     // lets get the credential
                     
                     setLinkage(JSON.stringify(e));
@@ -58,7 +50,6 @@ const Providers = ({ layout = 'default' }) => {
     }, []);
 
     const continueWith = async (provider) => {
-        console.log('transit status', transit);
         if (transit) return;
         // call the loader and mark the progress as true
         load(true);

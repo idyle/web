@@ -75,7 +75,6 @@ export const getMetrics = async (token) => {
 
         const req = await fetch(`${servicePath}/metrics`, options);
         const res = await req.json();
-        console.log('metrics', res);
         return res?.metrics;
     } catch (e) {
         console.error(e);

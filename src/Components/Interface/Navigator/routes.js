@@ -8,6 +8,8 @@ module.exports = {
         { title: 'Codebase', route: '/editor/codebase' },
         { title: 'Pages', route: '/editor/pages' },
         { title: 'Deployer', route: '/deployer' },
+        { title: 'Station', route: '/deployer/station' },
+        { title: 'Labs', route: '/deployer/labs' },
         { title: 'Objects', route: '/objects' },
         { title: 'Documents', route: '/docs' },
         { title: 'Home', route: '/' }

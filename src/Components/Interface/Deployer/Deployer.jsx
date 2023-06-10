@@ -6,10 +6,10 @@ import { deployWebsite } from "./requests";
 import { useData } from "../../../Contexts/Data";
 import Subnav from "../Templates/Subnav";
 import Subnavbutton from "../Templates/Subnavbutton";
-import { MdHome } from 'react-icons/md';
-import Home from "./Home";
+import Station from "./Station";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { IoMdFlask } from 'react-icons/io';
+import { RiGasStationFill } from "react-icons/ri";
 
 const Deployer = () => {
 
@@ -22,7 +22,6 @@ const Deployer = () => {
         const operation = await deployWebsite(user?.accessToken, website?.name, files, revert);
         load(false);
         if (!operation) return notify('Deploy failed :(');
-        console.log('deploy operation', operation);
         notify("Successfully deployed your page. Due to caching, changes may take up to an hour to take effect.");
         resetWebsite();
     };
@@ -37,14 +36,14 @@ const Deployer = () => {
             </Helmet>
 
             <Subnav type="side" mode="white">
-                <Subnavbutton icon={<MdHome />} text="Home" route="/deployer/home" />
+                <Subnavbutton icon={<RiGasStationFill />} text="Station" route="/deployer/station" />
                 <Subnavbutton icon={<IoMdFlask />} text="Labs" route="/deployer/labs" />
             </Subnav>
 
             <Routes>
-                <Route path="home" element={<Home deploy={deploy} />} />
+                <Route path="station" element={<Station deploy={deploy} />} />
                 <Route path="labs" element={<Labs />} />
-                <Route path="*" element={<Navigate to="home" />} /> 
+                <Route path="*" element={<Navigate to="station" />} /> 
             </Routes>
         </div>
     )

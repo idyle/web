@@ -1,26 +1,9 @@
 import { MdOutlineDataUsage } from "react-icons/md";
 import { useData } from "../../../Contexts/Data";
-import { useAuth } from "../../../Contexts/Auth";
-import { useUtil } from "../../../Contexts/Util";
-import { getMetrics } from "../Payments/requests";
-import { useEffect } from "react";
 
 const Metrics = () => {
 
-    const { user } = useAuth();
-    const { load, notify } = useUtil();
-    const { metrics, setMetrics } = useData();
-
-    useEffect(() => {
-        if (!user?.accessToken) return;
-        (async () => {
-            load(true);
-            const metrics = await getMetrics(user?.accessToken);
-            load(false);
-            if (!metrics) return notify('Failed to get metrics');
-            setMetrics(metrics);
-        })();
-    }, [user?.accessToken]);
+    const { metrics } = useData();
 
     const percentage = metrics?.used / metrics?.limit;
 

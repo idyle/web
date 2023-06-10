@@ -24,9 +24,7 @@ const Viewer = ({ doc, setDocs, docs }) => {
 
     useEffect(() => {
         setString(JSON.stringify(value, null, 2));
-        console.log('m state', mounted);
         if (!mounted) return load(true);
-        console.log('mounted!');
         load(false);
         
     }, [mounted]);
@@ -60,7 +58,6 @@ const Viewer = ({ doc, setDocs, docs }) => {
     const beforeMount = () => setString(JSON.stringify(value, null, 2));
 
     const prettify = () => {
-        console.log('prettifiyg', value);
         setString(JSON.stringify(value, null, 2));
     };
 

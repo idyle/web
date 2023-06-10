@@ -13,7 +13,6 @@ const Email = () => {
 
     const onChange = (e) => {
         credentials[`${e.target.id}`] = e.target.value;
-        console.log('new credentials', { ...credentials });
         setCredentials({ ...credentials });
     };
 
@@ -23,13 +22,10 @@ const Email = () => {
             setTransit(true);
             load(true);
             const { email = '', password = '' } = credentials;
-            console.log('email pass', email, password);
             const test = await signInWithEmailAndPassword(getAuth(), email, password);
-            console.log('test', test);
             setTransit();
         } catch (e) {
             setTransit();
-            console.log(e);
             if (e.code === 'auth/invalid-email' || e.code === 'auth/wrong-password') {
                 notify('Your email or password is invalid.');
             } else if (e.code === 'auth/user-not-found') notify('This account does not exist');

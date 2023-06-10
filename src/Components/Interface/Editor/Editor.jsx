@@ -34,12 +34,11 @@ export const EditorContext = ({ children }) => {
         setCss(p?.metadata?.css);
         setToggle(p?.metadata?.toggle);
         setFont(p?.metadata?.font);
-        console.log('RELOAD occured', p?.metadata?.font);
     }, [pages, pageId]);
 
     const save = async (page) => {
         const index = pages.findIndex(( { id } ) => id === page?.id);
-        if (!(index >= 0)) return console.log('INDEX NOT FOUND', pages, index, !(index >= 0));
+        if (!(index >= 0)) return;
         // a page must be created
         const lastPageData = pages[index];
         pages[index] = { ...page, id: lastPageData?.id };
@@ -70,7 +69,6 @@ export const EditorContext = ({ children }) => {
     const serialize = (object, id = '0') => {
         let children = object.children || null;
         if (children instanceof Array) children = children.map((child, i) => serialize(child, `${id}-${i}`)) || [];
-        // console.log('TO SERIALIZE', object, id, children);
         return { ...object, children, id };
     };
 

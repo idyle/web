@@ -27,7 +27,6 @@ const Convert = () => {
     useEffect(() => {
         if (!integrator?.active || !integrator?.data) return;
         if (integrator?.target !== 'docs' || integrator?.origin !== origin) return;
-        console.log('received data', integrator?.data);
         setDoc(integrator?.data);
         setIntegrator({ active: false });
     }, [integrator?.active]);

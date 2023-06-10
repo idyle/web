@@ -13,15 +13,12 @@ const Reset = ({ code }) => {
 
     const onPasswordClick = async () => {
         const verifiedEmail = await verifyPasswordResetCode(getAuth(), code);
-        console.log(code, password, verifiedEmail);
         if (!code || !password || !verifiedEmail) return;
         try {
             load(true);
-            console.log('pass change', code);
             const test = await confirmPasswordReset(getAuth(), code, password);
             await signInWithEmailAndPassword(getAuth(), verifiedEmail, password);
             navigate('/');
-            console.log('result of password change', test);
             notify('password changed!');
             load(false);
         } catch (e) {

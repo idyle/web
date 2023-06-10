@@ -16,13 +16,11 @@ export const savePage = async (token, page) => {
 
         const req = await fetch(url, options);
         const res = await req.json();
-        console.log(res?.status, 'res NEW TEST');
         if (res?.status) return res;
         return res?.status;
 
     } catch (e) {
         console.error(e);
-        console.log('errorrrrr');
         return false;
     }
 };
@@ -43,7 +41,6 @@ export const listPages = async (token, filter, value) => {
 
         const req = await fetch(url, options);
         const res = await req.json();
-        console.log('res pages', res);
         if (!res?.status) return false;
         return res?.pages;
     } catch (e) {
@@ -65,7 +62,6 @@ export const getPage = async (token, page) => {
 
         const req = await fetch(`${servicePath}/get/user/${page?.id}`, options);
         const res = await req.json();
-        console.log('delete res', res);
         if (!res?.status) return false;
         return res?.page;
 
@@ -88,7 +84,6 @@ export const deletePage = async (token, page) => {
 
         const req = await fetch(`${servicePath}/delete/user/${page?.id}`, options);
         const res = await req.json();
-        console.log('delete res', res);
         return res?.status;
 
     } catch (e) {

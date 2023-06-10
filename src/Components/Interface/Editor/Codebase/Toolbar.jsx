@@ -26,7 +26,6 @@ const Toolbar = () => {
 
     // entering
     const sendDocsRequest = () => {
-        console.log(string, 'string');
         setIntegrator({ active: true, target: 'docs', origin: `${origin}?mode=codebase`, ref: string });
         notify('Sending you to docs. Please select a doc to add');
         navigate('/docs');
@@ -46,13 +45,10 @@ const Toolbar = () => {
             if (integrator?.target !== 'docs' || integrator?.origin !== `${origin}?mode=codebase`) return; 
             const config = integrator?.data;
             // actual thing to convert
-            console.log('data sent back', config);
             const himalayaJSON = convertJSONtoHimalayaJSON(config);
-            console.log(himalayaJSON, 'HIMALAYA json');
             if (!himalayaJSON) return render(integrator?.ref);
             const stringified = stringify([himalayaJSON]);
             if (!stringified) return render(integrator?.ref);
-            console.log('SETTING STRING SUCC', `${integrator?.ref}${stringified}`);
             render(`${integrator?.ref}${stringified}`);
         } catch {
             notify('Something went wrong.');
@@ -62,7 +58,6 @@ const Toolbar = () => {
 
     const sendObjectsRequest = () => {
         // send a file reques
-        console.log('ORIGIN', origin);
         setIntegrator({ active: true, target: 'objects', origin: `${origin}?mode=codebase`, ref: page });
         notify('Sending you to objects. Please select a CSS file to import.');
         navigate('/objects');
@@ -72,7 +67,6 @@ const Toolbar = () => {
         if (!integrator?.active || !integrator?.data) return;
         if (integrator?.target !== 'objects' || integrator?.origin !== `${origin}?mode=codebase`) return;
         if (!integrator?.data?.type?.startsWith('text/css')) return notify('Invalid file');
-        console.log('PROCESS RECOGNIZED');
         // we can only except of type text/css
         setCss(integrator?.data?.url);
         setPage({ ...integrator?.ref, metadata: { ...integrator?.ref?.metadata, css: integrator?.data?.url }});

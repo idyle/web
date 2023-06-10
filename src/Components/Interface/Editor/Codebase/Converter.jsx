@@ -19,7 +19,6 @@ export const renderElements = (config) => {
 };
 
 export const constructDom = (config, toggle, css, fontFamily, origin) => {
-    console.log('font from cb', fontFamily, 'FROM', origin);
     let body = renderElements(config);
     if (fontFamily) body = createElement("div", { style: { fontFamily } }, body);
     if (toggle) toggle = createElement("script", { src: "https://cdn.tailwindcss.com" });

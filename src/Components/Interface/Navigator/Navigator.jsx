@@ -20,9 +20,6 @@ const Navigator = () => {
                 </div>
                 <BiMenu onClick={() => setMobileClicked(true)} className="md:hidden relative" size="45px" />
             </div>
-            {/* <div onClick={() => setMobileClicked(true)} className="absolute right-1 top-[1px] md:hidden">
-                <BiMenu size="45px" />
-            </div> */}
 
             <div className={`${mobileClicked ? 'h-full' : 'hidden'} top-0 left-0 right-0 md:block absolute md:static md:h-auto md:w-auto z-50`}>
     

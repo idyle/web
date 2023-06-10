@@ -21,7 +21,6 @@ const Control = ({ deploy }) => {
     };
 
     const currentDeploy = deploys.find(d => d?.id === website?.deploy);
-    console.log(currentDeploy, 'deploy', website, 'website', deploys);
 
     return (
         <div className="grid grid-rows-[auto_minmax(0,_1fr)] border border-black rounded-lg p-3 overflow-auto">

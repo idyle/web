@@ -12,7 +12,6 @@ const Objects = () => {
     const { user } = useAuth();
     const { load } = useUtil();
     const { objects, setObjects } = useData();
-    console.log(objects, 'objects');
     const onChange = async (e) => {
         if (!e.target?.files[0]) return;
 
@@ -20,10 +19,8 @@ const Objects = () => {
         const type = e.target?.files[0]?.type;
 
         load(true);
-        console.log('UPLOADING FILE');
         const url = await uploadFile(user?.accessToken, e.target.files[0]);
         load(false);
-        console.log(url, 'url')
         if (!url) return;
 
         setObjects([ ...objects, { name, type, ...url } ])

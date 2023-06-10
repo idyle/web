@@ -13,7 +13,6 @@ const Register = () => {
 
     const onChange = (e) => {
         credentials[`${e.target.id}`] = e.target.value;
-        console.log('new credentials', { ...credentials });
         setCredentials({ ...credentials });
     };
 
@@ -22,7 +21,6 @@ const Register = () => {
         let verdict = { success: false };
 
         for (const value of Object.values(credentials)) {
-            console.log(value.length);
             if (!value) verdict.message = 'Please complete all fields.';
             
             else if (value.length > 50) verdict.message = 'Please limit entries to 50 characters.';
@@ -40,7 +38,6 @@ const Register = () => {
 
     const onClick = async () => {
         if (transit) return;
-        console.log(verifyInfo());
         if (!verifyInfo()) return;
         try {
             setTransit(true);
@@ -49,14 +46,13 @@ const Register = () => {
             const { user } = await createUserWithEmailAndPassword(getAuth(), email, password);
             const proc = await updateProfile(user, { displayName: name });
             await sendEmailVerification(user);
-            console.log('proc', proc);
             setTransit();
         } catch (e) {
+            console.error(e);
             setTransit();
             if (e.code === 'auth/email-already-in-use') notify('This email has already been used.');
             else if (e.code === 'auth/weak-password') notify('This password is invalid.');
             else if (e.code === 'auth/invalid-email') notify('This email is invalid.');
-            console.log(e);
             handleDuplicateError(e);
         }
     };

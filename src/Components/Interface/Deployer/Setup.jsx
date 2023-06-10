@@ -8,13 +8,10 @@ import { useData } from "../../../Contexts/Data";
 
 const Setup = () => {
 
-    console.log('from SETUP');
-
     const { user } = useAuth();
     const { resetWebsite, website } = useData();
     const { notify, load, confirm } = useUtil();
 
-    const [clicked, setClicked] = useState(false);
     const [inputWebsite, setInputWebsite] = useState('');
     
     const onClick = async () => {

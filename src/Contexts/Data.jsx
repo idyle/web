@@ -34,16 +34,14 @@ const DataContext = ({ children }) => {
     };
 
     const [data, setData] = useState(getDataFromSession);
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const { load } = useUtil();
 
     const onLoad = async () => {
         const cachedData = getDataFromSession();
-        const token = user?.accessToken;
         if (!token) return setData({ ...cachedData });
         // attempt to retrieve from cache
         // get cache when applicable
-
         let missing = [];
         const keys = [ 
             'pages', 'deploys', 'docs', 
@@ -51,30 +49,48 @@ const DataContext = ({ children }) => {
         ];
         for (const key of keys) if (!data?.[key]) missing.push(key);
 
-        if (!missing.length) return setData(cachedData);
+        if (!missing.length) {
+            load(false)
+            return setData({ ...cachedData });
+        };
         // if no missing data
 
         let requests = [ 
             listPages(token), listDeploys(token), 
             listDocs(token), listFiles(token), 
             getWebsite(token), getMetrics(token)
-        ], requestedData = {};
+        ], requestedData = {}, secondary = [];
 
-        load(true);
         const results = await Promise.all(requests);
-        load(false);
         for (let i = 0; i < results.length; i++) {
             const result = results[i];
             const key = keys[i];
+            if (!result) secondary.push(i);
+            requestedData[key] = result;
+        };
+
+        // if our req was complete
+        if (!secondary?.length) {
+            load(false);
+            return setData({ ...cachedData, ...requestedData });
+        };
+
+        const secondaryResults = await Promise.all(secondary?.map(i => requests[i]));
+        for (let i = 0; i < secondaryResults?.length; i++) {
+            const result = secondaryResults[i];
+            const key = keys[secondary[i]];
             if (result) requestedData[key] = result;
         };
-        console.log('TO CACHE', cachedData, 'TO MERGE', requestedData);
+
         setData({ ...cachedData, ...requestedData });
+        load(false);
     };
 
     useEffect(() => {
+        load(true);
         onLoad();
-    }, [user?.accessToken]);
+    }, [token]);
+
     useEffect(() => saveToSession(data), [data]);
 
     const resetObjects = async () => setObjects((await listFiles(user?.accessToken)));

@@ -35,7 +35,6 @@ const Wrapper = ({ children }) => {
     const onDoubleClick = (e) => {
         e.stopPropagation();
         // enabling a particular edit mode
-        console.log('called', children);
         // if typeof is not string, return
         if (typeof children?.props?.children !== 'string') return;
         setEdit(true);

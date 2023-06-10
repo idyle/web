@@ -19,8 +19,7 @@ const Documents = () => {
 
     const onClick = (e) => {
         const newDoc = docs.find(({ id }) => id === e.currentTarget.id);
-        console.log('ONCLICK CALLED', newDoc, e.currentTarget.id);
-        if (!newDoc) return console.log('NO DOC FOUND');
+        if (!newDoc) return;
         const stagedDoc = { ...newDoc, id: e.currentTarget.id };
         setSelectedDoc({ ...stagedDoc });
         setMobileClicked(true);

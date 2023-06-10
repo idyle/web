@@ -70,7 +70,6 @@ export const DomContext = ({ children }) => {
         };
 
         current[key] = value;
-        console.log('rECEIVING FROM PATH WITH SPREAD', current);
         return data;
     };
 
