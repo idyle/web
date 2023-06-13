@@ -7,12 +7,16 @@ import { useNavigate } from 'react-router-dom';
 const Object = ({ object, objects, setObjects }) => {
 
     const navigate = useNavigate();
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const { notify, confirm, load, integrator, setIntegrator } = useUtil();
 
-    const copy = () => {
+    const copy = async () => {
+        load(true);
+        const file = await getFile(token, object?.name);
+        load(false);
+        if (!file) return notify('Could not get the file url.');
         notify('Successfully copied to clipboard');
-        navigator.clipboard.writeText(object.url);
+        navigator.clipboard.writeText(file.url);
     };
 
     const download = async () => {
@@ -33,13 +37,11 @@ const Object = ({ object, objects, setObjects }) => {
     };
 
     const remove = async () => {
-
         load(true);
         const op = await deleteFile(user?.accessToken, object.name);
         load(false);
         if (!op) return notify('Something went wrong...');
         setObjects(objects.filter(( { name }) => name !== object.name));
-        
     };
 
     const integrationMode = (integrator?.active && integrator?.target === 'objects') ? `hover:bg-blue-300/50 select-none` : '';

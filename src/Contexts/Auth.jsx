@@ -20,7 +20,7 @@ const AuthContext = ({ children }) => {
     }, [pathname, auth]);
 
     useEffect(() => onAuthStateChanged(getAuth(), async user => {
-        setToken((user?.getIdToken(true)));
+        setToken((await user?.getIdToken(true)));
         const latest = await user?.getIdTokenResult(true);
         if (user && latest) setUser({ ...user, ...latest?.claims });
         // quick fix, combining base user details + latest info (from refresh)
