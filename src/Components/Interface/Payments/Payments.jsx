@@ -72,7 +72,7 @@ const Payments = () => {
             </Helmet>
 
             <div className="grid gap-1 justify-items-center rounded-lg">
-                <h1 className="text-4xl font-bold md:text-6xl text-center">{user?.displayName || ''}, there's a perfect plan for You.</h1>
+                <h1 className="text-4xl font-bold md:text-6xl text-center">{user?.displayName || 'With idyle'}, there's a perfect plan for You.</h1>
 
 
             </div>

@@ -8,7 +8,7 @@ import { useAuth } from "../../../../Contexts/Auth";
 const Connect = () => {
     const { user } = useAuth();
     const { website, resetWebsite } = useData();
-    const { notify, confirm, load } = useUtil();
+    const { notify, confirm, load, inform } = useUtil();
     const [sub, setSub] = useState('');
     const [domain, setDomain] = useState('');
     const [tld, setTld] = useState('');
@@ -21,7 +21,10 @@ const Connect = () => {
         const operation = await connectDomain(user?.accessToken, host);
         load(false);
         if (!operation) return notify('Something went wrong...');
-        notify(`Success! Please CNAME to ${website?.name}.idyle.app to complete the connection.`, 10000)
+        inform(
+            `Success! Please CNAME to ${website?.name}.idyle.app using the domain ${host}.`,
+            'It may take up to 24 hours to propagate changes. Please ensure that there are no overlapping records on the domain. If you encounter any issues, contact us immediately.'
+        )
         resetWebsite();
     };
 

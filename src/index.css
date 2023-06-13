@@ -12,7 +12,7 @@
   @font-face {
     font-family: "Okta Neue";
     font-weight: bold;
-    src: url("./Oktabold.woff") format("woff");
+    src: url("./Okta-bold.woff") format("woff");
   }
   html {
     font-family: "Okta Neue", sans-serif;

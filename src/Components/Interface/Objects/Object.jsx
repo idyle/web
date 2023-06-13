@@ -1,4 +1,4 @@
-import { AiFillCopy, AiOutlineDownload, AiOutlineDelete, AiOutlineFile } from 'react-icons/ai'
+import { AiFillCopy, AiOutlineDownload, AiOutlineDelete, AiOutlineFile, AiOutlineGlobal, AiFillLock } from 'react-icons/ai'
 import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
 import { deleteFile, downloadFile, getFile, publicFile } from './requests';
@@ -60,6 +60,8 @@ const Object = ({ object, objects, setObjects }) => {
         navigate(integrator?.origin);
     };
 
+    console.log(object);
+
     return (
         <div onClick={sendFile} className={`grid grid-cols-2 md:grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg p-2 ${integrationMode}`}>
             <AiOutlineFile className="block md:hidden" size="50px" />
@@ -72,6 +74,8 @@ const Object = ({ object, objects, setObjects }) => {
             <div className="flex items-center gap-1">
                 <AiOutlineDownload onClick={download} size="30px" />
                 <AiOutlineDelete onClick={remove} size="30px" />
+                { object?.public ? <AiOutlineGlobal size="30px" /> : <AiFillLock size="30px" /> }
+  
             </div>
         </div>
     )
