@@ -98,7 +98,7 @@ const Codebase = () => {
                 <div className="order-2 md:order-1 grid grid-cols-1 md:grid-cols-[40%_60%] gap-1">
 
                     <div className={`${parser ? 'grid' : 'hidden'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 overflow-hidden`}>
-                        <div onClick={() => setParser(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                        <div onClick={() => setParser(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg bg-black text-white select-none hover:scale-[.98]">
                             <MdSwapHoriz size="30px" />
                             <h1 className="text-2xl">Switch to Dom</h1>
                         </div>
@@ -108,7 +108,7 @@ const Codebase = () => {
                     </div>
                     
                     <div className={`${parser ? 'hidden' : 'grid'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
-                        <div onClick={() => setParser(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                        <div onClick={() => setParser(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg bg-black text-white select-none hover:scale-[.98]">
                             <MdSwapHoriz size="30px" />
                             <h1 className="text-2xl">Switch to Parser</h1>
                         </div>

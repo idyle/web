@@ -9,7 +9,7 @@ const Deploy = ({ i, deploy, website, revert }) => {
     const onRevert = () => revert(deploy?.id);
 
     return (
-        <div className={`flex items-center ${selected ? 'bg-black text-white' : 'border border-black'} rounded-xl p-2 justify-between`}>
+        <div className={`flex items-center ${selected ? 'bg-gunmetal text-white' : 'border border-black'} rounded-xl p-2 justify-between`}>
             <div className="grid p-2">
                 <h1 className="text-4xl font-bold">Deploy #{i+1}</h1>
                 <h1 className="text-3xl break-all">Deploy ID: {deploy?.id}</h1>

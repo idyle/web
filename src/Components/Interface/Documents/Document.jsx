@@ -7,7 +7,7 @@ const Document = ({ doc, onClick, currentDoc }) => {
     const navigate = useNavigate();
     const { integrator, setIntegrator } = useUtil();
     const color = currentDoc?.id === doc?.id && 'bg-gray-200';
-    const integrationMode = (integrator?.active && integrator?.target === 'docs') ? `hover:bg-blue-300/50 select-none` : '';
+    const integrationMode = (integrator?.active && integrator?.target === 'docs') ? `hover:bg-blue/50 select-none` : '';
 
     const sendDoc = (e) => {
         if (!integrator?.active || integrator?.target !== 'docs' || !integrator?.origin) return onClick(e);
@@ -16,7 +16,7 @@ const Document = ({ doc, onClick, currentDoc }) => {
     };
 
     return (
-        <div id={doc?.id} onClick={sendDoc} className={`flex items-center border-b-2 border-black justify-between p-1 select-none rounded-lg hover:bg-gray-200 ${color} ${integrationMode}`}>
+        <div id={doc?.id} onClick={sendDoc} className={`flex items-center border-b-2 border-gunmetal justify-between p-1 select-none rounded-lg text-gunmetal hover:bg-gunmetal hover:text-white ${color} ${integrationMode}`}>
             <h1 className="text-3xl justify-self-start text-inherit">{doc.id}</h1>
             <AiOutlineRight className="text-inherit" size="30px" />
         </div>

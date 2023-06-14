@@ -30,7 +30,7 @@ const Reset = () => {
                 <h1 className="text-3xl">Reset your Password</h1>
             </div>
             <div className="grid w-full gap-1">
-                <input id="email" onChange={onEmailChange} className="rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" /> :
+                <input id="email" onChange={onEmailChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" /> :
                 <div onClick={onEmailClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border rounded-lg bg-black hover:scale-[.98]">
                     <h1 className='text-2xl text-white font-semibold'>Continue</h1>
                 </div>

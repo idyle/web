@@ -47,13 +47,13 @@ const Elements = () => {
         if (integrator?.target !== 'objects' || integrator?.origin !== `${origin}?mode=canvas`) return;
         const file = integrator?.data;
         const pageRef = integrator?.ref;
-        if (file?.type.startsWith('image'))  setPageData({ ...setObjectFromPath(pageRef.data, pageRef.path, { ...elements['img'], src: file?.url }) });
-        else if (file?.type.startsWith('video'))  setPageData({ ...setObjectFromPath(pageRef.data, pageRef.path, { ...elements['video'], src: file?.url }) });
+        if (file?.type.startsWith('image'))  setPageData({ ...setObjectFromPath(pageRef?.data, pageRef?.path, { ...elements['img'], src: file?.url }) });
+        else if (file?.type.startsWith('video'))  setPageData({ ...setObjectFromPath(pageRef?.data, pageRef?.path, { ...elements['video'], src: file?.url }) });
         setIntegrator({ active: false });
     }, [integrator?.active]);
 
-    const deleteElement = () => setPageData({ ...deleteObjectFromPath(page.data, path) });
-    const appendElement = (element) => setPageData({ ...setObjectFromPath(page.data, path, { ...elements[element] }) });
+    const deleteElement = () => setPageData({ ...deleteObjectFromPath(page?.data, path) });
+    const appendElement = (element) => setPageData({ ...setObjectFromPath(page?.data, path, { ...elements[element] }) });
 
     const clearFunc = (current) => {
         // brand new way of updating with arbitrary function
@@ -107,8 +107,8 @@ const Elements = () => {
     }, [integrator?.active]);
 
     return (
-        <div className="grid  md:grid-rows-[70%_30%] gap-1 p-1">
-            <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-1 shadow-xl border border-black rounded-lg gap-1">
+        <div className="grid md:grid-rows-[75%_25%] gap-1 p-1">
+            <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-1 shadow-xl bg-gunmetal text-white rounded-lg gap-1">
                 <h1 className="text-3xl font-bold text-center hidden md:block">Elements</h1>
                 <div className="grid grid-flow-col md:grid-flow-row gap-1 p-1 overflow-auto">
 
@@ -130,18 +130,18 @@ const Elements = () => {
                 </div> 
             </div>
 
-            <div className="grid border border-black p-1 gap-1 rounded-lg overflow-auto">
-                <h1 className="hidden md:block text-2xl text-center">Selected: {selData?.id || 'None'}</h1>
+            <div className="grid bg-gunmetal text-white p-1 gap-1 rounded-lg overflow-auto">
+                <h1 className="hidden md:block text-2xl text-center break-all">Plot: {selData?.id || 'Main'}</h1>
                 <div className="grid grid-flow-col md:grid-flow-row p-1 gap-1">
-                    <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
+                    <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 bg-white rounded-lg text-gunmetal hover:scale-[.98] select-none">
                         <AiOutlineReload size="25px" />
                         <h1 className="hidden md:block text-xl text-center">Reset Styles</h1>
                     </div>
-                    <div onClick={deleteElement} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
+                    <div onClick={deleteElement} className="flex place-content-center items-center gap-1 p-1 bg-white rounded-lg text-gunmetal hover:scale-[.98] select-none">
                         <AiFillDelete size="25px" />
                         <h1 className="hidden md:block text-xl text-center">Delete Element</h1>
                     </div>
-                    <div onClick={editProps} className="flex place-content-center items-center gap-1 p-1 bg-black rounded-lg text-white hover:bg-gray-500 select-none">
+                    <div onClick={editProps} className="flex place-content-center items-center gap-1 p-1 bg-white rounded-lg text-gunmetal hover:scale-[.98] select-none">
                         <AiFillEdit size="25px" />
                         <h1 className="hidden md:block text-xl text-center">Edit Property</h1>
                     </div>

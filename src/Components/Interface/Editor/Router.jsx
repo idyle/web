@@ -1,4 +1,4 @@
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Canvas from './Canvas/Canvas';
 import Codebase from './Codebase/Codebase';
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ const Router = () => {
     const [query, setQuery] = useState('');
     const { pages, pageId, setPageId, setPage } = useEditor();
     const navigate = useNavigate();
+    const { pathname: path } = useLocation();
 
     useEffect(() => {
         if (!pages.length) return;
@@ -20,13 +21,13 @@ const Router = () => {
         if (paramsRoute === params?.['*']) return; 
         // if routes are not same
         const paramsPage = pages?.find(( { route }) => route === params?.['*']);
-        if (!paramsPage?.id) return navigate('/editor/pages');
+        if (!paramsPage?.id) if (path !== '/editor/pages' || path !== '/editor') return navigate('/editor/pages');
         setPageId(paramsPage?.id);
         setPage({ ...paramsPage });
     }, [pages]);
 
     useEffect(() => {
-        if (!params['*']) return;
+        if (!params['*']) if (path !== '/editor/pages' || path !== '/editor') return navigate('/editor/pages');
         let query = queries?.get('mode');
         if (query) return setQuery(query);
         setQueries({ mode: 'canvas' });

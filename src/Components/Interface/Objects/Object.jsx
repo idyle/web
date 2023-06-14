@@ -44,7 +44,7 @@ const Object = ({ object, objects, setObjects }) => {
         setObjects(objects.filter(( { name }) => name !== object.name));
     };
 
-    const integrationMode = (integrator?.active && integrator?.target === 'objects') ? `hover:bg-blue-300/50 select-none` : '';
+    const integrationMode = (integrator?.active && integrator?.target === 'objects') ? `hover:bg-blue/50 select-none` : '';
 
     const sendFile = async () => {
         // send data back
@@ -63,7 +63,7 @@ const Object = ({ object, objects, setObjects }) => {
     console.log(object);
 
     return (
-        <div onClick={sendFile} className={`grid grid-cols-2 md:grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg p-2 ${integrationMode}`}>
+        <div onClick={sendFile} className={`grid grid-cols-2 md:grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg p-2 text-gunmetal ${integrationMode}`}>
             <AiOutlineFile className="block md:hidden" size="50px" />
             <h1 className="text-2xl text-center break-all">{object.name}</h1>
             <h1 className="text-2xl">{object.type}</h1>

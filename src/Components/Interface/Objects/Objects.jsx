@@ -28,7 +28,7 @@ const Objects = () => {
     };
 
     return (
-        <div className="grid md:grid-rows-[auto_minmax(0,_1fr)_auto] m-5 gap-2">
+        <div className="grid auto-rows-min md:auto-rows-auto md:grid-rows-[auto_minmax(0,_1fr)_auto] m-5 gap-2">
 
             <Helmet>
                 <title>idyle - Objects</title>
@@ -37,22 +37,22 @@ const Objects = () => {
                 <link rel="canonical" href="/objects" />
             </Helmet>
 
-            <div className="hidden md:grid md:grid-cols-4 items-center justify-items-center border-2 border-black rounded-lg p-3">
+            <div className="hidden md:grid md:grid-cols-4 items-center justify-items-center border-2 border-gunmetal text-gunmetal rounded-lg p-3">
                 <div className="flex items-center select-none gap-2">
                     <h1 className="text-2xl font-bold">Aa</h1>
-                    <h1 className="text-3xl">File Name</h1>
+                    <h1 className="text-3xl font-bold">File Name</h1>
                 </div>
                 <div className="flex items-center select-none gap-2">
                     <AiOutlineFile size="25px" />
-                    <h1 className="text-3xl">File Type</h1>
+                    <h1 className="text-3xl font-bold">File Type</h1>
                 </div>
                 <div className="flex items-center select-none gap-2">
                     <AiOutlineLink size="25px" />
-                    <h1 className="text-3xl">File Link</h1>
+                    <h1 className="text-3xl font-bold">File Link</h1>
                 </div>
                 <div className="flex items-center select-none gap-2">
                     <AiOutlinePartition size="25px" />
-                    <h1 className="text-3xl">File Options</h1>
+                    <h1 className="text-3xl font-bold text-center">File Options</h1>
                 </div>
             </div>
 
@@ -60,8 +60,8 @@ const Objects = () => {
                 { objects.map((object, i) => (<Object key={`o${i}`} object={object} objects={objects} setObjects={setObjects} />)) }
             </div>
 
-            <div className="order-1 md:order-3 grid grid-flow-col items-center justify-items-center bg-black text-white p-3 gap-3 rounded-lg border-l-2 border-white">
-                <h1 className="text-4xl justify-self-end">Objects</h1>
+            <div className="order-1 md:order-3 grid grid-flow-col items-center justify-items-center bg-gunmetal text-white p-3 gap-3 rounded-lg border-l-2 border-white">
+                <h1 className="text-4xl font-bold justify-self-end">Objects</h1>
                 <label className="grid grid-flow-col justify-self-start" htmlFor="file">
                     <AiOutlineUpload size="40px" />
                 </label>

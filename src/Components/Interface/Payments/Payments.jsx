@@ -1,20 +1,19 @@
 import { Helmet } from "react-helmet";
 import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
-import { MdGroups, MdDomain, MdBusinessCenter  } from 'react-icons/md';
 import Plan from './Plan';
 import { useEffect } from "react";
 import { useSearchParams } from 'react-router-dom';
 import { cancelPlan, confirmCheckout, getCheckout } from "./requests";
 import { getAuth } from "firebase/auth";
 import plans from './plans';
+import { useData } from "../../../Contexts/Data";
 
 const Payments = () => {
 
-   
-
     const { user } = useAuth();
-    const { load, notify } = useUtil();
+    const { load, notify, confirm } = useUtil();
+    const { resetData } = useData();
 
     const [searchParams] = useSearchParams();
 
@@ -23,7 +22,6 @@ const Payments = () => {
         if (!sessionId || !user) return;
         (async () => {
             load(true);
-            
             const { token } = await getAuth().currentUser.getIdTokenResult(true);
             const confirm = await confirmCheckout(token, sessionId);
             load(false);
@@ -51,12 +49,14 @@ const Payments = () => {
 
     const onCancel = async () => {
         if (!user?.planId) return;
+        if (!(await confirm('Are you sure you want to cancel your subscription? This action is permanent.'))) return;
         const { token } = await getAuth().currentUser.getIdTokenResult(true);
         if (!token) return;
         load(true);
         const operation = await cancelPlan(token, user?.planId);
         load(false);
         if (!operation) return;
+        resetData();
         window.location.reload();
     };
 
@@ -72,7 +72,7 @@ const Payments = () => {
             </Helmet>
 
             <div className="grid gap-1 justify-items-center rounded-lg">
-                <h1 className="text-4xl font-bold md:text-6xl text-center">{user?.displayName || 'With idyle'}, there's a perfect plan for You.</h1>
+                <h1 className="text-5xl text-gunmetal font-bold md:text-6xl text-center">{user?.displayName || 'With idyle'}, there's a perfect plan for You.</h1>
 
 
             </div>

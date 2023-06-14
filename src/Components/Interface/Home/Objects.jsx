@@ -15,12 +15,12 @@ const Objects = () => {
 
     return (
         <div className="grid justify-items-center items-center gap-1 p-3">
-            <AiOutlineFile size="40px" />
-            <h1 className="text-3xl text-center font-bold">{object?.name}</h1>
+            { object && <AiOutlineFile size="40px" /> }
+            { object ? <h1 className="text-3xl text-center font-bold">{object?.name}</h1> : <h1 className="text-4xl text-center">No object available.</h1> }
             <h1 className="text-3xl">{object?.type}</h1>
-            <div onClick={copy} className="flex rounded-lg border border-white p-1 select-none hover:scale-[.98]">
+            { object && <div onClick={copy} className="flex rounded-lg border border-black p-2 select-none hover:scale-[.98]">
                 <h1 className="text-3xl">Copy Link</h1>
-            </div>
+            </div> }
         </div>
     )
 };

@@ -52,11 +52,11 @@ const Profile = () => {
     return (
         <div className="grid auto-rows-min gap-1 p-2 m-1 shadow-xl rounded-lg overflow-auto">
             <div className="flex items-center p-2">
-                <h1 className="text-6xl">Your Account</h1>
+                <h1 className="text-7xl font-bold">Your Account</h1>
             </div>
             <div className="grid items-center justify-items-center border border-black p-2 rounded-lg">
                 {user?.photoURL ? <img className="w-[80px] h-[80px] rounded-full" src={user?.photoURL} /> : <BsPersonCircle size="80px" />}
-                {edit ? <input autoFocus className="text-center text-3xl w-1/2" onChange={onNameChange} value={name}/> : <h1 className="text-3xl">{name}</h1>}
+                {edit ? <input autoFocus className="bg-white text-center text-3xl w-1/2" onChange={onNameChange} value={name}/> : <h1 className="text-3xl">{name}</h1>}
                 <h1 className="text-xl md:text-3xl font-thin">{user?.email}</h1>
                 <div className="justify-self-end" onClick={() => setEdit(!edit)}>
                     {edit ? <MdCheck onClick={saveInfo} size="25px" /> : <MdEdit size="25px" />}

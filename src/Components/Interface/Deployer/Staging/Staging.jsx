@@ -74,11 +74,11 @@ const Staging = ({ deploy }) => {
     // (deploy) 2: initiate deploy
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] bg-black text-white rounded-lg p-3 gap-2 md:overflow-auto">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] bg-gunmetal text-white rounded-lg p-3 gap-2 md:overflow-auto">
             <div className="grid">
                 <div className="flex items-center gap-2 p-2">
                     <RiGasStationFill size="40px" />
-                    <h1 className="text-5xl md:text-6xl">Staging Area</h1>
+                    <h1 className="text-5xl md:text-6xl font-bold">Staging Area</h1>
                 </div>
                 <div onClick={sendFileRequest} className="flex items-center gap-2 place-content-center border border-white rounded-xl select-none hover:scale-[.98]">
                     <h1 className="text-4xl text-center">Select Files from Objects</h1>

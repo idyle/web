@@ -53,9 +53,9 @@ export const DomContext = ({ children }) => {
 
     const updateChildrenFromPath = (data, path, value) => {
         let current = data;
-        for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') current = current.children[path[depth]];
-            else current = current[path[depth]];
+        for (let depth = 0; depth < path?.length; depth++) {
+            if (current?.component === 'div') current = current?.children?.[path[depth]];
+            else current = current?.[path?.[depth]];
         };
         current.children = value;
         return data;
@@ -64,9 +64,9 @@ export const DomContext = ({ children }) => {
     const updateObjectFromPathCustom = (data, path, key, value) => {
         let current = data;
     
-        for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') current = current.children[path[depth]];
-            else current = current[path[depth]];
+        for (let depth = 0; depth < path?.length; depth++) {
+            if (current?.component === 'div') current = current?.children?.[path?.[depth]];
+            else current = current?.[path[depth]];
         };
 
         current[key] = value;
@@ -76,9 +76,9 @@ export const DomContext = ({ children }) => {
     const updateObjectFromPath = (data, path, value, merge = true) => {
         let current = data;
     
-        for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') current = current.children[path[depth]];
-            else current = current[path[depth]];
+        for (let depth = 0; depth < path?.length; depth++) {
+            if (current?.component === 'div') current = current?.children[path?.[depth]];
+            else current = current?.[path?.[depth]];
         };
 
         if (!merge) current.className = value;
@@ -90,17 +90,17 @@ export const DomContext = ({ children }) => {
         let current = data;
         let nearestParent = current;
     
-        for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') {
+        for (let depth = 0; depth < path?.length; depth++) {
+            if (current ?.component === 'div') {
                 nearestParent = current;
-                current = current.children[path[depth]];
+                current = current?.children?.[path[depth]];
             } 
         };
         if (current?.component !== 'div') current = nearestParent;
         // if our selected item is not a div
 
-        if (raise) current.children = [ value, ...current.children ];
-        else current.children = [ ...current.children, value ];
+        if (raise) current.children = [ value, ...current?.children ];
+        else current.children = [ ...current?.children, value ];
 
         return data;
     };
@@ -108,22 +108,22 @@ export const DomContext = ({ children }) => {
     const deleteObjectFromPath = (data, path) => {
 
         let value = data;
-        for (let d = 0; d < path.length; d++) if (value.component === 'div') value = value.children[path[d]];
+        for (let d = 0; d < path?.length; d++) if (value?.component === 'div') value = value?.children?.[path[d]];
         let current = data;
         let nearestParent = current;
     
-        for (let depth = 0; depth < path.length; depth++) {
-            if (depth === path.length - 1) break;
+        for (let depth = 0; depth < path?.length; depth++) {
+            if (depth === path?.length - 1) break;
             // we have reached final depth (target component)
-            if (current.component === 'div') {
+            if (current?.component === 'div') {
                 nearestParent = current;
-                current = current.children[path[depth]];
+                current = current?.children?.[path[depth]];
             } 
         };
-        if (current.component !== 'div') current = nearestParent;
+        if (current?.component !== 'div') current = nearestParent;
         // if our selected item is not a div
 
-        current.children = current.children.filter(child => child.id !== value.id);
+        current.children = current.children.filter(child => child?.id !== value?.id);
         return data;
     };
 
@@ -152,7 +152,7 @@ const Canvas = () => {
             <div className={`grid ${toolbar ? 'grid-rows-[auto_minmax(0,_1fr)]' : 'grid-rows-1'} md:grid-rows-1 md:grid-cols-[auto_minmax(0,_1fr)] overflow-auto`}>
                 
                 <div className={`${toolbar ? 'grid' : 'hidden'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
-                    <div onClick={() => setToolbar(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                    <div onClick={() => setToolbar(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg bg-black text-white select-none hover:scale-[.98]">
                         <MdSwapHoriz size="30px" />
                         <h1 className="text-2xl">Switch to Formatter</h1>
                     </div>
@@ -161,7 +161,7 @@ const Canvas = () => {
 
                 <div className={`grid ${!toolbar ? 'grid-rows-[auto_minmax(0,_1fr)]' : 'grid-rows-1'} md:grid-rows-[auto_minmax(0,_1fr)]`}>
                     <div className={`${toolbar ? 'hidden' : 'grid'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
-                        <div onClick={() => setToolbar(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg border border-black hover:bg-gray-300">
+                        <div onClick={() => setToolbar(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg bg-black text-white select-none hover:scale-[.98]">
                             <MdSwapHoriz size="30px" />
                             <h1 className="text-2xl">Switch to Toolbar</h1>
                         </div>

@@ -7,6 +7,13 @@ module.exports = {
     'lg:text-4xl',
   ],
   theme: {
+    colors: {
+      'black': '#050517',
+      'gunmetal': '#022B3A',
+      'blue': '#47BFD7',
+      'white': '#EBEBEB',
+      'fullwhite': '#FFFFFF'
+    },
     extend: {
       keyframes: {
         spinnerCircle: {

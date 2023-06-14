@@ -65,16 +65,16 @@ const Register = () => {
                 <h1 onClick={() => navigate('/login/login')} className="text-lg underline select-none">Have an Account? Login here</h1>
             </div>
             <div className="grid w-full gap-1">
-                <input id="name" onChange={onChange} className="rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Full Name" />
-                <input id="email" onChange={onChange} className="rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" />
-                <input id="password" onChange={onChange} className="rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="Password" />
-                <input id="confirm" onChange={onChange} className="rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="Confirm Password" />
+                <input id="name" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Full Name" />
+                <input id="email" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" />
+                <input id="password" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="Password" />
+                <input id="confirm" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="Confirm Password" />
                 <h1 className="text-lg select-none">Password must be at least 5 characters</h1>
                 <div onClick={onClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border rounded-lg bg-black hover:scale-[.98]">
-                    <h1 className='text-2xl text-white font-semibold'>Continue</h1>
+                    <h1 className='text-2xl text-white'>Continue</h1>
                 </div>
             </div>
-            <h1 className="text-xl"> - OR -</h1>
+            <h1 className="text-xl">or Register with a Provider</h1>
             <Providers layout="min" />
         </>
     )

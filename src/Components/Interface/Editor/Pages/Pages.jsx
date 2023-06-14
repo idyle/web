@@ -36,13 +36,13 @@ const Pages = () => {
     // must be staged
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] auto-rows-min p-2">
-            <div className="grid w-full justify-items-center gap-3 p-2">
-                <h1 className="text-7xl text-center font-bold">Your Pages</h1>
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] auto-rows-min p-2 gap-1">
+            <div className="flex w-full place-content-center items-center p-2 gap-1">
+                <h1 className="text-7xl text-gunmetal text-center font-bold">Your Pages</h1>
 
-                <div onClick={addPage} className="flex w-full items-center place-content-center border-black border rounded-lg select-none p-3 gap-x-1 hover:scale-[.98]">
-                    <MdAddCircle size="30px" />
-                    <h1 className="text-4xl text-center">Create a New Page</h1>
+                <div onClick={addPage} className="flex items-center text-gunmetal place-content-center rounded-lg select-none hover:scale-[.95]">
+                    <MdAddCircle size="50px" />
+
                 </div>
             </div>
 

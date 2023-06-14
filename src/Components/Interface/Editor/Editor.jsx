@@ -103,7 +103,7 @@ const Editor = () => {
                 <meta name="keywords" content="Editor" />
                 <link rel="canonical" href="/editor" />
             </Helmet>
-            <Subnav>
+            <Subnav mode="white">
                 <Subnavbutton icon={<FaCode />} text="Codebase" route={`/editor/${pageRoute}?mode=codebase`} />
                 <Subnavbutton icon={<AiOutlineDrag />} text="Canvas" route={`/editor/${pageRoute}?mode=canvas`} />
                 <Subnavbutton icon={<MdPages />} text="Pages" route="/editor/pages" />

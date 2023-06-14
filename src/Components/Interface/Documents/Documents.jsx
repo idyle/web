@@ -66,8 +66,8 @@ const Documents = () => {
 
                 {/* md:grid should exist regardless  */}
                  <div className={`${!mobileClicked ? 'grid' : 'hidden'} md:grid px-3 md:overflow-auto grid-rows-[auto_minmax(0,_1fr)]`}>
-                    <div className="flex items-center justify-between bg-black rounded-lg text-white p-2 select-none">
-                        <h1 className="text-3xl justify-self-start text-inherit">Documents</h1>
+                    <div className="flex items-center justify-between bg-gunmetal text-white rounded-lg p-2 select-none">
+                        <h1 className="text-3xl justify-self-start text-inherit font-bold">Documents</h1>
                         <AiOutlinePlus onClick={add} className="text-inherit" size="30px" />
                     </div>
 
@@ -79,21 +79,21 @@ const Documents = () => {
                 </div> 
 
                 {/* selected doc dictates init */}
-                { selectedDoc ? <div className={`${mobileClicked ? 'grid' : 'hidden'} md:grid overflow-hidden md:gap-2 grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-[minmax(0,_1fr)_auto]`}>
+                { selectedDoc ? <div className={`${mobileClicked ? 'grid' : 'hidden'} md:grid overflow-hidden md:gap-2 grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-[minmax(0,_1fr)_auto] bg-transparent`}>
                     <Viewer doc={selectedDoc} docs={docs} setDocs={setDocs} />
-                    <div className="order-1 md:order-2 flex items-center border border-black justify-between rounded-lg p-2 select-none">
-                        <h1 className="text-3xl text-inherit">Document</h1>
+                    <div className="order-1 md:order-2 flex items-center justify-between rounded-lg p-2 select-none">
+                        <h1 className="text-3xl text-inherit">Document: {selectedDoc?.id || 'Doc'}</h1>
                         <div className="flex items-center gap-1">
                             <AiFillDelete onClick={remove} className="text-inherit" size="30px" />
                             <AiOutlineCheck onClick={check} className="text-inherit" size="30px" />
-                            <div onClick={() => setMobileClicked(false)} className="flex md:hidden items-center rounded-lg p-1 bg-black text-white">
+                            <div onClick={() => setMobileClicked(false)} className="flex md:hidden items-center rounded-lg p-2 bg-black text-white select-none hover:scale-[.98]">
                                 <h1 className="text-xl text-center">View Docs</h1>
                             </div>
                         </div>
                     </div>
                 </div> :
                 <div className="hidden md:grid items-center justify-items-center border border-black rounded-lg">
-                    <h1 className="text-5xl">Select a doc</h1>
+                    <h1 className="text-5xl">Select a document</h1>
                 </div> }
                 
             </div>

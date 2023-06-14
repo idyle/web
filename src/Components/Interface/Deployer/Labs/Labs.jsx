@@ -8,7 +8,7 @@ const Labs = () => {
         <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-3 gap-2">
             <div className="flex items-center gap-2 p-2">
                 <IoMdFlask size="40px" />
-                <h1 className="text-5xl md:text-6xl">Deploy Labs</h1>
+                <h1 className="text-5xl md:text-6xl font-bold">Deploy Labs</h1>
             </div>
             <div className="grid">
                 <Convert />

@@ -5,7 +5,6 @@ export default [
     {
         id: planIds[0],
         name: 'Starter',
-        // icon: <MdGroups />,
         gb: 30,
         price: 4.99,
         inclusions: [
@@ -20,7 +19,6 @@ export default [
     {
         id: planIds[1],
         name: 'Standard',
-        // icon: <MdBusinessCenter />,
         gb: 50,
         price: 9.99,
         inclusions: [
@@ -35,7 +33,6 @@ export default [
     {
         id: planIds[2],
         name: 'Business',
-        // icon: <MdDomain />,
         gb: 100,
         price: 14.99,
         inclusions: [

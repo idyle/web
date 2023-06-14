@@ -23,10 +23,10 @@ const Control = ({ deploy }) => {
     const currentDeploy = deploys.find(d => d?.id === website?.deploy);
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] border border-black rounded-lg p-3 overflow-auto">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] border border-black text-gunmetal rounded-lg p-3 overflow-auto">
             <div className="flex items-center gap-2 p-2">
                 <GrDeploy size="40px" />
-                <h1 className="text-5xl md:text-6xl">Your Deploys</h1>
+                <h1 className="text-5xl md:text-6xl font-bold">Your Deploys</h1>
             </div>
             <div className="grid gap-2 auto-rows-min overflow-auto">
                 {

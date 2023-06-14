@@ -23,7 +23,7 @@ const Page = ({ page, editPage, addMode, setAddMode }) => {
 
     const color = `${(selectedPage?.id === page.id && !addMode) ? 'bg-black text-white' : 'border border-black text-black'}`;
     const border = `${(selectedPage?.id === page.id && !addMode) ? 'border border-white text-white' : 'border border-black text-black'}`;
-    const integrationMode = (integrator?.active && integrator?.target === 'editor/pages') ? `hover:bg-blue-300/50 select-none` : '';
+    const integrationMode = (integrator?.active && integrator?.target === 'editor/pages') ? `hover:bg-blue/50 select-none` : '';
 
     const [name, setName] = useState(page.name);
     const [route, setRoute] = useState(page.route);
@@ -59,7 +59,7 @@ const Page = ({ page, editPage, addMode, setAddMode }) => {
     const cancel = () => setAddMode(false);
 
     return (
-        <div onClick={sendPage} className={`grid w-full items-center justify-items-center ${color} p-6 gap-3 rounded-xl ${integrationMode}`}>
+        <div onClick={sendPage} className={`grid w-full items-center justify-items-center ${color} p-6 gap-3 rounded-xl bg-gunmetal text-white ${integrationMode}`}>
             <div className="grid items-center justify-items-center gap-2">
                 { !addMode ? <div className="flex items-center place-content-center gap-2">
                     { editName?
@@ -84,10 +84,10 @@ const Page = ({ page, editPage, addMode, setAddMode }) => {
             </div>
 
             { !addMode && <div className="flex items-center gap-1">
-                <div onClick={canvas} className={`flex items-center place-content-center p-1 ${border} rounded-lg select-none hover:scale-[.98]`}>
+                <div onClick={canvas} className={`flex items-center place-content-center p-2 ${border} rounded-lg select-none border-white text-white hover:scale-[.98]`}>
                     <h1 className="text-xl">Canvas</h1>
                 </div>
-                <div onClick={code} className={`flex items-center place-content-center p-1 ${border} rounded-lg select-none hover:scale-[.98]`}>
+                <div onClick={code} className={`flex items-center place-content-center p-2 ${border} rounded-lg select-none border-white text-white hover:scale-[.98]`}>
                     <h1 className="text-xl">Codebase</h1>
                 </div>
             </div> }

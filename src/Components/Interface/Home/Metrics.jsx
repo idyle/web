@@ -22,13 +22,13 @@ const Metrics = () => {
 
     return (
         <div className="grid items-center justify-items-center p-2 gap-2">
-        <div className="h-3 w-full bg-gray-700 rounded-lg"><div className={`h-3 bg-white ${view} rounded-lg`}></div></div>
-        <div className="flex items-center gap-1">
-            <MdOutlineDataUsage size="50px" />
-            <h1 className="text-6xl text-center">{metrics?.used} of {metrics?.limit} GB</h1>
+            <div className="h-3 w-full bg-black rounded-lg"><div className={`h-3 bg-white ${view} rounded-lg`}></div></div>
+            <div className="flex items-center gap-1">
+                <MdOutlineDataUsage size="50px" />
+                <h1 className="text-6xl text-center">{metrics?.used || 0} of {metrics?.limit || 0} GB</h1>
+            </div>
+            <h1 className="text-3xl italic">{metrics?.free || 0} GB Remaining</h1>
         </div>
-        <h1 className="text-3xl italic">{metrics?.free} GB Remaining</h1>
-    </div>
     )
 };
 

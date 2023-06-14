@@ -41,14 +41,14 @@ const Email = () => {
                 <h1 onClick={() => navigate('/login/register')} className="text-lg underline select-none">No Account? Register here</h1>
             </div>
             <div className="grid w-full gap-1">
-                <input id="email" onChange={onChange} className="rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" />
-                <input id="password" onChange={onChange} className="rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="Password" />
+                <input id="email" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" />
+                <input id="password" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="Password" />
                 <h1 onClick={() => navigate('/login/reset')} className="text-lg underline select-none">Forgot Password?</h1>
                 <div onClick={onClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border rounded-lg bg-black hover:scale-[.98]">
-                    <h1 className='text-2xl text-white font-semibold'>Continue</h1>
+                    <h1 className='text-2xl text-white'>Continue</h1>
                 </div>
             </div>
-            <h1 className="text-xl"> - OR -</h1>
+            <h1 className="text-xl">or Continue with a Provider</h1>
             <Providers />
         </>
     )

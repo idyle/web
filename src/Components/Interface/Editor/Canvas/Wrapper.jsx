@@ -56,14 +56,14 @@ const Wrapper = ({ children }) => {
     }, [selected]);
 
     return (
-        <div className={`p-0.5 border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue-400' : 'border-transparent'} rounded-lg`} 
+        <div className={`p-0.5 border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
         onClick={onClick} 
         onMouseOver={onMouseOver} 
         onMouseOut={onMouseOut}
         onDoubleClick={onDoubleClick}
         onBlur={onBlur}>
             { edit ? 
-            <input type="text" onChange={onChange} value={value} className={`${children.props.className} w-full outline-none`} />
+            <input type="text" onChange={onChange} value={value} className={`${children.props.className} w-full outline-none text-black bg-white`} />
             : children 
             }
         </div>
