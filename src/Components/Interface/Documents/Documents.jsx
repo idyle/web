@@ -93,7 +93,7 @@ const Documents = () => {
                     </div>
                 </div> :
                 <div className="hidden md:grid items-center justify-items-center border border-black rounded-lg">
-                    <h1 className="text-5xl">Select a document</h1>
+                    <h1 className="text-5xl text-center">Select a document</h1>
                 </div> }
                 
             </div>

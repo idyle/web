@@ -7,19 +7,8 @@ import Editor from './Editor';
 import Deployer from './Deployer';
 import Welcome from "./Welcome";
 import { Helmet } from "react-helmet";
-import { useEffect } from "react";
-import { useUtil } from "../../../Contexts/Util";
-import { useAuth } from "../../../Contexts/Auth";
 
 const Home = () => {
-
-    const { notify } = useUtil();
-    const { user } = useAuth();
-
-    useEffect(() => {
-        if (!user) return;
-        notify('Welcome to idyle!');
-    }, [user]);
 
     return (
         <div className="grid md:grid-rows-9 md:grid-cols-9 gap-2">

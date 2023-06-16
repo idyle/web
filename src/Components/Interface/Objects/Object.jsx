@@ -55,7 +55,7 @@ const Object = ({ object, objects, setObjects }) => {
         // const updatedFile = await getFile(user?.accessToken, object?.name);
         load(false);
         // if (!updatedFile) return;
-        const url = `https://storage.googleapis.com/idyle/${object?.path}`;
+        const url = `https://cdn.idyle.app/${object?.path}`;
         if (operation) setIntegrator({ ...integrator, data: { ...object, url } });
         navigate(integrator?.origin);
     };
@@ -67,7 +67,7 @@ const Object = ({ object, objects, setObjects }) => {
             <AiOutlineFile className="block md:hidden" size="50px" />
             <h1 className="text-2xl text-center break-all">{object.name}</h1>
             <h1 className="text-2xl">{object.type}</h1>
-            <div onClick={copy} className="flex items-center border border-black select-none p-1 gap-1 rounded-lg hover:bg-black hover:text-white">
+            <div onClick={copy} className="flex items-center border border-gunmetal select-none p-1 gap-1 rounded-lg hover:bg-gunmetal hover:text-white">
                 <AiFillCopy size="15px" />
                 <h1 className="text-xl">Copy Link</h1>
             </div>

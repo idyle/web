@@ -6,6 +6,7 @@ import { listDocs } from '../Components/Interface/Documents/requests';
 import { listFiles } from "../Components/Interface/Objects/requests";
 import { getMetrics } from "../Components/Interface/Payments/requests";
 import { useUtil } from "./Util";
+import { getAuth } from "firebase/auth";
 
 const DataValues = createContext();
 export const useData = () => useContext(DataValues);
@@ -34,12 +35,13 @@ const DataContext = ({ children }) => {
     };
 
     const [data, setData] = useState(getDataFromSession);
-    const { user, token } = useAuth();
+    const { user } = useAuth();
     const { load } = useUtil();
 
     const onLoad = async () => {
         const cachedData = getDataFromSession();
-        if (!token) return setData({ ...cachedData });
+        const token = await getAuth()?.currentUser?.getIdToken(true);
+        if (!token) return setData({ ...data, ...cachedData });
         // attempt to retrieve from cache
         // get cache when applicable
         let missing = [];
@@ -51,7 +53,7 @@ const DataContext = ({ children }) => {
 
         if (!missing.length) {
             load(false)
-            return setData({ ...cachedData });
+            return setData({ ...data, ...cachedData });
         };
         // if no missing data
 
@@ -61,6 +63,7 @@ const DataContext = ({ children }) => {
             getWebsite(token), getMetrics(token)
         ], requestedData = {}, secondary = [];
 
+
         const results = await Promise.all(requests);
         for (let i = 0; i < results.length; i++) {
             const result = results[i];
@@ -69,10 +72,11 @@ const DataContext = ({ children }) => {
             requestedData[key] = result;
         };
 
+
         // if our req was complete
         if (!secondary?.length) {
             load(false);
-            return setData({ ...cachedData, ...requestedData });
+            return setData({ ...data, ...cachedData, ...requestedData });
         };
 
         const secondaryResults = await Promise.all(secondary?.map(i => requests[i]));
@@ -82,14 +86,14 @@ const DataContext = ({ children }) => {
             if (result) requestedData[key] = result;
         };
 
-        setData({ ...cachedData, ...requestedData });
+        setData({ ...data, ...cachedData, ...requestedData });
         load(false);
     };
 
     useEffect(() => {
         load(true);
         onLoad();
-    }, [token]);
+    }, [getAuth().currentUser]);
 
     useEffect(() => saveToSession(data), [data]);
 
@@ -110,6 +114,12 @@ const DataContext = ({ children }) => {
         sessionStorage.setItem('idyle-data', '');
     };
 
+    const renewData = async () => {
+        resetData();
+        load(true);
+        await onLoad();
+    };
+
     const values = {
         pages: data?.pages || [], setPages,
         deploys: data?.deploys || [], setDeploys, resetDeploys,
@@ -118,7 +128,7 @@ const DataContext = ({ children }) => {
         website: data?.website || '', setWebsite, resetWebsite,
         metrics: data?.metrics || '', setMetrics,
         pageId: data?.pageId || '', setPageId,
-        resetData
+        resetData, renewData
     };
 
     return (

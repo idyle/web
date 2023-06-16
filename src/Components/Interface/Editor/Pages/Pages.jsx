@@ -36,7 +36,7 @@ const Pages = () => {
     // must be staged
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] auto-rows-min p-2 gap-1">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] auto-rows-min p-2 gap-2">
             <div className="flex w-full place-content-center items-center p-2 gap-1">
                 <h1 className="text-7xl text-gunmetal text-center font-bold">Your Pages</h1>
 

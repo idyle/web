@@ -37,7 +37,7 @@ export const listFiles = async (token) => {
 
         const req = await fetch(`${servicePath}/list/user`, options);
         const res = await req.json();
-        if (!res?.status) return [];
+        if (!res?.status) return false;
         return res?.list;
 
     } catch (e) {

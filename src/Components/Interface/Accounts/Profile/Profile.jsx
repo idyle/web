@@ -28,12 +28,12 @@ const Profile = () => {
     useEffect(() => {
         let date = new Date(user?.metadata?.creationTime)?.toLocaleString('en-us');
         const info = [
-            { title: 'User ID', text: user?.uid },
-            { title: 'Account Provider', text: user?.providerData?.[0]?.providerId },
+            { title: 'User ID', text: user?.uid || user?.sub },
+            { title: 'Account Provider', text: user?.providerData?.[0]?.providerId || user?.firebase?.sign_in_provider },
             { title: 'User Since', text: date }
         ];
         setInfo(info);
-        setName(user?.displayName)
+        setName(user?.displayName || user?.name)
     }, [user]);
 
     const [edit, setEdit] = useState(false);
@@ -55,7 +55,7 @@ const Profile = () => {
                 <h1 className="text-7xl font-bold">Your Account</h1>
             </div>
             <div className="grid items-center justify-items-center border border-black p-2 rounded-lg">
-                {user?.photoURL ? <img className="w-[80px] h-[80px] rounded-full" src={user?.photoURL} /> : <BsPersonCircle size="80px" />}
+                {(user?.photoURL || user?.picture) ? <img className="w-[80px] h-[80px] rounded-full" src={user?.photoURL || user?.picture} /> : <BsPersonCircle size="80px" />}
                 {edit ? <input autoFocus className="bg-white text-center text-3xl w-1/2" onChange={onNameChange} value={name}/> : <h1 className="text-3xl">{name}</h1>}
                 <h1 className="text-xl md:text-3xl font-thin">{user?.email}</h1>
                 <div className="justify-self-end" onClick={() => setEdit(!edit)}>

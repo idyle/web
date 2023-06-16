@@ -15,7 +15,7 @@ const Accounts = () => {
                 <link rel="canonical" href="/accounts" />
             </Helmet>
 
-            <Subnav mode="white" type="side">
+            <Subnav type="side">
                 <Subnavbutton text="Profile" icon={<AiOutlineUser />} route="/accounts/profile" />
             </Subnav>
 

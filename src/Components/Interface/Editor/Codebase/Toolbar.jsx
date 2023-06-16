@@ -86,14 +86,14 @@ const Toolbar = () => {
         <div className="order-1 md:order-2 grid grid-flow-col rounded-lg p-1 gap-2">
             <div onClick={toggleTailwind} className="flex items-center place-content-center bg-gunmetal text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
                 <SiTailwindcss size="25px" />
-                <h1 className="text-2xl text-center hidden md:block">Toggle Tailwind CSS ({toggle ? 'ON' : 'OFF'})</h1>
+                <h1 className="text-2xl text-center hidden md:block">Toggle Tailwind CSS {toggle ? 'On' : 'Off'}</h1>
             </div>
             { !css ? <div onClick={sendObjectsRequest} className="flex items-center place-content-center bg-gunmetal text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
                 <SiCss3 size="25px" />
-                <h1 className="text-2xl text-center hidden md:block">Custom CSS File (IMPORT)</h1>
+                <h1 className="text-2xl text-center hidden md:block">Import CSS File</h1>
             </div> : <div onClick={ejectCss} className="flex items-center place-content-center bg-gunmetal text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
                 <SiCss3 size="25px" />
-                <h1 className="text-2xl text-center hidden md:block">Custom CSS File (EJECT)</h1>
+                <h1 className="text-2xl text-center hidden md:block">Eject CSS File</h1>
             </div> }
             <div onClick={sendDocsRequest} className="flex items-center place-content-center bg-gunmetal text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
                 <HiOutlineDatabase size="25px" />

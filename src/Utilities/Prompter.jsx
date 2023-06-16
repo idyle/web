@@ -24,7 +24,7 @@ const Prompter = () => {
     };
 
     return (
-        <div className={`grid items-center justify-items-center ${prompter?.active ? 'h-full' : 'h-0'} overflow-hidden absolute top-0 bottom-0 left-0 right-0 shadow bg-black/90`}>
+        <div className={`grid items-center justify-items-center ${prompter?.active ? 'h-full' : 'h-0'} overflow-hidden fixed top-0 bottom-0 left-0 right-0 shadow bg-black/90`}>
             <div className="grid items-center justify-items-center bg-white rounded-xl opacity-100 p-20 gap-3">
                 <input type="text" value={value} onChange={onChange} className="outline-none text-4xl text-center" />
                 <div className="grid md:grid-cols-2 items-center justify-items-center gap-3">

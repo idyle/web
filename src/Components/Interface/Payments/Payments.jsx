@@ -3,7 +3,7 @@ import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
 import Plan from './Plan';
 import { useEffect } from "react";
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { cancelPlan, confirmCheckout, getCheckout } from "./requests";
 import { getAuth } from "firebase/auth";
 import plans from './plans';
@@ -11,10 +11,10 @@ import { useData } from "../../../Contexts/Data";
 
 const Payments = () => {
 
-    const { user } = useAuth();
-    const { load, notify, confirm } = useUtil();
-    const { resetData } = useData();
-
+    const { user, resetUser } = useAuth();
+    const { load, notify, confirm, inform } = useUtil();
+    const { resetData, renewData } = useData();
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
@@ -26,7 +26,12 @@ const Payments = () => {
             const confirm = await confirmCheckout(token, sessionId);
             load(false);
             if (!confirm) return;
-            window.location.replace(`${window.location.origin}${window.location.pathname}`);
+            await resetUser();
+            await renewData();
+            // window.location.replace(`${window.location.origin}${window.location.pathname}`);
+            await inform("Welcome to idyle!", "A powerful journey awaits.");
+            navigate('/');
+            return notify('Take a look at all your data over here. Start building today!', 5000);   
             // propagate to user
         })();
     }, [searchParams, user]);
@@ -39,7 +44,6 @@ const Payments = () => {
         if (!id) return;
         load(true);
         const { token } = await getAuth().currentUser.getIdTokenResult(true);
-
         const link = await getCheckout(token, id);
         load(false);
         if (!link) return;
@@ -57,7 +61,8 @@ const Payments = () => {
         load(false);
         if (!operation) return;
         resetData();
-        window.location.reload();
+        resetUser();
+        // window.location.reload();
     };
 
     
@@ -72,7 +77,7 @@ const Payments = () => {
             </Helmet>
 
             <div className="grid gap-1 justify-items-center rounded-lg">
-                <h1 className="text-5xl text-gunmetal font-bold md:text-6xl text-center">{user?.displayName || 'With idyle'}, there's a perfect plan for You.</h1>
+                <h1 className="text-5xl text-gunmetal font-bold md:text-6xl text-center">{user?.displayName || user?.name || 'With idyle'}, there's a perfect plan for You.</h1>
 
 
             </div>

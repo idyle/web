@@ -37,7 +37,7 @@ const Navigator = () => {
     
                         <Navbutton icon={<IoPersonCircleOutline/>} text="Accounts" route='/accounts'/>
                         <Navbutton icon={<HiOutlineCreditCard/>} text="Payments" route='/payments'/>
-                        <Navbutton icon={<MdOutlineBuild/>} text="Editor" route='/editor'/>
+                        <Navbutton icon={<MdOutlineBuild/>} text="Editor" route='/editor/pages'/>
                         <Navbutton icon={<IoRocketOutline/>} text="Deployer" route='/deployer'/>
                         <Navbutton icon={<MdOutlinePermMedia/>} text="Objects" route='/objects'/>
                         <Navbutton icon={<HiOutlineDatabase/>} text="Docs" route='/docs'/>

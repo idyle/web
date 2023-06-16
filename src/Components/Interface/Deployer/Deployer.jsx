@@ -35,7 +35,7 @@ const Deployer = () => {
                 <link rel="canonical" href="/deployer" />
             </Helmet>
 
-            <Subnav type="side">
+            <Subnav mode="white" type="side">
                 <Subnavbutton icon={<RiGasStationFill />} text="Station" route="/deployer/station" />
                 <Subnavbutton icon={<IoMdFlask />} text="Labs" route="/deployer/labs" />
             </Subnav>
