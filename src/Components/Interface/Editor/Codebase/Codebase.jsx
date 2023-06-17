@@ -19,6 +19,30 @@ export const DomContext = ({ children }) => {
     const { integrator } = useUtil();
     const [dom, setDom] = useState();
     const [string, setString] = useState();
+    
+    const convertJSONtoCSS = (json = {}) => {
+        let string = '';
+        const entries = Object.entries(json);
+        for (let i = 0; i < entries?.length; i++) {
+            const [key, value] = entries[i];
+            const converted = key?.split(/(?=[A-Z])/)?.join('-')?.toLowerCase();
+            if (!converted && !value) continue;
+            string += `${converted}: ${value};`;
+            if (i < entries?.length - 1) string += ' ';
+        };
+        return string;
+    };
+    
+    const convertCSStoJSON = (string = '') => {
+        const object = {};
+        for (const style of string?.split(';')) {
+            const parts = style?.split(':', 2);
+            if (!parts?.[0] || !parts?.[1]) continue;
+            const key = parts?.[0]?.trim()?.replace(/-([a-z])/ig, (_, l) => l?.toUpperCase());
+            object[key] = parts?.[1]?.trim();
+        };
+        return object;
+    };
 
     const convertJSONtoHimalayaJSON = (config, toggle = true) => {
         // we are basing this off our built in JSON
@@ -33,7 +57,8 @@ export const DomContext = ({ children }) => {
             if (value instanceof Array && value?.length < 1) continue;
             if (typeof value === 'object' && Object.values(value)?.length < 1) continue;
             if (key === 'className') key = 'class';
-            if (key === 'style') value = JSON.stringify(value).slice(1, -1);
+            if (key === 'style') value = convertJSONtoCSS(value);
+            // brand new convert function
             attributes.push({ key, value });
         };
 
@@ -56,7 +81,8 @@ export const DomContext = ({ children }) => {
             if (key === 'id') continue;
             if (!key || !value) continue;
             if (key === 'class') key = 'className';
-            if (key === 'style') value = JSON.parse(`{${value}}`);
+            if (key === 'style') value = convertCSStoJSON(value);
+            // brand new convert function
             attributes[`${key}`] = value;
         };
 
@@ -102,9 +128,7 @@ const Codebase = () => {
                             <MdSwapHoriz size="30px" />
                             <h1 className="text-2xl">Switch to Dom</h1>
                         </div>
-                        <div className="shadow-xl rounded-lg overflow-hidden">
-                            <Parser />
-                        </div>
+                        <Parser />
                     </div>
                     
                     <div className={`${parser ? 'hidden' : 'grid'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
