@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./Auth";
 import { listPages } from "../Components/Interface/Editor/requests";
-import { getWebsite, listDeploys } from "../Components/Interface/Deployer/requests";
+import { getWebsite, getWebsites, listDeploys } from "../Components/Interface/Deployer/requests";
 import { listDocs } from '../Components/Interface/Documents/requests';
 import { listFiles } from "../Components/Interface/Objects/requests";
 import { getMetrics } from "../Components/Interface/Payments/requests";
@@ -47,7 +47,7 @@ const DataContext = ({ children }) => {
         let missing = [];
         const keys = [ 
             'pages', 'deploys', 'docs', 
-            'objects', 'website', 'metrics' 
+            'objects', 'metrics', 'websites' 
         ];
         for (const key of keys) if (!data?.[key]) missing.push(key);
 
@@ -59,8 +59,7 @@ const DataContext = ({ children }) => {
 
         let requests = [ 
             listPages(token), listDeploys(token), 
-            listDocs(token), listFiles(token), 
-            getWebsite(token), getMetrics(token)
+            listDocs(token), listFiles(token), getMetrics(token), getWebsites(token)
         ], requestedData = {}, secondary = [];
 
 
@@ -97,17 +96,23 @@ const DataContext = ({ children }) => {
 
     useEffect(() => saveToSession(data), [data]);
 
-    const resetObjects = async () => setObjects((await listFiles(user?.accessToken)));
-    const resetDeploys = async () => setDeploys((await listDeploys(user?.accessToken)));
-    const resetWebsite = async () => setWebsite((await getWebsite(user?.accessToken)));
+    const resetWebsitesAndDeploys = async () => {
+        const deploys = await listDeploys((await getAuth()?.currentUser?.getIdToken(true)));
+        const websites = await getWebsites((await getAuth()?.currentUser?.getIdToken(true)));
+        setData({ ...data, deploys, websites });
+    };
+    const resetObjects = async () => setObjects((await listFiles((await getAuth()?.currentUser?.getIdToken(true)))));
+    const resetDeploys = async () => setDeploys((await listDeploys((await getAuth()?.currentUser?.getIdToken(true)))));
+    const resetWebsites = async () => setWebsites((await getWebsites((await getAuth()?.currentUser?.getIdToken(true)))));
 
     const setPages = (array) => setData({ ...data, pages: array }); 
-    const setDeploys = (array) => setData({ ...data, deploys: array }); 
+    const setDeploys = (array) => setData({ ...data, deploys: array });
     const setObjects = (array) => setData({ ...data, objects: array }); 
-    const setDocs = (array) => setData({ ...data, docs: array }); 
-    const setWebsite = (obj) => setData({ ...data, website: obj });
+    const setDocs = (array) => setData({ ...data, docs: array });
+    const setWebsites = (array) => setData({ ...data, websites: array });
     const setMetrics = (obj) => setData({ ...data, metrics: obj });
     const setPageId = (str) => setData({ ...data, pageId: str });
+    const setWebsiteName = (str) => setData({ ...data, websiteName: str });
     
     const resetData = () => {
         setData();
@@ -125,10 +130,11 @@ const DataContext = ({ children }) => {
         deploys: data?.deploys || [], setDeploys, resetDeploys,
         objects: data?.objects || [], setObjects, resetObjects,
         docs: data?.docs || [], setDocs,
-        website: data?.website || '', setWebsite, resetWebsite,
-        metrics: data?.metrics || '', setMetrics,
+        websites: data?.websites || [], setWebsites, resetWebsites,
+        metrics: data?.metrics || null, setMetrics,
         pageId: data?.pageId || '', setPageId,
-        resetData, renewData
+        websiteName: data?.websiteName || '', setWebsiteName,
+        resetData, renewData, resetWebsitesAndDeploys
     };
 
     return (

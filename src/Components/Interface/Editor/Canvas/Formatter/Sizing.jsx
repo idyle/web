@@ -55,11 +55,11 @@ const Sizing = ({ icon, format }) => {
     return (
         <div className="flex border p-0.5 gap-x-0.5 border-black select-none rounded-lg items-center bg-white">
             {editedIcon}
-            <div onClick={add} className={`flex border bg-black text-white rounded-lg items-center p-0.5 hover:bg-gray-300 select-none`}>
+            <div onClick={add} className={`flex border bg-black text-white rounded-lg items-center p-0.5 hover:bg-black/20 select-none`}>
                 <RxPlus size="20px" />
             </div>
             <input onChange={onChange} className="w-[30px] text-center outline-none bg-white" type="tel" value={px} />
-            <div onClick={deduct} className={`flex border bg-black text-white rounded-lg items-center p-0.5 hover:bg-gray-300 select-none`}>
+            <div onClick={deduct} className={`flex border bg-black text-white rounded-lg items-center p-0.5 hover:bg-black/20 select-none`}>
                 <RxMinus size="20px" />
             </div>
         </div>

@@ -152,7 +152,7 @@ const Canvas = () => {
             <div className={`grid ${toolbar ? 'grid-rows-[auto_minmax(0,_1fr)]' : 'grid-rows-1'} md:grid-rows-1 md:grid-cols-[auto_minmax(0,_1fr)] overflow-auto`}>
                 
                 <div className={`${toolbar ? 'grid' : 'hidden'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
-                    <div onClick={() => setToolbar(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg bg-black text-white select-none hover:scale-[.98]">
+                    <div onClick={() => setToolbar(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg text-gunmetal border border-gunmetal select-none hover:scale-[.98]">
                         <MdSwapHoriz size="30px" />
                         <h1 className="text-2xl">Switch to Formatter</h1>
                     </div>
@@ -161,7 +161,7 @@ const Canvas = () => {
 
                 <div className={`grid ${!toolbar ? 'grid-rows-[auto_minmax(0,_1fr)]' : 'grid-rows-1'} md:grid-rows-[auto_minmax(0,_1fr)]`}>
                     <div className={`${toolbar ? 'hidden' : 'grid'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
-                        <div onClick={() => setToolbar(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg bg-black text-white select-none hover:scale-[.98]">
+                        <div onClick={() => setToolbar(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg text-gunmetal border border-gunmetal select-none hover:scale-[.98]">
                             <MdSwapHoriz size="30px" />
                             <h1 className="text-2xl">Switch to Toolbar</h1>
                         </div>

@@ -1,26 +1,28 @@
 import { GrDeploy } from 'react-icons/gr';
 import Deploy from "./Deploy";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useUtil } from '../../../../Contexts/Util';
 import { useData } from '../../../../Contexts/Data';
 
-const Control = ({ deploy }) => {
+const Control = ({ deploy, website }) => {
 
     const { notify, confirm } = useUtil();
-    const { deploys, resetDeploys, website } = useData();
+    const { deploys } = useData();
+    const [websiteDeploys, setWebsiteDeploys] = useState([]);
+    const [currentDeploy, setCurrentDeploy] = useState();
 
     useEffect(() => {
-        if (!website) return;
-        resetDeploys();
-    }, [website])
+        if (!website || !deploys?.length) return;
+        const websiteDeploys = deploys.filter(deploy => deploy.website === website?.name) || [];
+        setWebsiteDeploys(websiteDeploys);
+        setCurrentDeploy(websiteDeploys.find(({ id }) => id === website?.deploy));
+    }, [deploys, website]);
 
     const revert = async (id) => {
         if (!id) return notify('No deploy specified.');
         if (!(await confirm(`You're about to revert back to ${id}. Make sure you still have the same files in Objects. Proceed?`))) return;
         deploy([], id);
     };
-
-    const currentDeploy = deploys.find(d => d?.id === website?.deploy);
 
     return (
         <div className="grid grid-rows-[auto_minmax(0,_1fr)] border border-black text-gunmetal rounded-lg p-3 overflow-auto">
@@ -38,7 +40,7 @@ const Control = ({ deploy }) => {
                     </div>
                 }
                 {
-                    deploys?.filter(( { id }) => id !== website?.deploy)
+                    websiteDeploys?.filter(( { id }) => id !== website?.deploy)
                     .map((deploy, i) => (<Deploy i={i+1} key={`d${i}`} revert={revert} deploy={deploy} website={website} />))
                 }
             </div>

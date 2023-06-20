@@ -10,20 +10,28 @@ import Station from "./Station";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { IoMdFlask } from 'react-icons/io';
 import { RiGasStationFill } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import { getAuth } from "firebase/auth";
 
 const Deployer = () => {
-
-    const { user } = useAuth();
+    
     const { load, notify } = useUtil();
-    const { website, resetWebsite } = useData();
+    const { websites, websiteName, resetDeploys, resetWebsitesAndDeploys } = useData();
+    const [website, setWebsite] = useState();
+    useEffect(() => {
+        const website = websites?.find(( { website } ) => website?.name === websiteName)?.website;
+        if (!websites?.length) return;
+        setWebsite(website || websites[0]?.website);
+    }, [websites, websiteName]);
 
     const deploy = async (files = [], revert) => {
         load(true);
-        const operation = await deployWebsite(user?.accessToken, website?.name, files, revert);
+        const token = await getAuth().currentUser.getIdToken(true);
+        const operation = await deployWebsite(token, website?.name, files, revert);
         load(false);
         if (!operation) return notify('Deploy failed :(');
         notify("Successfully deployed your page. Due to caching, changes may take up to an hour to take effect.");
-        resetWebsite();
+        resetWebsitesAndDeploys();
     };
 
     return (
@@ -41,8 +49,8 @@ const Deployer = () => {
             </Subnav>
 
             <Routes>
-                <Route path="station" element={<Station deploy={deploy} />} />
-                <Route path="labs" element={<Labs />} />
+                <Route path="station" element={<Station website={website} deploy={deploy} />} />
+                <Route path="labs" element={<Labs website={website} />} />
                 <Route path="*" element={<Navigate to="station" />} /> 
             </Routes>
         </div>

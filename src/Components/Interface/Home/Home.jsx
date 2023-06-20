@@ -47,7 +47,7 @@ const Home = () => {
                 <Metrics />
             </div>
 
-            <div className="grid items-center justify-items-center md:col-span-3 md:row-span-3 bg-blue text-black rounded-lg p-1 hidden md:block">
+            <div className="grid items-center justify-items-center md:col-span-3 md:row-span-3 bg-blue text-black rounded-lg p-1">
                 <Objects />
             </div>
         </div>

@@ -1,29 +1,26 @@
 const servicePath = `${process.env.REACT_APP_BASEPATH}/deployer`;
 
-export const setupWebsite = async (token, website) => {
+export const getWebsites = async (token) => {
     try {
-
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
-
-        const req = await fetch(`${servicePath}/setup/${website}`, options);
+        const req = await fetch(`${servicePath}/websites`, options);
         const res = await req.json();
-        return res?.status;
-
+        if (!res?.status) return false;
+        return res?.websites;
     } catch (e) {
         console.error(e);
         return false;
     }
 };
 
-export const getWebsite = async (token) => {
+export const createWebsite = async (token, website) => {
     try {
-
         const options = {
             method: 'POST',
             headers: {
@@ -31,12 +28,9 @@ export const getWebsite = async (token) => {
                 'Authorization': `Bearer ${token}`
             }
         };
-
-        const req = await fetch(`${servicePath}/get`, options);
+        const req = await fetch(`${servicePath}/websites/${website}`, options);
         const res = await req.json();
-        if (!res?.status) return false;
-        return res?.website;
-
+        return res?.status;
     } catch (e) {
         console.error(e);
         return false;
@@ -45,7 +39,6 @@ export const getWebsite = async (token) => {
 
 export const deployWebsite = async (token, website, files, revertDeployId) => {
     try {
-
         const options = {
             method: 'POST',
             headers: {
@@ -55,14 +48,12 @@ export const deployWebsite = async (token, website, files, revertDeployId) => {
             body: JSON.stringify({ files })
         };
 
-        let url = `${servicePath}/deploy/${website}`;
+        let url = `${servicePath}/deploys/${website}`;
         if (revertDeployId) url = `${url}?revert=${revertDeployId}`;
-
         const req = await fetch(url, options);
         const res = await req.json();
         if (!res?.status) return false;
         return res;
-
     } catch (e) {
         console.error(e);
         return false;
@@ -72,18 +63,15 @@ export const deployWebsite = async (token, website, files, revertDeployId) => {
 
 export const listDeploys = async (token, filter, value) => {
     try {
-
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
         };
-
-        let url = `${servicePath}/list`;
+        let url = `${servicePath}/deploys`;
         if (filter && value) url = `${url}?filter=${filter}&value=${value}`;
-
         const req = await fetch(url, options);
         const res = await req.json();
         if (!res?.status) return false;
@@ -94,9 +82,8 @@ export const listDeploys = async (token, filter, value) => {
     }
 };
 
-export const connectDomain = async (token, domain) => {
+export const connectDomain = async (token, website, domain) => {
     try {
-
         const options = {
             method: 'POST',
             headers: {
@@ -104,9 +91,7 @@ export const connectDomain = async (token, domain) => {
                 'Authorization': `Bearer ${token}`
             },
         };
-
-        let url = `${servicePath}/connect/${domain}`;
-        const req = await fetch(url, options);
+        const req = await fetch(`${servicePath}/domains/${website}/${domain}`, options);
         const res = await req.json();
         if (!res?.status) return false;
         return res?.status;
@@ -116,18 +101,16 @@ export const connectDomain = async (token, domain) => {
     }
 };
 
-export const disconnectDomain = async (token) => {
+export const disconnectDomain = async (token, website) => {
     try {
-
         const options = {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
         };
-
-        let url = `${servicePath}/disconnect`;
+        let url = `${servicePath}/domains/${website}`;
         const req = await fetch(url, options);
         const res = await req.json();
         if (!res?.status) return false;
@@ -159,7 +142,6 @@ export const convertPage = async (token, entryId, customPath, stringOutput) => {
         if (!res?.status) return false;
         if (stringOutput) return res;
         return res?.status;
-
     } catch (e) {
         console.error(e);
         return false;

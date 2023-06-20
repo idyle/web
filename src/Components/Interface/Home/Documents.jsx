@@ -11,7 +11,7 @@ const Documents = () => {
                 {
                     docs.map((doc, i) => {
                         return (
-                            <div key={`h-d-${i}`} className="flex items-center border-b-2 border-black gap-1 select-none hover:bg-gunmetal hover:text-blue rounded-lg">
+                            <div key={`h-d-${i}`} className="flex items-center border-b-2 border-black gap-1 select-none rounded-lg">
                                 <MdDataObject size="30px" />
                                 <h1 className="text-3xl">{doc?.id}</h1>
                             </div>

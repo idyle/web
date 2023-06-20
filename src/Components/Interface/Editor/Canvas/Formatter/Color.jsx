@@ -28,7 +28,7 @@ const Color = ({ icon, format }) => {
     }, [path]);
 
     return (
-        <div className={`flex border border-black rounded-lg items-center p-0.5 hover:bg-gray-300 select-none`}>
+        <div className={`flex border border-black rounded-lg items-center p-0.5 select-none`}>
             <label htmlFor="color">
                 {editedIcon}
             </label>

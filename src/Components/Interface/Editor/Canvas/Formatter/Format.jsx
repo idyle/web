@@ -21,7 +21,7 @@ const Format = ({ title, icon, format }) => {
     }, [path, updateElement]);
 
     return (
-        <div onClick={updateElement} className={`flex border border-black rounded-lg ${title && 'gap-x-1'} items-center p-0.5 ${styles && 'bg-gray-300'} hover:bg-gray-300 select-none`}>
+        <div onClick={updateElement} className={`flex border border-black rounded-lg ${title && 'gap-x-1'} items-center p-0.5 ${styles && 'bg-black/20'} hover:bg-black/20 select-none`}>
             {editedIcon}
             { title && <h1 className="text-sm">{title}</h1> }
         </div>

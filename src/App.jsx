@@ -9,7 +9,7 @@ import Informer from './Utilities/Informer';
 const App = () => {
     return (
         <Contexts>
-            <div className='grid grid-rows-[minmax(0,_1fr)] h-screen bg-white'>
+            <div className='grid grid-rows-[minmax(0,_1fr)] h-full min-h-screen md:h-screen bg-white overflow-auto'>
                 <Components />
                 <Notifier />
                 <Informer />

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { convertPages } from '../requests';
 import { useData } from '../../../../Contexts/Data';
 import Page from './Page';
+import { getAuth } from 'firebase/auth';
 
 const Staging = ({ deploy }) => {
 
@@ -18,6 +19,7 @@ const Staging = ({ deploy }) => {
     const [files, setFiles] = useState([]);
     const [pages, setPages] = useState(pagesFromEditor);
     const [index, setIndex] = useState();
+    useEffect(() => setPages(pagesFromEditor), [pagesFromEditor]);
 
     // move this over to Labs
     const sendFileRequest = async () => {
@@ -56,10 +58,11 @@ const Staging = ({ deploy }) => {
         if (!pages?.length) return deploy(files);
         notify('Beginning conversion on the pages first...');
         load(true);
-        const batch = await convertPages(user?.accessToken);
+        const token = await getAuth().currentUser.getIdToken(true);
+        const batch = await convertPages(token);
         load(false);
         if (!batch) return notify('Something went wrong trying to convert.');
-        await resetObjects();
+        resetObjects();
         // let pageFiles = pages.map(( { route }) => ({ path: objects?.find(( { name } ) => name === `${route}.html`)?.path }));
         let pageFiles = pages.map(( { route, id }) => ({ path: `${route}.html`, index: (id === index) }));
         let objectFiles = files.map(( { path } ) => ({ path, index: (path === index) }));

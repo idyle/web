@@ -2,7 +2,7 @@ import { IoMdFlask } from 'react-icons/io';
 import Connect from './Connect';
 import Convert from './Convert';
 
-const Labs = () => {
+const Labs = ({ website }) => {
 
     return (
         <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-3 gap-2">
@@ -12,7 +12,7 @@ const Labs = () => {
             </div>
             <div className="grid">
                 <Convert />
-                <Connect />
+                <Connect website={website} />
             </div> 
         </div>
     )

@@ -5,37 +5,38 @@ import { useUtil } from "../../../../Contexts/Util";
 import { connectDomain, disconnectDomain } from "../requests";
 import { useAuth } from "../../../../Contexts/Auth";
 
-const Connect = () => {
+const Connect = ({ website }) => {
     const { user } = useAuth();
-    const { website, resetWebsite } = useData();
+    const { resetWebsites } = useData();
     const { notify, confirm, load, inform } = useUtil();
     const [sub, setSub] = useState('');
     const [domain, setDomain] = useState('');
     const [tld, setTld] = useState('');
 
     const connect = async () => {
+        if (!website) return notify('No website available. Please create or select one.');
         if (!domain || !tld) return notify('No domain or tld (.com) specified.');
         let host = `${domain}.${tld}`;
         if (sub) host = `${sub}.${host}`;
         load(true);
-        const operation = await connectDomain(user?.accessToken, host);
+        const operation = await connectDomain(user?.accessToken, website?.name, host);
         load(false);
         if (!operation) return notify('Something went wrong...');
         inform(
             `Success! Please CNAME to ${website?.name}.idyle.app using the domain ${host}.`,
             'It may take up to 24 hours to propagate changes. Please ensure that there are no overlapping records on the domain. If you encounter any issues, contact us immediately.'
         )
-        resetWebsite();
+        resetWebsites();
     };
 
     const disconnect = async () => {
         if (!(await confirm('Are you sure you want to disconnect your domain?'))) return;
         if (!website?.domain) return notify('No domain available.');
         load(true);
-        const operation = await disconnectDomain(user?.accessToken);
+        const operation = await disconnectDomain(user?.accessToken, website?.name);
         load(false);
         if (!operation) return notify('Something went wrong...');
-        resetWebsite();
+        resetWebsites();
         // reset to trigger a reload/resave
     };
 

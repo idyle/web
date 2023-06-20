@@ -28,7 +28,7 @@ export default [
             "Basic Data Features",
             "2 Custom Domains + SSL"
         ],
-        active: false
+        active: true
     },
     {
         id: planIds[2],
@@ -42,6 +42,6 @@ export default [
             "Premium Data Features",
             "5 Custom Domains + SSL"
         ],
-        active: false
+        active: true
     }
 ]

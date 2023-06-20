@@ -12,7 +12,7 @@ const UtilContext = ({ children }) => {
     const [confirmer, setConfirmer] = useState({ active: false });
     const confirm = (message) => new Promise(resolve => setConfirmer({ resolve, message, active: true }));
     const [prompter, setPrompter] = useState({ active: false });
-    const prompt = (data) => new Promise(resolve => setPrompter({ resolve, data, active: true }));
+    const prompt = (data, message) => new Promise(resolve => setPrompter({ resolve, data, message, active: true }));
     const [integrator, setIntegrator] = useState({ active: false });
     const integrate = (origin) => new Promise(resolve => setIntegrator({ resolve, origin, active: true }) );
     const values = { 
