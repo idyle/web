@@ -53,7 +53,7 @@ const Sizing = ({ icon, format }) => {
     };
 
     return (
-        <div className="flex border p-0.5 gap-x-0.5 border-black select-none rounded-lg items-center bg-white">
+        <div className="flex text-gunmetal p-0.5 gap-x-0.5 select-none rounded-lg items-center bg-white">
             {editedIcon}
             <div onClick={add} className={`flex border bg-black text-white rounded-lg items-center p-0.5 hover:bg-black/20 select-none`}>
                 <RxPlus size="20px" />

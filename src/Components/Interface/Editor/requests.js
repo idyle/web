@@ -1,6 +1,6 @@
 const servicePath = `${process.env.REACT_APP_BASEPATH}/editor`;
 
-export const savePage = async (token, page) => {
+export const createPage = async (token, page) => {
     try {
         const options = {
             method: 'POST',
@@ -11,19 +11,62 @@ export const savePage = async (token, page) => {
             body: JSON.stringify({ page })
         };
 
-        let url = `${servicePath}/save/user`;
-        if (page?.id) url = `${url}/${page?.id}`;
-
+        let url = `${servicePath}/create/user`;
         const req = await fetch(url, options);
         const res = await req.json();
         if (res?.status) return res;
         return res?.status;
-
     } catch (e) {
         console.error(e);
         return false;
     }
 };
+
+export const editPage = async (token, page) => {
+    try {
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ page })
+        };
+
+        let url = `${servicePath}/edit/user/${page?.id}`;
+        const req = await fetch(url, options);
+        const res = await req.json();
+        return res?.status
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
+// export const savePage = async (token, page) => {
+//     try {
+//         const options = {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${token}`
+//             },
+//             body: JSON.stringify({ page })
+//         };
+
+//         let url = `${servicePath}/save/user`;
+//         if (page?.id) url = `${url}/${page?.id}`;
+
+//         const req = await fetch(url, options);
+//         const res = await req.json();
+//         if (res?.status) return res;
+//         return res?.status;
+
+//     } catch (e) {
+//         console.error(e);
+//         return false;
+//     }
+// };
 
 export const listPages = async (token, filter, value) => {
     try {

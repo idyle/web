@@ -34,7 +34,7 @@ const Parser = () => {
         const builtInJSON = convertHimalayaJSONtoJSON(parsedHimalayaJSON[0]);
         if (!builtInJSON) return;
         setPageData({ ...builtInJSON });
-        setDom(constructDom(builtInJSON, toggle, css, font, 'PARSER'));
+        setDom(constructDom(builtInJSON, toggle, css, font));
         // it's now possible to setDom() without classes while also saving 
         // a different case where the classes are presevered
     };

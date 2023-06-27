@@ -1,5 +1,4 @@
 import { createElement } from 'react';
-import { renderToString } from 'react-dom/server';
 
 import Wrapper from './Wrapper';
 
@@ -12,6 +11,8 @@ export const renderElements = (config) => {
     for (let [key, value] of Object.entries(config)) {
         if (key === 'component' || key === 'children') continue;
         if (key === 'id') value = config.id;
+        if (key === 'className') value = value.replace(/md:/g, "@md:");
+        // canvas-only
         attributes[`${key}`] = value;
     };
 

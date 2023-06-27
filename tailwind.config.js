@@ -93,5 +93,7 @@ module.exports = {
       sans: ['Okta', 'sans-serif']
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/container-queries'),
+  ],
 }

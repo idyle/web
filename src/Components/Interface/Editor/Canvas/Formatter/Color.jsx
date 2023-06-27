@@ -7,7 +7,7 @@ const Color = ({ icon, format }) => {
 
     const { setPageData, page } = useEditor();
     const { updateStylesFromPath, path } = useDom();
-    const [color, setColor] = useState('');
+    const [color, setColor] = useState('#000000');
     const onChange = (e) => setColor(e.target.value);
 
     const onBlur = () => {
@@ -17,18 +17,18 @@ const Color = ({ icon, format }) => {
     };
 
     useEffect(() => {
-        if (!path.length) return setColor('');
+        if (!path.length) return setColor('#000000');
         // if none is selected, color === ''
         let current = page?.data;
         for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
         const properties = current?.style || {};
-        if (!properties[format]) return setColor('');
+        if (!properties[format]) return setColor('#000000');
         // if none is selected, we'll default to color === ''
         setColor(properties[format]);
     }, [path]);
 
     return (
-        <div className={`flex border border-black rounded-lg items-center p-0.5 select-none`}>
+        <div className={`flex bg-white text-gunmetal rounded-lg items-center p-0.5 select-none`}>
             <label htmlFor="color">
                 {editedIcon}
             </label>

@@ -18,12 +18,20 @@ export const renderElements = (config) => {
     return createElement(config.component, attributes, children);
 };
 
-export const constructDom = (config, toggle, css, fontFamily, origin) => {
+export const constructDom = (config, toggle, css, fontFamily) => {
     let body = renderElements(config);
     if (fontFamily) body = createElement("div", { style: { fontFamily } }, body);
     if (toggle) toggle = createElement("script", { src: "https://cdn.tailwindcss.com" });
     if (css) css = createElement("link", { type: 'text/css', rel: "stylesheet", href: css });
-    const string = renderToString(<html><head>{css}{toggle}</head><body>{body}</body></html>);
+    const aosCss = createElement("link", { rel: "stylesheet", href: "https://unpkg.com/aos@next/dist/aos.css" });
+    const aosJs = createElement("script", { src: "https://unpkg.com/aos@next/dist/aos.js" });
+    const aosInit = createElement("script", {}, 'AOS.init();');
+    const string = renderToString(
+        <html>
+            <head>{css}{aosCss}{toggle}</head>
+            <body>{body}{aosJs}{aosInit}</body>
+        </html>
+    );
     return (
         <iframe className="w-full h-full" srcDoc={string}></iframe>
     )

@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "@monaco-editor/react": "^4.4.6",
+    "@tailwindcss/container-queries": "^0.1.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "aos": "^3.0.0-beta.6",
     "emmet-monaco-es": "^5.1.2",
     "firebase": "^9.13.0",
     "himalaya": "^1.1.0",

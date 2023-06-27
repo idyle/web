@@ -11,7 +11,7 @@ import { HiOutlineDatabase } from 'react-icons/hi';
 const Toolbar = () => {
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
-    const { page, setPage, save } = useEditor();
+    const { page, setPage, edit } = useEditor();
     const { toggle, setToggle, setDom, setString, string, 
         convertJSONtoHimalayaJSON, css, setCss, font 
     } = useDom();
@@ -20,7 +20,7 @@ const Toolbar = () => {
     const toggleTailwind = () => {
         setToggle(!toggle);
         setPage({ ...page, metadata: { ...page?.metadata, toggle: !toggle }});
-        save({ ...page, metadata: { ...page?.metadata, toggle: !toggle }});
+        edit({ ...page, metadata: { ...page?.metadata, toggle: !toggle }});
         // setDom(renderElements(page?.data, !toggle));
     };
 
@@ -37,7 +37,7 @@ const Toolbar = () => {
 
         const render = (str) => {
             setIntegrator({ active: false });
-            if (page?.data) setDom(constructDom(page?.data, toggle, css, font, 'TOOLBAR'));
+            if (page?.data) setDom(constructDom(page?.data, toggle, css, font));
             setString(str);
         };
         try {
@@ -70,7 +70,7 @@ const Toolbar = () => {
         // we can only except of type text/css
         setCss(integrator?.data?.url);
         setPage({ ...integrator?.ref, metadata: { ...integrator?.ref?.metadata, css: integrator?.data?.url }});
-        save({ ...integrator?.ref, metadata: { ...integrator?.ref?.metadata, css: integrator?.data?.url }});
+        edit({ ...integrator?.ref, metadata: { ...integrator?.ref?.metadata, css: integrator?.data?.url }});
         setIntegrator({ active: false });
         // now we have to handle the render on codebase & canvas 
         // we also need to transfer css & toggle to main context (done) 
@@ -79,14 +79,14 @@ const Toolbar = () => {
     const ejectCss = () => {
         setCss();
         setPage({ ...page, metadata: { ...page?.metadata, css: null }});
-        save({ ...page, metadata: { ...page?.metadata, css: null }});
+        edit({ ...page, metadata: { ...page?.metadata, css: null }});
     };
 
     return (
         <div className="order-1 md:order-2 grid grid-flow-col rounded-lg p-1 gap-2">
             <div onClick={toggleTailwind} className="flex items-center place-content-center bg-gunmetal text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
                 <SiTailwindcss size="25px" />
-                <h1 className="text-2xl text-center hidden md:block">Toggle TailwindCSS {toggle ? 'On' : 'Off'}</h1>
+                <h1 className="text-2xl text-center hidden md:block">Toggle TailwindCSS {toggle ? '(On)' : '(Off)'}</h1>
             </div>
             { !css ? <div onClick={sendObjectsRequest} className="flex items-center place-content-center bg-gunmetal text-white p-0.5 rounded-lg select-none hover:scale-[.98] gap-1">
                 <SiCss3 size="25px" />

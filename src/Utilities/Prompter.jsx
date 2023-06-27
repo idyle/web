@@ -5,9 +5,9 @@ import { MdCheck, MdCancel } from 'react-icons/md';
 const Prompter = () => {
 
     const { prompter, setPrompter } = useUtil();
-    const [value, setValue] = useState(prompter?.data);
+    const [value, setValue] = useState(prompter?.data || '');
 
-    useEffect(() => setValue(prompter?.data), [prompter?.data]);
+    useEffect(() => setValue(prompter?.data || ''), [prompter?.data]);
 
     const onChange = (e) => {
         if (typeof e.target.value !== 'string') return;
@@ -16,7 +16,8 @@ const Prompter = () => {
 
     const onConfirm = async () => {
         await prompter?.resolve(value);
-        setPrompter({ ...prompter, active: false });
+        setValue('');
+        setPrompter({ ...prompter, data: '', active: false });
     };
     const onCancel = () => {
         prompter?.resolve(false);

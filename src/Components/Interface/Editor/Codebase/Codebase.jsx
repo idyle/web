@@ -99,7 +99,7 @@ export const DomContext = ({ children }) => {
             // instead of creating a wrapper func, it's possible to just return its children
             const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON?.children || []);
             if (!stringifiedHimalayaJSON) return;
-            const cDom = constructDom(page?.data, toggle, css, font, 'MAIN');
+            const cDom = constructDom(page?.data, toggle, css, font);
             setString(stringifiedHimalayaJSON);
             setDom(cDom);
         } catch {

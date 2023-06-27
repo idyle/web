@@ -12,27 +12,26 @@ import { useLocation, useNavigate } from "react-router-dom";
 const Elements = () => {
 
     const { page, setPageData, pages } = useEditor();
-    const { integrator, setIntegrator, notify, prompt } = useUtil();
-    const { selected, updateFromPath, setObjectFromPath, deleteObjectFromPath, updateObjectFromPathCustom, path, setPath } = useDom();
-    const [selData, setSelData] = useState('None');
+    const { integrator, confirm, setIntegrator, notify, prompt } = useUtil();
+    const { selectedData, updateFromPath, setObjectFromPath, deleteObjectFromPath, updateObjectFromPathCustom, path } = useDom();
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
 
-    useEffect(() => {
-        if (!selected) return;
-        let path = [];
-        if (selected?.includes('-')) path = selected.split('-');
-        path.shift();
-        for (let i = 0; i < path.length; i++) path[i] = parseInt(path[i]);
-        setPath(path);
-    }, [selected]);
+    // useEffect(() => {
+    //     if (!selected) return;
+    //     let path = [];
+    //     if (selected?.includes('-')) path = selected.split('-');
+    //     path.shift();
+    //     for (let i = 0; i < path.length; i++) path[i] = parseInt(path[i]);
+    //     setPath(path);
+    // }, [selected]);
 
-    useEffect(() => {
-        if (!path.length) return setSelData({});
-        let current = page?.data;
-        for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
-        setSelData(current);
-    }, [path]);
+    // useEffect(() => {
+    //     if (!path.length) return setSelData({});
+    //     let current = page?.data;
+    //     for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
+    //     setSelData(current);
+    // }, [path]);
 
     // entering
     const sendObjectsRequest = () => {
@@ -55,22 +54,24 @@ const Elements = () => {
     const deleteElement = () => setPageData({ ...deleteObjectFromPath(page?.data, path) });
     const appendElement = (element) => setPageData({ ...setObjectFromPath(page?.data, path, { ...elements[element] }) });
 
-    const clearFunc = (current) => {
-        // brand new way of updating with arbitrary function
-        current.style = {};
-        current.className = '';
-        return current;
+    const clear = async () => {
+        if (!(await confirm("You're about to clear all styles. Are you sure?"))) return;
+        const clearFunc = (current) => {
+            // brand new way of updating with arbitrary function
+            current.style = {};
+            current.className = '';
+            return current;
+        };
+        setPageData({ ...updateFromPath(page?.data, path, clearFunc) });
     };
-
-    const clear = () => setPageData({ ...updateFromPath(page?.data, path, clearFunc) });
 
     const editProps = async () => {
         if (!path?.length) return;
         // if we don't have a selected item
-        let config = { key: 'className', value: selData?.className || '' };
+        let config = { key: 'className', value: selectedData?.className || '' };
         // our default editable config
-        if (selData?.component === 'img' || selData?.component === 'video') config = { key: 'alt', value: selData?.alt || '' };
-        else if (selData?.component === 'a') config = { key: 'href', value: selData?.href || '' };
+        if (selectedData?.component === 'img' || selectedData?.component === 'video') config = { key: 'alt', value: selectedData?.alt || '' };
+        else if (selectedData?.component === 'a') config = { key: 'href', value: selectedData?.href || '' };
 
         const input = await prompt(config?.value);
         if (!input) return;
@@ -107,7 +108,7 @@ const Elements = () => {
     }, [integrator?.active]);
 
     return (
-        <div className="grid md:grid-rows-[75%_25%] gap-1 p-1">
+        <div className="grid md:grid-rows-[minmax(0,_1fr)_auto] gap-1 p-1">
             <div className="grid grid-rows-[auto_minmax(0,_1fr)] p-1 shadow-xl bg-gunmetal text-white rounded-lg gap-1">
                 <h1 className="text-3xl font-bold text-center hidden md:block">Elements</h1>
                 <div className="grid grid-flow-col md:grid-flow-row gap-1 p-1 overflow-auto">
@@ -131,7 +132,7 @@ const Elements = () => {
             </div>
 
             <div className="grid bg-gunmetal text-white p-1 gap-1 rounded-lg overflow-auto">
-                <h1 className="hidden md:block text-2xl text-center break-all">Plot: {selData?.id || 'Main'}</h1>
+                <h1 className="hidden md:block text-2xl text-center">Type: {selectedData?.component || 'Main'}</h1>
                 <div className="grid grid-flow-col md:grid-flow-row p-1 gap-1">
                     <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 bg-white rounded-lg text-gunmetal hover:scale-[.98] select-none">
                         <AiOutlineReload size="25px" />

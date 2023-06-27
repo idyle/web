@@ -29,12 +29,14 @@ const AuthContext = ({ children }) => {
         localStorage.setItem('idyle-auth', auth);
     }), []);
 
+    const getToken = async () => (await getAuth().currentUser.getIdToken(true));
+
     const resetUser = async () => {
         const latest = await getAuth().currentUser.getIdTokenResult(true);
         setUser({ ...getAuth().currentUser, ...latest?.claims });
     };
 
-    const values = { auth, user, setUser, token, resetUser }
+    const values = { auth, user, setUser, token, resetUser, getToken }
     return ( <AuthValues.Provider value={values}>{children}</AuthValues.Provider> );
 };
 

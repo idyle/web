@@ -9,7 +9,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
-import { savePage, deletePage } from './requests';
+import { deletePage, editPage } from './requests';
 import { useData } from '../../../Contexts/Data';
 import { Helmet } from 'react-helmet';
 import Router from './Router';
@@ -19,7 +19,7 @@ export const useEditor = () => useContext(EditorValues);
 
 export const EditorContext = ({ children }) => {
 
-    const { user } = useAuth();
+    const { user, getToken } = useAuth();
     const { load, notify, confirm } = useUtil();
     const { pages, setPages, pageId, setPageId } = useData();
     const pageQuery = pages?.find(({ id }) => id === pageId);
@@ -36,26 +36,51 @@ export const EditorContext = ({ children }) => {
         setFont(p?.metadata?.font);
     }, [pages, pageId]);
 
-    const save = async (page) => {
+    const edit = async (page) => {
         const index = pages.findIndex(( { id } ) => id === page?.id);
-        if (!(index >= 0)) return;
-        // a page must be created
-        const lastPageData = pages[index];
-        pages[index] = { ...page, id: lastPageData?.id };
+        if (!(index >= 0)) return false;
+        // page must exist 
         setPage({ ...page });
-        setPages([ ...pages ]);
-        const operation = await savePage(user?.accessToken, page);
-        if (!lastPageData?.id) {
-            pages[index] = { ...lastPageData, id: operation?.id };
-            setPages([ ...pages ]);
-            setPage({ ...lastPageData, id: operation?.id });
-        };
-        if (operation) return;
-        notify('Something went wrong trying to save the page.');
-        pages[index] = { ...lastPageData };
-        setPages([ ...pages ]);
-        setPage({ ...lastPageData });
+        const pageCache = pages[index];
+        // updated page & save cache
+        const token = await getToken();
+        const operation = await editPage(token, page);
+        if (operation) {
+            // if operation succeeded, update data 
+            let array = pages;
+            array[index] = page;
+            setPages([ ...array ]);
+            return true;
+        } else {
+            notify('Something went wrong trying to edit the page.');
+            setPage({ ...pageCache });
+            // if false, replace the page with old cache
+            return false;
+        }
     };
+
+    // const save = async (page) => {
+    //     const index = pages.findIndex(( { id } ) => id === page?.id);
+    //     if (!(index >= 0)) return false;
+    //     // a page must be created
+    //     const lastPageData = pages[index];
+    //     pages[index] = { ...page, id: lastPageData?.id };
+    //     setPage({ ...page });
+    //     setPages([ ...pages ]);
+    //     const token = await getToken();
+    //     const operation = await savePage(token, page);
+    //     if (!lastPageData?.id) {
+    //         pages[index] = { ...lastPageData, id: operation?.id };
+    //         setPages([ ...pages ]);
+    //         setPage({ ...lastPageData, id: operation?.id });
+    //     };
+    //     if (operation) return false;
+    //     notify('Something went wrong trying to save the page.');
+    //     pages[index] = { ...lastPageData };
+    //     setPages([ ...pages ]);
+    //     setPage({ ...lastPageData });
+    //     return true;
+    // };
 
     const remove = async (page) => {
         if (!(await confirm("You're about to delete a page. This action cannot be undone. Proceed?"))) return;
@@ -72,13 +97,13 @@ export const EditorContext = ({ children }) => {
         return { ...object, children, id };
     };
 
-    const setPageData = (pageData) => save({ ...page, data: { ...serialize(pageData) } });
-    const setPageMetadata = (pageMetadata) => save({ ...page, metadata: { ...page?.metadata, ...pageMetadata } });
+    const setPageData = (pageData) => edit({ ...page, data: { ...serialize(pageData) } });
+    const setPageMetadata = (pageMetadata) => edit({ ...page, metadata: { ...page?.metadata, ...pageMetadata } });
 
     const values = { 
         page, setPage, pages, setPages,
         setPageData, setPageId, setPageMetadata,
-        save, remove,
+        remove, edit,
         toggle, setToggle, css, setCss, font, setFont,
     };
     return ( <EditorValues.Provider value={values}>{children}</EditorValues.Provider> );

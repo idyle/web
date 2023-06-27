@@ -5,14 +5,35 @@ import { useEditor } from '../Editor';
 import Toolbar from './Toolbar/Toolbar';
 import Formatter from './Formatter/Formatter';
 import { MdSwapHoriz } from 'react-icons/md';
+import Dom from './Dom';
 
 const DomValues = createContext();
 export const useDom = () => useContext(DomValues);
 
 export const DomContext = ({ children }) => {
+    const { page } = useEditor();
     const [selected, setSelected] = useState('0');
     const [hovered, setHovered] = useState('');
     const [path, setPath] = useState([]);
+    const [selectedData, setSelectedData] = useState({});
+
+    useEffect(() => {
+        if (!selected) return;
+        let path = [];
+        if (selected?.includes('-')) path = selected.split('-');
+        path.shift();
+        for (let i = 0; i < path.length; i++) path[i] = parseInt(path[i]);
+        setPath(path);
+    }, [selected]);
+
+    useEffect(() => {
+        if (!path.length) return setSelectedData({});
+        let current = page?.data;
+        for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
+        setSelectedData(current);
+    }, [path]);
+
+    // false === styles; true === styles (md) (none)
 
     const updateFromPath = (data, path, func) => {
         let current = data;
@@ -128,7 +149,8 @@ export const DomContext = ({ children }) => {
     };
 
     const values = { 
-        selected, setSelected, hovered, setHovered, path, setPath,
+        selected, setSelected, hovered, setHovered, path, setPath, 
+        setSelectedData, selectedData,
         updateObjectFromPath, setObjectFromPath, deleteObjectFromPath,
         updateChildrenFromPath, updateClassFromPath, updateStylesFromPath,
         updateFromPath, updateObjectFromPathCustom
@@ -138,14 +160,7 @@ export const DomContext = ({ children }) => {
 
 const Canvas = () => {
 
-    const { page, css, font } = useEditor();
-    const [dom, setDom] = useState([]);
     const [toolbar, setToolbar] = useState(true);
-
-    useEffect(() => {
-        if (!page?.id || !page?.data) return;
-        setDom(constructDom(page?.data, css, font));
-    }, [page?.id, page?.data, css, font]);
 
     return (
         <DomContext>
@@ -168,9 +183,7 @@ const Canvas = () => {
                         <Formatter />
                     </div>
 
-                    <div className="grid p-1 overflow-auto shadow-xl rounded-lg">
-                        {dom}
-                    </div>
+                    <Dom />
                 </div>
             </div>
         </DomContext>

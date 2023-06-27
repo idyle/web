@@ -1,7 +1,9 @@
+// all elements must have corresponding style
+
 const header = {
     component: 'h1',
     className: 'text-2xl font-bold',
-    style: { fontSize: '24px', lineHeight: '32px' },
+    style: { fontSize: '24px', lineHeight: '32px', fontWeight: 700 },
     children: 'Your Header Here'
 };
 
@@ -14,19 +16,23 @@ const text = {
 
 const section1 = {
     component: 'div',
+    "data-aos": "fade-in",
     className: 'grid',
+    style: { display: 'grid' },
     children: [ { ...header, children: '1 Section' }, text ]
 };
 
 const section2 = {
     component: 'div',
-    className: 'grid md:grid-cols-2',
+    className: 'grid md:grid-cols-2 @md:grid-cols-2',
+    style: { display: 'grid' },
     children: [ { ...header, children: '2 Section' }, text ]
 };
 
 const section3 = {
     component: 'div',
-    className: 'grid md:grid-cols-3',
+    className: 'grid md:grid-cols-3 @md:grid-cols-3',
+    style: { display: 'grid' },
     children: [ { ...header, children: '3 Section' }, header, text ]
 }
 
@@ -45,34 +51,36 @@ const video = {
 
 const button = {
     component: 'a',
-    className: 'text-white bg-black rounded-lg select-none block',
+    className: 'block text-white bg-black rounded-lg select-none',
+    style: { display: 'block', color: 'white', backgroundColor: 'black', borderRadius: '8px', userSelect: 'none' },
     href: 'test',
     children: [ { ...text, children: 'Button Name' }]
 };
 
 const link = {
     component: 'a',
-    className: 'md:text-2xl text-xl text-blue-500 underline',
+    className: 'text-xl text-blue underline',
+    style: { fontSize: '20px', lineHeight: '28px', color: 'blue', textDecorationLine: 'underline' },
     href: 'test',
     children: 'Link'
 }
 
 const navBase = {
     component: 'div',
-    className: 'grid grid-flow-col gap-1 bg-black text-white p-1',
+    className: 'grid grid-flow-col text-white bg-black gap-1 p-1',
+    style: { display: 'grid', gridAutoFlow: 'column', color: 'white', backgroundColor: 'black', gap: '4px', padding: '4px' },
     children: []
 };
 
 const navPart = {
     component: 'a',
-    className: 'md:text-2xl text-xl',
+    className: 'text-xl',
+    style: { fontSize: '20px', lineHeight: '28px' },
     children: 'Sample'
 };
 
 export default {
-
     header, text, img, video,
     section1, section2, section3, 
     button, link, navBase, navPart
-    
 }
