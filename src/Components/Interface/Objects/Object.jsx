@@ -60,8 +60,6 @@ const Object = ({ object, objects, setObjects }) => {
         navigate(integrator?.origin);
     };
 
-    console.log(object);
-
     return (
         <div onClick={sendFile} className={`grid grid-cols-2 md:grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg p-2 text-gunmetal ${integrationMode}`}>
             <AiOutlineFile className="block md:hidden" size="50px" />

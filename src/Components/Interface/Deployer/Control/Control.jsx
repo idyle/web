@@ -25,7 +25,7 @@ const Control = ({ deploy, website }) => {
     };
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] border border-black text-gunmetal rounded-lg p-3 overflow-auto">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] border border-black text-gunmetal rounded-lg p-3 overflow-auto gap-y-2">
             <div className="flex items-center gap-2 p-2">
                 <GrDeploy size="40px" />
                 <h1 className="text-5xl md:text-6xl font-bold">Your Deploys</h1>
