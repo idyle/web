@@ -7,12 +7,11 @@ import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
 import { removeDoc, setDoc } from "./requests";
 import { useData } from "../../../Contexts/Data";
-import { MdSwapHoriz } from "react-icons/md";
 
 const Documents = () => {
 
     const { load, notify } = useUtil();
-    const { user } = useAuth();
+    const { getToken } = useAuth();
     const { docs, setDocs } = useData();
     const [selectedDoc, setSelectedDoc] = useState();
     const [mobileClicked, setMobileClicked] = useState(false);
@@ -31,20 +30,22 @@ const Documents = () => {
     };
 
     const check = async () => {
-        if (!user?.accessToken || !selectedDoc?.id) return;
+        const token = await getToken();
+        if (!token || !selectedDoc?.id) return;
         const actualDoc = docs.find(({ id }) => id === selectedDoc?.id);
         if (!actualDoc) return notify('Something went wrong...');
         load(true);
-        const op = await setDoc(user?.accessToken, actualDoc);
+        const op = await setDoc(token, actualDoc);
         load(false);
         if (!op) return notify('Something went wrong...');
         return notify('Successfully updated doc');
     };
 
     const remove = async () => {
-        if (!user?.accessToken || !selectedDoc?.id) return;
+        const token = await getToken();
+        if (!token || !selectedDoc?.id) return;
         load(true);
-        const op = await removeDoc(user?.accessToken, selectedDoc.id);
+        const op = await removeDoc(token, selectedDoc.id);
         load(false);
         if (!op) return notify('Something went wrong...');
         setSelectedDoc();

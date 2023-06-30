@@ -5,7 +5,7 @@ import AOS from 'aos';
 
 const Animate = ({ title, icon, animate }) => {
     const editedIcon = cloneElement(icon, { ...icon?.props, size: "25px" });
-    const { path, updateFromPath } = useDom();
+    const { path, updateObjectFromPath } = useDom();
     const { page, setPageData } = useEditor();
     const [styles, setStyles] = useState(false);
 
@@ -15,7 +15,7 @@ const Animate = ({ title, icon, animate }) => {
             else current['data-aos'] = 'fade-in';
             return current;
         };
-        setPageData({ ...updateFromPath(page?.data, path, func)} );
+        setPageData({ ...updateObjectFromPath(page?.data, path, func)} );
     };
 
     useEffect(() => {

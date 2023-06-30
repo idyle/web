@@ -6,7 +6,7 @@ import { connectDomain, disconnectDomain } from "../requests";
 import { useAuth } from "../../../../Contexts/Auth";
 
 const Connect = ({ website }) => {
-    const { user } = useAuth();
+    const { user, getToken } = useAuth();
     const { resetWebsites } = useData();
     const { notify, confirm, load, inform } = useUtil();
     const [sub, setSub] = useState('');
@@ -19,7 +19,8 @@ const Connect = ({ website }) => {
         let host = `${domain}.${tld}`;
         if (sub) host = `${sub}.${host}`;
         load(true);
-        const operation = await connectDomain(user?.accessToken, website?.name, host);
+        const token = await getToken();
+        const operation = await connectDomain(token, website?.name, host);
         load(false);
         if (!operation) return notify('Something went wrong...');
         inform(
@@ -33,7 +34,8 @@ const Connect = ({ website }) => {
         if (!(await confirm('Are you sure you want to disconnect your domain?'))) return;
         if (!website?.domain) return notify('No domain available.');
         load(true);
-        const operation = await disconnectDomain(user?.accessToken, website?.name);
+        const token = await getToken();
+        const operation = await disconnectDomain(token, website?.name);
         load(false);
         if (!operation) return notify('Something went wrong...');
         resetWebsites();

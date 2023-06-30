@@ -6,7 +6,7 @@ const Documents = () => {
     const { docs } = useData();
     return (
         <div className="grid grid-rows-[auto_minmax(0,_1fr)] h-full items-center justify-items-center overflow-auto p-4">
-            <h1 className="text-4xl font-bold">Documents</h1>
+            { (docs?.length > 0) && <h1 className="text-4xl font-bold">Documents</h1> }
             <div className="grid w-full h-full overflow-auto auto-rows-min">
                 {
                     docs.map((doc, i) => {

@@ -7,8 +7,8 @@ import { useData } from "../../../Contexts/Data";
 
 const Setup = ({ website }) => {
 
-    const { user } = useAuth();
-    const { resetWebsites, websites, websiteName, setWebsiteName } = useData();
+    const { getToken } = useAuth();
+    const { resetWebsites, websites, setWebsiteName } = useData();
     const { notify, prompt } = useUtil();
     const [active, setActive] = useState(false);
     
@@ -16,8 +16,9 @@ const Setup = ({ website }) => {
         if (active) setActive(false);
         const websiteName = await prompt('', 'Input the name of your website below');
         if (!websiteName) return;
-        notify("Started setting up your website. We'll let you know when it's complete!")
-        const operation = await createWebsite(user?.accessToken, websiteName);
+        notify("Started setting up your website. We'll let you know when it's complete!");
+        const token = await getToken();
+        const operation = await createWebsite(token, websiteName);
         if (!operation) return notify("An error occured trying to make the website.");
         notify("Successfully created the website.");
         resetWebsites();

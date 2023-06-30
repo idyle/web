@@ -4,7 +4,7 @@ import formats from "./formats";
 import { useEditor } from "../../Editor";
 
 const Format = ({ title, icon, format }) => {
-    const { path, updateFromPath } = useDom();
+    const { path, updateObjectFromPath } = useDom();
     // by default, true
     const { page, setPageData } = useEditor();
     const [styles, setStyles] = useState('');
@@ -52,7 +52,7 @@ const Format = ({ title, icon, format }) => {
             // current.style = { ...style };
             // return current;
         };
-        setPageData({ ...updateFromPath(page?.data, path, func) });
+        setPageData({ ...updateObjectFromPath(page?.data, path, func) });
         // setPageData({ ...updateClassFromPath(page?.data, path, formats[format]) });
     };
 

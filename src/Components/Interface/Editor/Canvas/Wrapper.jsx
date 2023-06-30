@@ -4,8 +4,6 @@
 import { useState, useEffect } from 'react';
 import { useDom } from './Canvas';
 import { useEditor } from '../Editor';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 // if a child is being hovered in a parent, how do we signify this?
 
@@ -13,10 +11,10 @@ const Wrapper = ({ children }) => {
 
     const [edit, setEdit] = useState(false);
     const [value, setValue] = useState(children?.props?.children);
-    const { page, setPageData } = useEditor();
+    const { page, setPageData, serialize } = useEditor();
     const { 
         selectedData, selected, setSelected, hovered, setHovered, path,
-        deleteObjectFromPath, setObjectFromPath, updateChildrenFromPath 
+        deleteObjectFromPath, setObjectFromPath, updateObjectFromPath 
     } = useDom();
 
     // add additional hover property to ensure that only one is hovered
@@ -54,7 +52,12 @@ const Wrapper = ({ children }) => {
         setEdit(false);
         if (children.props.children === value) return;
         // no changes needed
-        setPageData({ ...updateChildrenFromPath(page?.data, path, value) });
+        const func = (current) => {
+            current.children = value;
+            return current;
+        };
+        setPageData({ ...updateObjectFromPath(page?.data, path, func) });
+        // setPageData({ ...updateChildrenFromPath(page?.data, path, value) });
         // run update based on path
     };
 
@@ -74,16 +77,23 @@ const Wrapper = ({ children }) => {
     const onDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (selected === children.props.id) return;
+        if (selected === children.props.id || !selectedData) return;
         // where receiving element is children.props.id
         let dropPath = [];
         if (children.props.id?.includes('-')) dropPath = children.props.id.split('-');
         dropPath.shift();
         for (let i = 0; i < dropPath.length; i++) dropPath[i] = parseInt(dropPath[i]);
-        const data = setObjectFromPath(page?.data, dropPath, { ...selectedData, id: undefined });
-        // (1) add element into receiving element
-        setPageData({ ...deleteObjectFromPath(data, path) });
-        // (2) delete element at current position and add to page data
+        // TODO: probably delete id rather than mark it as undefined
+        let obj = selectedData || {};
+        delete obj['id'];
+        // delete the object first
+        const data = deleteObjectFromPath(page?.data, path);
+        // add the object into the drop path
+        setPageData({ ...setObjectFromPath({ ...serialize(data) }, dropPath, { ...obj }) });
+        // const data = setObjectFromPath(page?.data, dropPath, { ...obj });
+        // // (1) add element into receiving element
+        // setPageData({ ...deleteObjectFromPath({ ...serialize(data) }, path) });
+        // // (2) delete element at current position and add to page data
     };
 
     const onDragStart = (e) => {

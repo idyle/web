@@ -9,18 +9,21 @@ import { BsPersonCircle } from 'react-icons/bs';
 import { useData } from "../../../../Contexts/Data";
 
 const Profile = () => {
-    const { user } = useAuth();
-    const { notify } = useUtil();
+    const { user, getToken } = useAuth();
+    const { notify, load } = useUtil();
     const { resetData } = useData();
     const onSignOut = () => {
         signOut(getAuth());
         resetData();
     };
 
-    const copyToClip = () => {
+    const copyToClip = async () => {
+        load(true);
+        const token = await getToken();
+        load(false);
+        if (!token) return;
         notify('Successfully copied to clipboard');
-        navigator.clipboard.writeText(user?.accessToken);
-        
+        navigator.clipboard.writeText(token);
     };
 
     const [info, setInfo] = useState([]);

@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getAdditionalUserInfo, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useUtil } from './Util';
 
 const AuthValues = createContext();
 export const useAuth = () => useContext(AuthValues);
@@ -29,7 +28,7 @@ const AuthContext = ({ children }) => {
         localStorage.setItem('idyle-auth', auth);
     }), []);
 
-    const getToken = async () => (await getAuth().currentUser.getIdToken(true));
+    const getToken = async () => (await getAuth()?.currentUser?.getIdToken(true));
 
     const resetUser = async () => {
         const latest = await getAuth().currentUser.getIdTokenResult(true);

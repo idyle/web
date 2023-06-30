@@ -7,7 +7,7 @@ const Sizing = ({ icon, format }) => {
 
     const editedIcon = cloneElement(icon, { ...icon?.props, size: "25px" });   
     const { setPageData, page } = useEditor();
-    const { path, updateStylesFromPath } = useDom();
+    const { path, updateObjectFromPath } = useDom();
     const [px, setPx] = useState(0);
 
     // rather than a useEffect, create a func that updates the element
@@ -17,7 +17,12 @@ const Sizing = ({ icon, format }) => {
         let obj = {};
         obj['lineHeight'] = `${entry + 8}px`;
         obj[format] = `${entry}px`;
-        setPageData({ ...updateStylesFromPath(page?.data, path, { ...obj }) });
+        const func = (current) => {
+            if (current) current.style = { ...current.style, ...obj };
+            return current;
+        };
+        setPageData({ ...updateObjectFromPath(page?.data, path, func) });
+        // setPageData({ ...updateStylesFromPath(page?.data, path, { ...obj }) });
     };
 
     useEffect(() => {

@@ -6,14 +6,19 @@ const Color = ({ icon, format }) => {
     const editedIcon = cloneElement(icon, { color: "inherit", size: "25px" });
 
     const { setPageData, page } = useEditor();
-    const { updateStylesFromPath, path } = useDom();
+    const { updateObjectFromPath, path } = useDom();
     const [color, setColor] = useState('#000000');
     const onChange = (e) => setColor(e.target.value);
 
     const onBlur = () => {
         let obj = {};
         obj[format] = color;
-        setPageData({ ...updateStylesFromPath(page?.data, path, { ...obj }) });
+        const func = (current) => {
+            if (current) current.style = { ...current.style, ...obj };
+            return current;
+        };
+        setPageData({ ...updateObjectFromPath(page?.data, path, func) });
+        // setPageData({ ...updateStylesFromPath(page?.data, path, { ...obj }) });
     };
 
     useEffect(() => {

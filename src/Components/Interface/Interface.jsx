@@ -13,22 +13,22 @@ import { useUtil } from '../../Contexts/Util';
 
 const Interface = () => {
 
-    const { user } = useAuth();
-    const { notify, inform } = useUtil();
+    const { user, auth } = useAuth();
+    const { notify, inform, loading } = useUtil();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        if (!user || user?.planType || searchParams?.get('session')) return;
+        if (loading || !user || user?.planType || searchParams?.get('session')) return;
         (async () => {
                 await inform("You don't have a plan yet!", "Select a plan to get started.");
                 navigate('/payments');
                 return notify('Browse through our amazing plans and select the one best for you.', 5000);   
             }
         )();
-    }, [user, searchParams]);
+    }, [user, searchParams, loading]);
 
-    return (
+    if (auth) return (
         <div className='grid h-full grid-rows-[auto_minmax(0,_1fr)]'>
             <Navigator />
             <Routes>
@@ -43,6 +43,7 @@ const Interface = () => {
             </Routes>
         </div>
     )
+    else return (<Navigate to="login"/>)
 };
 
 export default Interface;

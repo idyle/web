@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { AiOutlinePartition, AiOutlineFile, AiOutlineLink, AiOutlineUpload } from 'react-icons/ai';
 import { useAuth } from '../../../Contexts/Auth';
 import { useUtil } from '../../../Contexts/Util';
@@ -9,22 +8,19 @@ import { useData } from '../../../Contexts/Data';
 
 const Objects = () => {
 
-    const { user } = useAuth();
+    const { getToken } = useAuth();
     const { load } = useUtil();
     const { objects, setObjects } = useData();
     const onChange = async (e) => {
         if (!e.target?.files[0]) return;
-
         const name = e.target?.files[0]?.name;
         const type = e.target?.files[0]?.type;
-
         load(true);
-        const url = await uploadFile(user?.accessToken, e.target.files[0]);
+        const token = await getToken();
+        const url = await uploadFile(token, e.target.files[0]);
         load(false);
         if (!url) return;
-
         setObjects([ ...objects, { name, type, ...url } ])
-
     };
 
     return (

@@ -18,7 +18,7 @@ const Editor = () => {
                     })
                 }
             </div>
-            <h1 className="text-4xl font-bold">Pages</h1>
+            { (pages?.length > 0) && <h1 className="text-4xl font-bold">Pages</h1> }
         </div>
     )
 };

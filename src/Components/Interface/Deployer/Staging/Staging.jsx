@@ -1,21 +1,21 @@
 import { RiGasStationFill } from 'react-icons/ri';
 import File from './File';
 import { useUtil } from '../../../../Contexts/Util';
-import { useAuth } from '../../../../Contexts/Auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { convertPages } from '../requests';
 import { useData } from '../../../../Contexts/Data';
 import Page from './Page';
 import { getAuth } from 'firebase/auth';
+import { useAuth } from '../../../../Contexts/Auth';
 
 const Staging = ({ deploy }) => {
 
+    const { getToken } = useAuth();
     const { confirm, notify, setIntegrator, integrator, load } = useUtil();
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
     const { pages: pagesFromEditor, resetObjects } = useData();
-    const { user } = useAuth();
     const [files, setFiles] = useState([]);
     const [pages, setPages] = useState(pagesFromEditor);
     const [index, setIndex] = useState();
@@ -58,7 +58,7 @@ const Staging = ({ deploy }) => {
         if (!pages?.length) return deploy(files);
         notify('Beginning conversion on the pages first...');
         load(true);
-        const token = await getAuth().currentUser.getIdToken(true);
+        const token = await getToken();
         const batch = await convertPages(token);
         load(false);
         if (!batch) return notify('Something went wrong trying to convert.');

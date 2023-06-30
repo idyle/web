@@ -5,13 +5,12 @@ import Plan from './Plan';
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { cancelPlan, confirmCheckout, getCheckout } from "./requests";
-import { getAuth } from "firebase/auth";
 import plans from './plans';
 import { useData } from "../../../Contexts/Data";
 
 const Payments = () => {
 
-    const { user, resetUser } = useAuth();
+    const { user, resetUser, getToken } = useAuth();
     const { load, notify, confirm, inform } = useUtil();
     const { resetData, renewData } = useData();
     const navigate = useNavigate();
@@ -22,7 +21,7 @@ const Payments = () => {
         if (!sessionId || !user) return;
         (async () => {
             load(true);
-            const { token } = await getAuth().currentUser.getIdTokenResult(true);
+            const token = await getToken();
             const confirm = await confirmCheckout(token, sessionId);
             load(false);
             if (!confirm) return;
@@ -43,7 +42,7 @@ const Payments = () => {
         // if user already owns plan 
         if (!id) return;
         load(true);
-        const { token } = await getAuth().currentUser.getIdTokenResult(true);
+        const token = await getToken();
         const link = await getCheckout(token, id);
         load(false);
         if (!link) return;
@@ -54,7 +53,7 @@ const Payments = () => {
     const onCancel = async () => {
         if (!user?.planId) return;
         if (!(await confirm('Are you sure you want to cancel your subscription? This action is permanent.'))) return;
-        const { token } = await getAuth().currentUser.getIdTokenResult(true);
+        const token = await getToken();
         if (!token) return;
         load(true);
         const operation = await cancelPlan(token, user?.planId);

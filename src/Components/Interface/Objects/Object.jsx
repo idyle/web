@@ -7,30 +7,32 @@ import { useNavigate } from 'react-router-dom';
 const Object = ({ object, objects, setObjects }) => {
 
     const navigate = useNavigate();
-    const { user, token } = useAuth();
+    const { getToken } = useAuth();
     const { notify, confirm, load, integrator, setIntegrator } = useUtil();
 
     const copy = async () => {
-        load(true);
-        const file = await getFile(token, object?.name);
-        load(false);
+        let file = object;
+        if (!object?.public) {
+            load(true);
+            const token = await getToken();
+            file = await getFile(token, object?.name);
+            load(false);
+        };
         if (!file) return notify('Could not get the file url.');
         notify('Successfully copied to clipboard');
         navigator.clipboard.writeText(file.url);
     };
 
     const download = async () => {
-
         load(true);
-        const file = await downloadFile(user?.accessToken, object.name);
+        const token = await getToken();
+        const file = await downloadFile(token, object.name);
         load(false);
         if (!file) return;
-
         const data = Uint8Array.from(file.data);
         const content = new Blob([data.buffer], { type: object.type });
         const encodedUri = window.URL.createObjectURL(content);
         const link = document.createElement("a");
-        
         link.setAttribute("href", encodedUri);
         link.setAttribute("download", object.name);    
         link.click();
@@ -38,7 +40,8 @@ const Object = ({ object, objects, setObjects }) => {
 
     const remove = async () => {
         load(true);
-        const op = await deleteFile(user?.accessToken, object.name);
+        const token = await getToken();
+        const op = await deleteFile(token, object.name);
         load(false);
         if (!op) return notify('Something went wrong...');
         setObjects(objects.filter(( { name }) => name !== object.name));
@@ -49,14 +52,16 @@ const Object = ({ object, objects, setObjects }) => {
     const sendFile = async () => {
         // send data back
         if (!integrator?.active || integrator?.target !== 'objects' || !integrator?.origin) return;
-        if (!(await confirm('Adding this to the canvas will make your file public. Continue?'))) return;
-        load(true);
-        const operation = await publicFile(user?.accessToken, object?.name);
-        // const updatedFile = await getFile(user?.accessToken, object?.name);
-        load(false);
-        // if (!updatedFile) return;
+        if (!object?.public) {
+            if (!(await confirm('Adding this to the canvas will make your file public. Continue?'))) return;
+            const token = await getToken();
+            load(true);
+            const operation = await publicFile(token, object?.name);
+            load(false);
+            if (!operation) return;
+        };
         const url = `https://cdn.idyle.app/${object?.path}`;
-        if (operation) setIntegrator({ ...integrator, data: { ...object, url } });
+        setIntegrator({ ...integrator, data: { ...object, url } });
         navigate(integrator?.origin);
     };
 

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react';
-import { constructDom } from './Converter';
 import { useEditor } from '../Editor';
 import Toolbar from './Toolbar/Toolbar';
 import Formatter from './Formatter/Formatter';
@@ -35,7 +34,7 @@ export const DomContext = ({ children }) => {
 
     // false === styles; true === styles (md) (none)
 
-    const updateFromPath = (data, path, func) => {
+    const updateObjectFromPath = (data, path, func) => {
         let current = data;
         for (let depth = 0; depth < path.length; depth++) {
             if (current.component === 'div') current = current.children[path[depth]];
@@ -43,67 +42,6 @@ export const DomContext = ({ children }) => {
         };
         current = { ...func(current) };
         // arbitrary func to generalize process
-        return data;
-    };
-
-    const updateStylesFromPath = (data, path, value) => {
-        let current = data;
-        for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') current = current.children[path[depth]];
-            else current = current[path[depth]];
-        };
-        if (current) current.style = { ...current.style, ...value };
-        return data;
-    };
-
-    const updateClassFromPath = (data, path, value) => {
-        let current = data;
-        for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') current = current.children[path[depth]];
-            else current = current[path[depth]];
-        };
-
-        let properties = current.className?.split(' ') || [];
-        const index = properties.findIndex(prop => prop === value);
-        if (index >= 0) properties.splice(index, 1);
-        else properties.push(value);
-
-        current.className = properties.join(" ");
-        return data;
-    };
-
-    const updateChildrenFromPath = (data, path, value) => {
-        let current = data;
-        for (let depth = 0; depth < path?.length; depth++) {
-            if (current?.component === 'div') current = current?.children?.[path[depth]];
-            else current = current?.[path?.[depth]];
-        };
-        current.children = value;
-        return data;
-    };
-
-    const updateObjectFromPathCustom = (data, path, key, value) => {
-        let current = data;
-    
-        for (let depth = 0; depth < path?.length; depth++) {
-            if (current?.component === 'div') current = current?.children?.[path?.[depth]];
-            else current = current?.[path[depth]];
-        };
-
-        current[key] = value;
-        return data;
-    };
-
-    const updateObjectFromPath = (data, path, value, merge = true) => {
-        let current = data;
-    
-        for (let depth = 0; depth < path?.length; depth++) {
-            if (current?.component === 'div') current = current?.children[path?.[depth]];
-            else current = current?.[path?.[depth]];
-        };
-
-        if (!merge) current.className = value;
-        else current.className = `${current?.className} ${value}`;
         return data;
     };
 
@@ -149,11 +87,9 @@ export const DomContext = ({ children }) => {
     };
 
     const values = { 
-        selected, setSelected, hovered, setHovered, path, setPath, 
-        setSelectedData, selectedData,
-        updateObjectFromPath, setObjectFromPath, deleteObjectFromPath,
-        updateChildrenFromPath, updateClassFromPath, updateStylesFromPath,
-        updateFromPath, updateObjectFromPathCustom
+        selected, setSelected, setSelectedData, selectedData,
+        hovered, setHovered, path, setPath, 
+        setObjectFromPath, deleteObjectFromPath, updateObjectFromPath
     };
     return ( <DomValues.Provider value={values}>{children}</DomValues.Provider> );
 };

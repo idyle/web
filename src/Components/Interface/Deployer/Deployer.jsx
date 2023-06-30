@@ -11,12 +11,12 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { IoMdFlask } from 'react-icons/io';
 import { RiGasStationFill } from "react-icons/ri";
 import { useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
 
 const Deployer = () => {
     
+    const { getToken } = useAuth(); 
     const { load, notify } = useUtil();
-    const { websites, websiteName, resetDeploys, resetWebsitesAndDeploys } = useData();
+    const { websites, websiteName, resetWebsitesAndDeploys } = useData();
     const [website, setWebsite] = useState();
     useEffect(() => {
         const website = websites?.find(( { website } ) => website?.name === websiteName)?.website;
@@ -26,7 +26,7 @@ const Deployer = () => {
 
     const deploy = async (files = [], revert) => {
         load(true);
-        const token = await getAuth().currentUser.getIdToken(true);
+        const token = await getToken();
         const operation = await deployWebsite(token, website?.name, files, revert);
         load(false);
         if (!operation) return notify('Deploy failed :(');

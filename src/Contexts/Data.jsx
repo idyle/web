@@ -35,12 +35,12 @@ const DataContext = ({ children }) => {
     };
 
     const [data, setData] = useState(getDataFromSession);
-    const { user } = useAuth();
+    const { getToken } = useAuth();
     const { load } = useUtil();
 
     const onLoad = async () => {
         const cachedData = getDataFromSession();
-        const token = await getAuth()?.currentUser?.getIdToken(true);
+        const token = await getToken();
         if (!token) return setData({ ...data, ...cachedData });
         // attempt to retrieve from cache
         // get cache when applicable
@@ -97,13 +97,13 @@ const DataContext = ({ children }) => {
     useEffect(() => saveToSession(data), [data]);
 
     const resetWebsitesAndDeploys = async () => {
-        const deploys = await listDeploys((await getAuth()?.currentUser?.getIdToken(true)));
-        const websites = await getWebsites((await getAuth()?.currentUser?.getIdToken(true)));
+        const deploys = await listDeploys((await getToken()));
+        const websites = await getWebsites((await getToken()));
         setData({ ...data, deploys, websites });
     };
-    const resetObjects = async () => setObjects((await listFiles((await getAuth()?.currentUser?.getIdToken(true)))));
-    const resetDeploys = async () => setDeploys((await listDeploys((await getAuth()?.currentUser?.getIdToken(true)))));
-    const resetWebsites = async () => setWebsites((await getWebsites((await getAuth()?.currentUser?.getIdToken(true)))));
+    const resetObjects = async () => setObjects((await listFiles((await getToken()))));
+    const resetDeploys = async () => setDeploys((await listDeploys((await getToken()))));
+    const resetWebsites = async () => setWebsites((await getWebsites((await getToken()))));
 
     const setPages = (array) => setData({ ...data, pages: array }); 
     const setDeploys = (array) => setData({ ...data, deploys: array });

@@ -19,7 +19,7 @@ export const useEditor = () => useContext(EditorValues);
 
 export const EditorContext = ({ children }) => {
 
-    const { user, getToken } = useAuth();
+    const { getToken } = useAuth();
     const { load, notify, confirm } = useUtil();
     const { pages, setPages, pageId, setPageId } = useData();
     const pageQuery = pages?.find(({ id }) => id === pageId);
@@ -85,7 +85,8 @@ export const EditorContext = ({ children }) => {
     const remove = async (page) => {
         if (!(await confirm("You're about to delete a page. This action cannot be undone. Proceed?"))) return;
         load(true);
-        const operation = await deletePage(user?.accessToken, page);
+        const token = await getToken();
+        const operation = await deletePage(token, page);
         load(false);
         if (!operation) return notify('Something went wrong trying to delete this page.');
         setPages(pages.filter(({ id }) => id !== page?.id));
@@ -103,7 +104,7 @@ export const EditorContext = ({ children }) => {
     const values = { 
         page, setPage, pages, setPages,
         setPageData, setPageId, setPageMetadata,
-        remove, edit,
+        remove, edit, serialize,
         toggle, setToggle, css, setCss, font, setFont,
     };
     return ( <EditorValues.Provider value={values}>{children}</EditorValues.Provider> );

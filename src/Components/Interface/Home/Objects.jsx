@@ -16,7 +16,7 @@ const Objects = () => {
     return (
         <div className="grid justify-items-center items-center gap-1 p-3">
             { object && <AiOutlineFile size="50px" /> }
-            { object ? <h1 className="text-3xl text-center font-bold">{object?.name}</h1> : <h1 className="text-4xl text-center">No object available.</h1> }
+            { object && <h1 className="text-3xl text-center font-bold">{object?.name}</h1> }
             <h1 className="text-3xl">{object?.type}</h1>
             { object && <div onClick={copy} className="flex rounded-lg items-center border border-black p-2 select-none hover:scale-[.98]">
                 <AiFillCopy size="30px" />
