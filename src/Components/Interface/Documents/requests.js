@@ -6,7 +6,7 @@ export const setDoc = async (token, doc) => {
         const { id, ...newDoc } = doc;
 
         const options = {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -14,7 +14,7 @@ export const setDoc = async (token, doc) => {
             body: JSON.stringify({ object: newDoc })
         };
 
-        const req = await fetch(`${servicePath}/set/user/${id}?merge=true`, options);
+        const req = await fetch(`${servicePath}/documents/user/${id}?merge=true`, options);
         const res = await req.json();
         return res?.status;
 
@@ -27,14 +27,14 @@ export const setDoc = async (token, doc) => {
 export const listDocs = async (token) => {
     try {
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/list/user`, options);
+        const req = await fetch(`${servicePath}/collections/user`, options);
         const res = await req.json();
         if (!res?.status) return [];
         return res?.list;
@@ -49,14 +49,14 @@ export const removeDoc = async (token, docId) => {
     try {
 
         const options = {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/delete/user/${docId}`, options);
+        const req = await fetch(`${servicePath}/documents/user/${docId}`, options);
         const res = await req.json();
         return res?.status;
 

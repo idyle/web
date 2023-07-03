@@ -3,14 +3,14 @@ const servicePath = `${process.env.REACT_APP_BASEPATH}/payments`;
 export const getCheckout = async (token, planId) => {
     try {
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/checkout/${planId}`, options);
+        const req = await fetch(`${servicePath}/plans/${planId}`, options);
         const res = await req.json();
 
         if (!res?.status) return false;
@@ -32,7 +32,7 @@ export const confirmCheckout = async (token, sessionId) => {
             }
         };
 
-        const req = await fetch(`${servicePath}/confirm/${sessionId}`, options);
+        const req = await fetch(`${servicePath}/plans/${sessionId}`, options);
         const res = await req.json();
         
         return res?.status;
@@ -46,16 +46,16 @@ export const confirmCheckout = async (token, sessionId) => {
 export const cancelPlan = async (token, planId) => {
     try {
         const options = {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/cancel/${planId}`, options);
+        const req = await fetch(`${servicePath}/plans/${planId}`, options);
         const res = await req.json();
-        
+        console.log(res, 'cancellationn');
         return res?.status;
     } catch (e) {
         console.error(e);
@@ -66,7 +66,7 @@ export const cancelPlan = async (token, planId) => {
 export const getMetrics = async (token) => {
     try {
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`

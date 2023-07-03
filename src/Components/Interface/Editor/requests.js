@@ -11,7 +11,7 @@ export const createPage = async (token, page) => {
             body: JSON.stringify({ page })
         };
 
-        let url = `${servicePath}/create/user`;
+        let url = `${servicePath}/pages/user`;
         const req = await fetch(url, options);
         const res = await req.json();
         if (res?.status) return res;
@@ -25,7 +25,7 @@ export const createPage = async (token, page) => {
 export const editPage = async (token, page) => {
     try {
         const options = {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -33,7 +33,7 @@ export const editPage = async (token, page) => {
             body: JSON.stringify({ page })
         };
 
-        let url = `${servicePath}/edit/user/${page?.id}`;
+        let url = `${servicePath}/pages/user/${page?.id}`;
         const req = await fetch(url, options);
         const res = await req.json();
         return res?.status
@@ -43,43 +43,18 @@ export const editPage = async (token, page) => {
     }
 };
 
-// export const savePage = async (token, page) => {
-//     try {
-//         const options = {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${token}`
-//             },
-//             body: JSON.stringify({ page })
-//         };
-
-//         let url = `${servicePath}/save/user`;
-//         if (page?.id) url = `${url}/${page?.id}`;
-
-//         const req = await fetch(url, options);
-//         const res = await req.json();
-//         if (res?.status) return res;
-//         return res?.status;
-
-//     } catch (e) {
-//         console.error(e);
-//         return false;
-//     }
-// };
-
 export const listPages = async (token, filter, value) => {
     try {
 
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
         };
 
-        let url = `${servicePath}/list/user`;
+        let url = `${servicePath}/pages/user`;
         if (filter && value) url = `${url}?filter=${filter}&value=${value}`;
 
         const req = await fetch(url, options);
@@ -96,14 +71,14 @@ export const getPage = async (token, page) => {
     try {
 
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/get/user/${page?.id}`, options);
+        const req = await fetch(`${servicePath}/pages/user/${page?.id}`, options);
         const res = await req.json();
         if (!res?.status) return false;
         return res?.page;
@@ -118,16 +93,72 @@ export const deletePage = async (token, page) => {
     try {
 
         const options = {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/delete/user/${page?.id}`, options);
+        const req = await fetch(`${servicePath}/pages/user/${page?.id}`, options);
         const res = await req.json();
         return res?.status;
+
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
+export const convertPage = async (token, entryId, customPath, stringOutput) => {
+    try {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        };
+
+        let url = `${servicePath}/convert/user/${entryId}`;
+        if (customPath) url = `${url}?type=custom`;
+        if (stringOutput && customPath) url = `${url}&output=string`
+        else if (stringOutput) url = `${url}?output=string`;
+
+        const req = await fetch(url, options);
+        const res = await req.json();
+        if (!res?.status) return false;
+        if (stringOutput) return res;
+        return res?.status;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
+// in replacement of above func, batch convert pages 
+
+export const convertPages = async (token, stringOutput) => {
+    try {
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        };
+
+        let url = `${servicePath}/batchconvert/user`;
+        if (stringOutput) url = `${url}?output=string`
+
+        const req = await fetch(url, options);
+        const res = await req.json();
+        if (!res?.status) return false;
+        if (stringOutput) return res;
+        return res?.status;
+        // we just access the files in docs
 
     } catch (e) {
         console.error(e);

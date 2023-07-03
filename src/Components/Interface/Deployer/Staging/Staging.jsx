@@ -3,10 +3,9 @@ import File from './File';
 import { useUtil } from '../../../../Contexts/Util';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { convertPages } from '../requests';
+import { convertPages } from '../../Editor/requests';
 import { useData } from '../../../../Contexts/Data';
 import Page from './Page';
-import { getAuth } from 'firebase/auth';
 import { useAuth } from '../../../../Contexts/Auth';
 
 const Staging = ({ deploy }) => {

@@ -14,7 +14,7 @@ export const uploadFile = async (token, file) => {
             body: form
         };
 
-        const req = await fetch(`${servicePath}/upload/user/${file.name}`, options);
+        const req = await fetch(`${servicePath}/files/user/${file.name}`, options);
         const res = await req.json();
         if (!res?.status) return false;
         return res?.file;
@@ -28,14 +28,14 @@ export const uploadFile = async (token, file) => {
 export const listFiles = async (token) => {
     try {
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/list/user`, options);
+        const req = await fetch(`${servicePath}/folders/user`, options);
         const res = await req.json();
         if (!res?.status) return false;
         return res?.list;
@@ -50,14 +50,14 @@ export const downloadFile = async (token, fileName) => {
     try {
 
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/download/user/${fileName}`, options);
+        const req = await fetch(`${servicePath}/files/user/${fileName}?type=download`, options);
         const res = await req.json();
 
         if (!res?.status) return false;
@@ -73,14 +73,14 @@ export const deleteFile = async (token, fileName) => {
     try {
 
         const options = {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/delete/user/${fileName}`, options);
+        const req = await fetch(`${servicePath}/files/user/${fileName}`, options);
         const res = await req.json();
         return res?.status;
 
@@ -94,14 +94,14 @@ export const getFile = async (token, fileName) => {
     try {
 
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/get/user/${fileName}`, options);
+        const req = await fetch(`${servicePath}/files/user/${fileName}`, options);
         const res = await req.json();
         if (!res?.status) return false;
         return res?.file;
@@ -116,14 +116,14 @@ export const publicFile = async (token, fileName) => {
     try {
 
         const options = {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
 
-        const req = await fetch(`${servicePath}/public/user/${fileName}`, options);
+        const req = await fetch(`${servicePath}/files/user/${fileName}`, options);
         const res = await req.json();
         return res?.status
     } catch (e) {

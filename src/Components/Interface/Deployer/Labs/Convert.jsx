@@ -4,7 +4,7 @@ import { useUtil } from "../../../../Contexts/Util";
 import { useAuth } from "../../../../Contexts/Auth";
 import { BsThreeDots } from 'react-icons/bs';
 import { MdClose } from "react-icons/md";
-import { convertPage } from "../requests";
+import { convertPage } from "../../Editor/requests";
 import { useData } from "../../../../Contexts/Data";
 
 const Convert = () => {
