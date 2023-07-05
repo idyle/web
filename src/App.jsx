@@ -10,7 +10,7 @@ import Loader from './Utilities/Loader';
 const App = () => {
     return (
         <Contexts>
-            <div className='grid grid-rows-[minmax(0,_1fr)] h-full min-h-screen md:h-screen bg-white overflow-auto'>
+            <div className='grid grid-rows-[auto_minmax(0,_1fr)] h-full min-h-screen md:h-screen bg-white overflow-auto'>
                 <Loader />
                 <Components />
                 <Notifier />

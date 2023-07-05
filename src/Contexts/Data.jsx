@@ -41,7 +41,10 @@ const DataContext = ({ children }) => {
     const onLoad = async () => {
         const cachedData = getDataFromSession();
         const token = await getToken();
-        if (!token) return setData({ ...data, ...cachedData });
+        if (!token) {
+            load(false);
+            return setData({ ...data, ...cachedData });
+        }
         // attempt to retrieve from cache
         // get cache when applicable
         let missing = [];
