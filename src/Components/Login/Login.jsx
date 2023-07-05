@@ -12,7 +12,7 @@ export const useSignIn = () => useContext(SignInValues);
 
 export const SignInContext = ({ children }) => {
     const { auth } = useAuth();
-    const { load, notify } = useUtil();
+    const { spin, notify } = useUtil();
     const [transit, setTransit] = useState(localStorage.getItem('transit'));
     const [linkage, setLinkage] = useState(localStorage.getItem('linkage'));
 
@@ -28,8 +28,8 @@ export const SignInContext = ({ children }) => {
 
     useEffect(() => {
         // sets off loader due to a transit state
-        if (transit && !auth) return load(true);
-        load(false);
+        if (transit && !auth) return spin(true);
+        spin(false);
     }, [transit, auth]);
 
     const handleDuplicateError = (e) => {

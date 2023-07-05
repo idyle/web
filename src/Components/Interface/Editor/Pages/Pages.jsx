@@ -10,7 +10,7 @@ const Pages = () => {
 
     const { getToken } = useAuth();
     const { pages, setPages } = useEditor();
-    const { notify, prompt, load } = useUtil();
+    const { notify, prompt, spin } = useUtil();
 
     const config = { name: 'New Page', route: 'newpage', data: {
         component: 'div',
@@ -19,33 +19,16 @@ const Pages = () => {
         children: []
     } };
 
-    // const [addPageMode, setAddPageMode] = useState(false);
-    // const addPage = () => setAddPageMode(true);
-
-    // const editPage = (page) => {
-    //     // an edit already sets regardless
-    //     if (addPageMode) setAddPageMode(false);
-    //     if (page?.route === config?.route) return notify('Please change the route');
-    //     const routeIndex = pages.findIndex(({ route }) => route === page?.route);
-    //     const pageIndex = pages.findIndex(({ id }) => id === page?.id);
-    //     if (routeIndex >= 0 && pageIndex !== routeIndex) return notify('This route already exists.');
-    //     let arr = pages;
-    //     if (addPageMode) arr.push(page);
-    //     else arr[pageIndex] = page;
-    //     setPages([ ...arr ]);
-    //     save(page);
-    // };
-
     const createNewPage = async () => {
         const pageName = await prompt('', 'Input a page name');
         if (!pageName) return;
         const routeIndex = pages.findIndex(({ route }) => route === pageName);
         if (routeIndex >= 0) return notify('This route already exists.');
-        load(true);
+        spin(true);
         const token = await getToken();
         const newPage = { ...config, route: pageName };
         const operation = await createPage(token, newPage);
-        load(false);
+        spin(false);
         if (!operation) return notify('Something went wrong trying to create the page');
         setPages([ ...pages, { ...newPage, id: operation?.id }]);
     };

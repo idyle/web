@@ -6,19 +6,19 @@ const Confirm = ({ code }) => {
 
     const navigate = useNavigate();
 
-    const { load, notify } = useUtil();
+    const { spin, notify } = useUtil();
 
     const onClick = async () => {
         try {
             if (!code) return;
-            load(true);
+            spin(true);
             await applyActionCode(getAuth(), code);
             navigate('/login/login');
-            load(false);
+            spin(false);
             notify('You have been successfully verified');
         } catch (e) {
             console.error(e);
-            load(false);
+            spin(false);
             notify('Something went wrong in the verification.');
         }
     };

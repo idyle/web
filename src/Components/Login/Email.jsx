@@ -8,7 +8,7 @@ import Providers from './Providers';
 const Email = () => {
     const [credentials, setCredentials] = useState({});
     const { transit, setTransit, handleDuplicateError } = useSignIn();
-    const { load, notify } = useUtil();
+    const { spin, notify } = useUtil();
     const navigate = useNavigate();
 
     const onChange = (e) => {
@@ -20,9 +20,9 @@ const Email = () => {
         if (transit) return;
         try {
             setTransit(true);
-            load(true);
+            spin(true);
             const { email = '', password = '' } = credentials;
-            const test = await signInWithEmailAndPassword(getAuth(), email, password);
+            await signInWithEmailAndPassword(getAuth(), email, password);
             setTransit();
         } catch (e) {
             setTransit();

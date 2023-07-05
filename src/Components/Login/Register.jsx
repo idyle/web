@@ -8,7 +8,7 @@ import Providers from "./Providers";
 const Register = () => {
     const [credentials, setCredentials] = useState({});
     const { transit, setTransit, handleDuplicateError } = useSignIn();
-    const { load, notify } = useUtil();
+    const { spin, notify } = useUtil();
     const navigate = useNavigate();
 
     const onChange = (e) => {
@@ -41,7 +41,7 @@ const Register = () => {
         if (!verifyInfo()) return;
         try {
             setTransit(true);
-            load(true);
+            spin(true);
             const { email = '', password = '', name = '' } = credentials;
             const { user } = await createUserWithEmailAndPassword(getAuth(), email, password);
             const proc = await updateProfile(user, { displayName: name });

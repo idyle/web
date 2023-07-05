@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Reset = ({ code }) => {
 
     const navigate = useNavigate();
-    const { load, notify } = useUtil();
+    const { spin, notify } = useUtil();
     const [password, setPassword] = useState('');
 
     const onPasswordChange = (e) => setPassword(e.target.value);
@@ -15,16 +15,16 @@ const Reset = ({ code }) => {
         const verifiedEmail = await verifyPasswordResetCode(getAuth(), code);
         if (!code || !password || !verifiedEmail) return;
         try {
-            load(true);
+            spin(true);
             const test = await confirmPasswordReset(getAuth(), code, password);
             await signInWithEmailAndPassword(getAuth(), verifiedEmail, password);
             navigate('/');
             notify('password changed!');
-            load(false);
+            spin(false);
         } catch (e) {
             if (e.code === 'auth/invalid-action-code') notify('This session is invalid.');
             else notify('an error occured');
-            load(false);
+            spin(false);
             console.error(e);
         }
     };

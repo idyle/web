@@ -4,6 +4,7 @@ const UtilValues = createContext();
 export const useUtil = () => useContext(UtilValues);
 
 const UtilContext = ({ children }) => {
+    const [spinning, spin] = useState(false);
     const [loading, load] = useState(false);
     const [notifier, setNotifier] = useState({ active: false });
     const notify = (message, time = 3000) => setNotifier({ message, active: true, time });
@@ -16,7 +17,7 @@ const UtilContext = ({ children }) => {
     const [integrator, setIntegrator] = useState({ active: false });
     const integrate = (origin) => new Promise(resolve => setIntegrator({ resolve, origin, active: true }) );
     const values = { 
-        loading, load, 
+        loading, load, spinning, spin,
         informer, inform, setInformer,
         notifier, notify, setNotifier, 
         confirmer, confirm, setConfirmer,

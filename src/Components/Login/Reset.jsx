@@ -6,7 +6,7 @@ import { useUtil } from "../../Contexts/Util";
 const Reset = () => {
 
     const navigate = useNavigate();
-    const { load, notify } = useUtil();
+    const { spin, notify } = useUtil();
     const [email, setEmail] = useState('');
 
     const onEmailChange = (e) => setEmail(e.target.value);
@@ -15,10 +15,10 @@ const Reset = () => {
     const onEmailClick = async () => {
         if (!email) return;
         try {
-            load(true);
+            spin(true);
             const test = await sendPasswordResetEmail(getAuth(), email);
             notify('email sent!', test);
-            load(false);
+            spin(false);
         } catch (e) {
             console.error(e);
         }

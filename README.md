@@ -1,4 +1,4 @@
-# [idyle/web](https://idyle.app)
+# [idyle/web](https://web.idyle.app)
 
 idyle's multi-service website and platform.
 
@@ -13,7 +13,7 @@ idyle is the first open platform website builder that offers full user freedom a
 5. Objects - storage service
 6. Documents - database service
 
-These services are accessible at `https://idyle.app`.
+These services are accessible at `https://web.idyle.app`.
 
 ## Technologies and Services
 

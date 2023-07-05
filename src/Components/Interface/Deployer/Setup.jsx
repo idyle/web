@@ -9,7 +9,7 @@ const Setup = ({ website }) => {
 
     const { getToken } = useAuth();
     const { resetWebsites, websites, setWebsiteName } = useData();
-    const { notify, prompt } = useUtil();
+    const { load, notify, prompt } = useUtil();
     const [active, setActive] = useState(false);
     
     const onCreate = async () => {
@@ -17,8 +17,10 @@ const Setup = ({ website }) => {
         const websiteName = await prompt('', 'Input the name of your website below');
         if (!websiteName) return;
         notify("Started setting up your website. We'll let you know when it's complete!");
+        load(true);
         const token = await getToken();
         const operation = await createWebsite(token, websiteName);
+        load(false);
         if (!operation) return notify("An error occured trying to make the website.");
         notify("Successfully created the website.");
         resetWebsites();

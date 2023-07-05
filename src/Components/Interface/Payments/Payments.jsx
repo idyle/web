@@ -11,7 +11,7 @@ import { useData } from "../../../Contexts/Data";
 const Payments = () => {
 
     const { user, resetUser, getToken } = useAuth();
-    const { load, notify, confirm, inform } = useUtil();
+    const { spin, notify, confirm, inform } = useUtil();
     const { resetData, renewData } = useData();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -20,10 +20,10 @@ const Payments = () => {
         const sessionId = searchParams?.get('session');
         if (!sessionId || !user) return;
         (async () => {
-            load(true);
+            spin(true);
             const token = await getToken();
             const confirm = await confirmCheckout(token, sessionId);
-            load(false);
+            spin(false);
             if (!confirm) return;
             await resetUser();
             await renewData();
@@ -41,10 +41,10 @@ const Payments = () => {
         if (user?.planType) return notify('To select another plan, cancel the one you have.'); 
         // if user already owns plan 
         if (!id) return;
-        load(true);
+        spin(true);
         const token = await getToken();
         const link = await getCheckout(token, id);
-        load(false);
+        spin(false);
         if (!link) return;
         window.location.replace(link);
         // navigate to checkout
@@ -55,9 +55,9 @@ const Payments = () => {
         if (!(await confirm('Are you sure you want to cancel your subscription? This action is permanent.'))) return;
         const token = await getToken();
         if (!token) return;
-        load(true);
+        spin(true);
         const operation = await cancelPlan(token, user?.planId);
-        load(false);
+        spin(false);
         if (!operation) return;
         resetData();
         resetUser();

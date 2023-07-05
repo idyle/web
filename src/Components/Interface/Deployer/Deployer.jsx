@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 const Deployer = () => {
     
     const { getToken } = useAuth(); 
-    const { load, notify } = useUtil();
+    const { spin, notify } = useUtil();
     const { websites, websiteName, resetWebsitesAndDeploys } = useData();
     const [website, setWebsite] = useState();
     useEffect(() => {
@@ -25,10 +25,10 @@ const Deployer = () => {
     }, [websites, websiteName]);
 
     const deploy = async (files = [], revert) => {
-        load(true);
+        spin(true);
         const token = await getToken();
         const operation = await deployWebsite(token, website?.name, files, revert);
-        load(false);
+        spin(false);
         if (!operation) return notify('Deploy failed :(');
         notify("Successfully deployed your page. Due to caching, changes may take up to an hour to take effect.");
         resetWebsitesAndDeploys();

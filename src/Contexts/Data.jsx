@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./Auth";
 import { listPages } from "../Components/Interface/Editor/requests";
-import { getWebsite, getWebsites, listDeploys } from "../Components/Interface/Deployer/requests";
+import { getWebsites, listDeploys } from "../Components/Interface/Deployer/requests";
 import { listDocs } from '../Components/Interface/Documents/requests';
 import { listFiles } from "../Components/Interface/Objects/requests";
 import { getMetrics } from "../Components/Interface/Payments/requests";
@@ -52,7 +52,7 @@ const DataContext = ({ children }) => {
         for (const key of keys) if (!data?.[key]) missing.push(key);
 
         if (!missing.length) {
-            load(false)
+            load(false);
             return setData({ ...data, ...cachedData });
         };
         // if no missing data

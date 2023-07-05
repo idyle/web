@@ -20,7 +20,7 @@ export const useEditor = () => useContext(EditorValues);
 export const EditorContext = ({ children }) => {
 
     const { getToken } = useAuth();
-    const { load, notify, confirm } = useUtil();
+    const { spin, notify, confirm } = useUtil();
     const { pages, setPages, pageId, setPageId } = useData();
     const pageQuery = pages?.find(({ id }) => id === pageId);
     const [page, setPage] = useState(pageQuery);
@@ -59,35 +59,12 @@ export const EditorContext = ({ children }) => {
         }
     };
 
-    // const save = async (page) => {
-    //     const index = pages.findIndex(( { id } ) => id === page?.id);
-    //     if (!(index >= 0)) return false;
-    //     // a page must be created
-    //     const lastPageData = pages[index];
-    //     pages[index] = { ...page, id: lastPageData?.id };
-    //     setPage({ ...page });
-    //     setPages([ ...pages ]);
-    //     const token = await getToken();
-    //     const operation = await savePage(token, page);
-    //     if (!lastPageData?.id) {
-    //         pages[index] = { ...lastPageData, id: operation?.id };
-    //         setPages([ ...pages ]);
-    //         setPage({ ...lastPageData, id: operation?.id });
-    //     };
-    //     if (operation) return false;
-    //     notify('Something went wrong trying to save the page.');
-    //     pages[index] = { ...lastPageData };
-    //     setPages([ ...pages ]);
-    //     setPage({ ...lastPageData });
-    //     return true;
-    // };
-
     const remove = async (page) => {
         if (!(await confirm("You're about to delete a page. This action cannot be undone. Proceed?"))) return;
-        load(true);
+        spin(true);
         const token = await getToken();
         const operation = await deletePage(token, page);
-        load(false);
+        spin(false);
         if (!operation) return notify('Something went wrong trying to delete this page.');
         setPages(pages.filter(({ id }) => id !== page?.id));
     };
