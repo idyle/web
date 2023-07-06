@@ -1,4 +1,4 @@
-import { AiOutlinePartition, AiOutlineFile, AiOutlineLink, AiOutlineUpload } from 'react-icons/ai';
+import { AiOutlinePartition, AiOutlineInfoCircle, AiOutlineLink, AiOutlineUpload, AiTwotoneFolder } from 'react-icons/ai';
 import { useAuth } from '../../../Contexts/Auth';
 import { useUtil } from '../../../Contexts/Util';
 import Object from './Object';
@@ -11,6 +11,7 @@ const Objects = () => {
     const { getToken } = useAuth();
     const { load } = useUtil();
     const { objects, setObjects } = useData();
+
     const onChange = async (e) => {
         if (!e.target?.files[0]) return;
         const name = e.target?.files[0]?.name;
@@ -24,7 +25,7 @@ const Objects = () => {
     };
 
     return (
-        <div className="grid auto-rows-min md:auto-rows-auto md:grid-rows-[auto_minmax(0,_1fr)_auto] m-5 gap-2">
+        <div className="grid auto-rows-min md:auto-rows-auto md:grid-rows-[auto_minmax(0,_1fr)_auto] mx-5 gap-2">
 
             <Helmet>
                 <title>idyle - Objects</title>
@@ -36,19 +37,19 @@ const Objects = () => {
             <div className="hidden md:grid md:grid-cols-4 items-center justify-items-center border-2 border-gunmetal text-gunmetal rounded-lg p-3">
                 <div className="flex items-center select-none gap-2">
                     <h1 className="text-2xl font-bold">Aa</h1>
-                    <h1 className="text-3xl font-bold">File Name</h1>
+                    <h1 className="text-3xl font-bold">Name</h1>
                 </div>
                 <div className="flex items-center select-none gap-2">
-                    <AiOutlineFile size="25px" />
-                    <h1 className="text-3xl font-bold">File Type</h1>
+                    <AiOutlineInfoCircle size="25px" />
+                    <h1 className="text-3xl font-bold">Type</h1>
                 </div>
                 <div className="flex items-center select-none gap-2">
                     <AiOutlineLink size="25px" />
-                    <h1 className="text-3xl font-bold">File Link</h1>
+                    <h1 className="text-3xl font-bold">Link</h1>
                 </div>
                 <div className="flex items-center select-none gap-2">
                     <AiOutlinePartition size="25px" />
-                    <h1 className="text-3xl font-bold text-center">File Options</h1>
+                    <h1 className="text-3xl font-bold text-center">Options</h1>
                 </div>
             </div>
 

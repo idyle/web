@@ -1,5 +1,4 @@
 import { useEffect, useState, createContext, useContext } from "react";
-import { signInWithRedirect, getRedirectResult, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, getAuth } from "firebase/auth";
 import { useAuth } from "../../Contexts/Auth";
 import { useUtil } from "../../Contexts/Util";
 import Email from './Email';
@@ -46,7 +45,7 @@ const Login = () => {
     return (
         <SignInContext>
             <div className="grid justify-items-center items-center h-full w-full">
-                <div className="grid h-[90%] w-[400px] my-10 p-6 gap-4 auto-rows-min justify-items-center border border-black rounded-xl shadow-xl overflow-auto">
+                <div className="grid w-[400px] my-10 p-6 gap-4 auto-rows-min justify-items-center border border-black rounded-xl overflow-auto">
                     <div className="grid gap-7 items-center justify-items-center">
                         <h1 className="text-6xl font-bold">idyle</h1>
                     </div>

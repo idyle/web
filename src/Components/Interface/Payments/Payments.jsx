@@ -66,7 +66,7 @@ const Payments = () => {
 
     
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] m-5 gap-5">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] mx-5 gap-5">
 
             <Helmet>
                 <title>idyle - Payments</title>

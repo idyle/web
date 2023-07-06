@@ -7,7 +7,7 @@ import Spinner from "../Utilities/Spinner";
 
 const Components = () => {
     return (
-        <div className="m-2">
+        <div>
             <Routes>
                     <Route path="login/*" element={<Login />} />
                     <Route path="actions" element={<Actions />} />

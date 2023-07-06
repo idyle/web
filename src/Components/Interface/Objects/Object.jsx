@@ -69,7 +69,7 @@ const Object = ({ object, objects, setObjects }) => {
         <div onClick={sendFile} className={`grid grid-cols-2 md:grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg p-2 text-gunmetal ${integrationMode}`}>
             <AiOutlineFile className="block md:hidden" size="50px" />
             <h1 className="text-2xl text-center break-all">{object.name}</h1>
-            <h1 className="text-2xl">{object.type}</h1>
+            <h1 className="text-2xl text-center break-all">{object.type}</h1>
             <div onClick={copy} className="flex items-center border border-gunmetal select-none p-1 gap-1 rounded-lg hover:bg-gunmetal hover:text-white">
                 <AiFillCopy size="15px" />
                 <h1 className="text-xl">Copy Link</h1>

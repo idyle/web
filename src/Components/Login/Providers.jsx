@@ -60,7 +60,7 @@ const Providers = ({ layout = 'default' }) => {
 
     const continueWithGoogle = () => continueWith(new GoogleAuthProvider());
     const continueWithGithub = () => continueWith(new GithubAuthProvider());
-    const continueWithFacebook = () => continueWith(new FacebookAuthProvider());
+    // const continueWithFacebook = () => continueWith(new FacebookAuthProvider());
     
     return (
         <>
@@ -68,12 +68,12 @@ const Providers = ({ layout = 'default' }) => {
                 layout === 'default' ?
                 <div className={`grid w-full gap-1`}>        
                     <Provider icon={<FaGoogle />} text="Continue with Google" onClick={continueWithGoogle} />
-                    <Provider icon={<FaFacebook />} text="Continue with Facebook" onClick={continueWithFacebook} />
+                    {/* <Provider icon={<FaFacebook />} text="Continue with Facebook" onClick={continueWithFacebook} /> */}
                     <Provider icon={<FaGithub />} text="Continue with Github" onClick={continueWithGithub} />
                 </div> :
                 <div className="grid w-full grid-cols-3 gap-1">
                     <Minprovider icon={<FaGoogle />} onClick={continueWithGoogle} />
-                    <Minprovider icon={<FaFacebook />} onClick={continueWithFacebook} />
+                    {/* <Minprovider icon={<FaFacebook />} onClick={continueWithFacebook} /> */}
                     <Minprovider icon={<FaGithub />} onClick={continueWithGithub} />
                 </div>
 

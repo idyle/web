@@ -98,7 +98,7 @@ const Editor = () => {
     }, [pageId]);
 
     return (
-        <div className='grid grid-rows-[auto_minmax(0,_1fr)] m-1'>
+        <div className='grid grid-rows-[auto_minmax(0,_1fr)] mx-5'>
 
             <Helmet>
                 <title>idyle - Editor</title>

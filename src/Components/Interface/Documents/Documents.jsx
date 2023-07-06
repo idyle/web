@@ -63,7 +63,7 @@ const Documents = () => {
                 <link rel="canonical" href="/docs" />
             </Helmet>
             
-            <div className="grid md:grid-cols-2 md:gap-3 md:overflow-auto">
+            <div className="grid md:grid-cols-2 md:gap-3 md:overflow-auto mx-5">
 
                 {/* md:grid should exist regardless  */}
                  <div className={`${!mobileClicked ? 'grid' : 'hidden'} md:grid px-3 md:overflow-auto grid-rows-[auto_minmax(0,_1fr)]`}>

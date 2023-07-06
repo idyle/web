@@ -1,6 +1,6 @@
-import { IoPersonCircle, IoPersonCircleOutline, IoRocket, IoRocketOutline } from 'react-icons/io5';
-import { MdOutlineBuild, MdBuild, MdOutlinePermMedia, MdPermMedia } from 'react-icons/md';
-import { HiCreditCard, HiOutlineCreditCard, HiDatabase, HiOutlineDatabase } from 'react-icons/hi';
+import { IoPersonCircleOutline, IoRocketOutline } from 'react-icons/io5';
+import { MdOutlineBuild, MdOutlinePermMedia } from 'react-icons/md';
+import { HiOutlineCreditCard, HiOutlineDatabase } from 'react-icons/hi';
 import { BiMenu, BiX } from 'react-icons/bi';
 import Navbutton from '../Templates/Navbutton';
 import { useState } from 'react';
@@ -21,7 +21,7 @@ const Navigator = () => {
                 <BiMenu onClick={() => setMobileClicked(true)} className="md:hidden relative" size="45px" />
             </div>
 
-            <div className={`${mobileClicked ? 'h-full' : 'hidden'} top-0 left-0 right-0 md:block absolute md:static md:h-auto md:w-auto z-50`}>
+            <div className={`${mobileClicked ? 'h-full' : 'hidden'} top-0 left-0 right-0 fixed md:block md:static md:h-auto md:w-auto z-50`}>
     
                 <div onClick={() => setMobileClicked(false)} className="absolute right-1 top-[1px] md:hidden">
                     <BiX size="45px" />
