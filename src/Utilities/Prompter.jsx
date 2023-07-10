@@ -21,6 +21,7 @@ const Prompter = () => {
     };
     const onCancel = () => {
         prompter?.resolve(false);
+        setValue('');
         setPrompter({ ...prompter, active: false });
     };
 

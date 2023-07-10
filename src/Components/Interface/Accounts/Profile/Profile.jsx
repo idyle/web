@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { updateProfile } from "firebase/auth";
 import { BsPersonCircle } from 'react-icons/bs';
 import { useData } from "../../../../Contexts/Data";
+import { createSession } from "../requests";
 
 const Profile = () => {
     const { user, getToken } = useAuth();
@@ -20,10 +21,11 @@ const Profile = () => {
     const copyToClip = async () => {
         load(true);
         const token = await getToken();
+        const session = await createSession(token);
         load(false);
-        if (!token) return;
-        notify('Successfully copied to clipboard');
-        navigator.clipboard.writeText(token);
+        if (!session) return;
+        navigator.clipboard.writeText(session);
+        notify('Copied your session token. This is valid for fourteen (14) days.');
     };
 
     const [info, setInfo] = useState([]);
@@ -69,7 +71,7 @@ const Profile = () => {
             <div className="grid p-3 gap-2">
                 <h1 className="text-4xl">Developer Tools</h1>
                 <div className="flex items-center gap-[20px] border border-black rounded-lg p-2">
-                    <h1 className="text-2xl font-black select-none">Access Token</h1>
+                    <h1 className="text-2xl font-black select-none">Session Token</h1>
                     <div onClick={copyToClip} className="flex place-content-center bg-black p-2 rounded-lg select-none hover:scale-[.98]">
                         <h1 className="text-md text-white">Get Token</h1>
                     </div>

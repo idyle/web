@@ -28,10 +28,13 @@ const AuthContext = ({ children }) => {
         localStorage.setItem('idyle-auth', auth);
     }), []);
 
-    const getToken = async () => (await getAuth()?.currentUser?.getIdToken(true));
+    const getToken = async () =>{
+        const latest = await getAuth()?.currentUser?.getIdTokenResult(true);
+        return latest?.token;
+    };
 
     const resetUser = async () => {
-        const latest = await getAuth().currentUser.getIdTokenResult(true);
+        const latest = await getAuth()?.currentUser?.getIdTokenResult(true);
         setUser({ ...getAuth().currentUser, ...latest?.claims });
     };
 
