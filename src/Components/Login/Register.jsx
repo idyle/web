@@ -4,10 +4,12 @@ import { useSignIn } from "./Login";
 import { useUtil } from "../../Contexts/Util";
 import { useNavigate } from "react-router-dom";
 import Providers from "./Providers";
+import { useAuth } from "../../Contexts/Auth";
 
 const Register = () => {
     const [credentials, setCredentials] = useState({});
     const { transit, setTransit, handleDuplicateError } = useSignIn();
+    const { resetUser } = useAuth();
     const { spin, notify } = useUtil();
     const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ const Register = () => {
             else if (value.length < 5) verdict.message = 'Please make entries at least 5 characters.'
         }
         const { password = '', confirm = '' } = credentials;
-        if (password !== confirm) verdict.message = 'Passwords do not match';
+        if (password !== confirm) verdict.message = 'Passwords do not match.';
 
         if (verdict.message) {
             notify(verdict.message);
@@ -44,7 +46,8 @@ const Register = () => {
             spin(true);
             const { email = '', password = '', name = '' } = credentials;
             const { user } = await createUserWithEmailAndPassword(getAuth(), email, password);
-            const proc = await updateProfile(user, { displayName: name });
+            await updateProfile(user, { displayName: name });
+            resetUser();
             await sendEmailVerification(user);
             setTransit();
         } catch (e) {
@@ -62,19 +65,23 @@ const Register = () => {
         <>
             <div className="grid justify-items-center">
                 <h1 className="text-3xl text-center">Register your Account</h1>
-                <h1 onClick={() => navigate('/login/login')} className="text-lg underline select-none">Have an Account? Login here</h1>
+                <h1 onClick={() => navigate('/login/login')} className="text-lg text-blue select-none">Have an Account? Login here</h1>
             </div>
             <div className="grid w-full gap-1">
-                <input id="name" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Full Name" />
-                <input id="email" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" />
-                <input id="password" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="Password" />
-                <input id="confirm" onChange={onChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="Confirm Password" />
+                <input id="name" onChange={onChange} className="bg-white rounded-lg p-2 outline-none placeholder:text-black text-black text-xl w-full h-full" type="text" placeholder="Full Name" />
+                <input id="email" onChange={onChange} className="bg-white rounded-lg p-2 outline-none placeholder:text-black text-black text-xl w-full h-full" type="text" placeholder="Email Address" />
+                <input id="password" onChange={onChange} className="bg-white rounded-lg p-2 outline-none placeholder:text-black text-black text-xl w-full h-full" type="password" placeholder="Password" />
+                <input id="confirm" onChange={onChange} className="bg-white rounded-lg p-2 outline-none placeholder:text-black text-black text-xl w-full h-full" type="password" placeholder="Confirm Password" />
                 <h1 className="text-lg select-none">Password must be at least 5 characters</h1>
                 <div onClick={onClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border rounded-lg bg-black hover:scale-[.98]">
                     <h1 className='text-2xl text-white'>Continue</h1>
                 </div>
             </div>
-            <h1 className="text-xl">or Register with a Provider</h1>
+            <div className="relative flex items-center w-full">
+                <div className="flex-grow border-t-2 border-white"></div>
+                <span className="flex-shrink px-3 text-white text-xl">Or</span>
+                <div className="flex-grow border-t-2 border-white"></div>
+            </div>
             <Providers layout="min" />
         </>
     )

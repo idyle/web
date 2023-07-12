@@ -8,7 +8,6 @@ export const useAuth = () => useContext(AuthValues);
 const AuthContext = ({ children }) => {
     const [auth, setAuth] = useState(localStorage.getItem('idyle-auth'));
     const [user, setUser] = useState();
-    const [token, setToken] = useState();
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -19,10 +18,8 @@ const AuthContext = ({ children }) => {
     }, [pathname, auth]);
 
     useEffect(() => onAuthStateChanged(getAuth(), async user => {
-        setToken((await user?.getIdToken(true)));
         const latest = await user?.getIdTokenResult(true);
-        if (user && latest) setUser({ ...user, ...latest?.claims });
-        // quick fix, combining base user details + latest info (from refresh)
+        if (latest) setUser({ ...latest, ...latest?.claims });
         const auth = user?.uid ? 'auth' : '';
         setAuth(auth);
         localStorage.setItem('idyle-auth', auth);
@@ -35,10 +32,11 @@ const AuthContext = ({ children }) => {
 
     const resetUser = async () => {
         const latest = await getAuth()?.currentUser?.getIdTokenResult(true);
-        setUser({ ...getAuth().currentUser, ...latest?.claims });
+        if (!latest) return;
+        setUser({ ...latest, ...latest?.claims });
     };
 
-    const values = { auth, user, setUser, token, resetUser, getToken }
+    const values = { auth, user, setUser, resetUser, getToken }
     return ( <AuthValues.Provider value={values}>{children}</AuthValues.Provider> );
 };
 

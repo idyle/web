@@ -15,7 +15,7 @@ const Confirm = ({ code }) => {
             await applyActionCode(getAuth(), code);
             navigate('/login/login');
             spin(false);
-            notify('You have been successfully verified');
+            notify('You have been successfully verified!');
         } catch (e) {
             console.error(e);
             spin(false);
@@ -29,8 +29,8 @@ const Confirm = ({ code }) => {
                 <h1 className="text-3xl text-white">Verify your Email</h1>
             </div>
             <div className="grid w-full gap-1">
-                <div onClick={onClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border border-white rounded-lg hover:scale-[.98]">
-                    <h1 className='text-2xl text-white font-semibold'>Continue</h1>
+                <div onClick={onClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border-2 border-white rounded-lg hover:scale-[.98]">
+                    <h1 className='text-2xl text-white'>Continue</h1>
                 </div>
             </div>
         </div>

@@ -44,8 +44,8 @@ export const SignInContext = ({ children }) => {
 const Login = () => {
     return (
         <SignInContext>
-            <div className="grid justify-items-center items-center h-full w-full">
-                <div className="grid w-[400px] my-10 p-6 gap-4 auto-rows-min justify-items-center border border-black rounded-xl overflow-auto">
+            <div className="grid justify-items-center items-center h-full w-full bg-black text-white border-gunmetal">
+                <div className="grid w-[400px] my-10 p-6 gap-4 auto-rows-min justify-items-center border-2 border-gunmetal rounded-xl overflow-auto">
                     <div className="grid gap-7 items-center justify-items-center">
                         <h1 className="text-6xl font-bold">idyle</h1>
                     </div>

@@ -23,13 +23,13 @@ const Plan = ({ plan, onClick, onCancel }) => {
 
             <div className="grid justify-items-center">
                 {/* {editedIcon} */}
-                <h1 className="text-5xl break-all text-center font-bold">{plan?.name}</h1>
+                <h1 className="text-5xl lg:text-6xl break-all text-center font-bold">{plan?.name}</h1>
             </div>
 
             <h1 className="text-5xl text-center">{plan?.gb} GB</h1>
 
             <div className="grid justify-items-center">
-                <h1 className="text-5xl font-bold text-center">${plan?.price}</h1>
+                <h1 className="text-4xl lg:text-5xl font-bold text-center">${plan?.price}</h1>
                 <h1 className="text-3xl text-center">per month</h1>
             </div>
 
@@ -38,7 +38,7 @@ const Plan = ({ plan, onClick, onCancel }) => {
                     plan?.inclusions?.map((inclusion, i) => (
                         <div key={`in${i}`} className="flex items-center gap-2">
                             <AiOutlineCheck size="30px" />
-                            <h1 className="text-2xl text-center">{inclusion}</h1>
+                            <h1 className="text-xl lg:text-2xl text-center">{inclusion}</h1>
                         </div>
                     ))
                 }

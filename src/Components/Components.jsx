@@ -1,9 +1,7 @@
 import Login from "./Login/Login";
 import Actions from "./Actions/Actions";
 import Interface from "./Interface/Interface";
-import { useUtil } from "../Contexts/Util";
 import { Routes, Route } from 'react-router-dom';
-import Spinner from "../Utilities/Spinner";
 
 const Components = () => {
     return (

@@ -6,7 +6,6 @@ import { listDocs } from '../Components/Interface/Documents/requests';
 import { listFiles } from "../Components/Interface/Objects/requests";
 import { getMetrics } from "../Components/Interface/Payments/requests";
 import { useUtil } from "./Util";
-import { getAuth } from "firebase/auth";
 
 const DataValues = createContext();
 export const useData = () => useContext(DataValues);
@@ -35,7 +34,7 @@ const DataContext = ({ children }) => {
     };
 
     const [data, setData] = useState(getDataFromSession);
-    const { getToken } = useAuth();
+    const { user, getToken } = useAuth();
     const { load } = useUtil();
 
     const onLoad = async () => {
@@ -95,7 +94,7 @@ const DataContext = ({ children }) => {
     useEffect(() => {
         load(true);
         onLoad();
-    }, [getAuth().currentUser]);
+    }, [user]);
 
     useEffect(() => saveToSession(data), [data]);
 

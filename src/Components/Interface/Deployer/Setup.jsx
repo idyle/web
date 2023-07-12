@@ -49,13 +49,13 @@ const Setup = ({ website }) => {
                 </div> }
             </div> 
 
-            { active && <div onBlur={() => setActive(false)} className="absolute w-full z-10 bg-black text-blue rounded-lg">
+            { active && <div onBlur={() => setActive(false)} className="absolute w-full z-10 bg-blue text-black rounded-lg">
                 {
                     websites.map(({ website }, i) => (
                         <div onClick={() =>{
                             setWebsiteName(website?.name);
                             setActive(false);
-                        }} key={`w${i}`} className="flex items-center justify-between p-3 gap-1 hover:bg-white/10 select-none">
+                        }} key={`w${i}`} className="flex items-center justify-between p-3 gap-1 hover:bg-black/10 select-none">
                             <div className="flex gap-2">
                                 <h1 className="text-3xl font-bold">Website</h1>
                                 <h1 className="text-3xl">{website?.name}</h1>
@@ -64,7 +64,7 @@ const Setup = ({ website }) => {
                         </div> 
                     ))
                 }
-                <div onClick={onCreate} className="flex items-center p-3 gap-1 hover:bg-white/10 select-none">
+                <div onClick={onCreate} className="flex items-center p-3 gap-1 hover:bg-black/10 select-none">
                     <BiPlus size="30px" />
                     <h1 className="text-3xl font-bold">Create a Website</h1>
                 </div>

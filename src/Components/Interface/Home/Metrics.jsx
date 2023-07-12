@@ -22,7 +22,7 @@ const Metrics = () => {
 
     return (
         <div className="grid items-center justify-items-center p-2 gap-2">
-            <div className="h-3 w-full bg-gunmetal rounded-lg"><div className={`h-3 bg-blue ${view} rounded-lg`}></div></div>
+            <div className="h-3 w-full bg-gunmetal rounded-lg"><div className={`h-3 bg-white border border-gunmetal ${view} rounded-lg`}></div></div>
             <div className="flex items-center gap-1">
                 <MdOutlineDataUsage size="50px" />
                 <h1 className="text-6xl font-bold text-center">{metrics?.used || 0} of {metrics?.limit || 0} GB</h1>

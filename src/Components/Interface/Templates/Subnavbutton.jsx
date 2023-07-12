@@ -34,12 +34,12 @@ const Subnavbutton =  ({ icon, text, route, textColor = 'text-black', bgColor = 
     if (mode === 'black') {
         // probably best to use this as an object
         borderSelected = 'border-white';
-        borderUnselected = 'border-black';
-        style = 'text-white hover:border-white hover:bg-black';
+        borderUnselected = 'border-gunmetal';
+        style = 'text-white hover:border-white hover:bg-white/20';
     } else {
-        borderSelected = 'border-black';
+        borderSelected = 'border-gunmetal';
         borderUnselected = 'border-white';
-        style = 'text-black hover:border-black hover:bg-white'
+        style = 'text-gunmetal hover:border-gunmetal hover:bg-gunmetal/20'
     }
     
 

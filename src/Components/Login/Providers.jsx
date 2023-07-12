@@ -20,7 +20,7 @@ const Providers = ({ layout = 'default' }) => {
                     const e = JSON.parse(linkage);
                     const credential = OAuthProvider.credentialFromError(e);
                     await linkWithCredential(result.user, credential);
-                    notify("We've linked your accounts!");
+                    notify("We've successfuly linked your accounts!");
                     setLinkage();
                 }
                 // we need to use credential linkage

@@ -1,7 +1,7 @@
 import { IoPersonCircleOutline, IoRocketOutline } from 'react-icons/io5';
 import { MdOutlineBuild, MdOutlinePermMedia } from 'react-icons/md';
 import { HiOutlineCreditCard, HiOutlineDatabase } from 'react-icons/hi';
-import { BiMenu, BiX } from 'react-icons/bi';
+import { BiMenu, BiX, BiHelpCircle } from 'react-icons/bi';
 import Navbutton from '../Templates/Navbutton';
 import { useState } from 'react';
 import Search from './Search';
@@ -11,19 +11,20 @@ const Navigator = () => {
     const [mobileClicked, setMobileClicked] = useState(false);
     
     return (
-        <div>
+        <div className="p-1 md:p-2 gap-1">
 
-            <div className="grid w-full grid-flow-col justify-between md:justify-center px-4 md:p-0">
-                <div className="grid grid-flow-col w-full gap-2 items-center justify-items-center relative">
-                        <h1 className="text-3xl md:text-3xl text-black font-bold select-none">idyle</h1>
-                        <Search />
-                </div>
+            <div className="grid w-full grid-flow-col justify-between md:justify-normal items-center gap-x-2 px-4 md:px-64">
+                {/* <div className="grid grid-flow-col w-full gap-2 items-center justify-items-center relative"> */}
+                <h1 className="text-3xl md:text-2xl text-black font-bold select-none md:justify-self-end">idyle</h1>
+                <Search />
+                {/* </div> */}
                 <BiMenu onClick={() => setMobileClicked(true)} className="md:hidden relative" size="45px" />
+                <BiHelpCircle onClick={() => window.open(`https://support.idyle.app`, '_blank')} className="hidden md:block relative hover:bg-black/10 rounded-full" size="25px" />
             </div>
 
             <div className={`${mobileClicked ? 'h-full' : 'hidden'} top-0 left-0 right-0 fixed md:block md:static md:h-auto md:w-auto z-50`}>
     
-                <div onClick={() => setMobileClicked(false)} className="absolute right-1 top-[1px] md:hidden">
+                <div onClick={() => setMobileClicked(false)} className="absolute right-3 top-2 md:hidden">
                     <BiX size="45px" />
                 </div>
 
@@ -33,8 +34,7 @@ const Navigator = () => {
                         <h1 className="text-7xl md:text-3xl text-black font-bold select-none">idyle</h1>
                     </div>
 
-                    <div className="grid w-[20rem] md:w-auto md:grid-cols-6 grid-cols-1 gap-3 md:gap-1 items-center justify-items-center">
-    
+                    <div className="grid md:grid-flow-col gap-3 md:gap-0.5">
                         <Navbutton icon={<IoPersonCircleOutline/>} text="Accounts" route='/accounts'/>
                         <Navbutton icon={<HiOutlineCreditCard/>} text="Payments" route='/payments'/>
                         <Navbutton icon={<MdOutlineBuild/>} text="Editor" route='/editor/pages'/>

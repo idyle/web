@@ -76,7 +76,7 @@ const Payments = () => {
             </Helmet>
 
             <div className="grid gap-1 justify-items-center rounded-lg">
-                <h1 className="text-5xl text-gunmetal font-bold md:text-6xl text-center">{user?.displayName || user?.name || 'With idyle'}, there's a perfect plan for You.</h1>
+                <h1 className="text-5xl text-gunmetal font-bold md:text-6xl text-center">{user?.name || 'With idyle'}, there's a perfect plan for You.</h1>
             </div>
 
             <div className="grid md:grid-cols-3 gap-x-5 gap-y-2 p-3 auto-rows-min md:overflow-auto">

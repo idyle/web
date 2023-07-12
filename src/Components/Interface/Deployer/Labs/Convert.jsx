@@ -50,22 +50,22 @@ const Convert = () => {
     };
 
     return (
-        <div className="grid auto-rows-min p-3 gap-2 border-b-4 border-black">
-            <h1 className="text-5xl text-center">Convert Custom Data</h1>
-            <div onClick={sendPageRequest} className="flex p-0.5 flex-wrap items-center gap-2 place-content-center border border-black rounded-xl select-none hover:scale-[.98]">
-                <h1 className="text-4xl text-center">Select Data from Docs</h1>
+        <div className="grid auto-rows-min items-center p-3 md:p-10 gap-4">
+            <h1 className="text-4xl md:text-5xl text-center font-bold">Custom Data</h1>
+            <div onClick={sendPageRequest} className="flex p-0.5 flex-wrap items-center gap-2 place-content-center border-2 border-inherit rounded-xl select-none hover:scale-[.98]">
+                <h1 className="text-3xl md:text-4xl text-center">Select from Docs</h1>
             </div>
 
-            { doc?.id && <div className="flex items-center justify-between border-b-2 border-black">
+            <div className="flex items-center justify-between border-b-2 border-inherit">
                 <div className="flex items-center p-1 gap-1">
                     <BsThreeDots size="25px" />
-                    <h1 className="text-3xl">{doc?.id}.json</h1>
+                    { doc?.id && <h1 className="text-2xl md:text-3xl">{doc?.id}.json</h1> }
                 </div>
-                <MdClose onClick={remove} size="25px" />
-            </div> }
+                { doc?.id && <MdClose onClick={remove} size="25px" /> }
+            </div> 
 
-            <div onClick={onConvert} className="grid items-center justify-items-center bg-black text-white p-2 gap-1 rounded-lg select-none hover:scale-[.98]">
-                <h1 className="text-4xl font-bold">Convert Data</h1>
+            <div onClick={onConvert} className="grid items-center justify-items-center bg-gunmetal text-white p-2 gap-1 rounded-lg select-none hover:scale-[.98]">
+                <h1 className="text-3xl md:text-4xl text-center">Convert Data</h1>
             </div>
         </div>
     )

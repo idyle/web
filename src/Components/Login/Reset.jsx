@@ -16,8 +16,8 @@ const Reset = () => {
         if (!email) return;
         try {
             spin(true);
-            const test = await sendPasswordResetEmail(getAuth(), email);
-            notify('email sent!', test);
+            await sendPasswordResetEmail(getAuth(), email);
+            notify("We've sent an email to this address.");
             spin(false);
         } catch (e) {
             console.error(e);
@@ -30,18 +30,22 @@ const Reset = () => {
                 <h1 className="text-3xl">Reset your Password</h1>
             </div>
             <div className="grid w-full gap-1">
-                <input id="email" onChange={onEmailChange} className="bg-white rounded-lg p-2 border border-black outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" /> :
-                <div onClick={onEmailClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border rounded-lg bg-black hover:scale-[.98]">
-                    <h1 className='text-2xl text-white font-semibold'>Continue</h1>
+                <input id="email" onChange={onEmailChange} className="bg-white rounded-lg p-2 outline-none placeholder:text-black text-xl w-full h-full" type="text" placeholder="Email Address" /> 
+                <div onClick={onEmailClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border-2 rounded-lg bg-black hover:scale-[.98]">
+                    <h1 className='text-2xl text-white'>Continue</h1>
                 </div>
             </div>
-            <h1 className="text-xl">- Other Options -</h1>
+            <div className="relative flex items-center w-full">
+                <div className="flex-grow border-t-2 border-white"></div>
+                <span className="flex-shrink px-3 text-white text-xl">Other Options</span>
+                <div className="flex-grow border-t-2 border-white"></div>
+            </div>
             <div className="grid w-full gap-1">
-                <div onClick={() => navigate('/login/login')} className="grid p-2 items-center justify-items-center cursor-pointer select-none border rounded-lg border border-black hover:scale-[.98]">
-                    <h1 className='text-2xl text-black font-semibold'>Login to an Account</h1>
+                <div onClick={() => navigate('/login/login')} className="grid p-2 items-center justify-items-center cursor-pointer select-none rounded-lg border-2 border-gunmetal hover:scale-[.98]">
+                    <h1 className='text-2xl text-inherit'>Login to an Account</h1>
                 </div>
-                <div onClick={() => navigate('/login/register')} className="grid p-2 items-center justify-items-center cursor-pointer select-none border rounded-lg border border-black hover:scale-[.98]">
-                    <h1 className='text-2xl text-black font-semibold'>Register an Account</h1>
+                <div onClick={() => navigate('/login/register')} className="grid p-2 items-center justify-items-center cursor-pointer select-none rounded-lg border-2 border-gunmetal hover:scale-[.98]">
+                    <h1 className='text-2xl text-inherit'>Register an Account</h1>
                 </div>
             </div>
         </div>

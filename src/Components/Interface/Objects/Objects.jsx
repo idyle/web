@@ -25,7 +25,7 @@ const Objects = () => {
     };
 
     return (
-        <div className="grid auto-rows-min md:auto-rows-auto md:grid-rows-[auto_minmax(0,_1fr)_auto] mx-5 gap-2">
+        <div className="grid auto-rows-min md:auto-rows-auto md:grid-rows-[auto_minmax(0,_1fr)_auto] m-2 mx-5 gap-2">
 
             <Helmet>
                 <title>idyle - Objects</title>

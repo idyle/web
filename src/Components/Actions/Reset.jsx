@@ -16,14 +16,14 @@ const Reset = ({ code }) => {
         if (!code || !password || !verifiedEmail) return;
         try {
             spin(true);
-            const test = await confirmPasswordReset(getAuth(), code, password);
+            await confirmPasswordReset(getAuth(), code, password);
             await signInWithEmailAndPassword(getAuth(), verifiedEmail, password);
             navigate('/');
-            notify('password changed!');
+            notify("We've successfully changed your password!");
             spin(false);
         } catch (e) {
             if (e.code === 'auth/invalid-action-code') notify('This session is invalid.');
-            else notify('an error occured');
+            else notify('Something went wrong. Please try again.');
             spin(false);
             console.error(e);
         }
@@ -35,9 +35,9 @@ const Reset = ({ code }) => {
                 <h1 className="text-3xl text-white">Reset your Password</h1>
             </div>
             <div className="grid w-full gap-1">
-                <input id="password" onChange={onPasswordChange} className="rounded-lg p-2 border border-white outline-none placeholder:text-white text-xl w-full h-full bg-black text-white" type="password" placeholder="New Password" />
-                <div onClick={onPasswordClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border border-white rounded-lg hover:scale-[.98]">
-                    <h1 className='text-2xl text-white font-semibold'>Continue</h1>
+                <input id="password" onChange={onPasswordChange} className="rounded-lg p-2 bg-white text-black outline-none placeholder:text-black text-xl w-full h-full" type="password" placeholder="New Password" />
+                <div onClick={onPasswordClick} className="grid p-2 items-center justify-items-center cursor-pointer select-none border-2 border-white rounded-lg hover:scale-[.98]">
+                    <h1 className='text-2xl text-white'>Continue</h1>
                 </div>
             </div>
         </div>

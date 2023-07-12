@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 
 const Accounts = () => {
     return (
-        <div className="grid auto-rows-min md:auto-rows-auto md:grid-cols-[15%_85%] mx-5">
+        <div className="grid auto-rows-min md:auto-rows-auto md:grid-cols-[15%_85%] m-2 mx-5">
             <Helmet>
                 <title>idyle - Accounts</title>
                 <meta name="description" content="Accounts" />

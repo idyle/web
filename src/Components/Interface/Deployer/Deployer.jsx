@@ -35,7 +35,7 @@ const Deployer = () => {
     };
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 md:grid-cols-[15%_85%] mx-5 gap-1">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 md:grid-cols-[15%_85%] m-2 mx-5 gap-1">
             <Helmet>
                 <title>idyle - Deployer</title>
                 <meta name="description" content="Deployer" />

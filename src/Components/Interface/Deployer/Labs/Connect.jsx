@@ -54,20 +54,20 @@ const Connect = ({ website }) => {
     };
 
     return (
-        <div className="grid auto-rows-min rounded-lg p-2 gap-2">
-            <h1 className="text-5xl text-center">Connect a Custom Domain</h1>
+        <div className="grid auto-rows-min items-center p-2 md:p-10 gap-4">
+            <h1 className="text-4xl md:text-5xl text-center font-bold">Custom Domains</h1>
             {  !domain ?
-                <div onClick={onClick} className="flex p-0.5 flex-wrap items-center gap-2 place-content-center border border-black rounded-xl select-none hover:scale-[.98]">
-                    <h1 className="text-4xl text-center">Add a Domain</h1>
-                </div> : <div className="flex place-content-center items-center gap-1 bg-black/10 rounded-lg p-1">
+                <div onClick={onClick} className="flex p-0.5 flex-wrap items-center gap-2 place-content-center border-2 border-inherit rounded-xl select-none hover:scale-[.98]">
+                    <h1 className="text-3xl md:text-4xl text-center">Add a Domain</h1>
+                </div> : <div className="flex place-content-center items-center gap-1 bg-gunmetal/10 rounded-lg p-1">
                     { website?.domain ? <MdLock size="30px" /> : <MdPending onClick={onClick} size="30px" /> }
-                    <h1 className="text-3xl md:text-5xl text-center">{domain}</h1>
+                    <h1 className="text-4xl md:text-5xl text-center">{domain}</h1>
                 </div> }
 
-            { !website?.domain ? <div onClick={connect} className="grid items-center justify-items-center bg-black text-white p-2 gap-1 rounded-lg select-none hover:scale-[.98]">
-                <h1 className="text-4xl font-bold">Connect Domain</h1>
-            </div> : <div onClick={disconnect} className="grid items-center justify-items-center bg-black text-white p-2 gap-1 rounded-lg select-none hover:scale-[.98]">
-                <h1 className="text-4xl font-bold">Disconnect Domain</h1>
+            { !website?.domain ? <div onClick={connect} className="grid items-center justify-items-center bg-gunmetal text-white p-2 gap-1 rounded-lg select-none hover:scale-[.98]">
+                <h1 className="text-3xl md:text-4xl text-center">Connect Domain</h1>
+            </div> : <div onClick={disconnect} className="grid items-center justify-items-center bg-gunmetal text-white p-2 gap-1 rounded-lg select-none hover:scale-[.98]">
+                <h1 className="text-3xl md:text-4xl text-center">Disconnect Domain</h1>
             </div> }
         </div>
     )

@@ -54,7 +54,7 @@ const Documents = () => {
     };
 
     return (
-        <div className='grid m-5'>
+        <div className='grid m-2 mx-5'>
 
             <Helmet>
                 <title>idyle - Documents</title>
@@ -63,13 +63,12 @@ const Documents = () => {
                 <link rel="canonical" href="/docs" />
             </Helmet>
             
-            <div className="grid md:grid-cols-2 md:gap-3 md:overflow-auto mx-5">
+            <div className="grid md:grid-cols-2 md:gap-3 md:overflow-auto">
 
-                {/* md:grid should exist regardless  */}
                  <div className={`${!mobileClicked ? 'grid' : 'hidden'} md:grid px-3 md:overflow-auto grid-rows-[auto_minmax(0,_1fr)]`}>
                     <div className="flex items-center justify-between bg-gunmetal text-white rounded-lg p-2 select-none">
                         <h1 className="text-3xl justify-self-start text-inherit font-bold">Documents</h1>
-                        <AiOutlinePlus onClick={add} className="text-inherit" size="30px" />
+                        <AiOutlinePlus onClick={add} className="text-inherit hover:bg-white/20 rounded-full" size="30px" />
                     </div>
 
                     <div className="grid p-3 md:gap-2 overflow-auto auto-rows-min">
@@ -82,7 +81,7 @@ const Documents = () => {
                 {/* selected doc dictates init */}
                 { selectedDoc ? <div className={`${mobileClicked ? 'grid' : 'hidden'} md:grid overflow-hidden md:gap-2 grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-[minmax(0,_1fr)_auto] bg-transparent`}>
                     <Viewer doc={selectedDoc} docs={docs} setDocs={setDocs} />
-                    <div className="order-1 md:order-2 flex items-center justify-between rounded-lg p-2 select-none bg-blue text-black">
+                    <div className="order-1 md:order-2 flex items-center justify-between rounded-lg p-2 select-none bg-black text-blue">
                         <h1 className="text-2xl md:text-3xl text-inherit font-bold">Doc: {selectedDoc?.id || 'Doc'}</h1>
                         <div className="flex items-center gap-1">
                             <AiFillDelete onClick={remove} className="text-inherit" size="30px" />
@@ -94,7 +93,7 @@ const Documents = () => {
                     </div>
                 </div> :
                 <div className="hidden md:grid items-center justify-items-center border border-black rounded-lg">
-                    <h1 className="text-5xl text-center">Select a document</h1>
+                    <h1 className="text-5xl text-center">Select a document.</h1>
                 </div> }
                 
             </div>

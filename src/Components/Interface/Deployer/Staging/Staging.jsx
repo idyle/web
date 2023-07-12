@@ -82,7 +82,7 @@ const Staging = ({ deploy }) => {
                     <RiGasStationFill size="40px" />
                     <h1 className="text-5xl md:text-6xl font-bold">Staging Area</h1>
                 </div>
-                <div onClick={sendFileRequest} className="flex items-center gap-2 place-content-center border border-white rounded-xl select-none hover:scale-[.98]">
+                <div onClick={sendFileRequest} className="flex items-center gap-2 place-content-center border-2 border-white rounded-xl select-none hover:scale-[.98]">
                     <h1 className="text-4xl text-center">Select Files from Objects</h1>
                 </div>
             </div>
@@ -92,8 +92,8 @@ const Staging = ({ deploy }) => {
                 {files?.map((file, i) => (<File file={file} key={`f${i}`} setIndex={setIndex} index={index} remove={removeFile} />))}
             </div>
 
-            <div onClick={onDeploy} className="grid items-center justify-items-center bg-white text-black p-2 gap-1 rounded-lg select-none hover:scale-[.98]">
-                <h1 className="text-4xl font-bold">Initiate Deploy</h1>
+            <div onClick={onDeploy} className="grid items-center justify-items-center bg-white text-gunmetal p-2 gap-1 rounded-lg select-none hover:scale-[.98]">
+                <h1 className="text-4xl font-bold">Deploy</h1>
             </div>
         </div>
     )
