@@ -27,9 +27,8 @@ export const renderElements = (config) => {
 };
 
 export const constructDom = (config, css, fontFamily, origin) => {
-    console.log('CALLED BY', origin)
     let body = renderElements(config);
-    if (fontFamily) body = createElement("div", { style: { fontFamily }, className: 'w-full max-w-full overflow-auto' }, body);
+    if (fontFamily) body = createElement("div", { style: { fontFamily }, className: 'w-full max-w-full h-full max-h-full overflow-auto' }, body);
     if (css) css = createElement("link", { rel: "stylesheet", href: css });
-    return (<div className="w-full max-w-full overflow-auto">{css}{body}</div>)
+    return (<div className="w-full max-w-full h-full max-h-full overflow-auto">{css}{body}</div>)
 };

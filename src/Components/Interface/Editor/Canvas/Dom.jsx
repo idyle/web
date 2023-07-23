@@ -12,6 +12,7 @@ const Dom = () => {
     useEffect(() => {
         AOS.init();
     }, []);
+    
     const onScroll = () => AOS.refresh();
 
     useEffect(() => {

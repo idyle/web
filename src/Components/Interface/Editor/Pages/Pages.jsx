@@ -15,7 +15,7 @@ const Pages = () => {
     const config = { name: 'New Page', route: 'newpage', data: {
         component: 'div',
         id: '0',
-        className: 'flex flex-col flex-wrap h-full w-full max-w-full max-h-full overflow-hidden',
+        className: 'w-full max-w-full h-full max-h-full overflow-auto',
         children: []
     } };
 

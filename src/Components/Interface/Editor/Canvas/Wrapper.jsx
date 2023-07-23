@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useDom } from './Canvas';
 import { useEditor } from '../Editor';
+import AOS from 'aos';
 
 // if a child is being hovered in a parent, how do we signify this?
 
@@ -67,7 +68,6 @@ const Wrapper = ({ children }) => {
     useEffect(() => {
         if (selected === children.props.id) return setHovered(children.props.id);
         setHovered();
-        // AOS.refresh()
     }, [selected]);
 
     const onDragOver = (e) => {
@@ -106,35 +106,36 @@ const Wrapper = ({ children }) => {
 
     const onMouseDown = (e) => {
         if (clicked) return;
-        if (!e.target?.clientWidth || !e.target?.parentNode?.clientWidth || !e.target?.id) return;
-        setSelected(e.target?.id);
-        setClicked({ elementWidth: e.target?.clientWidth, parentWidth: e.target?.parentNode?.clientWidth, id: e.target?.id });
+        const { clientWidth: elementWidth, clientHeight: elementHeight, parentNode, id } = e.target;
+        const { clientWidth: parentWidth, clientHeight: parentHeight } = parentNode;
+        if (!elementWidth || !elementHeight || !parentWidth || !parentHeight || !id) return;
+        // if (!e.target?.clientWidth || !e.target?.parentNode?.clientWidth || !e.target?.id) return;
+        setSelected(id);
+        setClicked({ elementWidth, elementHeight, parentWidth, parentHeight, id });
     };
+
     const onMouseUp = (e) => {
         e.stopPropagation();
-        console.log('MOUSE UP DETECTED', 'is clicked?', clicked);
         if (!clicked) return;
         setClicked(false);
         console.log('passed ,is clicked', clicked);
-        const { elementWidth, parentWidth, id } = clicked;
+        const { elementWidth, parentWidth, elementHeight, parentHeight, id } = clicked;
         if (e.currentTarget?.id !== id) return console.log('items do not match');
-        const latestElementWidth = e?.currentTarget?.clientWidth;
-        if (!parentWidth || !elementWidth) return;
-        // if (latestElementWidth === elementWidth) return console.log('Nothing changed');
-        // if measurements are the same, return
+        const { clientWidth: latestElementWidth, clientHeight: latestElementHeight } = e.currentTarget;
+        if (!parentWidth || !elementWidth || !parentHeight || !elementHeight || !latestElementHeight || !latestElementHeight) return;
 
-        const borderOffset = 1 * 2;
+        const borderOffset = 1 * 2, elementOffsetWidth = (latestElementWidth + borderOffset), elementOffsetHeight = (latestElementHeight + borderOffset);
         // consider 1px border (border) * 2 (sides) = 2px offset
 
-        let elementWidthPercentage = ((latestElementWidth + borderOffset) / parentWidth);
+        let elementWidthPercentage = (elementOffsetWidth / parentWidth), elementHeightPercentage = (elementOffsetHeight / parentHeight);
         if (elementWidthPercentage > 1) elementWidthPercentage = 1;
+        if (elementHeightPercentage > 1) elementHeightPercentage = 1;
 
         console.log('passed; something changed', elementWidthPercentage)
         let obj = {};
         obj['width'] = `${(elementWidthPercentage * 100).toFixed(2)}%`;
-        console.log('SETTING WIDTH', obj);
+        obj['height'] = `${(elementHeightPercentage * 100).toFixed(2)}%`;
         const func = (current) => {
-            console.log('changing for style', current);
             if (current) current.style = { ...current.style, ...obj };
             return current;
         };
@@ -143,8 +144,11 @@ const Wrapper = ({ children }) => {
     };
 
     return (
-        <div id={children?.props?.id} className={`p-3 overflow-auto resize-x border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
-        style={{ width: children?.props?.style?.width || '100%', maxWidth: '100%'}}
+        <div id={children?.props?.id} className={`p-3 max-w-full max-h-full overflow-auto resize border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
+        style={{ 
+            width: children?.props?.style?.width || '100%',
+            height: children?.props?.style?.height || '100%' 
+        }}
         draggable={true}
         onDrop={onDrop}
         // onMouseMove={onMouseDown}

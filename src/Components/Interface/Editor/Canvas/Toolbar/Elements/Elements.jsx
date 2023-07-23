@@ -7,6 +7,7 @@ import { useDom } from "../../Canvas.jsx";
 import Element from './Element.jsx';
 import { RxText, RxSection, RxImage, RxVideo, RxLayout, RxViewVertical, RxListBullet, RxLetterCaseCapitalize, RxButton, RxLink2 } from 'react-icons/rx';
 import { MdPages } from "react-icons/md";
+import Aos from 'aos';
 
 const Elements = () => {
 
@@ -17,6 +18,7 @@ const Elements = () => {
     const { pathname: origin } = useLocation();
 
     const appendElement = (element) => {
+        Aos.refreshHard();
         setPageData({ ...setObjectFromPath(page?.data, path, { ...elements[element] }) });
         console.log(element, elements[element])
     };
