@@ -1,7 +1,7 @@
 import { RxPlus, RxMinus } from 'react-icons/rx';
 import { cloneElement, useEffect, useState } from 'react';
-import { useEditor } from '../../Editor';
-import { useDom } from '../Canvas';
+import { useEditor } from '../../../Editor';
+import { useDom } from '../../Canvas';
 
 const Sizing = ({ icon, format }) => {
 
@@ -58,13 +58,13 @@ const Sizing = ({ icon, format }) => {
     };
 
     return (
-        <div className="flex text-gunmetal p-0.5 gap-x-0.5 select-none rounded-lg items-center bg-white">
+        <div className="flex text-gunmetal p-0.5 gap-x-0.5 select-none rounded-lg items-center border-2 border-inherit">
             {editedIcon}
-            <div onClick={add} className={`flex border bg-black text-white rounded-lg items-center p-0.5 hover:bg-black/20 select-none`}>
+            <div onClick={add} className={`flex border bg-gunmetal text-white rounded-lg items-center p-0.5 hover:bg-black/20 select-none`}>
                 <RxPlus size="20px" />
             </div>
             <input onChange={onChange} className="w-[30px] text-center outline-none bg-white" type="tel" value={px} />
-            <div onClick={deduct} className={`flex border bg-black text-white rounded-lg items-center p-0.5 hover:bg-black/20 select-none`}>
+            <div onClick={deduct} className={`flex border bg-gunmetal text-white rounded-lg items-center p-0.5 hover:bg-black/20 select-none`}>
                 <RxMinus size="20px" />
             </div>
         </div>

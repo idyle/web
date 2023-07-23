@@ -36,11 +36,19 @@ export const EditorContext = ({ children }) => {
         setFont(p?.metadata?.font);
     }, [pages, pageId]);
 
+    const serialize = (object, id = '0') => {
+        let children = object.children || null;
+        if (!id || id === undefined) console.log('found from serializer at', object);
+        if (children instanceof Array) children = children.map((child, i) => serialize(child, `${id}-${i}`)) || [];
+        return { ...object, children, id };
+    };
+
     const edit = async (page) => {
+        console.log('page', page);
         const index = pages.findIndex(( { id } ) => id === page?.id);
         if (!(index >= 0)) return false;
         // page must exist 
-        setPage({ ...page });
+        setPage({ ...page, data: { ...serialize(page?.data) } });
         const pageCache = pages[index];
         // updated page & save cache
         const token = await getToken();
@@ -53,7 +61,7 @@ export const EditorContext = ({ children }) => {
             return true;
         } else {
             notify('Something went wrong trying to edit the page.');
-            setPage({ ...pageCache });
+            setPage({ ...pageCache, data: { ...serialize(pageCache?.data) } });
             // if false, replace the page with old cache
             return false;
         }
@@ -67,12 +75,6 @@ export const EditorContext = ({ children }) => {
         spin(false);
         if (!operation) return notify('Something went wrong trying to delete this page.');
         setPages(pages.filter(({ id }) => id !== page?.id));
-    };
-
-    const serialize = (object, id = '0') => {
-        let children = object.children || null;
-        if (children instanceof Array) children = children.map((child, i) => serialize(child, `${id}-${i}`)) || [];
-        return { ...object, children, id };
     };
 
     const setPageData = (pageData) => edit({ ...page, data: { ...serialize(pageData) } });

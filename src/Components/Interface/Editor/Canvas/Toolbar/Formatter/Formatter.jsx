@@ -14,7 +14,7 @@ import Animate from './Animate';
 const Toolbar = () => {
 
     return (
-        <div className="flex flex-wrap place-content-center items-center gap-1 m-1 p-2 rounded-lg bg-gunmetal text-white">
+        <div className="flex flex-wrap place-content-center md:place-content-start items-center gap-1 p-1 shadow-xl rounded-lg bg-white text-gunmetal">
 
             <Format icon={<RxFontBold />} format="bold" />
             <Format icon={<RxFontItalic />} format="italic" />

@@ -87,26 +87,6 @@ const Page = ({ page, editPage, addMode, setAddMode }) => {
                 </div>
                 <h1 onBlur={onNameEdit} contentEditable={editName} onDoubleClick={enableEditName} onInput={onNameChange} className="text-5xl text-inherit text-center outline-none">{page?.name}</h1>
                 <h1 className="text-3xl text-center text-inherit">/{page?.route}</h1>
-                {/* { !addMode ? <div className="flex items-center place-content-center gap-2">
-                    { editName?
-                    <input autoFocus className={`text-center ${color} text-4xl rounded-lg w-full`} onChange={onNameChange} value={name}/>
-                    : <h1 className="text-5xl text-inherit text-center">{page?.name}</h1>
-                    }
-
-                    { editName ? <MdCheck onClick={onNameEdit} className='text-inherit' size="25px" /> 
-                    : <MdEdit onClick={() => setEditName(true)} className="text-inherit" size="25px" /> 
-                    } 
-                </div> : <h1 className="text-5xl text-inherit text-center">{page?.name}</h1> }
-                <div className="flex items-center place-content-center gap-2">
-                    { editRoute ?
-                    <input autoFocus className={`text-center ${color} text-2xl rounded-lg w-full`} onChange={onRouteChange} value={route}/>
-                    : <h1 className="text-3xl text-center text-inherit">/{page?.route}</h1>
-                    }
-        
-                    { editRoute ? <MdCheck onClick={onRouteEdit} className='text-inherit' size="25px" /> 
-                    : <MdEdit onClick={() => setEditRoute(true)} className="text-inherit" size="25px" /> 
-                    }
-                </div> */}
             </div>
 
             <div className="flex items-center gap-1">
@@ -118,30 +98,12 @@ const Page = ({ page, editPage, addMode, setAddMode }) => {
                 </div>
             </div> 
 
-            {/* <div className="flex justify-between w-full">
-                <h1 className="text-2xl text-center text-inherit">/{page?.route}</h1>
-                <div className="flex items-center gap-1">
-                    <MdEdit onClick={editPageName} size="25px" />
-                    <MdDelete onClick={removePage} size="25px" />
-                    <MdDelete onClick={removePage} size="25px" />
-                </div>
-            </div> */}
-
-
             <div className="flex items-center gap-1">
                 <MdEdit onClick={enableEditName} size="25px" />
                 <MdUpload onClick={editFavicon} size="25px" />
                 <MdDelete onClick={removePage} size="25px" />
             </div>
-            
 
-            {/* {
-                addMode &&
-                <div className="grid items-center justify-items-center">
-                    <h1 className="text-2xl text-center italic">Edit the route of this page.</h1>
-                    <MdCancel onClick={cancel} size="25px" />
-                </div>
-            } */}
         </div>
     )
 };

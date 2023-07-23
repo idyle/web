@@ -24,14 +24,14 @@ const section1 = {
 
 const section2 = {
     component: 'div',
-    className: 'grid md:grid-cols-2 @md:grid-cols-2',
+    className: 'grid md:grid-cols-2',
     style: { display: 'grid' },
     children: [ { ...header, children: '2 Section' }, text ]
 };
 
 const section3 = {
     component: 'div',
-    className: 'grid md:grid-cols-3 @md:grid-cols-3',
+    className: 'grid md:grid-cols-3',
     style: { display: 'grid' },
     children: [ { ...header, children: '3 Section' }, header, text ]
 }

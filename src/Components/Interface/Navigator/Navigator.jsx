@@ -11,16 +11,22 @@ const Navigator = () => {
     const [mobileClicked, setMobileClicked] = useState(false);
     
     return (
-        <div className="p-1 md:p-2 gap-1">
+        <div className="p-2 gap-1">
 
-            <div className="grid w-full grid-flow-col justify-between md:justify-normal items-center gap-x-2 px-4 md:px-64">
-                {/* <div className="grid grid-flow-col w-full gap-2 items-center justify-items-center relative"> */}
+            <div className="flex place-content-center items-center gap-x-2 px-4">
                 <h1 className="text-3xl md:text-2xl text-black font-bold select-none md:justify-self-end">idyle</h1>
                 <Search />
-                {/* </div> */}
+
                 <BiMenu onClick={() => setMobileClicked(true)} className="md:hidden relative" size="45px" />
                 <BiHelpCircle onClick={() => window.open(`https://support.idyle.app`, '_blank')} className="hidden md:block relative hover:bg-black/10 rounded-full" size="25px" />
             </div>
+
+            {/* <div className="grid w-full grid-flow-col justify-between md:justify-normal items-center gap-x-2 px-4 md:px-[30rem]">
+                <h1 className="text-3xl md:text-2xl text-black font-bold select-none md:justify-self-end">idyle</h1>
+                <Search />
+                <BiMenu onClick={() => setMobileClicked(true)} className="md:hidden relative" size="45px" />
+                <BiHelpCircle onClick={() => window.open(`https://support.idyle.app`, '_blank')} className="hidden md:block relative hover:bg-black/10 rounded-full" size="25px" />
+            </div>  */}
 
             <div className={`${mobileClicked ? 'h-full' : 'hidden'} top-0 left-0 right-0 fixed md:block md:static md:h-auto md:w-auto z-50`}>
     

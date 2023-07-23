@@ -15,7 +15,7 @@ const Pages = () => {
     const config = { name: 'New Page', route: 'newpage', data: {
         component: 'div',
         id: '0',
-        className: '',
+        className: 'flex flex-col flex-wrap h-full w-full max-w-full max-h-full overflow-hidden',
         children: []
     } };
 
@@ -35,15 +35,17 @@ const Pages = () => {
 
     return (
         <div className="grid grid-rows-[auto_minmax(0,_1fr)] auto-rows-min p-2 gap-2">
-            <div className="flex w-full place-content-center items-center p-2 gap-1">
-                <h1 className="text-7xl text-gunmetal text-center font-bold">Your Pages</h1>
-                <div onClick={createNewPage} className="flex items-center text-gunmetal place-content-center rounded-lg select-none hover:scale-[.95]">
-                    <MdAddCircle size="50px" />
-                </div>
+            <div className="flex w-full place-content-center items-center p-4">
+                <h1 className="text-6xl text-gunmetal text-center font-bold">Your Pages</h1>
             </div>
 
             <div className="grid auto-rows-min md:grid-cols-3 gap-3 px-5 justify-items-center items-center md:overflow-auto">
-                {/* { addPageMode && <Page page={config} editPage={editPage} addMode={addPageMode} setAddMode={setAddPageMode} /> } */}
+                <div onClick={createNewPage} className="grid w-full h-full items-center justify-items-center text-gunmetal border-2 border-gunmetal rounded-lg select-none hover:bg-black/10">
+                    <div className="grid items-center justify-items-center p-2">
+                        <MdAddCircle size="60px" />
+                        <h1 className="text-5xl text-center">Create a Page</h1>
+                    </div>
+                </div>
                 {pages.map((page, i) => (<Page key={`p${i}`} page={page} />))}
             </div>
 

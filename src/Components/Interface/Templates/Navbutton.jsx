@@ -26,8 +26,8 @@ const Navbutton = ({ icon, text, route }) => {
     }, [pathname, search, route])
     
     return (
-        <div onClick={() => navigate(route)} className={`flex p-2 md:p-0 ${selected && 'bg-gunmetal text-white rounded-lg'} md:border-b border-gunmetal select-none w-full place-content-center transform transition duration-100 hover:scale-[.98]`}>
-            <div className="flex gap-1 md:p-1 md:px-2 items-center">
+        <div onClick={() => navigate(route)} className={`flex p-2 md:p-0 ${selected && 'bg-gunmetal text-white rounded-lg'} select-none w-full place-content-center transform transition duration-100 hover:scale-[.98]`}>
+            <div className="flex gap-1 md:p-0.5 md:px-2 items-center">
                 {/* {editedIcon} */}
                 <h1 className='text-5xl md:text-xl text-inherit font-bold'>{text}</h1>
             </div>

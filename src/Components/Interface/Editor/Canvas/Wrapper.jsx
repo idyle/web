@@ -10,11 +10,13 @@ import { useEditor } from '../Editor';
 const Wrapper = ({ children }) => {
 
     const [edit, setEdit] = useState(false);
+    // const [clicked, setClicked] = useState(false);
     const [value, setValue] = useState(children?.props?.children);
     const { page, setPageData, serialize } = useEditor();
     const { 
         selectedData, selected, setSelected, hovered, setHovered, path,
-        deleteObjectFromPath, setObjectFromPath, updateObjectFromPath 
+        deleteObjectFromPath, setObjectFromPath, updateObjectFromPath,
+        clicked, setClicked 
     } = useDom();
 
     // add additional hover property to ensure that only one is hovered
@@ -31,6 +33,7 @@ const Wrapper = ({ children }) => {
     const onClick = (e) => {
         e.stopPropagation();
         setSelected(children.props.id);
+        console.log(children.props);
     };
 
     const onChange = (e) => {
@@ -101,10 +104,53 @@ const Wrapper = ({ children }) => {
         setSelected(children.props.id);
     };
 
+    const onMouseDown = (e) => {
+        if (clicked) return;
+        if (!e.target?.clientWidth || !e.target?.parentNode?.clientWidth || !e.target?.id) return;
+        setSelected(e.target?.id);
+        setClicked({ elementWidth: e.target?.clientWidth, parentWidth: e.target?.parentNode?.clientWidth, id: e.target?.id });
+    };
+    const onMouseUp = (e) => {
+        e.stopPropagation();
+        console.log('MOUSE UP DETECTED', 'is clicked?', clicked);
+        if (!clicked) return;
+        setClicked(false);
+        console.log('passed ,is clicked', clicked);
+        const { elementWidth, parentWidth, id } = clicked;
+        if (e.currentTarget?.id !== id) return console.log('items do not match');
+        const latestElementWidth = e?.currentTarget?.clientWidth;
+        if (!parentWidth || !elementWidth) return;
+        // if (latestElementWidth === elementWidth) return console.log('Nothing changed');
+        // if measurements are the same, return
+
+        const borderOffset = 1 * 2;
+        // consider 1px border (border) * 2 (sides) = 2px offset
+
+        let elementWidthPercentage = ((latestElementWidth + borderOffset) / parentWidth);
+        if (elementWidthPercentage > 1) elementWidthPercentage = 1;
+
+        console.log('passed; something changed', elementWidthPercentage)
+        let obj = {};
+        obj['width'] = `${(elementWidthPercentage * 100).toFixed(2)}%`;
+        console.log('SETTING WIDTH', obj);
+        const func = (current) => {
+            console.log('changing for style', current);
+            if (current) current.style = { ...current.style, ...obj };
+            return current;
+        };
+        setPageData({ ...updateObjectFromPath(page?.data, path, func) });
+        // save changes
+    };
+
     return (
-        <div className={`p-1 border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
+        <div id={children?.props?.id} className={`p-3 overflow-auto resize-x border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
+        style={{ width: children?.props?.style?.width || '100%', maxWidth: '100%'}}
         draggable={true}
         onDrop={onDrop}
+        // onMouseMove={onMouseDown}
+        onMouseDown={onMouseDown}
+        onMouseLeave={onMouseUp}
+        onMouseUp={onMouseUp}
         onDragOver={onDragOver}
         onDragStart={onDragStart}
         onClick={onClick} 

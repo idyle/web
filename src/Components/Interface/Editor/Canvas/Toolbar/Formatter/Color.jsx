@@ -1,6 +1,6 @@
 import { cloneElement, useState, useEffect } from "react";
-import { useEditor } from "../../Editor";
-import { useDom } from "../Canvas";
+import { useEditor } from "../../../Editor";
+import { useDom } from "../../Canvas";
 
 const Color = ({ icon, format }) => {
     const editedIcon = cloneElement(icon, { color: "inherit", size: "25px" });
@@ -33,7 +33,7 @@ const Color = ({ icon, format }) => {
     }, [path]);
 
     return (
-        <div className={`flex bg-white text-gunmetal rounded-lg items-center p-0.5 select-none`}>
+        <div className={`flex border-2 border-inherit text-gunmetal rounded-lg items-center p-0.5 select-none`}>
             <label htmlFor="color">
                 {editedIcon}
             </label>

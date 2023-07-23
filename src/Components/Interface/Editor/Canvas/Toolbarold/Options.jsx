@@ -45,19 +45,22 @@ const Options = () => {
     };
     
     return (
-        <div className="flex flex-wrap place-content-center md:place-content-start items-center shadow-xl bg-white text-gunmetal p-1 gap-1 rounded-lg overflow-auto">
-                <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 border-2 border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
+        <div className="grid bg-gunmetal text-white p-1 gap-1 rounded-lg overflow-auto">
+            <h1 className="hidden md:block text-2xl text-center">Type: {selectedData?.component || 'Main'}</h1>
+            <div className="grid grid-flow-col md:grid-flow-row p-1 gap-1">
+                <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 bg-white rounded-lg text-gunmetal hover:scale-[.98] select-none">
                     <AiOutlineReload size="25px" />
                     <h1 className="hidden md:block text-xl text-center">Reset Styles</h1>
                 </div>
-                <div onClick={deleteElement} className="flex place-content-center items-center gap-1 p-1 border-2 border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
+                <div onClick={deleteElement} className="flex place-content-center items-center gap-1 p-1 bg-white rounded-lg text-gunmetal hover:scale-[.98] select-none">
                     <AiFillDelete size="25px" />
                     <h1 className="hidden md:block text-xl text-center">Delete Element</h1>
                 </div>
-                <div onClick={editProps} className="flex place-content-center items-center gap-1 p-1 border-2 border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
+                <div onClick={editProps} className="flex place-content-center items-center gap-1 p-1 bg-white rounded-lg text-gunmetal hover:scale-[.98] select-none">
                     <AiFillEdit size="25px" />
                     <h1 className="hidden md:block text-xl text-center">Edit Property</h1>
                 </div>
+            </div>
         </div>
     )
 };

@@ -1,7 +1,7 @@
 import { cloneElement, useEffect, useState } from "react";
-import { useDom } from "../Canvas";
+import { useDom } from "../../Canvas";
 import formats from "./formats";
-import { useEditor } from "../../Editor";
+import { useEditor } from "../../../Editor";
 
 const Format = ({ title, icon, format }) => {
     const { path, updateObjectFromPath } = useDom();
@@ -68,7 +68,7 @@ const Format = ({ title, icon, format }) => {
     }, [path, updateElement]);
 
     return (
-        <div onClick={updateElement} className={`flex border border-white rounded-lg ${title && 'gap-x-1'} items-center p-0.5 ${styles && 'bg-white/50'} hover:bg-white/50 select-none`}>
+        <div onClick={updateElement} className={`flex border-2 border-gunmetal rounded-lg ${title && 'gap-x-1'} items-center p-0.5 ${styles && 'bg-black/10'} hover:bg-black/10 select-none`}>
             {editedIcon}
             { title && <h1 className="text-sm">{title}</h1> }
         </div>

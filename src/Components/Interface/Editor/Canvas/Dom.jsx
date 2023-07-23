@@ -20,8 +20,8 @@ const Dom = () => {
     }, [page?.id, page?.data, css, font]);
 
     return (
-        <div className="flex p-1 shadow-xl overflow-auto rounded-lg resize-none max-w-full place-content-center w-full">
-            <div onScroll={onScroll} className={`@container w-full flex border-2 md:min-w-[240px] md:max-w-full border-gunmetal rounded-lg p-1 overflow-auto md:resize-x`}>
+        <div className="flex p-1 shadow-xl overflow-auto rounded-lg place-content-center ">
+            <div onScroll={onScroll} className={`@container w-full border-2 md:min-w-[240px] md:max-w-full border-gunmetal rounded-lg p-1 overflow-auto md:resize-x`}>
                 {dom}
             </div>
         </div>
