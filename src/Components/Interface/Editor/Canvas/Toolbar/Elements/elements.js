@@ -14,6 +14,22 @@ const text = {
     children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempus lorem mauris, sed pharetra eros blandit eu. Praesent a aliquam dui. Nulla elementum nisl eu massa pharetra, sed rutrum diam.'
 };
 
+const grid = {
+    component: 'div',
+    "data-aos": "fade-in",
+    className: 'grid',
+    style: { display: 'grid' },
+    children: [ { ...header, children: 'Grid Section' }, text ]
+};
+
+const flex = {
+    component: 'div',
+    "data-aos": "fade-in",
+    className: 'flex flex-col md:flex-row @md:flex-row w-full',
+    style: { display: 'flex' },
+    children: [ { ...header, children: 'Flex Section' }, text ]
+};
+
 const section1 = {
     component: 'div',
     "data-aos": "fade-in",
@@ -24,14 +40,14 @@ const section1 = {
 
 const section2 = {
     component: 'div',
-    className: 'flex flex-col md:flex-row',
-    style: { display: 'flex' },
+    className: 'grid md:grid-cols-2 @md:grid-cols-2',
+    style: { display: 'grid' },
     children: [ { ...header, children: '2 Section' }, text ]
 };
 
 const section3 = {
     component: 'div',
-    className: 'grid md:grid-cols-3',
+    className: 'grid md:grid-cols-3 @md:grid-cols-3',
     style: { display: 'grid' },
     children: [ { ...header, children: '3 Section' }, header, text ]
 }
@@ -81,6 +97,7 @@ const navPart = {
 
 export default {
     header, text, img, video,
+    flex, grid,
     section1, section2, section3, 
     button, link, navBase, navPart
 }

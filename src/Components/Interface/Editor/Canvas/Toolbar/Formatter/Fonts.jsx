@@ -25,9 +25,9 @@ const Fonts = ({ icon }) => {
     // we need to handle displaying it as a checked option
 
     return (
-        <div className={`flex text-gunmetal gap-1 rounded-lg border-2 border-gunmetal items-center p-0.5 select-none`}>   
+        <div className={`flex text-gunmetal gap-1 rounded-lg border border-gunmetal items-center p-1 select-none`}>   
             {editedIcon}
-            <select value={font || 'native'} onChange={onChange} className="text-sm outline-none bg-white text-center max-w-[80px]">
+            <select value={font || 'native'} onChange={onChange} className="text-md outline-none bg-white text-center max-w-[100px]">
                 { !font && <option disabled value="native">Native</option>}
                 {fonts.map((font, i) => (<option key={`f${i}`} value={font}>{font}</option>))}
             </select>

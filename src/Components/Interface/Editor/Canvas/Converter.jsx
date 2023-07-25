@@ -17,7 +17,6 @@ export const renderElements = (config) => {
     };
 
     attributes.key = `k-${config.id}`;
-    console.log(config, config?.component);
 
     return (
         <Wrapper key={`w-${config.id}`}>
@@ -26,9 +25,9 @@ export const renderElements = (config) => {
     )
 };
 
-export const constructDom = (config, css, fontFamily, origin) => {
+export const constructDom = (config, css, fontFamily) => {
     let body = renderElements(config);
-    if (fontFamily) body = createElement("div", { style: { fontFamily }, className: 'w-full max-w-full h-full max-h-full overflow-auto' }, body);
+    if (fontFamily) body = createElement("div", { style: { fontFamily } }, body);
     if (css) css = createElement("link", { rel: "stylesheet", href: css });
-    return (<div className="w-full max-w-full h-full max-h-full overflow-auto">{css}{body}</div>)
+    return (<div className='w-full max-w-full'>{css}{body}</div>)
 };

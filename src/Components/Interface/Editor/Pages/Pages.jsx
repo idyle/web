@@ -2,7 +2,6 @@ import { MdAddCircle } from 'react-icons/md';
 import { useEditor } from '../Editor';
 import Page from './Page';
 import { useUtil } from '../../../../Contexts/Util';
-import { useState } from 'react';
 import { createPage } from '../requests';
 import { useAuth } from '../../../../Contexts/Auth';
 
@@ -15,7 +14,7 @@ const Pages = () => {
     const config = { name: 'New Page', route: 'newpage', data: {
         component: 'div',
         id: '0',
-        className: 'w-full max-w-full h-full max-h-full overflow-auto',
+        className: 'max-w-full w-full',
         children: []
     } };
 

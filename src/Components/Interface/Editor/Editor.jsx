@@ -38,13 +38,11 @@ export const EditorContext = ({ children }) => {
 
     const serialize = (object, id = '0') => {
         let children = object.children || null;
-        if (!id || id === undefined) console.log('found from serializer at', object);
         if (children instanceof Array) children = children.map((child, i) => serialize(child, `${id}-${i}`)) || [];
         return { ...object, children, id };
     };
 
     const edit = async (page) => {
-        console.log('page', page);
         const index = pages.findIndex(( { id } ) => id === page?.id);
         if (!(index >= 0)) return false;
         // page must exist 
@@ -56,12 +54,15 @@ export const EditorContext = ({ children }) => {
         if (operation) {
             // if operation succeeded, update data 
             let array = pages;
-            array[index] = page;
+            array[index] = { ...page, data: { ...serialize(page?.data) } };
             setPages([ ...array ]);
             return true;
         } else {
             notify('Something went wrong trying to edit the page.');
             setPage({ ...pageCache, data: { ...serialize(pageCache?.data) } });
+            let array = pages;
+            array[index] = { ...pageCache, data: { ...serialize(pageCache?.data) } };
+            setPages([ ...array ]);
             // if false, replace the page with old cache
             return false;
         }

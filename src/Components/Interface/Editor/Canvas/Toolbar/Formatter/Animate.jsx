@@ -3,7 +3,7 @@ import { useDom } from "../../Canvas";
 import { useEditor } from "../../../Editor";
 import AOS from 'aos';
 
-const Animate = ({ title, icon, animate }) => {
+const Animate = ({ title, icon }) => {
     const editedIcon = cloneElement(icon, { ...icon?.props, size: "25px" });
     const { path, updateObjectFromPath } = useDom();
     const { page, setPageData } = useEditor();
@@ -28,7 +28,7 @@ const Animate = ({ title, icon, animate }) => {
     }, [path, updateElement]);
 
     return (
-        <div onClick={updateElement} className={`flex border-2 border-inherit rounded-lg ${title && 'gap-x-1'} items-center p-0.5 ${styles && 'bg-black/10'} hover:bg-black/10 select-none`}>
+        <div onClick={updateElement} className={`flex border border-inherit rounded-lg ${title && 'gap-x-1'} items-center p-1 ${styles && 'bg-black/10'} hover:bg-black/10 select-none`}>
             {editedIcon}
             { title && <h1 className="text-sm">{title}</h1> }
         </div>

@@ -1,9 +1,11 @@
 // must be within the canvas contcxt (for selection)
 // selection is localized to canvas; this doesn't exist for cb
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDom } from './Canvas';
 import { useEditor } from '../Editor';
+import ReactResizeDetector from 'react-resize-detector';
+
 import AOS from 'aos';
 
 // if a child is being hovered in a parent, how do we signify this?
@@ -11,7 +13,6 @@ import AOS from 'aos';
 const Wrapper = ({ children }) => {
 
     const [edit, setEdit] = useState(false);
-    // const [clicked, setClicked] = useState(false);
     const [value, setValue] = useState(children?.props?.children);
     const { page, setPageData, serialize } = useEditor();
     const { 
@@ -19,6 +20,7 @@ const Wrapper = ({ children }) => {
         deleteObjectFromPath, setObjectFromPath, updateObjectFromPath,
         clicked, setClicked 
     } = useDom();
+    const elementRef = useRef();
 
     // add additional hover property to ensure that only one is hovered
     const onMouseOver = (e) => {
@@ -34,11 +36,9 @@ const Wrapper = ({ children }) => {
     const onClick = (e) => {
         e.stopPropagation();
         setSelected(children.props.id);
-        console.log(children.props);
     };
 
     const onChange = (e) => {
-        console.log(e.target.innerText);
         setValue(e.target.innerText);
     };
 
@@ -105,68 +105,76 @@ const Wrapper = ({ children }) => {
     };
 
     const onMouseDown = (e) => {
+        e.stopPropagation();
         if (clicked) return;
-        const { clientWidth: elementWidth, clientHeight: elementHeight, parentNode, id } = e.target;
+        const { clientWidth: elementWidth, clientHeight: elementHeight, parentNode, id } = elementRef?.current;
         const { clientWidth: parentWidth, clientHeight: parentHeight } = parentNode;
         if (!elementWidth || !elementHeight || !parentWidth || !parentHeight || !id) return;
-        // if (!e.target?.clientWidth || !e.target?.parentNode?.clientWidth || !e.target?.id) return;
         setSelected(id);
         setClicked({ elementWidth, elementHeight, parentWidth, parentHeight, id });
+    };
+
+    const onResize = () => {
+        // affirms/updates the mouse down
+        if (!clicked) return;
+        const { clientWidth: elementWidth, parentNode, id } = elementRef?.current;
+        const { clientWidth: parentWidth } = parentNode;
+        if (clicked && (id !== clicked?.id)) return;
+        // if an element is being procesed and is not assc with the listener id, return
+        setSelected(id);
+        setClicked({ elementWidth, parentWidth, id });
     };
 
     const onMouseUp = (e) => {
         e.stopPropagation();
         if (!clicked) return;
         setClicked(false);
-        console.log('passed ,is clicked', clicked);
-        const { elementWidth, parentWidth, elementHeight, parentHeight, id } = clicked;
-        if (e.currentTarget?.id !== id) return console.log('items do not match');
-        const { clientWidth: latestElementWidth, clientHeight: latestElementHeight } = e.currentTarget;
-        if (!parentWidth || !elementWidth || !parentHeight || !elementHeight || !latestElementHeight || !latestElementHeight) return;
+        const { elementWidth, parentWidth } = clicked;
+        if (!parentWidth || !elementWidth) return;
 
-        const borderOffset = 1 * 2, elementOffsetWidth = (latestElementWidth + borderOffset), elementOffsetHeight = (latestElementHeight + borderOffset);
+        const borderOffset = 1 * 2, elementOffsetWidth = (elementWidth + borderOffset);
         // consider 1px border (border) * 2 (sides) = 2px offset
 
-        let elementWidthPercentage = (elementOffsetWidth / parentWidth), elementHeightPercentage = (elementOffsetHeight / parentHeight);
+        let elementWidthPercentage = (elementOffsetWidth / parentWidth);
         if (elementWidthPercentage > 1) elementWidthPercentage = 1;
-        if (elementHeightPercentage > 1) elementHeightPercentage = 1;
 
-        console.log('passed; something changed', elementWidthPercentage)
         let obj = {};
         obj['width'] = `${(elementWidthPercentage * 100).toFixed(2)}%`;
-        obj['height'] = `${(elementHeightPercentage * 100).toFixed(2)}%`;
         const func = (current) => {
             if (current) current.style = { ...current.style, ...obj };
             return current;
         };
+
         setPageData({ ...updateObjectFromPath(page?.data, path, func) });
         // save changes
     };
 
     return (
-        <div id={children?.props?.id} className={`p-3 max-w-full max-h-full overflow-auto resize border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
-        style={{ 
-            width: children?.props?.style?.width || '100%',
-            height: children?.props?.style?.height || '100%' 
-        }}
-        draggable={true}
-        onDrop={onDrop}
-        // onMouseMove={onMouseDown}
-        onMouseDown={onMouseDown}
-        onMouseLeave={onMouseUp}
-        onMouseUp={onMouseUp}
-        onDragOver={onDragOver}
-        onDragStart={onDragStart}
-        onClick={onClick} 
-        onMouseOver={onMouseOver} 
-        onMouseOut={onMouseOut}
-        onDoubleClick={onDoubleClick}
-        onBlur={onBlur}>
-            { edit ? 
-            <div contentEditable onInput={onChange} className={`${children.props.className} outline-none bg-white`}>{children?.props?.children}</div>
-            : children 
-            }
-        </div>
+        <ReactResizeDetector skipOnMount={true} onResize={onResize}>
+            <div id={children?.props?.id} className={`p-1 max-w-full overflow-x-auto resize-x border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
+            ref={elementRef}
+            style={{ 
+                width: children?.props?.style?.width || '100%',
+            }}
+            draggable={true}
+            onDrop={onDrop}
+            onMouseDown={onMouseDown}
+            onMouseLeave={onMouseUp}
+            onMouseUp={onMouseUp}
+            onDragOver={onDragOver}
+            onDragStart={onDragStart}
+            onClick={onClick} 
+            onMouseOver={onMouseOver} 
+            onMouseOut={onMouseOut}
+            onDoubleClick={onDoubleClick}
+            onBlur={onBlur}>
+                { edit ? 
+                <div contentEditable onInput={onChange} className={`${children.props.className} outline-none bg-white`}>{children?.props?.children}</div>
+                : children 
+                }
+            </div>
+        </ReactResizeDetector>
+
     )
 };
 

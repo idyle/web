@@ -13,7 +13,7 @@ const Dom = () => {
         AOS.init();
     }, []);
     
-    const onScroll = () => AOS.refresh();
+    const onScroll = () => AOS.refreshHard();
 
     useEffect(() => {
         if (!page?.id || !page?.data) return;
@@ -21,8 +21,8 @@ const Dom = () => {
     }, [page?.id, page?.data, css, font]);
 
     return (
-        <div className="flex p-1 shadow-xl overflow-auto rounded-lg place-content-center ">
-            <div onScroll={onScroll} className={`@container w-full border-2 md:min-w-[240px] md:max-w-full border-gunmetal rounded-lg p-1 overflow-auto md:resize-x`}>
+        <div className="flex p-1 h-full shadow-xl overflow-auto rounded-lg place-content-center ">
+            <div onScroll={onScroll} className={`@container w-full max-h-full p-2 md:p-4 border-2 md:min-w-[240px] md:max-w-full border-gunmetal rounded-lg p-1 overflow-auto md:resize-x`}>
                 {dom}
             </div>
         </div>

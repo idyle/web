@@ -36,7 +36,6 @@ export const editPage = async (token, page) => {
         let url = `${servicePath}/pages/user/${page?.id}`;
         const req = await fetch(url, options);
         const res = await req.json();
-        console.log('requested initiated!!!!!');
         return res?.status
     } catch (e) {
         console.error(e);

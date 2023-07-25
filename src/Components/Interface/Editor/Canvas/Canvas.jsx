@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { useEditor } from '../Editor';
 import Toolbar from './Toolbar/Toolbar';
-import Formatter from './Toolbar/Toolbar';
-import { MdSwapHoriz } from 'react-icons/md';
 import Dom from './Dom';
 
 const DomValues = createContext();
@@ -31,10 +29,7 @@ export const DomContext = ({ children }) => {
         let current = page?.data;
         for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
         setSelectedData(current);
-        console.log(current?.id);
     }, [path]);
-
-    // false === styles; true === styles (md) (none)
 
     const updateObjectFromPath = (data, path, func) => {
         let current = data;
@@ -98,31 +93,11 @@ export const DomContext = ({ children }) => {
 
 const Canvas = () => {
 
-    const [toolbar, setToolbar] = useState(true);
-
     return (
         <DomContext>
             <div className={`grid grid-rows-[auto_minmax(0,_1fr)] overflow-auto`}>
-                
-                {/* <div className={`${toolbar ? 'grid' : 'hidden'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
-                    <div onClick={() => setToolbar(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg text-gunmetal border border-gunmetal select-none hover:scale-[.98]">
-                        <MdSwapHoriz size="30px" />
-                        <h1 className="text-2xl">Switch to Formatter</h1>
-                    </div> */}
-                    <Toolbar />
-                {/* </div> */}
-
-                {/* <div className={`grid ${!toolbar ? 'grid-rows-[auto_minmax(0,_1fr)]' : 'grid-rows-1'} md:grid-rows-[auto_minmax(0,_1fr)]`}>
-                    <div className={`${toolbar ? 'hidden' : 'grid'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
-                        <div onClick={() => setToolbar(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg text-gunmetal border border-gunmetal select-none hover:scale-[.98]">
-                            <MdSwapHoriz size="30px" />
-                            <h1 className="text-2xl">Switch to Toolbar</h1>
-                        </div>
-                        <Formatter />
-                    </div> */}
-
-                    <Dom />
-                {/* </div> */}
+                <Toolbar />
+                <Dom />
             </div>
         </DomContext>
     )

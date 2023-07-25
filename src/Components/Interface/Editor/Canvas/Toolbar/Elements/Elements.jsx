@@ -7,7 +7,6 @@ import { useDom } from "../../Canvas.jsx";
 import Element from './Element.jsx';
 import { RxText, RxSection, RxImage, RxVideo, RxLayout, RxViewVertical, RxListBullet, RxLetterCaseCapitalize, RxButton, RxLink2 } from 'react-icons/rx';
 import { MdPages } from "react-icons/md";
-import Aos from 'aos';
 
 const Elements = () => {
 
@@ -18,9 +17,7 @@ const Elements = () => {
     const { pathname: origin } = useLocation();
 
     const appendElement = (element) => {
-        Aos.refreshHard();
         setPageData({ ...setObjectFromPath(page?.data, path, { ...elements[element] }) });
-        console.log(element, elements[element])
     };
 
     const navigation = () => {
@@ -69,13 +66,13 @@ const Elements = () => {
     }, [integrator?.active]);
 
     return (
-        <div className="flex flex-wrap place-content-center md:place-content-start items-center p-1 shadow-xl bg-white text-gunmetal rounded-lg gap-1">
+        <div className="flex flex-wrap place-content-center md:place-content-start items-center p-1 bg-white text-gunmetal rounded-lg gap-1">
             <Element title="Header" onClick={() => appendElement('header')} icon={ <RxLetterCaseCapitalize />} />
             <Element title="Text" onClick={() => appendElement('text')} icon={ <RxText />} />
 
-            <Element title="1 Section" onClick={() => appendElement('section1')} icon={ <RxSection />} />
-            <Element title="2 Section" onClick={() => appendElement('section2')} icon={ <RxViewVertical />} />
-            <Element title="3 Section" onClick={() => appendElement('section3')} icon={ <RxLayout />} />
+            <Element title="Grid Section" onClick={() => appendElement('grid')} icon={ <RxSection />} />
+            <Element title="Flex Section" onClick={() => appendElement('flex')} icon={ <RxViewVertical />} />
+            {/* <Element title="3 Section" onClick={() => appendElement('section3')} icon={ <RxLayout />} /> */}
 
             <Element title="Image" onClick={sendObjectsRequest} icon={ <RxImage />} />
             <Element title="Video" onClick={sendObjectsRequest} icon={ <RxVideo />} />

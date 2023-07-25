@@ -33,7 +33,7 @@ const Color = ({ icon, format }) => {
     }, [path]);
 
     return (
-        <div className={`flex border-2 border-inherit text-gunmetal rounded-lg items-center p-0.5 select-none`}>
+        <div className={`flex border border-inherit text-gunmetal rounded-lg items-center p-1 select-none`}>
             <label htmlFor="color">
                 {editedIcon}
             </label>
