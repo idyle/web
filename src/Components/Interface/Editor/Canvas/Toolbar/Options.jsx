@@ -9,7 +9,10 @@ const Options = () => {
     const { confirm, prompt } = useUtil();
     const { selectedData, updateObjectFromPath, deleteObjectFromPath, path } = useDom();
 
-    const deleteElement = () => setPageData({ ...deleteObjectFromPath(page?.data, path) });
+    const deleteElement = async () => {
+        if (!(await confirm("You're about to delete this element. Are you sure?"))) return;
+        setPageData({ ...deleteObjectFromPath(page?.data, path) });
+    };
 
     const clear = async () => {
         if (!(await confirm("You're about to clear all styles. Are you sure?"))) return;

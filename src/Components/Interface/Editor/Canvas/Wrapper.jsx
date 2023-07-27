@@ -1,7 +1,7 @@
 // must be within the canvas contcxt (for selection)
 // selection is localized to canvas; this doesn't exist for cb
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, cloneElement } from 'react';
 import { useDom } from './Canvas';
 import { useEditor } from '../Editor';
 import ReactResizeDetector from 'react-resize-detector';
@@ -107,18 +107,21 @@ const Wrapper = ({ children }) => {
     const onMouseDown = (e) => {
         e.stopPropagation();
         if (clicked) return;
-        const { clientWidth: elementWidth, clientHeight: elementHeight, parentNode, id } = elementRef?.current;
-        const { clientWidth: parentWidth, clientHeight: parentHeight } = parentNode;
-        if (!elementWidth || !elementHeight || !parentWidth || !parentHeight || !id) return;
+        const { offsetWidth: elementWidth, parentNode, id } = elementRef?.current;
+        const { paddingRight, paddingLeft, marginRight, marginLeft } = getComputedStyle(parentNode);
+        const parentWidth = parentNode?.offsetWidth - (parseFloat(paddingRight) + parseFloat(paddingLeft) + parseFloat(marginRight) + parseFloat(marginLeft));
+        if (!elementWidth || !parentWidth || !id) return;
         setSelected(id);
-        setClicked({ elementWidth, elementHeight, parentWidth, parentHeight, id });
+        setClicked({ elementWidth, parentWidth, id });
     };
 
     const onResize = () => {
         // affirms/updates the mouse down
         if (!clicked) return;
-        const { clientWidth: elementWidth, parentNode, id } = elementRef?.current;
-        const { clientWidth: parentWidth } = parentNode;
+        const { offsetWidth: elementWidth, parentNode, id } = elementRef?.current;
+        const { paddingRight, paddingLeft, marginRight, marginLeft } = getComputedStyle(parentNode);
+        const parentWidth = parentNode?.clientWidth - (parseFloat(paddingRight) + parseFloat(paddingLeft) + parseFloat(marginRight) + parseFloat(marginLeft));
+        console.log(elementWidth, parentNode?.offsetWidth);
         if (clicked && (id !== clicked?.id)) return;
         // if an element is being procesed and is not assc with the listener id, return
         setSelected(id);
@@ -132,14 +135,12 @@ const Wrapper = ({ children }) => {
         const { elementWidth, parentWidth } = clicked;
         if (!parentWidth || !elementWidth) return;
 
-        const borderOffset = 1 * 2, elementOffsetWidth = (elementWidth + borderOffset);
-        // consider 1px border (border) * 2 (sides) = 2px offset
-
-        let elementWidthPercentage = (elementOffsetWidth / parentWidth);
-        if (elementWidthPercentage > 1) elementWidthPercentage = 1;
+        const elementWidthPercentage = ((elementWidth / parentWidth) > 1) ? 1 : (elementWidth / parentWidth);
+        console.log(elementWidth, parentWidth, e.currentTarget.offsetWidth);
+        console.log(`${Math.round(elementWidthPercentage * 100)}%`)
 
         let obj = {};
-        obj['width'] = `${(elementWidthPercentage * 100).toFixed(2)}%`;
+        obj['width'] = `${elementWidthPercentage * 100}%`;
         const func = (current) => {
             if (current) current.style = { ...current.style, ...obj };
             return current;
@@ -149,13 +150,16 @@ const Wrapper = ({ children }) => {
         // save changes
     };
 
+    
+    const clonedChild = cloneElement(children, { className: `${children?.props?.className} w-full`, style: { ...children?.props?.style, width: '100%' } });
+
+    const editableChild = cloneElement(clonedChild, { contentEditable: true, onInput: onChange, className: `${clonedChild.props.className} outline-none` });
+
     return (
         <ReactResizeDetector skipOnMount={true} onResize={onResize}>
-            <div id={children?.props?.id} className={`p-1 max-w-full overflow-x-auto resize-x border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
+            <div id={children?.props?.id} className={`p-1 max-w-full overflow-hidden resize-x border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
             ref={elementRef}
-            style={{ 
-                width: children?.props?.style?.width || '100%',
-            }}
+            style={{ width: children.props?.style?.width || 'auto' }}
             draggable={true}
             onDrop={onDrop}
             onMouseDown={onMouseDown}
@@ -168,10 +172,7 @@ const Wrapper = ({ children }) => {
             onMouseOut={onMouseOut}
             onDoubleClick={onDoubleClick}
             onBlur={onBlur}>
-                { edit ? 
-                <div contentEditable onInput={onChange} className={`${children.props.className} outline-none bg-white`}>{children?.props?.children}</div>
-                : children 
-                }
+                { edit ? editableChild : clonedChild }
             </div>
         </ReactResizeDetector>
 

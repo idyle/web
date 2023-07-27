@@ -70,9 +70,9 @@ const Elements = () => {
             <Element title="Header" onClick={() => appendElement('header')} icon={ <RxLetterCaseCapitalize />} />
             <Element title="Text" onClick={() => appendElement('text')} icon={ <RxText />} />
 
-            <Element title="Grid Section" onClick={() => appendElement('grid')} icon={ <RxSection />} />
-            <Element title="Flex Section" onClick={() => appendElement('flex')} icon={ <RxViewVertical />} />
-            {/* <Element title="3 Section" onClick={() => appendElement('section3')} icon={ <RxLayout />} /> */}
+            <Element title="Row Section" onClick={() => appendElement('row')} icon={ <RxSection />} />
+            <Element title="Column Section" onClick={() => appendElement('column')} icon={ <RxViewVertical />} />
+            <Element title="3 Section" onClick={() => appendElement('grid')} icon={ <RxLayout />} />
 
             <Element title="Image" onClick={sendObjectsRequest} icon={ <RxImage />} />
             <Element title="Video" onClick={sendObjectsRequest} icon={ <RxVideo />} />
@@ -80,7 +80,7 @@ const Elements = () => {
             <Element title="Navigation" onClick={navigation} icon={ <RxListBullet />} />
             <Element title="Page" onClick={sendPagesRequest} icon={ <MdPages />} />
 
-            <Element title="Button" onClick={() => appendElement('button')} icon={ <RxButton />} />
+            <Element title="Button" onClick={() => appendElement('button2')} icon={ <RxButton />} />
             <Element title="Link" onClick={() => appendElement('link')} icon={ <RxLink2 />} />
         </div>
     )

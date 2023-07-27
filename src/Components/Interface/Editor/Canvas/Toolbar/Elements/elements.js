@@ -17,9 +17,27 @@ const text = {
 const grid = {
     component: 'div',
     "data-aos": "fade-in",
-    className: 'grid',
+    className: 'grid w-full',
     style: { display: 'grid' },
     children: [ { ...header, children: 'Grid Section' }, text ]
+};
+
+
+const column = {
+    component: 'div',
+    "data-aos": "fade-in",
+    className: 'flex flex-col md:flex-row @md:flex-row w-full',
+    style: { display: 'flex', width: '100%' },
+    children: [ { ...header, children: 'Flex Section' }, text ]
+};
+
+
+const row = {
+    component: 'div',
+    "data-aos": "fade-in",
+    className: 'flex flex-col w-full',
+    style: { display: 'flex', width: '100%' },
+    children: [ { ...header, children: 'Flex Section' }, text ]
 };
 
 const flex = {
@@ -33,7 +51,7 @@ const flex = {
 const section1 = {
     component: 'div',
     "data-aos": "fade-in",
-    className: 'flex w-full overflow-auto',
+    className: 'flex flex-col w-full h-full overflow-auto',
     style: { display: 'flex' },
     children: [ { ...header, children: '1 Section' }, text ]
 };
@@ -67,10 +85,25 @@ const video = {
 
 const button = {
     component: 'a',
-    className: 'block text-white bg-black rounded-lg select-none',
-    style: { display: 'block', color: 'white', backgroundColor: 'black', borderRadius: '8px', userSelect: 'none' },
+    className: 'inline-block text-white bg-black rounded-lg select-none w-full',
+    style: { display: 'inline-block', color: 'white', backgroundColor: 'black', userSelect: 'none' },
     href: 'test',
-    children: [ { ...text, children: 'Button Name' }]
+    children: 'Button Name'
+};
+
+const buttonBase = {
+    component: 'div',
+    className: 'flex select-none w-full',
+    style: { display: 'flex', width: '100%' },
+    children: [ { ...button }]
+};
+
+const button2 = {
+    component: 'a',
+    className: 'text-xl text-white bg-black block',
+    style: { display: 'block', fontSize: '20px', lineHeight: '28px', color: 'white', backgroundColor: 'black' },
+    href: 'test',
+    children: 'Button'
 };
 
 const link = {
@@ -79,7 +112,7 @@ const link = {
     style: { fontSize: '20px', lineHeight: '28px', color: 'blue', textDecorationLine: 'underline' },
     href: 'test',
     children: 'Link'
-}
+};
 
 const navBase = {
     component: 'div',
@@ -97,7 +130,8 @@ const navPart = {
 
 export default {
     header, text, img, video,
-    flex, grid,
+    flex, grid, column, row,
     section1, section2, section3, 
-    button, link, navBase, navPart
+    button, link, navBase, navPart,
+    buttonBase, button2
 }

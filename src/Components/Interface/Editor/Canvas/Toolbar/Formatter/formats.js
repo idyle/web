@@ -46,18 +46,18 @@ const textBottom = {
 };
 
 const sectionLeft = {
-    className: 'justify-items-start',
-    style: { justifyItems: 'start' }
+    className: 'place-items-start',
+    style: { placeItems: 'start' }
 };
 
 const sectionCenter = {
-    className: 'justify-items-center',
-    style: { justifyItems: 'center' }
+    className: 'place-items-center',
+    style: { placeItems: 'center' }
 };
 
 const sectionRight = {
-    className: 'justify-items-end',
-    style: { justifyItems: 'end' }
+    className: 'place-items-end',
+    style: { placeItems: 'end' }
 };
 
 const sectionTop = {
