@@ -29,7 +29,7 @@ export const constructDom = (config, toggle, css, fontFamily) => {
     const string = renderToString(
         <html>
             <head>{css}{aosCss}{toggle}</head>
-            <body>{body}{aosJs}{aosInit}</body>
+            <body style={{ width: '100%', maxWidth: '100%' }}>{body}{aosJs}{aosInit}</body>
         </html>
     );
     return (

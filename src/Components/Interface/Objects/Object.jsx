@@ -3,11 +3,13 @@ import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
 import { deleteFile, downloadFile, getFile, publicFile } from './requests';
 import { useNavigate } from 'react-router-dom';
+import { useData } from '../../../Contexts/Data';
 
 const Object = ({ object, objects, setObjects }) => {
 
     const navigate = useNavigate();
     const { getToken } = useAuth();
+    const { resetObjects } = useData();
     const { notify, confirm, load, integrator, setIntegrator } = useUtil();
 
     const copy = async () => {
@@ -65,6 +67,16 @@ const Object = ({ object, objects, setObjects }) => {
         navigate(integrator?.origin);
     };
 
+    const makePublic = async () => {
+        if (!(await confirm('This will make your file public. Continue?'))) return;
+        const token = await getToken();
+        load(true);
+        const operation = await publicFile(token, object?.name);
+        load(false);
+        if (!operation) return;
+        resetObjects();
+    };
+
     return (
         <div onClick={sendFile} className={`grid grid-cols-2 md:grid-cols-4 items-center justify-items-center shadow-black shadow-sm rounded-lg p-2 text-gunmetal ${integrationMode}`}>
             <AiOutlineFile className="block md:hidden" size="50px" />
@@ -77,7 +89,7 @@ const Object = ({ object, objects, setObjects }) => {
             <div className="flex items-center gap-1">
                 <AiOutlineDownload onClick={download} size="30px" />
                 <AiOutlineDelete onClick={remove} size="30px" />
-                { object?.public ? <AiOutlineGlobal size="30px" /> : <AiFillLock size="30px" /> }
+                { object?.public ? <AiOutlineGlobal size="30px" /> : <AiFillLock size="30px" onClick={makePublic} /> }
   
             </div>
         </div>

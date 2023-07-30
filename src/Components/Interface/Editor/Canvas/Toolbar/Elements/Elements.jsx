@@ -32,7 +32,7 @@ const Elements = () => {
 
     // entering
     const sendObjectsRequest = () => {
-        setIntegrator({ active: true, target: 'objects', origin: `${origin}?mode=canvas`, ref: { path, data: page?.data } });
+        setIntegrator({ active: true, target: 'objects', origin: `${origin}?mode=canvas&toolbar=elements`, ref: { path, data: page?.data } });
         notify('Sending you to objects. Please select a file to add.');
         navigate('/objects');
     };
@@ -40,11 +40,11 @@ const Elements = () => {
     // returning
     useEffect(() => {
         if (!integrator?.active || !integrator?.data) return;
-        if (integrator?.target !== 'objects' || integrator?.origin !== `${origin}?mode=canvas`) return;
+        if (integrator?.target !== 'objects' || integrator?.origin !== `${origin}?mode=canvas&toolbar=elements`) return;
         const file = integrator?.data;
         const pageRef = integrator?.ref;
-        if (file?.type.startsWith('image'))  setPageData({ ...setObjectFromPath(pageRef?.data, pageRef?.path, { ...elements['img'], src: file?.url }) });
-        else if (file?.type.startsWith('video'))  setPageData({ ...setObjectFromPath(pageRef?.data, pageRef?.path, { ...elements['video'], src: file?.url }) });
+        if (file?.type.startsWith('image'))  setPageData({ ...setObjectFromPath(pageRef?.data, pageRef?.path, { ...elements['img'], children: [{ ...elements['img'].children[0], src: file?.url }] }) });
+        else if (file?.type.startsWith('video'))  setPageData({ ...setObjectFromPath(pageRef?.data, pageRef?.path, { ...elements['video'], children: [{ ...elements['video'].children[0], src: file?.url }] }) });
         setIntegrator({ active: false });
     }, [integrator?.active]);
 
@@ -72,7 +72,7 @@ const Elements = () => {
 
             <Element title="Row Section" onClick={() => appendElement('row')} icon={ <RxSection />} />
             <Element title="Column Section" onClick={() => appendElement('column')} icon={ <RxViewVertical />} />
-            <Element title="3 Section" onClick={() => appendElement('grid')} icon={ <RxLayout />} />
+            {/* <Element title="3 Section" onClick={() => appendElement('grid')} icon={ <RxLayout />} /> */}
 
             <Element title="Image" onClick={sendObjectsRequest} icon={ <RxImage />} />
             <Element title="Video" onClick={sendObjectsRequest} icon={ <RxVideo />} />
@@ -80,7 +80,7 @@ const Elements = () => {
             <Element title="Navigation" onClick={navigation} icon={ <RxListBullet />} />
             <Element title="Page" onClick={sendPagesRequest} icon={ <MdPages />} />
 
-            <Element title="Button" onClick={() => appendElement('button2')} icon={ <RxButton />} />
+            <Element title="Button" onClick={() => appendElement('button')} icon={ <RxButton />} />
             <Element title="Link" onClick={() => appendElement('link')} icon={ <RxLink2 />} />
         </div>
     )

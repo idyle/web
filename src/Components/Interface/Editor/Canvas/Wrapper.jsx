@@ -55,6 +55,7 @@ const Wrapper = ({ children }) => {
         if (!edit) return;
         setEdit(false);
         if (children.props.children === value) return;
+        console.log('hover called');
         // no changes needed
         const func = (current) => {
             current.children = value;
@@ -71,6 +72,7 @@ const Wrapper = ({ children }) => {
     }, [selected]);
 
     const onDragOver = (e) => {
+        console.log('drag over');
         e.preventDefault();
         e.stopPropagation();
         setHovered(e.target.id);
@@ -78,6 +80,7 @@ const Wrapper = ({ children }) => {
     };
 
     const onDrop = (e) => {
+        console.log('drop called');
         e.preventDefault();
         e.stopPropagation();
         if (selected === children.props.id || !selectedData) return;
@@ -107,17 +110,22 @@ const Wrapper = ({ children }) => {
     const onMouseDown = (e) => {
         e.stopPropagation();
         if (clicked) return;
+        console.log('mouse down, marking clicked as true');
+        // allows the resize to begin but does not provide data 
+        // onResize must affirm in order for an update to occur
         const { offsetWidth: elementWidth, parentNode, id } = elementRef?.current;
-        const { paddingRight, paddingLeft, marginRight, marginLeft } = getComputedStyle(parentNode);
-        const parentWidth = parentNode?.offsetWidth - (parseFloat(paddingRight) + parseFloat(paddingLeft) + parseFloat(marginRight) + parseFloat(marginLeft));
-        if (!elementWidth || !parentWidth || !id) return;
+        // const { paddingRight, paddingLeft, marginRight, marginLeft } = getComputedStyle(parentNode);
+        // const parentWidth = parentNode?.offsetWidth - (parseFloat(paddingRight) + parseFloat(paddingLeft) + parseFloat(marginRight) + parseFloat(marginLeft));
+        // if (!elementWidth || !parentWidth || !id) return;
+        // setSelected(id);
         setSelected(id);
-        setClicked({ elementWidth, parentWidth, id });
+        setClicked({ id });
     };
 
     const onResize = () => {
         // affirms/updates the mouse down
         if (!clicked) return;
+        console.log('affirmed!');
         const { offsetWidth: elementWidth, parentNode, id } = elementRef?.current;
         const { paddingRight, paddingLeft, marginRight, marginLeft } = getComputedStyle(parentNode);
         const parentWidth = parentNode?.clientWidth - (parseFloat(paddingRight) + parseFloat(paddingLeft) + parseFloat(marginRight) + parseFloat(marginLeft));
@@ -130,10 +138,11 @@ const Wrapper = ({ children }) => {
 
     const onMouseUp = (e) => {
         e.stopPropagation();
-        if (!clicked) return;
+        if (!clicked) return console.log('no click specifiwd', clicked);
+        console.log(clicked);
         setClicked(false);
         const { elementWidth, parentWidth } = clicked;
-        if (!parentWidth || !elementWidth) return;
+        if (!parentWidth || !elementWidth) return console.log('no data specified');
 
         const elementWidthPercentage = ((elementWidth / parentWidth) > 1) ? 1 : (elementWidth / parentWidth);
         console.log(elementWidth, parentWidth, e.currentTarget.offsetWidth);
@@ -157,13 +166,13 @@ const Wrapper = ({ children }) => {
 
     return (
         <ReactResizeDetector skipOnMount={true} onResize={onResize}>
-            <div id={children?.props?.id} className={`p-1 max-w-full overflow-hidden resize-x border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
+            <div id={children?.props?.id} className={`p-2 max-w-full overflow-hidden resize-x border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
             ref={elementRef}
             style={{ width: children.props?.style?.width || 'auto' }}
             draggable={true}
             onDrop={onDrop}
             onMouseDown={onMouseDown}
-            onMouseLeave={onMouseUp}
+            // onMouseLeave={onMouseUp}
             onMouseUp={onMouseUp}
             onDragOver={onDragOver}
             onDragStart={onDragStart}

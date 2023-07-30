@@ -11,9 +11,13 @@ const Dom = () => {
 
     useEffect(() => {
         AOS.init();
+        window.addEventListener('load', AOS.refreshHard());
     }, []);
     
-    const onScroll = () => AOS.refreshHard();
+    const onScroll = () => {
+        console.log('scroll')
+        AOS.refreshHard();
+    };
 
     useEffect(() => {
         if (!page?.id || !page?.data) return;
@@ -22,7 +26,7 @@ const Dom = () => {
 
     return (
         <div className="flex p-1 h-full shadow-xl overflow-auto rounded-lg place-content-center ">
-            <div onScroll={onScroll} className={`@container w-full p-2 md:p-4 border-2 md:min-w-[240px] border-gunmetal rounded-lg p-1 overflow-auto md:resize-x`}>
+            <div onScroll={onScroll} className={`@container w-full p-2 md:p-5 border-2 md:min-w-[240px] border-gunmetal rounded-lg p-1 overflow-auto md:resize-x`}>
                 {dom}
             </div>
         </div>

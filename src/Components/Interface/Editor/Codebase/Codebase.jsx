@@ -19,6 +19,7 @@ export const DomContext = ({ children }) => {
     const { integrator } = useUtil();
     const [dom, setDom] = useState();
     const [string, setString] = useState();
+    const [header, setHeader] = useState('div');
     
     const convertJSONtoCSS = (json = {}) => {
         let string = '';
@@ -36,11 +37,14 @@ export const DomContext = ({ children }) => {
     const convertCSStoJSON = (string = '') => {
         const object = {};
         for (const style of string?.split(';')) {
-            const parts = style?.split(':', 2);
-            if (!parts?.[0] || !parts?.[1]) continue;
+            const parts = style?.split(':');
+            const value = [ ...[ ...style?.split(`${parts?.[0]}:`)]?.slice(1, parts?.length) ]?.join('');
+            console.log(parts, value);
+            if (!parts?.[0] || !value) continue;
             const key = parts?.[0]?.trim()?.replace(/-([a-z])/ig, (_, l) => l?.toUpperCase());
-            object[key] = parts?.[1]?.trim();
+            object[key] = value?.trim();
         };
+        console.log('returned object', object);
         return object;
     };
 
@@ -96,6 +100,9 @@ export const DomContext = ({ children }) => {
             if (!page?.data || !page?.id) return;
             const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
             if (!convertedHimalayaJSON) return;
+            const stringifiedHimalayaJSONHeader = stringify([{ ...convertedHimalayaJSON, children: [] }]);
+            console.log('header to set', stringifiedHimalayaJSONHeader?.split('</')?.[0] || '<div>')
+            setHeader(stringifiedHimalayaJSONHeader?.split('</')?.[0] || '<div>');
             // instead of creating a wrapper func, it's possible to just return its children
             const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON?.children || []);
             if (!stringifiedHimalayaJSON) return;
@@ -103,13 +110,15 @@ export const DomContext = ({ children }) => {
             setString(stringifiedHimalayaJSON);
             setDom(cDom);
         } catch {
+            console.error('Could not create dom.');
             return;
         }
     }, [page?.id, toggle, css, font])
 
     const values = { 
         convertJSONtoHimalayaJSON, convertHimalayaJSONtoJSON,
-        dom, setDom, string, setString, toggle, setToggle, css, setCss
+        dom, setDom, string, setString, toggle, setToggle, css, setCss,
+        header, setHeader
     };
     return ( <DomValues.Provider value={values}>{children}</DomValues.Provider> );
 };

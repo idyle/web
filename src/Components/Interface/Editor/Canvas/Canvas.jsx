@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from 'react';
 import { useEditor } from '../Editor';
 import Toolbar from './Toolbar/Toolbar';
 import Dom from './Dom';
+import Aos from 'aos';
 
 const DomValues = createContext();
 export const useDom = () => useContext(DomValues);
@@ -32,6 +33,7 @@ export const DomContext = ({ children }) => {
     }, [path]);
 
     const updateObjectFromPath = (data, path, func) => {
+        Aos.refreshHard();
         let current = data;
         for (let depth = 0; depth < path.length; depth++) {
             if (current.component === 'div') current = current.children[path[depth]];
@@ -43,6 +45,7 @@ export const DomContext = ({ children }) => {
     };
 
     const setObjectFromPath = (data, path, value, raise = false) => {
+        Aos.refreshHard();
         let current = data;
         let nearestParent = current;
     

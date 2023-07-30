@@ -10,7 +10,7 @@ import { parse } from "himalaya";
 const Parser = () => {
     const { page, setPageData, font } = useEditor();
     const { load } = useUtil();
-    const { string, toggle, css, setDom, convertHimalayaJSONtoJSON } = useDom();
+    const { string, toggle, css, setDom, convertHimalayaJSONtoJSON, header } = useDom();
     const [mounted, setMounted] = useState();
     const editorRef = useRef();
 
@@ -29,7 +29,8 @@ const Parser = () => {
     };
 
     const onChange = (editorValue) => {
-        const parsedHimalayaJSON = parse(`<div>${editorValue}</div>`);
+        console.log('onchanging the ff', header);
+        const parsedHimalayaJSON = parse(`${header}${editorValue}</div>`);
         // output string
         const builtInJSON = convertHimalayaJSONtoJSON(parsedHimalayaJSON[0]);
         if (!builtInJSON) return;
