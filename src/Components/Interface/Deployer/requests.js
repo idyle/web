@@ -11,6 +11,7 @@ export const getWebsites = async (token) => {
         };
         const req = await fetch(`${servicePath}/websites`, options);
         const res = await req.json();
+        console.log('result of res', res);
         if (!res?.status) return false;
         return res?.websites;
     } catch (e) {
@@ -74,6 +75,7 @@ export const listDeploys = async (token, filter, value) => {
         if (filter && value) url = `${url}?filter=${filter}&value=${value}`;
         const req = await fetch(url, options);
         const res = await req.json();
+        console.log('deploys', res);
         if (!res?.status) return false;
         return res?.list;
     } catch (e) {

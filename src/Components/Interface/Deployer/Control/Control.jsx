@@ -14,6 +14,7 @@ const Control = ({ deploy, website }) => {
     useEffect(() => {
         if (!website || !deploys?.length) return;
         const websiteDeploys = deploys.filter(deploy => deploy.website === website?.name) || [];
+        console.log(deploys, websiteDeploys, 'websitedeploys');
         setWebsiteDeploys(websiteDeploys);
         setCurrentDeploy(websiteDeploys.find(({ id }) => id === website?.deploy));
     }, [deploys, website]);

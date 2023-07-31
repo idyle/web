@@ -3,13 +3,11 @@ import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
 import { deleteFile, downloadFile, getFile, publicFile } from './requests';
 import { useNavigate } from 'react-router-dom';
-import { useData } from '../../../Contexts/Data';
 
 const Object = ({ object, objects, setObjects }) => {
 
     const navigate = useNavigate();
     const { getToken } = useAuth();
-    const { resetObjects } = useData();
     const { notify, confirm, load, integrator, setIntegrator } = useUtil();
 
     const copy = async () => {
@@ -19,10 +17,10 @@ const Object = ({ object, objects, setObjects }) => {
             const token = await getToken();
             file = await getFile(token, object?.name);
             load(false);
-        };
+        } else file.url = `https://cdn.idyle.app/${file?.path}`;
         if (!file) return notify('Could not get the file url.');
+        navigator.clipboard.writeText(file.url.replace(/ /g, '%20'));
         notify('Successfully copied to clipboard');
-        navigator.clipboard.writeText(file.url);
     };
 
     const download = async () => {
@@ -63,7 +61,7 @@ const Object = ({ object, objects, setObjects }) => {
             if (!operation) return;
         };
         const url = `https://cdn.idyle.app/${object?.path}`;
-        setIntegrator({ ...integrator, data: { ...object, url } });
+        setIntegrator({ ...integrator, data: { ...object, url: url.replace(/ /g, '%20') } });
         navigate(integrator?.origin);
     };
 
@@ -74,7 +72,11 @@ const Object = ({ object, objects, setObjects }) => {
         const operation = await publicFile(token, object?.name);
         load(false);
         if (!operation) return;
-        resetObjects();
+        const objectIndex = objects.findIndex(({ name }) => name === object?.name);
+        if (!(objectIndex >= 0)) return;
+        let arr = [ ...objects ];
+        arr[objectIndex] = { ...object, public: true };
+        setObjects([ ...arr ]);
     };
 
     return (

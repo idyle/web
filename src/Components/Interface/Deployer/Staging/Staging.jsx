@@ -61,7 +61,7 @@ const Staging = ({ deploy }) => {
         const batch = await convertPages(token);
         load(false);
         if (!batch) return notify('Something went wrong trying to convert.');
-        resetObjects();
+        // resetObjects();
         // let pageFiles = pages.map(( { route }) => ({ path: objects?.find(( { name } ) => name === `${route}.html`)?.path }));
         let pageFiles = pages.map(( { route, id }) => ({ path: `${route}.html`, index: (id === index) }));
         let objectFiles = files.map(( { path } ) => ({ path, index: (path === index) }));

@@ -1,9 +1,11 @@
 import { MdAddCircle } from 'react-icons/md';
 import { useEditor } from '../Editor';
 import Page from './Page';
+import Template from './Template';
 import { useUtil } from '../../../../Contexts/Util';
 import { createPage } from '../requests';
 import { useAuth } from '../../../../Contexts/Auth';
+import templates from './templates';
 
 const Pages = () => {
 
@@ -19,9 +21,10 @@ const Pages = () => {
     } };
 
     const createNewPage = async () => {
-        const pageName = await prompt('', 'Input a page name');
+        const pageName = await prompt('', 'Input a page route');
         if (!pageName) return;
         const routeIndex = pages.findIndex(({ route }) => route === pageName);
+        if (/\s/g.test(pageName)) return notify('Routes cannot include whitespaces.');
         if (routeIndex >= 0) return notify('This route already exists.');
         spin(true);
         const token = await getToken();
@@ -33,18 +36,19 @@ const Pages = () => {
     };
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] auto-rows-min p-2 gap-2">
-            <div className="flex w-full place-content-center items-center p-4">
+        <div className="grid grid-rows-[minmax(0,_1fr)] auto-rows-min p-2 gap-2">
+            {/* <div className="flex w-full place-content-center items-center p-4">
                 <h1 className="text-6xl text-gunmetal text-center font-bold">Your Pages</h1>
-            </div>
+            </div> */}
 
-            <div className="grid auto-rows-min md:grid-cols-3 gap-3 px-5 justify-items-center items-center md:overflow-auto">
+            <div className="grid auto-rows-min md:grid-cols-2 xl:grid-cols-4 gap-3 px-5 justify-items-center items-center md:overflow-auto">
                 <div onClick={createNewPage} className="grid w-full h-full items-center justify-items-center text-gunmetal border-2 border-gunmetal rounded-lg select-none hover:bg-black/10">
                     <div className="grid items-center justify-items-center p-2">
                         <MdAddCircle size="60px" />
                         <h1 className="text-5xl text-center">Create a Page</h1>
                     </div>
                 </div>
+                {templates.map((template, i) => (<Template template={template} key={`t${i}`} />))}
                 {pages.map((page, i) => (<Page key={`p${i}`} page={page} />))}
             </div>
 
