@@ -14,7 +14,7 @@ export const DomContext = ({ children }) => {
     const [clicked, setClicked] = useState(false);
     const [hovered, setHovered] = useState('');
     const [path, setPath] = useState([]);
-    const [selectedData, setSelectedData] = useState({});
+    const [selectedData, setSelectedData] = useState();
 
     useEffect(() => {
         if (!selected) return;
@@ -26,49 +26,47 @@ export const DomContext = ({ children }) => {
     }, [selected]);
 
     useEffect(() => {
-        if (!path.length) return setSelectedData({});
+        if (!path.length) return setSelectedData();
         let current = page?.data;
         for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
         setSelectedData(current);
     }, [path]);
 
     const updateObjectFromPath = (data, path, func) => {
-        Aos.refreshHard();
-        let current = data;
+        const clonedData = JSON.parse(JSON.stringify(data));
+        let current = clonedData;
         for (let depth = 0; depth < path.length; depth++) {
             if (current.component === 'div') current = current.children[path[depth]];
             else current = current[path[depth]];
         };
         current = { ...func(current) };
         // arbitrary func to generalize process
-        return data;
+        return clonedData;
     };
 
     const setObjectFromPath = (data, path, value, raise = false) => {
-        Aos.refreshHard();
-        let current = data;
+        const clonedData = JSON.parse(JSON.stringify(data));
+        let current = clonedData;
         let nearestParent = current;
-    
         for (let depth = 0; depth < path?.length; depth++) {
-            if (current ?.component === 'div') {
-                nearestParent = current;
+            if (current?.component === 'div') {
                 current = current?.children?.[path[depth]];
             } 
         };
         if (current?.component !== 'div') current = nearestParent;
-        // if our selected item is not a div
 
         if (raise) current.children = [ value, ...current?.children ];
         else current.children = [ ...current?.children, value ];
 
-        return data;
+        return clonedData;
     };
 
     const deleteObjectFromPath = (data, path) => {
 
-        let value = data;
+        const clonedData = JSON.parse(JSON.stringify(data));
+        let value = clonedData;
         for (let d = 0; d < path?.length; d++) if (value?.component === 'div') value = value?.children?.[path[d]];
-        let current = data;
+        let current = clonedData;
         let nearestParent = current;
     
         for (let depth = 0; depth < path?.length; depth++) {
@@ -82,8 +80,8 @@ export const DomContext = ({ children }) => {
         if (current?.component !== 'div') current = nearestParent;
         // if our selected item is not a div
 
-        current.children = current.children.filter(child => child?.id !== value?.id);
-        return data;
+        current.children = [...current.children.filter(child => child?.id !== value?.id)];
+        return clonedData;
     };
 
     const values = { 

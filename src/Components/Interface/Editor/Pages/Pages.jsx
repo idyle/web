@@ -16,7 +16,7 @@ const Pages = () => {
     const config = { name: 'New Page', route: 'newpage', data: {
         component: 'div',
         id: '0',
-        className: 'max-w-full w-full',
+        className: 'max-w-full w-full h-full',
         children: []
     } };
 
@@ -45,7 +45,7 @@ const Pages = () => {
                 <div onClick={createNewPage} className="grid w-full h-full items-center justify-items-center text-gunmetal border-2 border-gunmetal rounded-lg select-none hover:bg-black/10">
                     <div className="grid items-center justify-items-center p-2">
                         <MdAddCircle size="60px" />
-                        <h1 className="text-5xl text-center">Create a Page</h1>
+                        <h1 className="text-5xl text-center">Create</h1>
                     </div>
                 </div>
                 {templates.map((template, i) => (<Template template={template} key={`t${i}`} />))}

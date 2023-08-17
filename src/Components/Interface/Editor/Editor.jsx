@@ -24,6 +24,8 @@ export const EditorContext = ({ children }) => {
     const { pages, setPages, pageId, setPageId } = useData();
     const pageQuery = pages?.find(({ id }) => id === pageId);
     const [page, setPage] = useState(pageQuery);
+    const [pageCache, setPageCache] = useState();
+    const [clipboard, setClipboard] = useState();
     const [css, setCss] = useState(pageQuery?.metadata?.css);
     const [toggle, setToggle] = useState(pageQuery?.metadata?.toggle);
     const [font, setFont] = useState(pageQuery?.metadata?.font);
@@ -32,9 +34,14 @@ export const EditorContext = ({ children }) => {
         const p = pages.find(({ id }) => id === pageId);
         if (!p || !pageId || !pages) return;
         setCss(p?.metadata?.css);
-        setToggle(p?.metadata?.toggle);
-        setFont(p?.metadata?.font);
+        setToggle(p?.metadata?.toggle ?? true);
+        setFont(p?.metadata?.font || 'Times New Roman');
     }, [pages, pageId]);
+
+    useEffect(() => {
+        setPageCache();
+        setClipboard();
+    }, [pageId]);
 
     const serialize = (object, id = '0') => {
         let children = object.children || null;
@@ -46,27 +53,28 @@ export const EditorContext = ({ children }) => {
         const index = pages.findIndex(( { id } ) => id === page?.id);
         if (!(index >= 0)) return false;
         // page must exist 
+        let currentArr = [ ...pages ];
+        // deep copy of array
+        const pageCache = { ...currentArr[index] };
+        setPageCache({ ...pageCache, data: { ...serialize(pageCache?.data) } });
+        // set page cache
         setPage({ ...page, data: { ...serialize(page?.data) } });
-        const pageCache = pages[index];
-        // updated page & save cache
+        currentArr[index] = { ...page, data: { ...serialize(page?.data) } };
+        setPages([ ...currentArr ]);
+        // update actual page 
         const token = await getToken();
-        const operation = await editPage(token, page);
-        if (operation) {
-            // if operation succeeded, update data 
-            let array = pages;
-            array[index] = { ...page, data: { ...serialize(page?.data) } };
-            setPages([ ...array ]);
-            return true;
-        } else {
-            notify('Something went wrong trying to edit the page.');
-            setPage({ ...pageCache, data: { ...serialize(pageCache?.data) } });
-            let array = pages;
-            array[index] = { ...pageCache, data: { ...serialize(pageCache?.data) } };
-            setPages([ ...array ]);
-            // if false, replace the page with old cache
-            return false;
-        }
+        const operation = await editPage(token, { ...page, data: { ...serialize(page?.data) } });
+        if (operation) return true;
+        notify('Something went wrong trying to edit the page.');
+        let array = [ ...pages ];
+        setPage({ ...pageCache, data: { ...serialize(pageCache?.data) } });
+        array[index] = { ...pageCache, data: { ...serialize(pageCache?.data) } };
+        setPages([ ...array ]);
+        // if false, replace the page with old cache
+        return false;
     };
+
+    const test = () => console.log(pages);
 
     const remove = async (page) => {
         if (!(await confirm("You're about to delete a page. This action cannot be undone. Proceed?"))) return;
@@ -86,6 +94,7 @@ export const EditorContext = ({ children }) => {
         setPageData, setPageId, setPageMetadata,
         remove, edit, serialize,
         toggle, setToggle, css, setCss, font, setFont,
+        pageCache, setPageCache, clipboard, setClipboard
     };
     return ( <EditorValues.Provider value={values}>{children}</EditorValues.Provider> );
 };

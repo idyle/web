@@ -12,7 +12,9 @@ const Animate = ({ title, icon }) => {
     const updateElement = () => {
         const func = (current) => {
             if (current?.['data-aos']) delete current['data-aos'];
-            else current['data-aos'] = 'fade-in';
+            if (current?.['data-aos-offset']) delete current['data-aos-offset'];
+            if (!current?.['data-aos']) current['data-aos'] = 'fade-in';
+            if (!current?.['data-aos-offset']) current['data-aos-offset'] = "0";
             return current;
         };
         setPageData({ ...updateObjectFromPath(page?.data, path, func)} );

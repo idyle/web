@@ -17,18 +17,30 @@ const Format = ({ title, icon, format }) => {
         const func = (current) => {
             // style and class must sync; style is determiner
             let classes = current.className?.split(' ') || [];
-            const index = classes.findIndex(prop => prop === className);
+            const index = classes.findIndex(prop => {
+                if (prop.includes('-')) prop = prop.split('-').slice(0, prop.split('-').length - 1).join('-');
+                console.log('test index find', prop, formats[format]?.classPrefix);
+                return prop === formats[format]?.classPrefix;
+            });
             // get all current classes and index
             let style = { ...current?.style };
             const key = Object.keys(formats[format]?.style)[0];
+            console.log(key, classes, index);
             // get the key of the style prop
-            if (Object.hasOwn(current?.style || {}, key)) {
-                console.log('key exists!', current?.style, key);
+            if (Object.hasOwn(current?.style || {}, key) && current?.style?.[key] === formats[format]?.style?.[key]) {
+                console.log('key exists!', current?.style, key, index, classes);
                 // if the key exists
                 if (index >= 0) classes.splice(index, 1);
+                console.log('spliced data', classes);
                 // if the class is listed, remove it
                 delete style[key];
                 // remove the key from the style object
+            } else if (Object.hasOwn(current?.style || {}, key) && current?.style?.[key] !== formats[format]?.style?.[key]) {
+                console.log('key exists but values do not match', current?.style?.[key], '&', formats[format]?.style?.[key]);
+                if (index >= 0) classes.splice(index, 1);
+                delete style[key];
+                classes.push(className);
+                style = { ...style, ...formats[format]?.style };
             } else {
                 // if the key doesn't exist
                 if (index < 0) classes.push(className);
@@ -38,22 +50,9 @@ const Format = ({ title, icon, format }) => {
             current.style = { ...style };
             current.className = classes.join(" ").trim();
             return current;
-            // let style = { ...current?.style };
-            // let properties = current.className?.split(' ') || [];
-            // const index = properties.findIndex(prop => prop === className);
-            // if (index >= 0) properties.splice(index, 1);
-            // else properties.push(className);
-            // current.className = properties.join(" ").trim();
-            // const key = Object.keys(formats[format]?.style)[0];
-            // console.log(current.style, current);
-            // if (Object.hasOwn(current?.style || {}, key)) style[key] = undefined;
-            // else style = { ...style, ...formats[format]?.style };
-            // console.log('FINAL STYLE', style);
-            // current.style = { ...style };
-            // return current;
         };
         setPageData({ ...updateObjectFromPath(page?.data, path, func) });
-        // setPageData({ ...updateClassFromPath(page?.data, path, formats[format]) });
+
     };
 
     useEffect(() => {

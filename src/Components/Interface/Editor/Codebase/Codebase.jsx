@@ -39,12 +39,10 @@ export const DomContext = ({ children }) => {
         for (const style of string?.split(';')) {
             const parts = style?.split(':');
             const value = [ ...[ ...style?.split(`${parts?.[0]}:`)]?.slice(1, parts?.length) ]?.join('');
-            console.log(parts, value);
             if (!parts?.[0] || !value) continue;
             const key = parts?.[0]?.trim()?.replace(/-([a-z])/ig, (_, l) => l?.toUpperCase());
             object[key] = value?.trim();
         };
-        console.log('returned object', object);
         return object;
     };
 
@@ -74,6 +72,7 @@ export const DomContext = ({ children }) => {
     const convertHimalayaJSONtoJSON = (config, id = '0') => {
 
         let children = config.children;
+        console.log('children', config);
         // divs, imgs, vids are exceptions
         if (config.tagName === 'div') children = children.filter(child => child.type === 'element')?.map((child, i) => convertHimalayaJSONtoJSON(child, `${id}-${i}`)) || [];
         else if (config.tagName === 'img') children = null;
@@ -95,14 +94,23 @@ export const DomContext = ({ children }) => {
     };
 
     useEffect(() => {
+        if (!page?.data || !page?.id) return;
+        const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
+        if (!convertedHimalayaJSON) return;
+        const stringifiedHimalayaJSONHeader = stringify([{ ...convertedHimalayaJSON, children: [] }]);
+        console.log('header to set', stringifiedHimalayaJSONHeader?.split('</')?.[0] || '<div>')
+        setHeader(stringifiedHimalayaJSONHeader?.split('</')?.[0] || '<div>');
+    }, [page?.data. page?.id]);
+
+    useEffect(() => {
         try {
             if (integrator?.active && integrator?.origin === `${origin}?mode=codebase`) return;
             if (!page?.data || !page?.id) return;
             const convertedHimalayaJSON = convertJSONtoHimalayaJSON(page?.data);
             if (!convertedHimalayaJSON) return;
-            const stringifiedHimalayaJSONHeader = stringify([{ ...convertedHimalayaJSON, children: [] }]);
-            console.log('header to set', stringifiedHimalayaJSONHeader?.split('</')?.[0] || '<div>')
-            setHeader(stringifiedHimalayaJSONHeader?.split('</')?.[0] || '<div>');
+            // const stringifiedHimalayaJSONHeader = stringify([{ ...convertedHimalayaJSON, children: [] }]);
+            // console.log('header to set', stringifiedHimalayaJSONHeader?.split('</')?.[0] || '<div>')
+            // setHeader(stringifiedHimalayaJSONHeader?.split('</')?.[0] || '<div>');
             // instead of creating a wrapper func, it's possible to just return its children
             const stringifiedHimalayaJSON = stringify(convertedHimalayaJSON?.children || []);
             if (!stringifiedHimalayaJSON) return;
@@ -132,20 +140,20 @@ const Codebase = () => {
             <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-[minmax(0,_1fr)_auto] p-2 gap-1">
                 <div className="order-2 md:order-1 grid grid-cols-1 md:grid-cols-[40%_60%] gap-1">
 
-                    <div className={`${parser ? 'grid' : 'hidden'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 overflow-hidden`}>
+                    <div className={`${parser ? 'grid' : 'hidden'} md:grid grid-rows-[minmax(0,_1fr)_auto] md:grid-rows-1 overflow-hidden`}>
+                        <Parser />
                         <div onClick={() => setParser(false)} className="flex md:hidden items-center place-content-center m-2 rounded-lg text-gunmetal border border-gunmetal select-none hover:scale-[.98]">
                             <MdSwapHoriz size="30px" />
                             <h1 className="text-2xl">Switch to Dom</h1>
                         </div>
-                        <Parser />
                     </div>
                     
-                    <div className={`${parser ? 'hidden' : 'grid'} md:grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1`}>
+                    <div className={`${parser ? 'hidden' : 'grid'} md:grid grid-rows-[minmax(0,_1fr)_auto] md:grid-rows-1`}>
+                        <Dom />
                         <div onClick={() => setParser(true)} className="flex md:hidden items-center place-content-center m-2 rounded-lg text-gunmetal border border-gunmetal select-none hover:scale-[.98]">
                             <MdSwapHoriz size="30px" />
                             <h1 className="text-2xl">Switch to Parser</h1>
                         </div>
-                        <Dom />
                     </div>
 
                 </div>

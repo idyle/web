@@ -15,7 +15,7 @@ const Sizing = ({ icon, format }) => {
 
     const updateElement = (entry) => {
         let obj = {};
-        obj['lineHeight'] = `${entry + 8}px`;
+        if (format === 'fontSize') obj['lineHeight'] = `${entry + 8}px`;
         obj[format] = `${entry}px`;
         const func = (current) => {
             if (current) current.style = { ...current.style, ...obj };
@@ -40,7 +40,7 @@ const Sizing = ({ icon, format }) => {
 
     const onChange = (e) => {
         const entry = parseInt(e.target.value);
-        if (entry < 1 || entry > 100 || isNaN(entry)) return setPx(0);
+        if (entry < 0 || entry > 100 || isNaN(entry)) return setPx(0);
         setPx(entry);
         updateElement(entry);
     };

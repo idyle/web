@@ -3,13 +3,15 @@ import Canvas from './Canvas/Canvas';
 import Codebase from './Codebase/Codebase';
 import { useEffect, useState } from "react";
 import { useEditor } from "./Editor";
+import { useUtil } from "../../../Contexts/Util";
 
 const Router = () => {
 
     const params = useParams();
     const [ queries, setQueries ] = useSearchParams();
     const [query, setQuery] = useState('');
-    const { pages, pageId, setPageId, setPage } = useEditor();
+    const { integrator } = useUtil();
+    const { pages, pageId, setPageId, setPage, page } = useEditor();
     const navigate = useNavigate();
     const { pathname: path } = useLocation();
 
@@ -23,7 +25,7 @@ const Router = () => {
         const paramsPage = pages?.find(( { route }) => route === params?.['*']);
         if (!paramsPage?.id) if (path !== '/editor/pages' || path !== '/editor') return navigate('/editor/pages');
         setPageId(paramsPage?.id);
-        setPage({ ...paramsPage });
+        if (!integrator?.active) setPage({ ...paramsPage });
     }, [pages]);
 
     useEffect(() => {

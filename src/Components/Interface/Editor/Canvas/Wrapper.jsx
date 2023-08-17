@@ -87,9 +87,12 @@ const Wrapper = ({ children }) => {
         // where receiving element is children.props.id
         let dropPath = [];
         if (children.props.id?.includes('-')) dropPath = children.props.id.split('-');
+        console.log('initial dorp', dropPath);
         dropPath.shift();
+
         for (let i = 0; i < dropPath.length; i++) dropPath[i] = parseInt(dropPath[i]);
         // TODO: probably delete id rather than mark it as undefined
+        console.log(dropPath, 'DROP PATH');
         let obj = selectedData || {};
         delete obj['id'];
         // delete the object first
@@ -113,11 +116,7 @@ const Wrapper = ({ children }) => {
         console.log('mouse down, marking clicked as true');
         // allows the resize to begin but does not provide data 
         // onResize must affirm in order for an update to occur
-        const { offsetWidth: elementWidth, parentNode, id } = elementRef?.current;
-        // const { paddingRight, paddingLeft, marginRight, marginLeft } = getComputedStyle(parentNode);
-        // const parentWidth = parentNode?.offsetWidth - (parseFloat(paddingRight) + parseFloat(paddingLeft) + parseFloat(marginRight) + parseFloat(marginLeft));
-        // if (!elementWidth || !parentWidth || !id) return;
-        // setSelected(id);
+        const { id } = elementRef?.current;
         setSelected(id);
         setClicked({ id });
     };

@@ -2,19 +2,18 @@ import { useEffect } from "react";
 import { useEditor } from "../../Editor";
 import { useDom } from "../Canvas";
 import { useUtil } from "../../../../../Contexts/Util";
-import { AiFillDelete, AiOutlineReload, AiFillEdit, AiFillFileImage } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineClear, AiOutlineEdit, AiOutlineFileImage, AiOutlineUndo, AiOutlineCopy, AiOutlineFormatPainter } from 'react-icons/ai';
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Options = () => {
 
-    const { page, setPageData } = useEditor();
+    const { page, setPageData, pageCache, setClipboard, clipboard } = useEditor();
     const { confirm, prompt, notify, integrator, setIntegrator } = useUtil();
-    const { selectedData, updateObjectFromPath, deleteObjectFromPath, path } = useDom();
+    const { selectedData, setObjectFromPath, updateObjectFromPath, deleteObjectFromPath, path } = useDom();
     const { pathname: origin } = useLocation();
     const navigate = useNavigate();
 
     const deleteElement = async () => {
-        if (!(await confirm("You're about to delete this element. Are you sure?"))) return;
         setPageData({ ...deleteObjectFromPath(page?.data, path) });
     };
 
@@ -27,6 +26,26 @@ const Options = () => {
             return current;
         };
         setPageData({ ...updateObjectFromPath(page?.data, path, clearFunc) });
+    };
+
+    const undo = async () => {
+        console.log('testing undo');
+        if (!(await confirm("You're about to undo your edits. Are you sure?"))) return;
+        if (pageCache?.data) setPageData({ ...pageCache?.data });
+        else notify("There's nothing to undo");
+        console.log(pageCache?.data);
+    };
+
+    const copy = async () => {
+        console.log('setitng selected', selectedData);
+        if (!selectedData) return notify('You have not selected anything yet!');
+        setClipboard({ ...selectedData });
+        notify('Copied this element!');
+    };
+
+    const paste = async () => {
+        if (!clipboard) return notify('You have not copied anything yet!');
+        setPageData({ ...setObjectFromPath(page?.data, path, { ...clipboard }) });
     };
 
     const editProps = async () => {
@@ -83,21 +102,33 @@ const Options = () => {
     
     return (
         <div className="flex flex-wrap place-content-center md:place-content-start items-center bg-white text-gunmetal p-1 gap-1 rounded-lg overflow-auto">
+                <div onClick={undo} className="flex place-content-center items-center gap-1 p-1 border border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
+                    <AiOutlineUndo size="25px" />
+                    <h1 className="hidden md:block text-xl text-center">Undo Edit</h1>
+                </div>
+                <div onClick={copy} className="flex place-content-center items-center gap-1 p-1 border border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
+                    <AiOutlineCopy size="25px" />
+                    <h1 className="hidden md:block text-xl text-center">Copy Element</h1>
+                </div>
+                <div onClick={paste} className="flex place-content-center items-center gap-1 p-1 border border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
+                    <AiOutlineFormatPainter size="25px" />
+                    <h1 className="hidden md:block text-xl text-center">Paste Element</h1>
+                </div>
                 <div onClick={clear} className="flex place-content-center items-center gap-1 p-1 border border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
-                    <AiOutlineReload size="25px" />
+                    <AiOutlineClear size="25px" />
                     <h1 className="hidden md:block text-xl text-center">Reset Styles</h1>
                 </div>
                 <div onClick={deleteElement} className="flex place-content-center items-center gap-1 p-1 border border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
-                    <AiFillDelete size="25px" />
+                    <AiOutlineDelete size="25px" />
                     <h1 className="hidden md:block text-xl text-center">Delete Element</h1>
                 </div>
                 <div onClick={editProps} className="flex place-content-center items-center gap-1 p-1 border border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
-                    <AiFillEdit size="25px" />
+                    <AiOutlineEdit size="25px" />
                     <h1 className="hidden md:block text-xl text-center">Edit Property</h1>
                 </div>
                 <div onClick={sendObjectsRequest} className="flex place-content-center items-center gap-1 p-1 border border-inherit rounded-lg text-gunmetal hover:scale-[.98] select-none">
-                    <AiFillFileImage size="25px" />
-                    <h1 className="hidden md:block text-xl text-center">Background Image</h1>
+                    <AiOutlineFileImage size="25px" />
+                    <h1 className="hidden md:block text-xl text-center">Background</h1>
                 </div>
         </div>
     )

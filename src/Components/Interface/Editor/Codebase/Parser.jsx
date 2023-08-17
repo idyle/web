@@ -31,6 +31,7 @@ const Parser = () => {
     const onChange = (editorValue) => {
         console.log('onchanging the ff', header);
         const parsedHimalayaJSON = parse(`${header}${editorValue}</div>`);
+        console.log('from onc hange result of parse', parsedHimalayaJSON);
         // output string
         const builtInJSON = convertHimalayaJSONtoJSON(parsedHimalayaJSON[0]);
         if (!builtInJSON) return;

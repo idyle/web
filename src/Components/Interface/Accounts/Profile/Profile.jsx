@@ -14,8 +14,8 @@ const Profile = () => {
     const { resetData } = useData();
     const navigate = useNavigate();
 
-    const onSignOut = () => {
-        signOut(getAuth());
+    const onSignOut = async () => {
+        await signOut(getAuth());
         resetData();
     };
 

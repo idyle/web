@@ -93,7 +93,6 @@ const DataContext = ({ children }) => {
 
     useEffect(() => {
         load(true);
-        console.log(data);
         onLoad();
     }, [user]);
 

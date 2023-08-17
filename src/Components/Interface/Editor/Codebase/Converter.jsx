@@ -27,9 +27,13 @@ export const constructDom = (config, toggle, css, fontFamily) => {
     const aosJs = createElement("script", { src: "https://unpkg.com/aos@next/dist/aos.js" });
     const aosInit = createElement("script", {}, 'AOS.init();');
     const string = renderToString(
-        <html>
-            <head>{css}{aosCss}{toggle}</head>
-            <body style={{ width: '100%', maxWidth: '100%' }}>{body}{aosJs}{aosInit}</body>
+        <html lang="en">
+            <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                {css}{aosCss}{toggle}
+            </head>
+            <body>{body}{aosJs}{aosInit}</body>
         </html>
     );
     return (

@@ -62,7 +62,7 @@ const Viewer = ({ doc, setDocs, docs }) => {
     };
 
     return (
-        <div onBlur={prettify} className="bg-fullwhite order-2 md:order-1 transition animate-fadein duration-300 border border-black p-3 shadow-xl rounded-lg overflow-hidden">
+        <div onBlur={prettify} className="bg-fullwhite transition animate-fadein duration-300 border border-black p-3 shadow-xl rounded-lg overflow-hidden">
             <Editor 
                 className="" 
                 loading="" 

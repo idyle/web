@@ -2,86 +2,103 @@
 
 const bold = {
     className: 'font-bold',
+    classPrefix: 'font',
     style: { fontWeight: 700 }
 };
 
 const italic = {
     className: 'italic',
+    classPrefix: 'italic',
     style: { fontStyle: 'italic' }
 };
 
 const underline = {
     className: 'underline',
+    classPrefix: 'underline',
     style: { textDecorationLine: 'underline' }
 };
 
 const textLeft = {
     className: 'text-left',
+    classPrefix: 'text',
     style: { textAlign: 'left' }
 };
 
 const textCenter = {
     className: 'text-center',
+    classPrefix: 'text',
     style: { textAlign: 'center' }
 };
 
 const textRight = {
     className: 'text-right',
+    classPrefix: 'text',
     style: { textAlign: 'right' }
 };
 
 const textTop = {
     className: 'align-top',
+    classPrefix: 'align',
     style: { verticalAlign: 'top' }
 };
 
 const textMiddle = {
     className: 'align-middle',
+    classPrefix: 'align',
     style: { verticalAlign: 'middle' }
 };
 
 const textBottom = {
     className: 'align-bottom',
+    classPrefix: 'align',
     style: { verticalAlign: 'bottom' }
 };
 
 const sectionLeft = {
-    className: 'place-items-start',
-    style: { placeItems: 'start' }
+    className: 'place-content-start',
+    classPrefix: 'place-content',
+    style: { placeContent: 'start' }
 };
 
 const sectionCenter = {
-    className: 'place-items-center',
-    style: { placeItems: 'center' }
+    className: 'place-content-center',
+    classPrefix: 'place-content',
+    style: { placeContent: 'center' }
 };
 
 const sectionRight = {
-    className: 'place-items-end',
-    style: { placeItems: 'end' }
+    className: 'place-content-end',
+    classPrefix: 'place-content',
+    style: { placeContent: 'end' }
 };
 
 const sectionTop = {
     className: 'items-start',
+    classPrefix: 'items',
     style: { alignItems: 'flex-start' }
 };
 
 const sectionMiddle = {
     className: 'items-center',
+    classPrefix: 'items',
     style: { alignItems: 'center' }
 };
 
 const sectionBottom = {
     className: 'items-end',
+    classPrefix: 'items',
     style: { alignItems: 'flex-end' }
 };
 
 const roundedSmall = {
     className: 'rounded-sm',
+    classPrefix: 'rounded',
     style: { borderRadius: '2px' }
 };
 
 const roundedLarge = {
     className: 'rounded-lg',
+    classPrefix: 'rounded',
     style: { borderRadius: '8px' }
 };
 
@@ -96,29 +113,3 @@ export default {
     sectionTop, sectionMiddle, sectionBottom, 
     roundedSmall, roundedLarge
 }
-
-// export default {
-//     bold: 'font-bold',
-//     italic: 'italic',
-//     underline: 'underline',
-
-//     textLeft: 'text-left',
-//     textCenter: 'text-center',
-//     textRight: 'text-right',
-
-//     textTop: 'align-top',
-//     textMiddle: 'align-middle',
-//     textBottom: 'align-bottom',
-
-//     sectionLeft: 'justify-items-start',
-//     sectionCenter: 'justify-items-center',
-//     sectionRight: 'justify-items-end',
-
-//     sectionTop: 'items-start',
-//     sectionMiddle: 'items-center',
-//     sectionBottom: 'items-end',
-
-//     roundedSmall: 'rounded-sm',
-//     roundedLarge: 'rounded-lg'
-
-// }

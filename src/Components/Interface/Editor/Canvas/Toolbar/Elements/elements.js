@@ -17,18 +17,20 @@ const text = {
 const column = {
     component: 'div',
     "data-aos": "fade-in",
+    "data-aos-offset": "0",
     className: 'flex flex-col md:flex-row @md:flex-row w-full',
     style: { display: 'flex', width: '100%' },
-    children: [ { ...header, children: 'Flex Section' }, text ]
+    children: [ { ...header, children: 'Column Section' }, text ]
 };
 
 
 const row = {
     component: 'div',
     "data-aos": "fade-in",
+    "data-aos-offset": "0",
     className: 'flex flex-col w-full',
     style: { display: 'flex', width: '100%' },
-    children: [ { ...header, children: 'Flex Section' }, text ]
+    children: [ { ...header, children: 'Row Section' }, text ]
 };
 
 // const grid = {
@@ -131,15 +133,14 @@ const link = {
 
 const navBase = {
     component: 'div',
-    // className: 'grid grid-flow-col md:flex-row @md:flex-row w-full text-white bg-black p-1',
-    className: 'flex flex-col md:flex-row @md:flex-row w-full text-white bg-black w-full p-2',
-    style: { display: 'flex', width: '100%', color: 'white', backgroundColor: 'black', padding: '8px' },
+    className: 'flex flex-wrap place-content-center text-white bg-black w-full sticky top-0 z-10',
+    style: { display: 'flex', placeContent: 'center', flexWrap: 'wrap', width: '100%', color: 'white', backgroundColor: 'black', padding: '8px', gap: '4px', position: 'sticky', top: '0px', zIndex: '10' },
     children: []
 };
 
 const navPart = {
     component: 'a',
-    className: 'block text-xl font-bold p-1',
+    className: 'block text-xl font-bold',
     style: { display: 'block', fontSize: '20px', lineHeight: '28px', fontWeight: 700, padding: '4px' },
     children: 'Sample'
 };

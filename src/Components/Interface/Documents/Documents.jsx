@@ -79,14 +79,14 @@ const Documents = () => {
                 </div> 
 
                 {/* selected doc dictates init */}
-                { selectedDoc ? <div className={`${mobileClicked ? 'grid' : 'hidden'} md:grid overflow-hidden md:gap-2 grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-[minmax(0,_1fr)_auto] bg-transparent`}>
+                { selectedDoc ? <div className={`${mobileClicked ? 'grid' : 'hidden'} md:grid overflow-hidden md:gap-2 gap-1 grid-rows-[minmax(0,_1fr)_auto] md:grid-rows-[minmax(0,_1fr)_auto] bg-transparent`}>
                     <Viewer doc={selectedDoc} docs={docs} setDocs={setDocs} />
-                    <div className="order-1 md:order-2 flex items-center justify-between rounded-lg p-2 select-none bg-black text-blue">
+                    <div className="flex items-center justify-between rounded-lg p-2 select-none bg-black text-blue">
                         <h1 className="text-2xl md:text-3xl text-inherit font-bold">Doc: {selectedDoc?.id || 'Doc'}</h1>
                         <div className="flex items-center gap-1">
                             <AiFillDelete onClick={remove} className="text-inherit" size="30px" />
                             <AiOutlineCheck onClick={check} className="text-inherit" size="30px" />
-                            <div onClick={() => setMobileClicked(false)} className="flex md:hidden items-center rounded-lg p-1 bg-gunmetal text-white select-none hover:scale-[.98]">
+                            <div onClick={() => setMobileClicked(false)} className="flex md:hidden items-center rounded-lg p-1 border border-inherit select-none hover:scale-[.98]">
                                 <h1 className="text-xl text-center">Back</h1>
                             </div>
                         </div>

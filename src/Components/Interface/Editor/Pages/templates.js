@@ -19,7 +19,10 @@ const home = {
                         "className": "block text-xl font-bold",
                         "style": {
                             "padding": "4px",
-                            "lineHeight": "12px"
+                            "display": "block",
+                            "fontSize": "20px",
+                            "lineHeight": "28px",
+                            "fontWeight": "700"
                         },
                         "id": "0-0-0",
                         "href": "home"
@@ -30,7 +33,10 @@ const home = {
                         "className": "block text-xl font-bold",
                         "style": {
                             "padding": "4px",
-                            "lineHeight": "12px"
+                            "display": "block",
+                            "fontSize": "20px",
+                            "lineHeight": "28px",
+                            "fontWeight": "700"
                         },
                         "id": "0-0-1",
                         "href": "business"
@@ -41,7 +47,10 @@ const home = {
                         "className": "block text-xl font-bold",
                         "style": {
                             "padding": "4px",
-                            "lineHeight": "12px"
+                            "display": "block",
+                            "fontSize": "20px",
+                            "lineHeight": "28px",
+                            "fontWeight": "700"
                         },
                         "id": "0-0-2",
                         "href": "pricing"
@@ -52,16 +61,28 @@ const home = {
                         "className": "block text-xl font-bold",
                         "style": {
                             "padding": "4px",
-                            "lineHeight": "12px"
+                            "display": "block",
+                            "fontSize": "20px",
+                            "lineHeight": "28px",
+                            "fontWeight": "700"
                         },
                         "id": "0-0-3",
                         "href": "https://web.idyle.app"
                     }
                 ],
-                "className": "flex flex-col md:flex-row @md:flex-row w-full text-white bg-black w-full p-1 rounded-lg",
+                "className": "flex flex-wrap place-content-center text-white bg-black w-full sticky top-0 z-10",
                 "style": {
                     "padding": "8px",
-                    "lineHeight": "16px"
+                    "backgroundColor": "black",
+                    "color": "white",
+                    "top": "0px",
+                    "flexWrap": "wrap",
+                    "display": "flex",
+                    "placeContent": "center",
+                    "gap": "4px",
+                    "width": "100%",
+                    "position": "sticky",
+                    "zIndex": "10"
                 },
                 "id": "0-0"
             },
@@ -70,25 +91,14 @@ const home = {
                 "data-aos": "fade-in",
                 "children": [
                     {
-                        "component": "div",
-                        "children": [],
-                        "className": "max-w-full w-auto overflow-hidden",
-                        "style": {
-                            "overflow": "hidden",
-                            "width": "auto",
-                            "maxWidth": "100%"
-                        },
-                        "id": "0-1-0"
-                    },
-                    {
                         "component": "img",
                         "children": null,
                         "src": "https://cdn.idyle.app/users/vkxFrbzeeXX85dtfM6qQoaSbOhR2/folders/services/objects/idyle colored-10-heightcrop.png",
                         "alt": "Image",
                         "style": {
-                            "width": "28.69496855345912%"
+                            "width": "35.595169637722826%"
                         },
-                        "id": "0-1-1"
+                        "id": "0-1-0"
                     },
                     {
                         "component": "h1",
@@ -100,7 +110,7 @@ const home = {
                             "lineHeight": "48px",
                             "fontSize": "100px"
                         },
-                        "id": "0-1-2"
+                        "id": "0-1-1"
                     },
                     {
                         "component": "h1",
@@ -109,10 +119,10 @@ const home = {
                         "style": {
                             "padding": "20px",
                             "width": "100%",
-                            "lineHeight": "28px",
+                            "lineHeight": "58px",
                             "fontSize": "50px"
                         },
-                        "id": "0-1-3"
+                        "id": "0-1-2"
                     }
                 ],
                 "className": "flex flex-col w-full text-center items-center",
@@ -151,6 +161,7 @@ const home = {
                 "className": "flex flex-col w-full text-center place-items-center items-center",
                 "style": {
                     "padding": "30px",
+                    "gap": "10px",
                     "lineHeight": "38px"
                 },
                 "id": "0-2"
@@ -277,12 +288,66 @@ const home = {
                                         "id": "0-3-1-1-2"
                                     }
                                 ],
+                                "style": {
+                                    "width": "100%"
+                                },
+                                "id": "0-3-1-1"
+                            },
+                            {
+                                "component": "div",
+                                "data-aos": "fade-in",
+                                "children": [
+                                    {
+                                        "component": "div",
+                                        "children": [
+                                            {
+                                                "component": "img",
+                                                "children": null,
+                                                "src": "https://cdn.idyle.app/users/vkxFrbzeeXX85dtfM6qQoaSbOhR2/folders/services/objects/Grace.png",
+                                                "alt": "Image",
+                                                "id": "0-3-1-2-0-0"
+                                            }
+                                        ],
+                                        "className": "max-w-full w-auto overflow-hidden",
+                                        "style": {
+                                            "overflow": "hidden",
+                                            "width": "auto",
+                                            "maxWidth": "100%"
+                                        },
+                                        "id": "0-3-1-2-0"
+                                    },
+                                    {
+                                        "component": "h1",
+                                        "children": "Grace Madrona",
+                                        "className": "text-2xl font-bold",
+                                        "style": {
+                                            "textAlign": "center",
+                                            "fontSize": "34px",
+                                            "lineHeight": "42px",
+                                            "fontWeight": "700"
+                                        },
+                                        "id": "0-3-1-2-1"
+                                    },
+                                    {
+                                        "component": "h1",
+                                        "children": "Head of Marketing\r\n            ",
+                                        "className": "text-2xl italic",
+                                        "style": {
+                                            "textAlign": "center",
+                                            "fontSize": "24px",
+                                            "lineHeight": "32px",
+                                            "fontStyle": "italic"
+                                        },
+                                        "id": "0-3-1-2-2"
+                                    }
+                                ],
+                                "data-aos-offset": "0",
                                 "className": "flex flex-col w-full",
                                 "style": {
                                     "display": "flex",
                                     "width": "100%"
                                 },
-                                "id": "0-3-1-1"
+                                "id": "0-3-1-2"
                             }
                         ],
                         "className": "flex flex-col md:flex-row @md:flex-row w-full",
@@ -296,6 +361,7 @@ const home = {
                 "className": "flex flex-col w-full",
                 "style": {
                     "padding": "20px",
+                    "width": "100%",
                     "lineHeight": "28px"
                 },
                 "id": "0-3"
@@ -460,7 +526,7 @@ const business = {
                             "padding": "4px",
                             "display": "block",
                             "fontSize": "20px",
-                            "lineHeight": "12px",
+                            "lineHeight": "28px",
                             "fontWeight": "700"
                         },
                         "id": "0-0-0",
@@ -474,7 +540,7 @@ const business = {
                             "padding": "4px",
                             "display": "block",
                             "fontSize": "20px",
-                            "lineHeight": "12px",
+                            "lineHeight": "28px",
                             "fontWeight": "700"
                         },
                         "id": "0-0-1",
@@ -488,7 +554,7 @@ const business = {
                             "padding": "4px",
                             "display": "block",
                             "fontSize": "20px",
-                            "lineHeight": "12px",
+                            "lineHeight": "28px",
                             "fontWeight": "700"
                         },
                         "id": "0-0-2",
@@ -497,28 +563,31 @@ const business = {
                     {
                         "component": "a",
                         "children": "platform",
-                        "className": "block text-xl text-white bg-black font-bold",
+                        "className": "block text-xl font-bold",
                         "style": {
                             "padding": "4px",
-                            "backgroundColor": "black",
-                            "color": "white",
                             "display": "block",
                             "fontSize": "20px",
-                            "lineHeight": "12px",
+                            "lineHeight": "28px",
                             "fontWeight": "700"
                         },
                         "id": "0-0-3",
                         "href": "https://web.idyle.app"
                     }
                 ],
-                "className": "flex flex-col md:flex-row @md:flex-row w-full text-white bg-black w-full p-1",
+                "className": "flex flex-wrap place-content-center text-white bg-black w-full sticky top-0 z-10",
                 "style": {
-                    "padding": "12px",
+                    "padding": "8px",
                     "backgroundColor": "black",
                     "color": "white",
+                    "top": "0px",
+                    "flexWrap": "wrap",
                     "display": "flex",
+                    "placeContent": "center",
+                    "gap": "4px",
                     "width": "100%",
-                    "lineHeight": "20px"
+                    "position": "sticky",
+                    "zIndex": "10"
                 },
                 "id": "0-0"
             },
@@ -560,7 +629,7 @@ const business = {
                                     },
                                     {
                                         "component": "h1",
-                                        "children": "adjective",
+                                        "children": "adjective\n                        ",
                                         "className": "text-xl italic",
                                         "style": {
                                             "width": "100%",
@@ -584,9 +653,9 @@ const business = {
                                 ],
                                 "className": "flex flex-col w-full",
                                 "style": {
-                                    "padding": "4px",
+                                    "padding": "10px",
                                     "display": "flex",
-                                    "width": "49.8876404494382%",
+                                    "width": "100%",
                                     "lineHeight": "12px"
                                 },
                                 "id": "0-1-1-0"
@@ -633,9 +702,9 @@ const business = {
                                 ],
                                 "className": "flex flex-col w-full",
                                 "style": {
-                                    "padding": "4px",
+                                    "padding": "10px",
                                     "display": "flex",
-                                    "width": "51.68539325842697%",
+                                    "width": "100%",
                                     "lineHeight": "12px"
                                 },
                                 "id": "0-1-1-1"
@@ -647,7 +716,7 @@ const business = {
                             "textAlign": "center",
                             "placeItems": "center",
                             "display": "flex",
-                            "width": "99.70260223048328%"
+                            "width": "100%"
                         },
                         "id": "0-1-1"
                     },
@@ -656,9 +725,9 @@ const business = {
                         "children": "\n                idyle\n        ",
                         "className": "font-bold",
                         "style": {
-                            "width": "98.35680751173709%",
-                            "lineHeight": "48px",
-                            "fontSize": "40px",
+                            "width": "100%",
+                            "lineHeight": "58px",
+                            "fontSize": "50px",
                             "fontWeight": "700"
                         },
                         "id": "0-1-2"
@@ -671,6 +740,7 @@ const business = {
                     "textAlign": "center",
                     "placeItems": "center",
                     "display": "flex",
+                    "gap": "10px",
                     "width": "100%",
                     "lineHeight": "68px"
                 },
@@ -713,7 +783,7 @@ const business = {
                                 "src": "https://cdn.idyle.app/users/vkxFrbzeeXX85dtfM6qQoaSbOhR2/folders/services/objects/assets%20-%20modularity.png",
                                 "alt": "Image",
                                 "style": {
-                                    "width": "36.56927426955702%"
+                                    "width": "49.71910112359551%"
                                 },
                                 "id": "0-2-2-0"
                             },
@@ -747,7 +817,7 @@ const business = {
                                 "className": "flex flex-col w-full",
                                 "style": {
                                     "display": "flex",
-                                    "width": "68.52026390197926%"
+                                    "width": "100%"
                                 },
                                 "id": "0-2-2-1"
                             }
@@ -784,6 +854,7 @@ const business = {
                                         "children": "the\n                                ability\n                                to move\n                                or be moved freely and easily",
                                         "className": "text-xl italic",
                                         "style": {
+                                            "textAlign": "right",
                                             "fontSize": "30px",
                                             "lineHeight": "38px",
                                             "fontStyle": "italic"
@@ -795,7 +866,7 @@ const business = {
                                 "style": {
                                     "placeItems": "end",
                                     "display": "flex",
-                                    "width": "67.57775683317625%"
+                                    "width": "100%"
                                 },
                                 "id": "0-2-3-0"
                             },
@@ -805,7 +876,7 @@ const business = {
                                 "src": "https://cdn.idyle.app/users/vkxFrbzeeXX85dtfM6qQoaSbOhR2/folders/services/objects/assets%20-%20mobility.png",
                                 "alt": "Image",
                                 "style": {
-                                    "width": "31.66823751178134%"
+                                    "width": "49.71910112359551%"
                                 },
                                 "id": "0-2-3-1"
                             }
@@ -821,8 +892,9 @@ const business = {
                 ],
                 "className": "flex flex-col w-full",
                 "style": {
-                    "padding": "0px",
+                    "padding": "30px",
                     "display": "flex",
+                    "gap": "5px",
                     "width": "100%",
                     "lineHeight": "8px"
                 },
@@ -1068,7 +1140,7 @@ const business = {
                                     "color": "#ffffff",
                                     "borderRadius": "8px",
                                     "fontSize": "40px",
-                                    "lineHeight": "28px",
+                                    "lineHeight": "48px",
                                     "fontWeight": "700"
                                 },
                                 "id": "0-4-1-0"
@@ -1108,7 +1180,7 @@ const business = {
                                     "color": "#ffffff",
                                     "borderRadius": "8px",
                                     "fontSize": "40px",
-                                    "lineHeight": "28px",
+                                    "lineHeight": "48px",
                                     "fontWeight": "700"
                                 },
                                 "id": "0-4-2-0"
@@ -1148,7 +1220,7 @@ const business = {
                                     "color": "#ffffff",
                                     "borderRadius": "8px",
                                     "fontSize": "40px",
-                                    "lineHeight": "28px",
+                                    "lineHeight": "48px",
                                     "fontWeight": "700"
                                 },
                                 "id": "0-4-3-0"
@@ -1218,7 +1290,7 @@ const pricing = {
                             "padding": "4px",
                             "display": "block",
                             "fontSize": "20px",
-                            "lineHeight": "12px",
+                            "lineHeight": "28px",
                             "fontWeight": "700"
                         },
                         "id": "0-0-0",
@@ -1232,7 +1304,7 @@ const pricing = {
                             "padding": "4px",
                             "display": "block",
                             "fontSize": "20px",
-                            "lineHeight": "12px",
+                            "lineHeight": "28px",
                             "fontWeight": "700"
                         },
                         "id": "0-0-1",
@@ -1246,7 +1318,7 @@ const pricing = {
                             "padding": "4px",
                             "display": "block",
                             "fontSize": "20px",
-                            "lineHeight": "12px",
+                            "lineHeight": "28px",
                             "fontWeight": "700"
                         },
                         "id": "0-0-2",
@@ -1255,28 +1327,31 @@ const pricing = {
                     {
                         "component": "a",
                         "children": "platform",
-                        "className": "block text-xl text-white bg-black font-bold",
+                        "className": "block text-xl font-bold",
                         "style": {
                             "padding": "4px",
-                            "backgroundColor": "black",
-                            "color": "white",
                             "display": "block",
                             "fontSize": "20px",
-                            "lineHeight": "12px",
+                            "lineHeight": "28px",
                             "fontWeight": "700"
                         },
                         "id": "0-0-3",
                         "href": "https://web.idyle.app"
                     }
                 ],
-                "className": "flex flex-col md:flex-row @md:flex-row w-full text-white bg-black w-full p-1",
+                "className": "flex flex-wrap place-content-center text-white bg-black w-full sticky top-0 z-10",
                 "style": {
-                    "padding": "12px",
-                    "backgroundColor": "#000000",
+                    "padding": "8px",
+                    "backgroundColor": "black",
                     "color": "white",
+                    "top": "0px",
+                    "flexWrap": "wrap",
                     "display": "flex",
+                    "placeContent": "center",
+                    "gap": "4px",
                     "width": "100%",
-                    "lineHeight": "20px"
+                    "position": "sticky",
+                    "zIndex": "10"
                 },
                 "id": "0-0"
             },
@@ -1304,16 +1379,17 @@ const pricing = {
                             {
                                 "component": "a",
                                 "children": "Join Beta!",
-                                "className": "text-xl text-white bg-black block rounded-lg font-bold",
+                                "className": "text-xl text-white bg-black block rounded-lg font-bold text-center text-left",
                                 "style": {
                                     "padding": "15px",
                                     "backgroundColor": "#ffffff",
                                     "color": "#000000",
                                     "borderRadius": "8px",
+                                    "textAlign": "left",
                                     "display": "block",
                                     "width": "100%",
                                     "fontSize": "30px",
-                                    "lineHeight": "23px",
+                                    "lineHeight": "38px",
                                     "fontWeight": "700"
                                 },
                                 "id": "0-1-0-1",
@@ -1324,6 +1400,7 @@ const pricing = {
                         "style": {
                             "alignItems": "center",
                             "display": "flex",
+                            "gap": "15px",
                             "width": "100%"
                         },
                         "id": "0-1-0"
@@ -1344,7 +1421,7 @@ const pricing = {
                 ],
                 "className": "flex flex-col w-full",
                 "style": {
-                    "padding": "80px",
+                    "padding": "50px",
                     "display": "flex",
                     "width": "100%",
                     "lineHeight": "88px"
@@ -1399,7 +1476,7 @@ const pricing = {
                                                     "padding": "20px",
                                                     "width": "99.8501872659176%",
                                                     "fontSize": "50px",
-                                                    "lineHeight": "28px",
+                                                    "lineHeight": "58px",
                                                     "fontWeight": "700"
                                                 },
                                                 "id": "0-2-2-0-0-0"
@@ -1412,7 +1489,7 @@ const pricing = {
                                                     "padding": "20px",
                                                     "width": "100%",
                                                     "fontSize": "50px",
-                                                    "lineHeight": "28px"
+                                                    "lineHeight": "58px"
                                                 },
                                                 "id": "0-2-2-0-0-1"
                                             },
@@ -1540,7 +1617,7 @@ const pricing = {
                                 ],
                                 "className": "flex flex-col w-full",
                                 "style": {
-                                    "padding": "30px",
+                                    "padding": "0px",
                                     "display": "flex",
                                     "width": "100%",
                                     "lineHeight": "38px"
@@ -1563,7 +1640,7 @@ const pricing = {
                                                     "padding": "20px",
                                                     "width": "100%",
                                                     "fontSize": "50px",
-                                                    "lineHeight": "28px",
+                                                    "lineHeight": "58px",
                                                     "fontWeight": "700"
                                                 },
                                                 "id": "0-2-2-1-0-0"
@@ -1576,7 +1653,7 @@ const pricing = {
                                                     "padding": "20px",
                                                     "width": "100%",
                                                     "fontSize": "50px",
-                                                    "lineHeight": "28px"
+                                                    "lineHeight": "58px"
                                                 },
                                                 "id": "0-2-2-1-0-1"
                                             },
@@ -1704,7 +1781,7 @@ const pricing = {
                                 ],
                                 "className": "flex flex-col w-full",
                                 "style": {
-                                    "padding": "30px",
+                                    "padding": "0px",
                                     "display": "flex",
                                     "width": "100%",
                                     "lineHeight": "38px"
@@ -1727,7 +1804,7 @@ const pricing = {
                                                     "padding": "20px",
                                                     "width": "99.8501872659176%",
                                                     "fontSize": "50px",
-                                                    "lineHeight": "28px",
+                                                    "lineHeight": "58px",
                                                     "fontWeight": "700"
                                                 },
                                                 "id": "0-2-2-2-0-0"
@@ -1740,7 +1817,7 @@ const pricing = {
                                                     "padding": "20px",
                                                     "width": "100%",
                                                     "fontSize": "50px",
-                                                    "lineHeight": "28px"
+                                                    "lineHeight": "58px"
                                                 },
                                                 "id": "0-2-2-2-0-1"
                                             },
@@ -1809,7 +1886,7 @@ const pricing = {
                                                     },
                                                     {
                                                         "component": "h1",
-                                                        "children": "Premium Request Quota",
+                                                        "children": "Premium Request Quota\r\n                    ",
                                                         "className": "text-xl",
                                                         "style": {
                                                             "width": "100%",
@@ -1820,7 +1897,7 @@ const pricing = {
                                                     },
                                                     {
                                                         "component": "h1",
-                                                        "children": "Premium Data Features",
+                                                        "children": "Premium Data Features\r\n                    ",
                                                         "className": "text-xl",
                                                         "style": {
                                                             "width": "100%",
@@ -1868,7 +1945,7 @@ const pricing = {
                                 ],
                                 "className": "flex flex-col w-full",
                                 "style": {
-                                    "padding": "3px",
+                                    "padding": "0px",
                                     "display": "flex",
                                     "width": "100%",
                                     "lineHeight": "11px"
@@ -1878,8 +1955,9 @@ const pricing = {
                         ],
                         "className": "flex flex-col md:flex-row @md:flex-row w-full",
                         "style": {
-                            "padding": "70px",
+                            "padding": "40px",
                             "display": "flex",
+                            "gap": "10px",
                             "width": "100%",
                             "lineHeight": "78px"
                         },
@@ -1960,14 +2038,14 @@ const pricing = {
                             "borderRadius": "8px",
                             "textAlign": "center",
                             "display": "flex",
-                            "width": "68.89726672950047%"
+                            "width": "100%"
                         },
                         "id": "0-3-1"
                     }
                 ],
                 "className": "flex flex-col md:flex-row @md:flex-row w-full items-center",
                 "style": {
-                    "padding": "10px",
+                    "padding": "30px",
                     "alignItems": "center",
                     "display": "flex",
                     "width": "100%",
@@ -2012,9 +2090,9 @@ const pricing = {
                                 "className": "font-bold",
                                 "style": {
                                     "color": "#ffffff",
-                                    "width": "75.2988047808765%",
-                                    "lineHeight": "48px",
-                                    "fontSize": "40px",
+                                    "width": "72.02614379084967%",
+                                    "lineHeight": "38px",
+                                    "fontSize": "30px",
                                     "fontWeight": "700"
                                 },
                                 "id": "0-4-2-0"
@@ -2036,13 +2114,13 @@ const pricing = {
                                 "className": "max-w-full w-auto overflow-hidden",
                                 "style": {
                                     "overflow": "hidden",
-                                    "width": "24.98577120091064%",
+                                    "width": "21.638330757341574%",
                                     "maxWidth": "100%"
                                 },
                                 "id": "0-4-2-1"
                             }
                         ],
-                        "className": "flex flex-col md:flex-row @md:flex-row w-full items-center place-items-center text-center",
+                        "className": "flex flex-col md:flex-row @md:flex-row w-full items-center place-items-center text-right text-left text-center",
                         "style": {
                             "alignItems": "center",
                             "textAlign": "center",
@@ -2055,6 +2133,7 @@ const pricing = {
                 ],
                 "className": "flex flex-col w-full text-center",
                 "style": {
+                    "padding": "30px",
                     "textAlign": "center",
                     "display": "flex",
                     "width": "100%"

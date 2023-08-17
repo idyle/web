@@ -17,6 +17,7 @@ const Elements = () => {
     const { pathname: origin } = useLocation();
 
     const appendElement = (element) => {
+        console.log(pages, 'fropm append');
         setPageData({ ...setObjectFromPath(page?.data, path, { ...elements[element] }) });
     };
 

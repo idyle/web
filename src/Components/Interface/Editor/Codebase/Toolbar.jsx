@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { constructDom, renderElements } from "./Converter";
 import { useEditor } from "../Editor";
 import { useDom } from "./Codebase";
 import { useUtil } from "../../../../Contexts/Util";
@@ -12,8 +11,8 @@ const Toolbar = () => {
     const navigate = useNavigate();
     const { pathname: origin } = useLocation();
     const { page, setPage, edit } = useEditor();
-    const { toggle, setToggle, setDom, setString, string, 
-        convertJSONtoHimalayaJSON, css, setCss, font 
+    const { toggle, setToggle, setString, string, 
+        convertJSONtoHimalayaJSON, css, setCss
     } = useDom();
     const { integrator, setIntegrator, notify } = useUtil();
 
@@ -34,26 +33,27 @@ const Toolbar = () => {
 
     // returning
     useEffect(() => {
-
-        const render = (str) => {
-            setIntegrator({ active: false });
-            if (page?.data) setDom(constructDom(page?.data, toggle, css, font));
-            setString(str);
-        };
         try {
             if (!integrator?.active || !integrator?.data) return;
             if (integrator?.target !== 'docs' || integrator?.origin !== `${origin}?mode=codebase`) return; 
             const config = integrator?.data;
+            console.log('received config', config, 'with', integrator?.ref);
             // actual thing to convert
             const himalayaJSON = convertJSONtoHimalayaJSON(config);
-            if (!himalayaJSON) return render(integrator?.ref);
+            console.log('him', himalayaJSON);
+            if (!himalayaJSON) return;
             const stringified = stringify([himalayaJSON]);
-            if (!stringified) return render(integrator?.ref);
-            render(`${integrator?.ref}${stringified}`);
+            if (!stringified) return;
+            console.log('stringified', integrator?.ref);
+            setString(`${integrator?.ref}${stringified}`);
+            setIntegrator({ active: false });
         } catch {
-            notify('Something went wrong.');
-            render(integrator?.ref)
+            notify('This doc was invalid. Could not add.');
+            setString(integrator?.ref);
+            setIntegrator({ active: false });
+            return;
         }
+
     }, [integrator?.active]);
 
     const sendObjectsRequest = () => {

@@ -37,13 +37,13 @@ const Navigator = () => {
                 <div className="grid auto-rows-min h-full gap-y-[1px] w-full bg-white p-1 flex items-center justify-items-center md:h-auto">
 
                     <div className={`${mobileClicked ? 'block ' : 'hidden'} grid grid-flow-row py-5 md:py-0 md:grid-flow-col gap-2 items-center justify-items-center `}>
-                        <h1 className="text-7xl md:text-3xl text-black font-bold select-none">idyle</h1>
+                        <h1 className="text-7xl md:text-3xl text-black font-bold select-none block md:hidden">idyle</h1>
                     </div>
 
                     <div className="grid md:grid-flow-col gap-3 md:gap-0.5">
                         <Navbutton icon={<IoPersonCircleOutline/>} text="Accounts" route='/accounts'/>
                         <Navbutton icon={<HiOutlineCreditCard/>} text="Payments" route='/payments'/>
-                        <Navbutton icon={<MdOutlineBuild/>} text="Editor" route='/editor/pages'/>
+                        <Navbutton icon={<MdOutlineBuild/>} text="Editor" route='/editor'/>
                         <Navbutton icon={<IoRocketOutline/>} text="Deployer" route='/deployer'/>
                         <Navbutton icon={<MdOutlinePermMedia/>} text="Objects" route='/objects'/>
                         <Navbutton icon={<HiOutlineDatabase/>} text="Docs" route='/docs'/>

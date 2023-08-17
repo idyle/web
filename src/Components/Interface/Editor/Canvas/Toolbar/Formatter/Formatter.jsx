@@ -3,7 +3,8 @@ import {
     RxAlignRight, RxAlignLeft, RxAlignCenterHorizontally,
     RxAlignTop, RxAlignBottom, RxAlignCenterVertically,
     RxMargin, RxPadding, RxFontBold, RxFontItalic, RxUnderline, 
-    RxFontStyle, RxHalf2, RxColorWheel, RxFontSize, RxCircle, RxMagicWand
+    RxFontStyle, RxHalf2, RxColorWheel, RxFontSize, RxCircle, RxMagicWand,
+    RxSpaceBetweenHorizontally
 } from 'react-icons/rx';
 import Format from './Format';
 import Color from './Color';
@@ -35,8 +36,10 @@ const Toolbar = () => {
             <Format icon={<RxAlignBottom />} format="sectionTop" />
             <Format icon={<RxAlignCenterVertically />} format="sectionMiddle" />
             <Format icon={<RxAlignTop />} format="sectionBottom" />
+
             <Sizing format="margin" icon={<RxMargin />} />
             <Sizing format="padding" icon={<RxPadding />} />
+            <Sizing format="gap" icon={<RxSpaceBetweenHorizontally />} />
 
             <Format icon={<RxCircle />} format="roundedLarge" />
             <Animate icon={<RxMagicWand />} />
