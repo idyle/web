@@ -11,7 +11,7 @@ import { Helmet } from "react-helmet";
 const Home = () => {
 
     return (
-        <div className="grid md:grid-rows-9 md:grid-cols-9 gap-1 m-2">
+        <div className="grid md:grid-rows-9 md:grid-cols-9 gap-1 m-3">
             <Helmet>
                 <title>idyle - Home</title>
                 <meta name="description" content="Home" />

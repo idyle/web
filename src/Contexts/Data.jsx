@@ -4,7 +4,7 @@ import { listPages } from "../Components/Interface/Editor/requests";
 import { getWebsites, listDeploys } from "../Components/Interface/Deployer/requests";
 import { listDocs } from '../Components/Interface/Documents/requests';
 import { listFiles } from "../Components/Interface/Objects/requests";
-import { getMetrics } from "../Components/Interface/Payments/requests";
+import { getMetrics } from "../Components/Interface/Accounts/Payments/requests";
 import { useUtil } from "./Util";
 
 const DataValues = createContext();

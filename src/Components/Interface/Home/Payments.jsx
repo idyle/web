@@ -1,6 +1,6 @@
 import { useAuth } from "../../../Contexts/Auth";
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
-import plans from '../Payments/plans';
+import plans from '../Accounts/Payments/plans';
 
 const Payments = () => {
 

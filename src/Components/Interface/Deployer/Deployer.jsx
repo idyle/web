@@ -4,8 +4,8 @@ import { useUtil } from "../../../Contexts/Util";
 import { useAuth } from "../../../Contexts/Auth";
 import { deployWebsite } from "./requests";
 import { useData } from "../../../Contexts/Data";
-import Subnav from "../Templates/Subnav";
-import Subnavbutton from "../Templates/Subnavbutton";
+import Subnav from "../Navigator/Subnav/Subnav";
+import Subnavbutton from "../Navigator/Subnav/Subnavbutton";
 import Station from "./Station";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { IoMdFlask } from 'react-icons/io';
@@ -35,7 +35,7 @@ const Deployer = () => {
     };
 
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 md:grid-cols-[15%_85%] m-2 mx-5 gap-1">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] md:grid-rows-1 md:grid-cols-[15%_85%] m-3 gap-1">
             <Helmet>
                 <title>idyle - Deployer</title>
                 <meta name="description" content="Deployer" />

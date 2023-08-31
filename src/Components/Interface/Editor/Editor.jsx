@@ -1,8 +1,8 @@
 import { AiOutlineDrag } from 'react-icons/ai';
 import { FaCode } from 'react-icons/fa'; 
 import { MdPages } from 'react-icons/md';
-import Subnav from '../Templates/Subnav';
-import Subnavbutton from '../Templates/Subnavbutton';
+import Subnav from '../Navigator/Subnav/Subnav';
+import Subnavbutton from '../Navigator/Subnav/Subnavbutton';
 import Pages from './Pages/Pages';
 import { createContext, useContext, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -110,7 +110,7 @@ const Editor = () => {
     }, [pageId]);
 
     return (
-        <div className='grid grid-rows-[auto_minmax(0,_1fr)] mx-5'>
+        <div className='grid grid-rows-[minmax(0,_1fr)] m-2'>
 
             <Helmet>
                 <title>idyle - Editor</title>
@@ -118,11 +118,7 @@ const Editor = () => {
                 <meta name="keywords" content="Editor" />
                 <link rel="canonical" href="/editor" />
             </Helmet>
-            <Subnav mode="white">
-                <Subnavbutton icon={<FaCode />} text="Codebase" route={`/editor/${pageRoute}?mode=codebase`} />
-                <Subnavbutton icon={<AiOutlineDrag />} text="Canvas" route={`/editor/${pageRoute}?mode=canvas`} />
-                <Subnavbutton icon={<MdPages />} text="Pages" route="/editor/pages" />
-            </Subnav>
+
             <EditorContext>
                     <Routes>
                         <Route path="pages" element={<Pages />} />

@@ -1,12 +1,12 @@
 import { Helmet } from "react-helmet";
-import { useAuth } from "../../../Contexts/Auth";
-import { useUtil } from "../../../Contexts/Util";
+import { useAuth } from "../../../../Contexts/Auth";
+import { useUtil } from "../../../../Contexts/Util";
 import Plan from './Plan';
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { cancelPlan, confirmCheckout, getCheckout } from "./requests";
 import plans from './plans';
-import { useData } from "../../../Contexts/Data";
+import { useData } from "../../../../Contexts/Data";
 
 const Payments = () => {
 
@@ -66,7 +66,7 @@ const Payments = () => {
 
     
     return (
-        <div className="grid grid-rows-[auto_minmax(0,_1fr)] mx-5 gap-5">
+        <div className="grid grid-rows-[auto_minmax(0,_1fr)] gap-5 m-3">
 
             <Helmet>
                 <title>idyle - Payments</title>

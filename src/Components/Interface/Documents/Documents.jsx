@@ -54,7 +54,7 @@ const Documents = () => {
     };
 
     return (
-        <div className='grid m-2 mx-5'>
+        <div className='grid m-3'>
 
             <Helmet>
                 <title>idyle - Documents</title>

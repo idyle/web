@@ -5,13 +5,13 @@ import { Routes, Route } from 'react-router-dom';
 
 const Components = () => {
     return (
-        <div>
+
             <Routes>
                     <Route path="login/*" element={<Login />} />
                     <Route path="actions" element={<Actions />} />
                     <Route path ="*" element={<Interface />} />
             </Routes>
-        </div>
+
     )
 };
 
