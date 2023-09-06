@@ -28,7 +28,7 @@ export const DomContext = ({ children }) => {
     useEffect(() => {
         if (!path.length) return setSelectedData();
         let current = page?.data;
-        for (let depth = 0; depth < path.length; depth++) if (current.component === 'div') current = current.children[path[depth]];
+        for (let depth = 0; depth < path.length; depth++) if (current.component === 'div' || current.component === 'details') current = current.children[path[depth]];
         setSelectedData(current);
     }, [path]);
 
@@ -36,7 +36,7 @@ export const DomContext = ({ children }) => {
         const clonedData = JSON.parse(JSON.stringify(data));
         let current = clonedData;
         for (let depth = 0; depth < path.length; depth++) {
-            if (current.component === 'div') current = current.children[path[depth]];
+            if (current.component === 'div' || current.component === 'details') current = current.children[path[depth]];
             else current = current[path[depth]];
         };
         current = { ...func(current) };
@@ -49,11 +49,11 @@ export const DomContext = ({ children }) => {
         let current = clonedData;
         let nearestParent = current;
         for (let depth = 0; depth < path?.length; depth++) {
-            if (current?.component === 'div') {
+            if (current?.component === 'div' || current.component === 'details') {
                 current = current?.children?.[path[depth]];
             } 
         };
-        if (current?.component !== 'div') current = nearestParent;
+        if (current?.component !== 'div' && current.component !== 'details') current = nearestParent;
 
         if (raise) current.children = [ value, ...current?.children ];
         else current.children = [ ...current?.children, value ];
@@ -65,19 +65,19 @@ export const DomContext = ({ children }) => {
 
         const clonedData = JSON.parse(JSON.stringify(data));
         let value = clonedData;
-        for (let d = 0; d < path?.length; d++) if (value?.component === 'div') value = value?.children?.[path[d]];
+        for (let d = 0; d < path?.length; d++) if (value?.component === 'div' || value?.component === 'details') value = value?.children?.[path[d]];
         let current = clonedData;
         let nearestParent = current;
     
         for (let depth = 0; depth < path?.length; depth++) {
             if (depth === path?.length - 1) break;
             // we have reached final depth (target component)
-            if (current?.component === 'div') {
+            if (current?.component === 'div' || current.component === 'details') {
                 nearestParent = current;
                 current = current?.children?.[path[depth]];
             } 
         };
-        if (current?.component !== 'div') current = nearestParent;
+        if (current?.component !== 'div' && current.component !== 'details') current = nearestParent;
         // if our selected item is not a div
 
         current.children = [...current.children.filter(child => child?.id !== value?.id)];

@@ -50,7 +50,7 @@ export const DomContext = ({ children }) => {
         // we are basing this off our built in JSON
         let children = config.children;
         // divs, imgs, vids are exceptions
-        if (config.component === 'div') children = children?.map(child => convertJSONtoHimalayaJSON(child, toggle));
+        if (config.component === 'div' || config.component === 'details') children = children?.map(child => convertJSONtoHimalayaJSON(child, toggle));
         else children = [{ type: 'text', content: config.children || '' }];
 
         let attributes = [];
@@ -74,7 +74,7 @@ export const DomContext = ({ children }) => {
         let children = config.children;
         console.log('children', config);
         // divs, imgs, vids are exceptions
-        if (config.tagName === 'div') children = children.filter(child => child.type === 'element')?.map((child, i) => convertHimalayaJSONtoJSON(child, `${id}-${i}`)) || [];
+        if (config.tagName === 'div' || config.tagName === 'details') children = children.filter(child => child.type === 'element')?.map((child, i) => convertHimalayaJSONtoJSON(child, `${id}-${i}`)) || [];
         else if (config.tagName === 'img') children = null;
         else children = children.find(child => child.type === 'text')?.content || '';
         // himalaya json follows this format

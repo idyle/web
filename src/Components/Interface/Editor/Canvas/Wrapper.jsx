@@ -1,12 +1,10 @@
 // must be within the canvas contcxt (for selection)
 // selection is localized to canvas; this doesn't exist for cb
 
-import { useState, useEffect, useRef, cloneElement } from 'react';
+import { useState, useEffect, useRef, cloneElement, Fragment } from 'react';
 import { useDom } from './Canvas';
 import { useEditor } from '../Editor';
 import ReactResizeDetector from 'react-resize-detector';
-
-import AOS from 'aos';
 
 // if a child is being hovered in a parent, how do we signify this?
 
@@ -55,9 +53,9 @@ const Wrapper = ({ children }) => {
         if (!edit) return;
         setEdit(false);
         if (children.props.children === value) return;
-        console.log('hover called');
         // no changes needed
         const func = (current) => {
+            console.log(current, 'current', path, 'path');
             current.children = value;
             return current;
         };
@@ -160,10 +158,13 @@ const Wrapper = ({ children }) => {
 
     
     const clonedChild = cloneElement(children, { className: `${children?.props?.className} w-full`, style: { ...children?.props?.style, width: '100%' } });
-
     const editableChild = cloneElement(clonedChild, { contentEditable: true, onInput: onChange, className: `${clonedChild.props.className} outline-none` });
 
-    return (
+    const clonedSumChild = cloneElement(children, { onClick: onClick, onDoubleClick: onDoubleClick, onBlur: onBlur, className: `${children?.props?.className} w-full`, style: { ...children?.props?.style, width: '100%' } });
+    const editableSumChild = cloneElement(clonedChild, { onClick: onClick, onDoubleClick: onDoubleClick, onBlur: onBlur, contentEditable: true, onInput: onChange, className: `${clonedChild.props.className} outline-none` });
+
+    console.log(children.props.name);
+    if (children.type !== 'summary') return (
         <ReactResizeDetector skipOnMount={true} onResize={onResize}>
             <div id={children?.props?.id} className={`p-2 max-w-full overflow-hidden resize-x border ${(hovered === children.props.id || selected === children.props.id) ? 'border-blue' : 'border-white/0'} rounded-lg`} 
             ref={elementRef}
@@ -171,7 +172,6 @@ const Wrapper = ({ children }) => {
             draggable={true}
             onDrop={onDrop}
             onMouseDown={onMouseDown}
-            // onMouseLeave={onMouseUp}
             onMouseUp={onMouseUp}
             onDragOver={onDragOver}
             onDragStart={onDragStart}
@@ -184,7 +184,9 @@ const Wrapper = ({ children }) => {
             </div>
         </ReactResizeDetector>
 
-    )
+    ); else return (<>{ edit ? editableSumChild : clonedSumChild }</>);
+
+    // must have editable properties
 };
 
 export default Wrapper;

@@ -10,7 +10,7 @@ const header = {
 const text = {
     component: 'h1',
     className: 'text-xl',
-    style: { fontSize: '20px', lineHeight: '28px' },
+    style: { fontSize: '20px', lineHeight: '28px', fontWeight: 400 },
     children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempus lorem mauris, sed pharetra eros blandit eu. Praesent a aliquam dui. Nulla elementum nisl eu massa pharetra, sed rutrum diam.'
 };
 
@@ -33,44 +33,30 @@ const row = {
     children: [ { ...header, children: 'Row Section' }, text ]
 };
 
-// const grid = {
-//     component: 'div',
-//     "data-aos": "fade-in",
-//     className: 'grid w-full',
-//     style: { display: 'grid' },
-//     children: [ { ...header, children: 'Grid Section' }, text ]
-// };
+const embed = {
+    component: 'iframe',
+    "data-aos": "fade-in",
+    "data-aos-offset": "0",
+    src: `https://docs.google.com/forms/d/e/1FAIpQLScuCMlQ279_Rl8F-Q60KPqRluWp2jDCwSF-yRnqQSyp80Hw2A/viewform?embedded=true`,
+    style: { height: '100%', width: '100%' },
+    className: 'h-full w-full',
+    children: []
+};
 
-// const flex = {
-//     component: 'div',
-//     "data-aos": "fade-in",
-//     className: 'flex flex-col md:flex-row @md:flex-row w-full',
-//     style: { display: 'flex' },
-//     children: [ { ...header, children: 'Flex Section' }, text ]
-// };
-
-// const section1 = {
-//     component: 'div',
-//     "data-aos": "fade-in",
-//     className: 'flex flex-col w-full h-full overflow-auto',
-//     style: { display: 'flex' },
-//     children: [ { ...header, children: '1 Section' }, text ]
-// };
-
-// const section2 = {
-//     component: 'div',
-//     className: 'grid md:grid-cols-2 @md:grid-cols-2',
-//     style: { display: 'grid' },
-//     children: [ { ...header, children: '2 Section' }, text ]
-// };
-
-// const section3 = {
-//     component: 'div',
-//     className: 'grid md:grid-cols-3 @md:grid-cols-3',
-//     style: { display: 'grid' },
-//     children: [ { ...header, children: '3 Section' }, header, text ]
-// };
-
+const dropdown = {
+    component: 'details',
+    "data-aos": "fade-in",
+    "data-aos-offset": "0",
+    className: 'text-2xl',
+    style: { fontSize: '24px', lineHeight: '32px' },
+    children: [
+        {
+            component: 'summary',
+            children: 'Collapse'
+        },
+        text
+    ]
+};
 
 const imgBase = {
     component: 'img',
@@ -99,21 +85,6 @@ const video = {
     children: [ videoBase ]
 };
 
-
-// const buttonold = {
-//     component: 'a',
-//     className: 'inline-block text-white bg-black rounded-lg select-none w-full',
-//     style: { display: 'inline-block', color: 'white', backgroundColor: 'black', userSelect: 'none' },
-//     href: 'test',
-//     children: 'Button Name'
-// };
-
-// const buttonBase = {
-//     component: 'div',
-//     className: 'flex select-none w-full',
-//     style: { display: 'flex', width: '100%' },
-//     children: [ { ...button }]
-// };
 
 const button = {
     component: 'a',
@@ -148,6 +119,6 @@ const navPart = {
 export default {
     header, text, img, video,
     column, row,
-    // section1, section2, section3, 
-    button, link, navBase, navPart
+    button, link, navBase, navPart,
+    embed, dropdown
 }

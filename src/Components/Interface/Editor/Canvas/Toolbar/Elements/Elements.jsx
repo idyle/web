@@ -5,7 +5,7 @@ import { useEditor } from "../../../Editor.jsx";
 import { useUtil } from "../../../../../../Contexts/Util.jsx";
 import { useDom } from "../../Canvas.jsx";
 import Element from './Element.jsx';
-import { RxText, RxSection, RxImage, RxVideo, RxLayout, RxViewVertical, RxListBullet, RxLetterCaseCapitalize, RxButton, RxLink2 } from 'react-icons/rx';
+import { RxText, RxSection, RxImage, RxVideo, RxCode, RxDropdownMenu, RxViewVertical, RxListBullet, RxLetterCaseCapitalize, RxButton, RxLink2 } from 'react-icons/rx';
 import { MdPages } from "react-icons/md";
 
 const Elements = () => {
@@ -73,7 +73,6 @@ const Elements = () => {
 
             <Element title="Row Section" onClick={() => appendElement('row')} icon={ <RxSection />} />
             <Element title="Column Section" onClick={() => appendElement('column')} icon={ <RxViewVertical />} />
-            {/* <Element title="3 Section" onClick={() => appendElement('grid')} icon={ <RxLayout />} /> */}
 
             <Element title="Image" onClick={sendObjectsRequest} icon={ <RxImage />} />
             <Element title="Video" onClick={sendObjectsRequest} icon={ <RxVideo />} />
@@ -83,6 +82,9 @@ const Elements = () => {
 
             <Element title="Button" onClick={() => appendElement('button')} icon={ <RxButton />} />
             <Element title="Link" onClick={() => appendElement('link')} icon={ <RxLink2 />} />
+
+            <Element title="Embed" onClick={() => appendElement('embed')} icon={ <RxCode />} />
+            <Element title="Collapse" onClick={() => appendElement('dropdown')} icon={ <RxDropdownMenu />} />
         </div>
     )
 };
