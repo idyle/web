@@ -1,15 +1,10 @@
-import { AiOutlineDrag } from 'react-icons/ai';
-import { FaCode } from 'react-icons/fa'; 
-import { MdPages } from 'react-icons/md';
-import Subnav from '../Navigator/Subnav/Subnav';
-import Subnavbutton from '../Navigator/Subnav/Subnavbutton';
 import Pages from './Pages/Pages';
 import { createContext, useContext, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from "../../../Contexts/Auth";
 import { useUtil } from "../../../Contexts/Util";
-import { deletePage, editPage } from './requests';
+import { deletePage, editEditorData, editPage } from './requests';
 import { useData } from '../../../Contexts/Data';
 import { Helmet } from 'react-helmet';
 import Router from './Router';
@@ -21,7 +16,7 @@ export const EditorContext = ({ children }) => {
 
     const { getToken } = useAuth();
     const { spin, notify, confirm } = useUtil();
-    const { pages, setPages, pageId, setPageId } = useData();
+    const { pages, setPages, pageId, setPageId, setEditorData } = useData();
     const pageQuery = pages?.find(({ id }) => id === pageId);
     const [page, setPage] = useState(pageQuery);
     const [pageCache, setPageCache] = useState();
@@ -74,8 +69,6 @@ export const EditorContext = ({ children }) => {
         return false;
     };
 
-    const test = () => console.log(pages);
-
     const remove = async (page) => {
         if (!(await confirm("You're about to delete a page. This action cannot be undone. Proceed?"))) return;
         spin(true);
@@ -86,13 +79,20 @@ export const EditorContext = ({ children }) => {
         setPages(pages.filter(({ id }) => id !== page?.id));
     };
 
+    const editData = async (data) => { 
+        const token = await getToken();
+        const operation = await editEditorData(token, data);
+        if (!operation) return notify('Something went wrong trying to edit the editor data.');
+        setEditorData({ ...data });
+    };
+
     const setPageData = (pageData) => edit({ ...page, data: { ...serialize(pageData) } });
     const setPageMetadata = (pageMetadata) => edit({ ...page, metadata: { ...page?.metadata, ...pageMetadata } });
 
     const values = { 
         page, setPage, pages, setPages,
         setPageData, setPageId, setPageMetadata,
-        remove, edit, serialize,
+        remove, edit, serialize, editData,
         toggle, setToggle, css, setCss, font, setFont,
         pageCache, setPageCache, clipboard, setClipboard
     };

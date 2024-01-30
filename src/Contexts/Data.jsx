@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./Auth";
-import { listPages } from "../Components/Interface/Editor/requests";
+import { getEditorData, listPages } from "../Components/Interface/Editor/requests";
 import { getWebsites, listDeploys } from "../Components/Interface/Deployer/requests";
 import { listDocs } from '../Components/Interface/Documents/requests';
 import { listFiles } from "../Components/Interface/Objects/requests";
@@ -49,7 +49,7 @@ const DataContext = ({ children }) => {
         let missing = [];
         const keys = [ 
             'pages', 'deploys', 'docs', 
-            'objects', 'metrics', 'websites' 
+            'objects', 'metrics', 'websites', 'editor' 
         ];
         for (const key of keys) if (!data?.[key]) missing.push(key);
 
@@ -61,7 +61,8 @@ const DataContext = ({ children }) => {
 
         let requests = [ 
             listPages(token), listDeploys(token), 
-            listDocs(token), listFiles(token), getMetrics(token), getWebsites(token)
+            listDocs(token), listFiles(token), getMetrics(token), getWebsites(token),
+            getEditorData(token)
         ], requestedData = {}, secondary = [];
 
 
@@ -115,6 +116,7 @@ const DataContext = ({ children }) => {
     const setMetrics = (obj) => setData({ ...data, metrics: obj });
     const setPageId = (str) => setData({ ...data, pageId: str });
     const setWebsiteName = (str) => setData({ ...data, websiteName: str });
+    const setEditorData = (obj) => setData({ ...data, editor: obj });
     
     const resetData = () => {
         setData();
@@ -128,6 +130,7 @@ const DataContext = ({ children }) => {
     };
 
     const values = {
+        editor: data?.editor || {}, setEditorData,
         pages: data?.pages || [], setPages,
         deploys: data?.deploys || [], setDeploys, resetDeploys,
         objects: data?.objects || [], setObjects, resetObjects,

@@ -1,5 +1,45 @@
 const servicePath = `${process.env.REACT_APP_BASEPATH}/editor`;
 
+export const getEditorData = async (token) => {    
+    try {
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+        const url = `${servicePath}/data/user`;
+        const req = await fetch(url, options);
+        const res = await req.json();
+        if (res?.status) return res?.editor;
+        return res?.status;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
+export const editEditorData = async (token, editor) => {
+    try {
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ editor })
+        };
+        const url = `${servicePath}/data/user`;
+        const req = await fetch(url, options);
+        const res = await req.json();
+        return res?.status;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};
+
 export const createPage = async (token, page) => {
     try {
         const options = {

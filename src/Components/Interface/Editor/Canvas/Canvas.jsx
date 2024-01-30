@@ -3,18 +3,29 @@ import { createContext, useContext, useState } from 'react';
 import { useEditor } from '../Editor';
 import Toolbar from './Toolbar/Toolbar';
 import Dom from './Dom';
-import Aos from 'aos';
 
 const DomValues = createContext();
 export const useDom = () => useContext(DomValues);
 
 export const DomContext = ({ children }) => {
     const { page } = useEditor();
+    const [navbarPath, setNavbarPath] = useState([]);
+    const [navbarSelected, setNavbarSelected] = useState('0');
+
     const [selected, setSelected] = useState('0');
     const [clicked, setClicked] = useState(false);
     const [hovered, setHovered] = useState('');
     const [path, setPath] = useState([]);
     const [selectedData, setSelectedData] = useState();
+
+    useEffect(() => {
+        if (!navbarSelected) return;
+        let path = [];
+        if (navbarSelected?.includes('-')) path = navbarSelected.split('-');
+        path.shift();
+        for (let i = 0; i < path.length; i++) path[i] = parseInt(path[i]);
+        setNavbarPath(path);
+    }, [navbarSelected]);
 
     useEffect(() => {
         if (!selected) return;
