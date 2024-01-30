@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Okta Neue";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/font.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Okta Neue";
+    font-weight: bold;
+    src: url("../fonts/font-bold.woff") format("woff");
+  }
+  html {
+    font-family: "Okta Neue", sans-serif;
+  }
+}

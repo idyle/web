@@ -1,0 +1,29 @@
+# name: deploy
+
+# on:
+#   push:
+#     branches: [ master, dev ]
+#   pull_request:
+#     branches: [ master ]
+  
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v4
+
+#       - name: Install Dependencies
+#         run: |
+#           cd ./action  
+#           npm install   
+
+#       - name: Authenticate Google
+#         id: auth
+#         uses: 'google-github-actions/auth@v2'
+#         with:
+#           credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+#       - name: Run Deployment
+#         uses: ./action
